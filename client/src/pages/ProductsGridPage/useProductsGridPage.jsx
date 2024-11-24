@@ -40,6 +40,10 @@ export const useProductsGridPage = () => {
   });
 
   useEffect(() => {
+    refetch();
+  }, []);
+
+  useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const newSelectedTags = searchParams.getAll("tags[]");
     const newSelectedMicrolight = searchParams.get("microlight") || null;

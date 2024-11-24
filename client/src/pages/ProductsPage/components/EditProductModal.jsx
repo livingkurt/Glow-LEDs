@@ -41,8 +41,6 @@ const EditProductModal = () => {
     dispatch,
   });
 
-  console.log({ product });
-
   return (
     <div>
       <GLActionModal

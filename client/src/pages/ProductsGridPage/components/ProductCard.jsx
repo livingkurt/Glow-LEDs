@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Card, CardContent, Typography, Rating, Box, useMediaQuery, useTheme, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import { random } from "lodash";
-import { sale_price_switch } from "../../../utils/react_helper_functions";
-import { useSelector } from "react-redux";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
+import GLPrice from "../../../shared/GlowLEDsComponents/GLPrice/GLPrice";
 
 const ProductCard = ({ product, promo_code, goHorizontal = true }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const { current_user } = useSelector(state => state.users.userPage);
   const [isHovered, setIsHovered] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -148,12 +146,7 @@ const ProductCard = ({ product, promo_code, goHorizontal = true }) => {
             {product.rating ? <Rating value={product.rating} readOnly size={isMobile ? "small" : "medium"} /> : null}
           </Box>
           <Typography variant="body1" color="white">
-            {sale_price_switch({
-              product,
-              cartItem: false,
-              background: "dark",
-              isWholesaler: current_user?.isWholesaler,
-            })}
+            <GLPrice product={product} />
           </Typography>
         </CardContent>
       </Card>

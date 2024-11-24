@@ -30,13 +30,12 @@ import { selectOption, setIsAddonChecked, setQuantity } from "./productPageSlice
 import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 import CompatibleMicrolights from "./components/CompatibleMicrolights";
 import ContributorsDisplay from "./components/ContributorsDisplay";
-import { sale_price_switch } from "../../utils/react_helper_functions";
 import IconFeatures from "./components/IconFeatures";
 import LineBreak from "./components/LineBreak";
 import { formatDate } from "../../utils/helpers/universal_helpers";
 import PasswordPromptModal from "./components/PasswordPromptModal";
-import { Link } from "react-router-dom";
 import FeaturedModes from "../HomePage/components/FeaturedModes";
+import GLPrice from "../../shared/GlowLEDsComponents/GLPrice/GLPrice";
 
 const ProductPage = () => {
   const theme = useTheme();
@@ -159,13 +158,9 @@ const ProductPage = () => {
                     {customizedProduct.fact}
                   </Typography>
                   <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
-                    {"Price:"}{" "}
-                    {sale_price_switch({
-                      product: customizedProduct,
-                      cartItem: false,
-                      background: "dark",
-                      isWholesaler: current_user?.isWholesaler,
-                    })}
+                    <Box display="flex" gap={1} alignItems="flex-end">
+                      {"Price:"} <GLPrice product={customizedProduct} />
+                    </Box>
                     {customizedProduct.isPreOrder && (
                       <Typography
                         component="span"

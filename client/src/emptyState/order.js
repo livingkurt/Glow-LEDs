@@ -27,7 +27,6 @@ export const emptyOrder = {
       pathname: "",
       size: "",
       preorder: false,
-      sale_price: 0,
       dimensions: {
         package_volume: 0,
         weight_pounds: 0,

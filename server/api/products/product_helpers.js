@@ -221,32 +221,6 @@ export const determineImage = (product, imageNum) => {
   }
 };
 
-export const transformProducts = products => {
-  return products
-    .filter(product => product.category !== "options")
-    .sort((a, b) => (a.order > b.order ? 1 : -1))
-    .map((product, i) => ({
-      id: product._id,
-      title: product.name,
-      description: product.description,
-      availability: "In Stock",
-      condition: "New",
-      price: `${product.price} USD`,
-      link: `https://www.glow-leds.com/products/${product.pathname}`,
-      image_link: determineImage(product, 0),
-      additional_image_link: determineImage(product, 1),
-      brand: "Glow LEDs",
-      inventory: product.max_display_quantity,
-      fb_product_category: "toys & games > electronic toys",
-      google_product_category: "Toys & Games > Toys > Visual Toys",
-      sale_price: `${product.sale_price && product.sale_price.toFixed(2)} USD`,
-      sale_price_effective_date: `${product?.sale_start_date}/${product?.sale_end_date}`,
-      product_type: product.category,
-      color: product.color,
-      size: product.size,
-    }));
-};
-
 // To find parents via a Mongoose query:
 export const findParentsForProduct = async productId => {
   const product = await Product.findById(productId);
@@ -513,4 +487,123 @@ export const handleMicrolightFiltering = async microlightPathname => {
   const microlight = await Microlight.findOne({ deleted: false, pathname: microlightPathname });
   if (!microlight) return {};
   return { microlights: microlight._id };
+};
+
+export const calculateSalePrice = (price, discountType, discountValue) => {
+  if (discountType === "percentage") {
+    const discount = parseFloat(discountValue) / 100;
+    return Math.round(price * (1 - discount) * 100) / 100; // This rounding can cause slight discrepancies
+  }
+  return Math.round((price - parseFloat(discountValue)) * 100) / 100;
+};
+
+export const clearProductSales = async (products, applyToOptions) => {
+  const bulkOps = [];
+
+  for (const product of products) {
+    bulkOps.push({
+      updateOne: {
+        filter: { _id: product._id },
+        update: { $unset: { sale: "" } },
+      },
+    });
+
+    if (applyToOptions) {
+      const optionProductIds = getOptionProductIds(product);
+      if (optionProductIds.length > 0) {
+        bulkOps.push({
+          updateMany: {
+            filter: { _id: { $in: optionProductIds } },
+            update: { $unset: { sale: "" } },
+          },
+        });
+      }
+    }
+  }
+
+  if (bulkOps.length > 0) {
+    await Product.bulkWrite(bulkOps);
+  }
+
+  return bulkOps.length;
+};
+
+const getOptionProductIds = product => {
+  if (!product.options) return [];
+  return product.options
+    .flatMap(option => option.values)
+    .map(value => value.product)
+    .filter(id => id);
+};
+
+export const createSaleUpdate = (price, productId, discountType, discountValue, startDate, endDate) => {
+  const salePrice = calculateSalePrice(price, discountType, discountValue);
+  if (isNaN(salePrice) || salePrice <= 0) return null;
+
+  return {
+    updateOne: {
+      filter: { _id: productId },
+      update: {
+        $set: {
+          sale: {
+            price: Number(salePrice.toFixed(2)),
+            start_date: startDate,
+            end_date: endDate,
+          },
+        },
+      },
+    },
+  };
+};
+
+export const applyProductSales = async (products, saleParams, processedIds = new Set()) => {
+  const { discountType, discountValue, startDate, endDate, applyToOptions } = saleParams;
+  const bulkOps = [];
+
+  for (const product of products) {
+    if (processedIds.has(product._id.toString())) continue;
+
+    const saleUpdate = createSaleUpdate(product.price, product._id, discountType, discountValue, startDate, endDate);
+    if (saleUpdate) {
+      bulkOps.push(saleUpdate);
+      processedIds.add(product._id.toString());
+    }
+
+    if (applyToOptions) {
+      const optionUpdates = await handleOptionProductSales(product, saleParams, processedIds);
+      bulkOps.push(...optionUpdates);
+    }
+  }
+
+  if (bulkOps.length > 0) {
+    await Product.bulkWrite(bulkOps);
+  }
+
+  return bulkOps.length;
+};
+
+export const handleOptionProductSales = async (product, saleParams, processedIds) => {
+  const optionProductIds = getOptionProductIds(product).filter(id => !processedIds.has(id.toString()));
+
+  if (optionProductIds.length === 0) return [];
+
+  const optionProducts = await Product.find({ _id: { $in: optionProductIds } });
+  const bulkOps = [];
+
+  for (const optionProduct of optionProducts) {
+    const saleUpdate = createSaleUpdate(
+      optionProduct.price,
+      optionProduct._id,
+      saleParams.discountType,
+      saleParams.discountValue,
+      saleParams.startDate,
+      saleParams.endDate
+    );
+    if (saleUpdate) {
+      bulkOps.push(saleUpdate);
+      processedIds.add(optionProduct._id.toString());
+    }
+  }
+
+  return bulkOps;
 };

@@ -11,16 +11,7 @@ const productsPage = createSlice({
     loading: false,
     products: [],
     product: productInitialState,
-    color_modifier: "",
-    secondary_color_modifier: "",
-    option_modifier: "",
-    macro_products_list: [],
-    option_products_list: [],
     filtered_products: [],
-    sale_start_time: "",
-    sale_end_time: "",
-    sale_start_date: "",
-    sale_end_date: "",
     loading_options: "",
     image: "",
     color_image: "",
@@ -39,6 +30,7 @@ const productsPage = createSlice({
     remoteVersionRequirement: 0,
     edit_product_modal: false,
     product_modal: false,
+    salePriceModalOpen: false,
     limit: 10,
     selectedOptionType: "",
     productOptionsGeneratorModal: {
@@ -49,6 +41,16 @@ const productsPage = createSlice({
     },
     editProductHistory: [],
     ourPicksProducts: [],
+    salePriceModal: {
+      isOpen: false,
+      discountType: "percentage",
+      discountValue: "",
+      startDate: "",
+      endDate: "",
+      applyToOptions: true,
+      selectedTags: [],
+      applyToAll: false,
+    },
   },
   reducers: {
     set_product: (state, { payload }) => {
@@ -86,38 +88,30 @@ const productsPage = createSlice({
       state.product_modal = true;
       state.product = payload;
     },
+    setSalePriceModalData: (state, action) => {
+      state.salePriceModal = {
+        ...state.salePriceModal,
+        ...action.payload,
+      };
+    },
+    openSalePriceModal: state => {
+      state.salePriceModal.isOpen = true;
+    },
+    closeSalePriceModal: state => {
+      state.salePriceModal.isOpen = false;
+      state.salePriceModal.discountType = "percentage";
+      state.salePriceModal.discountValue = "";
+      state.salePriceModal.startDate = "";
+      state.salePriceModal.endDate = "";
+      state.salePriceModal.applyToOptions = true;
+      state.salePriceModal.selectedTags = [];
+      state.salePriceModal.applyToAll = false;
+    },
     setRemoteVersionRequirement: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
     },
-    set_color_modifier: (state, { payload }) => {
-      state.color_modifier = payload;
-    },
-    set_secondary_color_modifier: (state, { payload }) => {
-      state.secondary_color_modifier = payload;
-    },
-    set_option_modifier: (state, { payload }) => {
-      state.option_modifier = payload;
-    },
-    set_macro_products_list: (state, { payload }) => {
-      state.macro_products_list = payload;
-    },
-    set_option_products_list: (state, { payload }) => {
-      state.option_products_list = payload;
-    },
     set_filtered_products: (state, { payload }) => {
       state.filtered_products = payload;
-    },
-    set_sale_start_date: (state, { payload }) => {
-      state.sale_start_date = payload;
-    },
-    set_sale_start_time: (state, { payload }) => {
-      state.sale_start_time = payload;
-    },
-    set_sale_end_date: (state, { payload }) => {
-      state.sale_end_date = payload;
-    },
-    set_sale_end_time: (state, { payload }) => {
-      state.sale_end_time = payload;
     },
     set_loading_options: (state, { payload }) => {
       state.loading_options = payload;
@@ -201,15 +195,15 @@ const productsPage = createSlice({
     },
     [API.detailsProduct.fulfilled]: (state, { payload }) => {
       const { data, openEditModal } = payload;
-      const start_date = new Date(data.sale_start_date);
-      const end_date = new Date(data.sale_end_date);
-      if (data.sale_start_date) {
-        state.sale_start_date = format_date(accurate_date(start_date));
-        state.sale_start_time = format_time(accurate_date(start_date));
+      const start_date = new Date(data.sale?.start_date);
+      const end_date = new Date(data.sale?.end_date);
+      if (data.sale?.start_date) {
+        state.sale.start_date = format_date(accurate_date(start_date));
+        state.sale.start_time = format_time(accurate_date(start_date));
       }
-      if (data.sale_end_date) {
-        state.sale_end_date = format_date(accurate_date(end_date));
-        state.sale_end_time = format_time(accurate_date(end_date));
+      if (data.sale?.end_date) {
+        state.sale.end_date = format_date(accurate_date(end_date));
+        state.sale.end_time = format_time(accurate_date(end_date));
       }
       state.loading = false;
       state.product = data;
@@ -280,7 +274,7 @@ const productsPage = createSlice({
           price: payload.price,
           wholesale_price: payload.wholesale_price,
           previous_price: payload.previous_price,
-          sale_price: payload.sale_price,
+          sale: payload.sale,
           size: payload.size,
           quantity: payload.quantity,
           count_in_stock: payload.count_in_stock,
@@ -295,7 +289,6 @@ const productsPage = createSlice({
           review_modal: payload.review_modal,
           rating: payload.rating,
           comment: payload.comment,
-          // selectedOptions: payload.options.map(option => option.values.find(value => value.isDefault)),
         },
       };
     },
@@ -336,22 +329,31 @@ const productsPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
+    [API.applySale.pending]: (state, { payload }) => {
+      state.success = false;
+    },
+    [API.applySale.fulfilled]: (state, { payload }) => {
+      state.remoteVersionRequirement = Date.now();
+      state.salePriceModal.isOpen = false;
+      state.salePriceModal.discountType = "percentage";
+      state.salePriceModal.discountValue = "";
+      state.salePriceModal.startDate = "";
+      state.salePriceModal.endDate = "";
+      state.salePriceModal.applyToOptions = true;
+      state.salePriceModal.selectedTags = [];
+      state.salePriceModal.applyToAll = false;
+    },
+    [API.applySale.rejected]: (state, { payload, error }) => {
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
   },
 });
 
 export const {
   set_loading,
   set_product,
-  set_color_modifier,
-  set_secondary_color_modifier,
-  set_option_modifier,
-  set_macro_products_list,
-  set_option_products_list,
   set_filtered_products,
-  set_sale_start_date,
-  set_sale_start_time,
-  set_sale_end_date,
-  set_sale_end_time,
   set_loading_options,
   set_new_index,
   set_success,
@@ -360,6 +362,8 @@ export const {
   open_product_modal,
   close_edit_product_modal,
   openEditProductModal,
+  openSalePriceModal,
+  closeSalePriceModal,
   setRemoteVersionRequirement,
   setSelectedOptionType,
   openProductOptionsGeneratorModal,
@@ -370,5 +374,6 @@ export const {
   setTemplateProduct,
   setUseTemplate,
   setSelectedOptions,
+  setSalePriceModalData,
 } = productsPage.actions;
 export default productsPage.reducer;

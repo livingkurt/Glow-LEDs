@@ -50,7 +50,6 @@ export const routes = [
 ];
 
 export const adminRoutes = [
-  { path: "/secure/glow/edit_all_data", element: "DatabaseMigrationPage" },
   { path: "/secure/glow/products", element: "ProductsPage" },
   { path: "/secure/glow/orders", element: "OrdersPage" },
   { path: "/secure/glow/users", element: "UsersPage" },

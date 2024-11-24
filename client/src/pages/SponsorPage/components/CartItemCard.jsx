@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-import { Card, CardContent, Typography, Box, useMediaQuery, useTheme, IconButton, Chip, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Card, CardContent, Typography, Box, useTheme, Chip, Button } from "@mui/material";
 import { random } from "lodash";
-import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { useSelector, useDispatch } from "react-redux";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { formatDate } from "../../../utils/helpers/universal_helpers";
@@ -13,11 +9,11 @@ import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyIm
 import * as API from "../../../api";
 import { showInfo } from "../../../slices/snackbarSlice";
 import PropTypes from "prop-types";
+import GLPrice from "../../../shared/GlowLEDsComponents/GLPrice/GLPrice";
 
 const CartItemCard = ({ item }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const { current_user } = useSelector(state => state.users.userPage);
   const { my_cart } = useSelector(state => state.carts.cartPage);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -137,12 +133,7 @@ const CartItemCard = ({ item }) => {
         )}
         <Box display="flex" justifyContent="space-between">
           <Typography variant="body1" color="white" mt={1}>
-            {sale_price_switch({
-              product: item,
-              cartItem: true,
-              background: "dark",
-              isWholesaler: current_user?.isWholesaler,
-            })}
+            <GLPrice product={item} />
           </Typography>
           <Typography variant="body1" color="white" mt={1}>
             {"Qty: "}

@@ -265,66 +265,6 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  each_day_income_orders_c: async (req, res) => {
-    const { params } = req;
-    try {
-      const orders = await order_services.each_day_income_orders_s(params);
-      if (orders) {
-        return res.status(200).send(orders);
-      }
-      return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
-  each_month_income_orders_c: async (req, res) => {
-    const { params } = req;
-    try {
-      const orders = await order_services.each_month_income_orders_s(params);
-      if (orders) {
-        return res.status(200).send(orders);
-      }
-      return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
-  previous_income_orders_c: async (req, res) => {
-    const { params } = req;
-    try {
-      const orders = await order_services.previous_income_orders_s(params);
-      if (orders) {
-        return res.status(200).send(orders);
-      }
-      return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
-  mark_as_shipped_orders_c: async (req, res) => {
-    const { params } = req;
-    try {
-      const orders = await order_services.mark_as_shipped_orders_s(params);
-      if (orders) {
-        return res.status(200).send(orders);
-      }
-      return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
-  income_orders_c: async (req, res) => {
-    const { params } = req;
-    try {
-      const orders = await order_services.income_orders_s(params);
-      if (orders) {
-        return res.status(200).send(orders);
-      }
-      return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
   invoice_orders_c: async (req, res) => {
     const { params } = req;
     try {

@@ -1,11 +1,6 @@
-import {
-  formatDate,
-  email_sale_price_switch,
-  determine_card_logo_images_white,
-  order_status_steps,
-  getItemsTotal,
-} from "../../utils/util.js";
-import { isColorLight } from "../email_template_helpers.js";
+import { formatDate, determine_card_logo_images_white, order_status_steps } from "../../utils/util.js";
+import { isColorLight, getItemsTotal, getSaleTotal, hasActiveSale } from "../email_template_helpers.js";
+import Price from "../components/Price.js";
 
 export default ({ email, order }) => {
   return `<table style="width:100%;border-spacing:0; padding: 10px;">
@@ -241,7 +236,7 @@ export default ({ email, order }) => {
 																											<td style='font-family:helvetica;width:100%;white-space:nowrap;'>
 																												<p style='color:white;line-height:150%;font-size:16px;font-weight:600;margin:0 0 0 15px;'
 																													align="right">
-																													${item.quantity > 1 ? item.quantity + "x" : ""} ${email_sale_price_switch(item, "white", order?.user?.isWholesaler)}
+																													${item.quantity > 1 ? item.quantity + "x" : ""} ${Price(item, "white", order?.user?.isWholesaler)}
 																												</p>
 																											</td>
 																										</tr>
@@ -265,85 +260,90 @@ export default ({ email, order }) => {
 																<table style="width:100%;border-spacing:0;margin-top:20px">
 																	<tbody>
 																		<tr>
-																			${
-                                        !order.promo_code
-                                          ? `<td style="font-family:helvetica;padding:5px 0">
-																				<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																						style="font-size:16px">Subtotal</span></p>
-																			</td>
-																			<td style="font-family:helvetica;padding:5px 0;text-align:right">
-																				<strong style="font-size:16px;color:white">$${order.orderItems
-                                          .map(item => {
-                                            return {
-                                              price: item.sale_price ? item.sale_price : item.price,
-                                              quantity: item.quantity,
-                                            };
-                                          })
-                                          .reduce((a, c) => a + c.price * c.quantity, 0)
-                                          ?.toFixed(2)}</strong>
-																			</td>
-																		</tr>`
-                                          : ""
-                                      }
-																		${
-                                      order.promo_code
-                                        ? `<td style="font-family:helvetica;padding:5px 0">
-																			<del style="color:red">
-																				<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																						style="font-size:16px">Subtotal</span></p>
-																			</del>
-																		</td>
-																		<td style="font-family:helvetica;padding:5px 0;text-align:right">
-																			<del style="color:red">
-																				<strong style="font-size:16px;color:white">$${order.orderItems
-                                          .map(item => {
-                                            return {
-                                              price: item.sale_price ? item.sale_price : item.price,
-                                              quantity: item.quantity,
-                                            };
-                                          })
-                                          .reduce((a, c) => a + c.price * c.quantity, 0)
-                                          ?.toFixed(2)}</strong></del>
-																		</td>
-														</tr>`
-                                        : ""
-                                    }
-														${
-                              order.promo_code
-                                ? `<tr>
-															<td style="font-family:helvetica;padding:5px 0;width:100%">
-																<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																		style="font-size:16px">Discount</span><span
-																		style="font-size:16px;margin-left:5px"><img
-																			src="https://images2.imgbox.com/a1/63/ptqm33q2_o.png"
-																			style="height:16px;margin-right:10px" alt="tag_logo" /><span
-																			style="font-size:14px;line-height:1.1;margin-left:-4px">${
-                                        order && order.promo_code ? order.promo_code?.toUpperCase() : ""
-                                      }</span></span>
-																</p>
-															</td>
-															<td style="font-family:helvetica;padding:5px 0;text-align:right">
-															<strong style="font-size:16px;color:white">&minus;&nbsp;$${(
-                                getItemsTotal(order.orderItems) - order.itemsPrice
-                              )?.toFixed(2)}</strong>
-
-															</td>
-														</tr>`
-                                : ""
-                            }
-														${
-                              order.promo_code
-                                ? `<tr>
-															<td style="font-family:helvetica;padding:5px 0">
-																<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																		style="font-size:16px">New Subtotal</span></p>
-															</td>
-															<td style="font-family:helvetica;padding:5px 0;text-align:right">
-																<strong style="font-size:16px;color:white">$${order.itemsPrice?.toFixed(2)}</strong>
-															</td>
-														</tr>`
-                                : ""
-                            }
+																			   ${
+                                           !order.promo_code && !hasActiveSale(order.orderItems)
+                                             ? `
+                                            <tr>
+                                              <td style="font-family:helvetica;padding:5px 0">
+                                                <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                                  <span style="font-size:16px">Subtotal</span>
+                                                </p>
+                                              </td>
+                                              <td style="font-family:helvetica;padding:5px 0;text-align:right">
+                                                <strong style="font-size:16px;color:white">$${order.itemsPrice.toFixed(2)}</strong>
+                                              </td>
+                                            </tr>
+                                          `
+                                             : `
+                                            <tr>
+                                              <td style="font-family:helvetica;padding:5px 0">
+                                                <del style="color:red">
+                                                  <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                                    <span style="font-size:16px">Original Subtotal</span>
+                                                  </p>
+                                                </del>
+                                              </td>
+                                              <td style="font-family:helvetica;padding:5px 0;text-align:right">
+                                                <del style="color:red">
+                                                  <strong style="font-size:16px;color:white">$${getItemsTotal(order.orderItems).toFixed(2)}</strong>
+                                                </del>
+                                              </td>
+                                            </tr>
+                                            ${
+                                              hasActiveSale(order.orderItems)
+                                                ? `
+                                              <tr>
+                                                <td style="font-family:helvetica;padding:5px 0">
+                                                  <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                                    <span style="font-size:16px">Sale Discount</span>
+                                                  </p>
+                                                </td>
+                                                <td style="font-family:helvetica;padding:5px 0;text-align:right">
+                                                  <strong style="font-size:16px;color:white">-$${(
+                                                    getItemsTotal(order.orderItems) - getSaleTotal(order.orderItems)
+                                                  ).toFixed(2)}</strong>
+                                                </td>
+                                              </tr>
+                                            `
+                                                : ""
+                                            }
+                                            ${
+                                              order.promo_code
+                                                ? `
+                                              <tr>
+                                                <td style="font-family:helvetica;padding:5px 0">
+                                                  <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                                    <span style="font-size:16px">Promo Discount</span>
+                                                    <span style="font-size:14px;margin-left:5px">
+                                                      <img src="https://images2.imgbox.com/a1/63/ptqm33q2_o.png"
+                                                        style="height:16px;margin-right:10px" alt="tag_logo" />
+                                                      <span style="font-size:14px;line-height:1.1;margin-left:-4px">
+                                                        ${order.promo_code.toUpperCase()}
+                                                      </span>
+                                                    </span>
+                                                  </p>
+                                                </td>
+                                                <td style="font-family:helvetica;padding:5px 0;text-align:right">
+                                                  <strong style="font-size:16px;color:white">-$${(
+                                                    getSaleTotal(order.orderItems) - order.itemsPrice
+                                                  ).toFixed(2)}</strong>
+                                                </td>
+                                              </tr>
+                                            `
+                                                : ""
+                                            }
+                                            <tr>
+                                              <td style="font-family:helvetica;padding:5px 0">
+                                                <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                                  <span style="font-size:16px">Final Subtotal</span>
+                                                </p>
+                                              </td>
+                                              <td style="font-family:helvetica;padding:5px 0;text-align:right">
+                                                <strong style="font-size:16px;color:white">$${order.itemsPrice.toFixed(2)}</strong>
+                                              </td>
+                                            </tr>
+                                          `
+                                         }
 														<tr>
 															<td style="font-family:helvetica;padding:5px 0">
 																<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span

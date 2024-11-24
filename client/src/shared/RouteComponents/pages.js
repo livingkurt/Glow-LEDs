@@ -1,7 +1,7 @@
 import { OrderPage } from "../../pages/OrderPage";
 import { PlaceOrderPage } from "../../pages/PlaceOrderPage";
 import { AdminChangePasswordPage } from "../../pages/ProfilePage/components";
-import { DatabaseMigrationPage } from "../../pages/DatabaseMigrationPage";
+
 import { ProductsPage } from "../../pages/ProductsPage";
 import { OrdersPage } from "../../pages/OrdersPage";
 import { PaychecksPage } from "../../pages/PaychecksPage";
@@ -99,7 +99,6 @@ export const Components = {
   ModesGridPage,
 };
 export const AdminComponents = {
-  DatabaseMigrationPage,
   ProductsPage,
   OrdersPage,
   UsersPage,

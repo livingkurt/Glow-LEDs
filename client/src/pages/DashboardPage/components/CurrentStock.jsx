@@ -37,7 +37,7 @@ const CurrentStock = () => {
         ]}
       />
 
-      <GLDisplayTable
+      {/* <GLDisplayTable
         title="Current Battery Stock"
         loading={currentStock.isLoading && currentStock.data}
         rows={!currentStock.isLoading && currentStock?.data?.filter(row => row.category === "batteries")}
@@ -69,7 +69,7 @@ const CurrentStock = () => {
           { title: "Name", display: "name", sortable: true },
           { title: "Count in Stock", display: row => row?.count_in_stock, attribute: "count_in_stock", sortable: true },
         ]}
-      />
+      /> */}
     </div>
   );
 };

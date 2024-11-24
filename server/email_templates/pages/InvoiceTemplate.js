@@ -1,5 +1,6 @@
 import config from "../../config.js";
-import { email_sale_price_switch, determine_card_logo_images, format_date } from "../../utils/util.js";
+import { determine_card_logo_images, format_date } from "../../utils/util.js";
+import Price from "../components/Price.js";
 
 export default ({ order, isSponsor }) => {
   return `<body id="invoice" style="background-color:transparent;zoom:100%; font-family: Helvetica; color: black;">
@@ -118,7 +119,7 @@ export default ({ order, isSponsor }) => {
                           <td style="font-family:helvetica;width:100%;white-space:nowrap">
                             <p style="color:black;line-height:150%;font-size:25px;font-weight:600;margin:0 0 0 15px"
                               align="right">
-                             ${email_sale_price_switch(item, "black", order?.user?.isWholesaler)}
+                             ${Price(item, "black", order?.user?.isWholesaler)}
                             </p>
                           </td>
                         </tr>
@@ -189,9 +190,9 @@ export default ({ order, isSponsor }) => {
                               <td style="text-align:right; margin-right:3px;" valign="top" align="right">
                                 <div style="padding:5px;vertical-align:top;text-align:right;color:black" valign="top"
                                   align="right">$${
-                                    order.orderItems.reduce((a, c) => a + c.sale_price * c.quantity, 0) === 0
+                                    order.orderItems.reduce((a, c) => a + c.sale?.price * c.quantity, 0) === 0
                                       ? order.orderItems.reduce((a, c) => a + c.price * c.quantity, 0).toFixed(2)
-                                      : order.orderItems.reduce((a, c) => a + c.sale_price * c.quantity, 0).toFixed(2)
+                                      : order.orderItems.reduce((a, c) => a + c.sale?.price * c.quantity, 0).toFixed(2)
                                   }
                                 </div>
                               </td>
@@ -212,9 +213,11 @@ export default ({ order, isSponsor }) => {
                                 <del style="color:red">
                                   <div style="padding:5px;vertical-align:top;text-align:right;color:black" valign="top"
                                     align="right">$${
-                                      order.orderItems.reduce((a, c) => a + c.sale_price * c.quantity, 0) === 0
+                                      order.orderItems.reduce((a, c) => a + c.sale?.price * c.quantity, 0) === 0
                                         ? order.orderItems.reduce((a, c) => a + c.price * c.quantity, 0).toFixed(2)
-                                        : order.orderItems.reduce((a, c) => a + c.sale_price * c.quantity, 0).toFixed(2)
+                                        : order.orderItems
+                                            .reduce((a, c) => a + c.sale?.price * c.quantity, 0)
+                                            .toFixed(2)
                                     }
                                   </div>
                                 </del>
@@ -255,9 +258,9 @@ export default ({ order, isSponsor }) => {
                                     order.promo_code
                                       ? order.itemsPrice.toFixed(2)
                                       : (order.orderItems &&
-                                        order.orderItems.reduce((a, c) => a + c.sale_price * c.quantity, 0) === 0
+                                        order.orderItems.reduce((a, c) => a + c.sale?.price * c.quantity, 0) === 0
                                           ? order.orderItems.reduce((a, c) => a + c.price * c.quantity, 0)
-                                          : order.orderItems.reduce((a, c) => a + c.sale_price * c.quantity, 0)
+                                          : order.orderItems.reduce((a, c) => a + c.sale?.price * c.quantity, 0)
                                         ).toFixed(2)
                                   }</div>
                                 </div>

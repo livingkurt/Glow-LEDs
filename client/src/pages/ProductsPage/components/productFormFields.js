@@ -886,21 +886,18 @@ export const productFormFields = ({ products, users, product, microlights, filam
       type: "object",
       title: "Sale Info",
       fields: {
-        sale_price: {
+        price: {
           type: "number",
           label: "Sale Price",
-          labelProp: "sale_price",
           defaultValue: 0,
         },
         start_date: {
           type: "date",
           label: "Sale Start Date",
-          labelProp: "sale_start_date",
         },
         end_date: {
           type: "date",
           label: "Sale End Date",
-          labelProp: "sale_end_date",
         },
       },
     },

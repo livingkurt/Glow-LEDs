@@ -1,10 +1,9 @@
 import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
-import { openProductOptionsGeneratorModal, open_create_product_modal, set_loading } from "./productsPageSlice";
-import { EditProductModal } from "./components";
+import { openProductOptionsGeneratorModal, open_create_product_modal, openSalePriceModal } from "./productsPageSlice";
+import { EditProductModal, SalePriceModal } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
 import { Box, Button, Container } from "@mui/material";
@@ -15,11 +14,12 @@ import LandscapeIcon from "@mui/icons-material/Landscape";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
-import axios from "axios";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ProductDropdown from "./components/ProductDropdown";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import { showConfirm } from "../../slices/snackbarSlice";
 
 const ProductsPage = () => {
   const productsPage = useSelector(state => state.products.productsPage);
@@ -54,6 +54,10 @@ const ProductsPage = () => {
       { title: "Category", display: "category" },
       { title: "Order", display: "order" },
       { title: "Price", display: row => `$${row.price}` },
+      {
+        title: "Sale Price",
+        display: row => (row.sale?.price ? `$${row.sale?.price}` : "-"),
+      },
       { title: "Count In Stock", display: "count_in_stock" },
       {
         title: "",
@@ -144,7 +148,6 @@ const ProductsPage = () => {
         dropdownComponent={row => (
           <ProductDropdown row={row} determineColor={determineColor} colspan={columnDefs.length + 1} />
         )}
-        // dropdownRows={row => row.options.flatMap(option => option.values)}
         loading={loading}
         enableRowSelect
         enableDragDrop
@@ -155,43 +158,42 @@ const ProductsPage = () => {
                 color="secondary"
                 variant="contained"
                 onClick={() => {
-                  const confirm = window.confirm(`Are you sure you want to Delete ${selectedRows.length} Products?`);
-                  if (confirm) {
-                    dispatch(API.deleteMultipleProducts(selectedRows));
-                  }
+                  dispatch(
+                    showConfirm({
+                      title: "Confirm Delete",
+                      message: `Are you sure you want to Delete ${selectedRows.length} Products?`,
+                      onConfirm: () => {
+                        dispatch(API.deleteMultipleProducts(selectedRows));
+                      },
+                    })
+                  );
                 }}
               >
                 {"Delete Products"}
               </Button>
             )}
             {selectedRows.length > 0 && (
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={() => {
-                  dispatch(
-                    openProductOptionsGeneratorModal({ selectedProducts: selectedRowObjects, useTemplate: false })
-                  );
-                }}
-              >
-                {"Replicate Product Options"}
-              </Button>
+              <>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={() => {
+                    dispatch(
+                      openProductOptionsGeneratorModal({ selectedProducts: selectedRowObjects, useTemplate: false })
+                    );
+                  }}
+                >
+                  {"Replicate Product Options"}
+                </Button>
+              </>
             )}
-
             <Button
-              color="primary"
+              color="secondary"
               variant="contained"
-              onClick={async () => {
-                const confirm = window.confirm("Are you sure you want to generate the product catelog?");
-                if (confirm) {
-                  dispatch(set_loading(true));
-                  await axios.get(`/api/products/facebook_catelog`);
-                  // google_catalog_upload();
-                  dispatch(set_loading(false));
-                }
-              }}
+              startIcon={<LocalOfferIcon />}
+              onClick={() => dispatch(openSalePriceModal())}
             >
-              {"Generate Product Catelog CSV"}
+              {"Apply Product Discount"}
             </Button>
             <Button color="primary" variant="contained" onClick={() => dispatch(open_create_product_modal())}>
               {"Create Product"}
@@ -201,7 +203,9 @@ const ProductsPage = () => {
       />
       <EditProductModal />
       <ProductOptionsGeneratorModal />
+      <SalePriceModal />
     </Container>
   );
 };
+
 export default ProductsPage;

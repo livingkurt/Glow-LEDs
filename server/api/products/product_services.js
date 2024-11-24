@@ -8,7 +8,6 @@ import {
   diminish_single_glove_stock,
   normalizeProductFilters,
   normalizeProductSearch,
-  transformProducts,
   generateProductOptionsProducts,
   handleTagFiltering,
   handleCategoryFiltering,
@@ -16,13 +15,12 @@ import {
   getOurPicks,
   sortProducts,
   handleMicrolightFiltering,
+  applyProductSales,
+  clearProductSales,
 } from "./product_helpers.js";
 import { categories, determine_filter, snake_case, subcategories } from "../../utils/util.js";
 import { getFilteredData } from "../api_helpers.js";
 import Ticket from "../tickets/ticket.js";
-
-import fs from "fs";
-import Papa from "papaparse";
 
 export default {
   findAll_products_s: async query => {
@@ -261,64 +259,72 @@ export default {
   },
   check_stock_products_s: async body => {
     const { cartItems } = body;
-    const outOfStockItems = []; // Store details of out-of-stock items
-    try {
-      for (const item of cartItems) {
-        if (item.itemType === "product") {
-          const product = await Product.findOne({ _id: item.product, deleted: false }).populate("option_products");
-          if (!product) {
-            // If the main product doesn't exist
-            outOfStockItems.push({ id: item.product, name: "Unknown Product", itemType: "product" });
-            continue;
-          }
+    const outOfStockItems = [];
 
-          let isOutOfStock = product.finite_stock && product.count_in_stock < item.quantity;
-          let optionProductOutOfStock = false;
-          let optionProductId = null; // Placeholder for the option product ID
+    for (const item of cartItems) {
+      if (item.itemType === "product") {
+        const product = await Product.findOne({ _id: item.product, deleted: false });
+        if (!product) {
+          outOfStockItems.push({ id: item.product, name: "Unknown Product", itemType: "product" });
+          continue;
+        }
 
-          // Check if the product is an option product and has other option products related
-          if (!isOutOfStock && product.option_products && product.option_products.length > 0) {
-            // Assuming `size` in cartItems corresponds to a property in option products to find the specific option
-            const optionProduct = product.option_products.find(op => op.size === item.size && op.deleted === false);
-            if (optionProduct && optionProduct.finite_stock && optionProduct.count_in_stock < item.quantity) {
-              isOutOfStock = true;
-              optionProductOutOfStock = true;
-              optionProductId = optionProduct._id; // Capture the option product's unique ID
+        let isOutOfStock = product.finite_stock && product.count_in_stock < item.quantity;
+
+        // Check selected options for stock/availability
+        if (!isOutOfStock && item.selectedOptions?.length > 0) {
+          for (const selectedOption of item.selectedOptions) {
+            const option = product.options.find(opt =>
+              opt.values.some(val => val._id.toString() === selectedOption._id.toString())
+            );
+
+            if (option) {
+              const optionValue = option.values.find(val => val._id.toString() === selectedOption._id.toString());
+
+              // If this option value links to another product, check its stock
+              if (optionValue?.product) {
+                const linkedProduct = await Product.findOne({ _id: optionValue.product, deleted: false });
+                if (linkedProduct?.finite_stock && linkedProduct.count_in_stock < item.quantity) {
+                  isOutOfStock = true;
+                  outOfStockItems.push({
+                    id: item.product,
+                    optionId: optionValue.product,
+                    name: product.name,
+                    option: `${option.name}: ${optionValue.name}`,
+                    itemType: "product",
+                  });
+                }
+              }
             }
           }
+        }
 
-          if (isOutOfStock) {
-            // Include product name along with the ID, and now also include the option product ID if applicable
-            outOfStockItems.push({
-              id: item.product,
-              optionId: optionProductId, // Include this in the response
-              name: product.name,
-              option: optionProductOutOfStock ? `Size: ${item.size}` : "",
-              itemType: "product",
-            });
-          }
-        } else if (item.itemType === "ticket") {
-          const ticket = await Ticket.findOne({ _id: item.ticket, deleted: false });
-          if (!ticket) {
-            outOfStockItems.push({ id: item.ticket, name: "Unknown Ticket", itemType: "ticket" });
-            continue;
-          }
-          // Add ticket availability check logic here
-          // For example, if tickets have a limited quantity:
-          if (ticket.count_in_stock < item.quantity) {
-            outOfStockItems.push({
-              id: item.ticket,
-              name: ticket.title,
-              itemType: "ticket",
-              count_in_stock: ticket.count_in_stock,
-            });
-          }
+        if (isOutOfStock && !outOfStockItems.find(i => i.id === item.product)) {
+          outOfStockItems.push({
+            id: item.product,
+            name: product.name,
+            itemType: "product",
+          });
+        }
+      } else if (item.itemType === "ticket") {
+        const ticket = await Ticket.findOne({ _id: item.ticket, deleted: false });
+        if (!ticket) {
+          outOfStockItems.push({ id: item.ticket, name: "Unknown Ticket", itemType: "ticket" });
+          continue;
+        }
+        // Add ticket availability check logic here
+        // For example, if tickets have a limited quantity:
+        if (ticket.count_in_stock < item.quantity) {
+          outOfStockItems.push({
+            id: item.ticket,
+            name: ticket.title,
+            itemType: "ticket",
+            count_in_stock: ticket.count_in_stock,
+          });
         }
       }
-      return outOfStockItems; // Return the details of out of stock items
-    } catch (error) {
-      throw error;
     }
+    return outOfStockItems; // Return the details of out of stock items
   },
 
   create_products_s: async body => {
@@ -649,47 +655,6 @@ export default {
       }
     }
   },
-  image_upload_products_s: async req => {
-    // or you can use
-    const formData = new FormData(req);
-    // const { images, album_title } = body;
-    // try {
-    //   const options = {
-    //     auth_cookie: config.IMGBOX_AUTH_COOKIE,
-    //     album_title: album_title,
-    //     content_type: "safe",
-    //     thumbnail_size: "800r",
-    //     comments_enabled: false,
-    //     logger: true
-    //   };
-
-    //   const send = await imgbox(images, options);
-    // } catch (error) {
-    //   if (error instanceof Error) {
-    //     throw new Error(error.message);
-    //   }
-    // }
-    return "Success";
-  },
-  // compress_images_products_s: async (body) => {
-  //   try {
-  //     //
-  //     const { images } = body;
-
-  //     sharp(images[0].data_url)
-  //       .jpeg({ progressive: true, force: false })
-  //       .toFile(
-  //         __dirname + "/Desktop/" + images[0].file.name + "-optimized.jpg"
-  //       );
-
-  //     return "Success";
-  //   } catch (error) {
-  //
-  // //     if (error instanceof Error) {
-  //             throw new Error(error.message);
-  //           }
-  //   }
-  // },
   remove_multiple_products_s: async body => {
     try {
       return await product_db.remove_multiple_products_db(body.ids);
@@ -699,9 +664,53 @@ export default {
       }
     }
   },
-  current_stock_products_s: async () => {
+  apply_sale_products_s: async body => {
     try {
-      return await product_db.current_stock_products_db();
+      const {
+        discountType: discountTypeObj, // Rename to clarify it's an object
+        discountValue,
+        startDate,
+        endDate,
+        applyToOptions,
+        selectedTags,
+        applyToAll,
+        clear,
+      } = body;
+
+      // Extract the value from the discountType object
+      const discountType = discountTypeObj?.value || discountTypeObj;
+
+      let query = {};
+
+      if (clear) {
+        query = { sale: { $exists: true } };
+        const products = await Product.find(query);
+        const count = await clearProductSales(products, applyToOptions);
+        return { success: true, count };
+      }
+
+      if (!discountType || !discountValue || isNaN(discountValue) || discountValue <= 0) {
+        throw new Error("Invalid discount value");
+      }
+
+      if (!applyToAll && selectedTags?.length > 0) {
+        query.tags = { $in: selectedTags };
+      }
+
+      // Add query to exclude option products from main query
+      query.isVariation = { $ne: true };
+
+      const products = await Product.find(query);
+      console.log(`Found ${products.length} main products to update`);
+
+      const count = await applyProductSales(products, {
+        discountType,
+        discountValue,
+        startDate,
+        endDate,
+        applyToOptions,
+      });
+      return { success: true, count };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -709,138 +718,9 @@ export default {
     }
   },
 
-  facebook_catelog_products_s: async params => {
+  current_stock_products_s: async () => {
     try {
-      const products = await Product.find({ hidden: false, deleted: false, option: false })
-        .sort({ order: 1 })
-        .populate("images")
-        .populate("color_images")
-        .populate("secondary_color_images")
-        .populate("option_images")
-        .populate("secondary_images")
-        .populate("microlights")
-        .populate("products")
-        .populate({
-          path: "color_products",
-          populate: [
-            {
-              path: "filament",
-            },
-            {
-              path: "images",
-            },
-            {
-              path: "categorys",
-            },
-            {
-              path: "subcategorys",
-            },
-            // {
-            //   path: "collections",
-            // },
-          ],
-        })
-        .populate({
-          path: "secondary_color_products",
-          populate: [
-            {
-              path: "filament",
-            },
-            {
-              path: "images",
-            },
-            {
-              path: "categorys",
-            },
-            {
-              path: "subcategorys",
-            },
-            // {
-            //   path: "collections",
-            // },
-          ],
-        })
-        .populate({
-          path: "option_products",
-          populate: [
-            {
-              path: "filament",
-            },
-            {
-              path: "images",
-            },
-            {
-              path: "categorys",
-            },
-            {
-              path: "subcategorys",
-            },
-            // {
-            //   path: "collections",
-            // },
-          ],
-        })
-        .populate("filament")
-        .populate({
-          path: "secondary_products",
-          populate: [
-            {
-              path: "filament",
-            },
-            {
-              path: "images",
-            },
-            {
-              path: "categorys",
-            },
-            {
-              path: "subcategorys",
-            },
-            // {
-            //   path: "collections",
-            // },
-
-            {
-              path: "color_products",
-              populate: {
-                path: "filament",
-              },
-            },
-            {
-              path: "secondary_color_products",
-              populate: {
-                path: "filament",
-              },
-            },
-            {
-              path: "option_products",
-              populate: {
-                path: "filament",
-              },
-            },
-            {
-              path: "secondary_color_products",
-              populate: {
-                path: "filament",
-              },
-            },
-          ],
-        })
-        .populate("categorys")
-        .populate("subcategorys")
-        // .populate("collections")
-        .populate("contributors");
-
-      const transformedProducts = transformProducts(products);
-
-      const csv = Papa.unparse(transformedProducts);
-
-      const csvFileName = "./client/public/facebook_product_catalog.csv";
-      fs.writeFile(csvFileName, csv, err => {
-        if (err) throw err;
-        console.log("CSV file has been saved.");
-      });
-      return transformedProducts;
+      return await product_db.current_stock_products_db();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

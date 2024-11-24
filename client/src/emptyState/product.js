@@ -27,9 +27,11 @@ export const product = {
   numReviews: 0,
   reviews: [],
   hidden: false,
-  sale_price: 0,
-  sale_start_date: "",
-  sale_end_date: "",
+  sale: {
+    price: 0,
+    start_date: "",
+    end_date: "",
+  },
   deleted: false,
   preorder: false,
   pathname: "",
@@ -89,7 +91,6 @@ export const product = {
 
   option_product_group: false,
   option_group_name: "",
-  option_products: [],
   color: "",
   color_code: "",
   size: "",

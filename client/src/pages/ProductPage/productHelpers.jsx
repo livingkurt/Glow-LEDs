@@ -19,10 +19,27 @@ export const getRelevantOptions = (options = [], isAddonChecked) => {
 };
 
 export const updatePrice = (state, additionalCost) => {
+  // Update regular price
   const newPrice = Number(state.product.price + additionalCost).toFixed(2);
   state.customizedProduct.price = newPrice;
-};
 
+  // Check if there's an active sale
+  const today = new Date();
+  const isSaleActive =
+    state.product.sale?.price &&
+    state.product.sale?.start_date &&
+    state.product.sale?.end_date &&
+    today >= new Date(state.product.sale?.start_date) &&
+    today <= new Date(state.product.sale?.end_date);
+
+  // Update sale price if there's an active sale
+  if (isSaleActive) {
+    state.customizedProduct.sale = {
+      ...state.product.sale,
+      price: Number(state.product.sale.price + additionalCost).toFixed(2),
+    };
+  }
+};
 export const calculateAdditionalCost = selectedOptions => {
   const total = selectedOptions.reduce((total, option) => total + (option?.additionalCost || 0), 0);
   return Number(total.toFixed(2));
@@ -92,13 +109,13 @@ export const updateProductDetailsFromOption = (state, selectedOption, option, fr
   if (product?.previous_price > 0) {
     state.customizedProduct.previous_price = product.previous_price;
   }
-  if (product?.sale.sale_start_date) {
-    state.customizedProduct.sale_start_date = product.sale.sale_start_date;
+  if (product?.sale) {
+    state.customizedProduct.sale = {
+      price: product.sale.price || 0,
+      start_date: product.sale.start_date || null,
+      end_date: product.sale.end_date || null,
+    };
   }
-  if (product?.sale.sale_end_date) {
-    state.customizedProduct.sale_end_date = product.sale.sale_end_date;
-  }
-
   if (product?.wholesale_product) {
     state.customizedProduct.wholesale_product = product.wholesale_product;
   }
@@ -112,9 +129,6 @@ export const updateProductDetailsFromOption = (state, selectedOption, option, fr
       state.customizedProduct.originalPrice = product.price;
     }
 
-    if (product?.sale.sale_price > 0) {
-      state.customizedProduct.sale_price = product.sale.sale_price;
-    }
     if (product?.wholesale_price > 0) {
       state.customizedProduct.wholesale_price = product.wholesale_price;
     }
@@ -122,6 +136,8 @@ export const updateProductDetailsFromOption = (state, selectedOption, option, fr
 };
 
 export const handlePriceReplacement = (state, option, selectedOption) => {
+  const additionalCost = calculateAdditionalCost(state.customizedProduct.selectedOptions);
+
   // Find any selected option that has replacePrice: true
   const priceReplacingOption = state.customizedProduct.currentOptions?.find((opt, index) => {
     if (opt.replacePrice) {
@@ -133,23 +149,39 @@ export const handlePriceReplacement = (state, option, selectedOption) => {
 
   if (option?.replacePrice) {
     // This is a price-replacing option being selected
-    state.customizedProduct.price = selectedOption?.product?.price;
+    const basePrice = selectedOption?.product?.price;
+    state.customizedProduct.price = Number(basePrice + additionalCost).toFixed(2);
     state.customizedProduct.previousPriceWithAddOn = state?.customizedProduct?.price;
+
+    // Update sale information with additional cost
+    if (selectedOption?.product?.sale) {
+      state.customizedProduct.sale = {
+        ...selectedOption.product.sale,
+        price: Number(selectedOption.product.sale.price + additionalCost).toFixed(2),
+      };
+    }
   } else if (priceReplacingOption) {
     // Another option changed, but we have a price-replacing option selected
-    // Find its current selection
     const index = state.customizedProduct.currentOptions.indexOf(priceReplacingOption);
     const selection = state.customizedProduct.selectedOptions[index];
     if (selection?.product?.price) {
-      state.customizedProduct.price = selection.product.price;
-      state.customizedProduct.previousPriceWithAddOn = selection.product.price;
+      const basePrice = selection.product.price;
+      state.customizedProduct.price = Number(basePrice + additionalCost).toFixed(2);
+      state.customizedProduct.previousPriceWithAddOn = state.customizedProduct.price;
+
+      // Update sale information with additional cost
+      if (selection?.product?.sale) {
+        state.customizedProduct.sale = {
+          ...selection.product.sale,
+          price: Number(selection.product.sale.price + additionalCost).toFixed(2),
+        };
+      }
     }
   } else {
     // No price-replacing options selected, use normal price calculation
     if (!state.customizedProduct.previousPriceWithAddOn) {
       state.customizedProduct.previousPriceWithAddOn = state.product.price;
     }
-    const additionalCost = calculateAdditionalCost(state.customizedProduct.selectedOptions);
     updatePrice(state, additionalCost);
   }
 };

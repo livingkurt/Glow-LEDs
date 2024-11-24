@@ -305,13 +305,14 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  facebook_catelog_products_c: async (req, res) => {
+  apply_sale_products_c: async (req, res) => {
+    const { body } = req;
     try {
-      const product = await product_services.facebook_catelog_products_s();
-      if (product) {
-        return res.status(201).send(product);
+      const result = await product_services.apply_sale_products_s(body);
+      if (result) {
+        return res.status(200).send(result);
       }
-      return res.status(500).send({ message: "Error Finding Product Attributes" });
+      return res.status(500).send({ message: "Error Applying Sale" });
     } catch (error) {
       res.status(500).send({ error, message: error.message });
     }

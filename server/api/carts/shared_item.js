@@ -18,9 +18,11 @@ export const sharedItemSchema = {
   selectedOptions: [optionValueSchema],
   tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
   pathname: { type: String },
-  sale_price: { type: Number },
-  sale_start_date: { type: Date },
-  sale_end_date: { type: Date },
+  sale: {
+    price: { type: Number },
+    start_date: { type: Date },
+    end_date: { type: Date },
+  },
   dimensions: {
     weight_pounds: { type: Number },
     weight_ounces: { type: Number },

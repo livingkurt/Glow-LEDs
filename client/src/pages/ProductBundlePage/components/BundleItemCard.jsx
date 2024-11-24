@@ -5,17 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { Add } from "@mui/icons-material";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
-import { sale_price_switch } from "../../../utils/react_helper_functions";
 import * as API from "../../../api";
 import { useNavigate } from "react-router-dom";
 import { setPromoCode } from "../../../utils/helpers/universal_helpers";
 import BundleOptionsModal from "./BundleOptionsModal";
+import GLPrice from "../../../shared/GlowLEDsComponents/GLPrice/GLPrice";
 
 const BundleItemCard = ({ item, bundle }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const my_cart = useSelector(state => state.carts.cartPage.my_cart);
-  const { current_user } = useSelector(state => state.users.userPage);
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false);
 
   const handleQuickAdd = () => {
@@ -72,12 +71,7 @@ const BundleItemCard = ({ item, bundle }) => {
             )}
             <Typography variant="h6">
               {"Price: "}
-              {sale_price_switch({
-                product: item,
-                cartItem: false,
-                background: "dark",
-                isWholesaler: current_user?.isWholesaler,
-              })}
+              <GLPrice product={item} />
             </Typography>
             {item.product.short_description && (
               <Typography variant="body2" color="text.secondary_light" paragraph>

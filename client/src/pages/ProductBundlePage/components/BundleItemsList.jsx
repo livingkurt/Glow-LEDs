@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Box, Typography, Divider, ListItem } from "@mui/material";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import { sale_price_switch } from "../../../utils/react_helper_functions";
 import * as API from "../../../api";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import { Add } from "@mui/icons-material";
 import { setPromoCode } from "../../../utils/helpers/universal_helpers";
 import BundleOptionsModal from "./BundleOptionsModal";
+import GLPrice from "../../../shared/GlowLEDsComponents/GLPrice/GLPrice";
 
 const BundleItemsList = ({ item, idx, bundle }) => {
   const dispatch = useDispatch();
@@ -49,12 +49,7 @@ const BundleItemsList = ({ item, idx, bundle }) => {
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <Typography variant="body1">
-            {sale_price_switch({
-              product: item,
-              cartItem: false,
-              background: "dark",
-              isWholesaler: current_user?.isWholesaler,
-            })}
+            <GLPrice product={item} />
           </Typography>
           <GLButtonV2 variant="contained" color="primary" onClick={handleQuickAdd} sx={{ whiteSpace: "nowrap" }}>
             <Add /> {"Add to Cart"}
