@@ -15,16 +15,12 @@ import {
   getOurPicks,
   sortProducts,
   handleMicrolightFiltering,
-  calculateSalePrice,
   applyProductSales,
   clearProductSales,
 } from "./product_helpers.js";
 import { categories, determine_filter, snake_case, subcategories } from "../../utils/util.js";
 import { getFilteredData } from "../api_helpers.js";
 import Ticket from "../tickets/ticket.js";
-
-import fs from "fs";
-import Papa from "papaparse";
 
 export default {
   findAll_products_s: async query => {
@@ -683,17 +679,6 @@ export default {
 
       // Extract the value from the discountType object
       const discountType = discountTypeObj?.value || discountTypeObj;
-
-      console.log({
-        discountType, // Log the extracted value
-        discountValue,
-        startDate,
-        endDate,
-        applyToOptions,
-        selectedTags,
-        applyToAll,
-        clear,
-      });
 
       let query = {};
 

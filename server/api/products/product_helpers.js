@@ -492,7 +492,7 @@ export const handleMicrolightFiltering = async microlightPathname => {
 export const calculateSalePrice = (price, discountType, discountValue) => {
   if (discountType === "percentage") {
     const discount = parseFloat(discountValue) / 100;
-    return Math.round(price * (1 - discount) * 100) / 100;
+    return Math.round(price * (1 - discount) * 100) / 100; // This rounding can cause slight discrepancies
   }
   return Math.round((price - parseFloat(discountValue)) * 100) / 100;
 };

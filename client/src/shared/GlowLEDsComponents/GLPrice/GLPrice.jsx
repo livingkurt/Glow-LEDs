@@ -12,7 +12,8 @@ const GLPrice = ({ product }) => {
 
   const calculateDiscount = (currentPrice, originalPrice) => {
     if (!currentPrice || !originalPrice) return null;
-    return (100 * (1 - parseInt(currentPrice, 10) / parseInt(originalPrice, 10))).toFixed(0);
+    // Use parseFloat instead of parseInt to maintain decimal precision
+    return (100 * (1 - parseFloat(currentPrice) / parseFloat(originalPrice))).toFixed(0);
   };
 
   if (!product) return null;

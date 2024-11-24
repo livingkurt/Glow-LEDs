@@ -188,7 +188,7 @@ const ProductsPage = () => {
               </>
             )}
             <Button
-              color="primary"
+              color="secondary"
               variant="contained"
               startIcon={<LocalOfferIcon />}
               onClick={() => dispatch(openSalePriceModal())}
