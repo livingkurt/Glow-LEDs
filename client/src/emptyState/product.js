@@ -1,10 +1,6 @@
 export const product = {
   name: "",
   images: [],
-  color_images: [],
-  secondary_color_images: [],
-  option_images: [],
-  secondary_images: [],
   video: "",
   brand: "",
   price: 0,
