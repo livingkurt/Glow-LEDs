@@ -30,51 +30,11 @@ import {
 import { Checkbox, FormControlLabel, Paper } from "@mui/material";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { isRequired, validateSection } from "../placeOrderHelpers";
-import { makeStyles } from "@mui/styles";
 import { fullName } from "../../UsersPage/usersHelpers";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { Info } from "@mui/icons-material";
 
-// const useStyles = makeStyles(theme => ({
-//   // input: {
-//   //   backgroundColor: "white",
-//   //   color: "black",
-//   // },
-//   // label: {},
-//   input: {
-//     backgroundColor: "transparent",
-//     color: "white",
-//   },
-
-//   helperText: {
-//     color: "white",
-//   },
-//   errorHelperText: {
-//     color: "red", // or any color you prefer for error state
-//   },
-//   outlinedInput: {
-//     "& .MuiOutlinedInput-root": {
-//       "& fieldset": {
-//         borderColor: "white",
-//       },
-//       "&:hover fieldset": {
-//         borderColor: "white",
-//       },
-//       "&.Mui-focused fieldset": {
-//         borderColor: "white",
-//       },
-//     },
-//   },
-//   label: {
-//     color: "white",
-//     "&.Mui-focused": {
-//       color: "white",
-//     },
-//   },
-// }));
-
 const ShippingStep = ({ choose_shipping_rate, next_step }) => {
-  // const classes = useStyles();
   const { width } = useWindowDimensions();
   const all_shipping = useGetAllShippingOrdersQuery();
   const cartPage = useSelector(state => state.carts.cartPage);

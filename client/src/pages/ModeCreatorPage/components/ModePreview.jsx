@@ -1,5 +1,4 @@
-import { Slider, Box, Typography, Grid2, Grid, Link } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Slider, Box, Typography, Grid2, Grid, Link, styled } from "@mui/material";
 import { useModePreview } from "./useModePreview";
 import { getSliderProps } from "../modeCreatorPageHelpers";
 

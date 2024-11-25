@@ -1,8 +1,7 @@
 import { useRef, useState } from "react";
-import { styled } from "@mui/material/styles";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import GLPopper from "../../GLPopper/GLPopper";
-import { Paper, List, ListItem, ListItemText, Typography } from "@mui/material";
+import { Paper, List, ListItem, ListItemText, Typography, styled } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import GLIconButton from "../../GLIconButton/GLIconButton";
 

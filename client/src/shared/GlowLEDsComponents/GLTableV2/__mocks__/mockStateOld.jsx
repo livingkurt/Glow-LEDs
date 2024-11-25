@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { tagKeyMatchFull } from "covalent/MaterialUI/TagInput/tagRegex";
+import { tagKeyMatchFull } from "gl/MaterialUI/TagInput/tagRegex";
 import React from "react";
 
 const props = {

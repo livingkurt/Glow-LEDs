@@ -13,6 +13,7 @@ import jestDom from "eslint-plugin-jest-dom";
 import babelEslint from "@babel/eslint-plugin";
 import * as babelParser from "@babel/eslint-parser";
 import importPlugin from "eslint-plugin-import";
+import vitestPlugin from "eslint-plugin-vitest";
 
 export default [
   { ignores: ["dist"] },
@@ -62,6 +63,7 @@ export default [
       "testing-library": testingLibrary,
       "jest-dom": jestDom,
       import: importPlugin,
+      vitest: vitestPlugin,
     },
     rules: {
       ...eslintConfigAirbnb.rules,

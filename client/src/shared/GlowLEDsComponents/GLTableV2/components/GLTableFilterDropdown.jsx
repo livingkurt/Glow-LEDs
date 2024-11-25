@@ -143,7 +143,7 @@ const GLTableFilterDropdown = ({
                   <GLTextFieldV2
                     autoFocus
                     InputProps={{
-                      "data-test": "covalent-table-sub-menu-search-input",
+                      "data-test": "gl-table-sub-menu-search-input",
                     }}
                     value={filterSearch}
                     name="filter_search"

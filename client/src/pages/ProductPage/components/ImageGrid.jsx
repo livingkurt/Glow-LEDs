@@ -1,6 +1,5 @@
 import React from "react";
-import { Grid, Typography, Box, Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Grid, Typography, Box, Button, styled } from "@mui/material";
 import { random } from "lodash";
 
 const StyledImage = styled("img")({

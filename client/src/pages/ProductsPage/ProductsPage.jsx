@@ -20,6 +20,7 @@ import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconBut
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import { showConfirm } from "../../slices/snackbarSlice";
+import GLTable from "../../shared/GlowLEDsComponents/GLTable/GLTable";
 
 const ProductsPage = () => {
   const productsPage = useSelector(state => state.products.productsPage);
@@ -130,7 +131,7 @@ const ProductsPage = () => {
         <title>{"Admin Products | Glow LEDs"}</title>
       </Helmet>
 
-      <GLTableV2
+      <GLTable
         remoteApi={remoteApi}
         remoteReorderApi={remoteReorderApi}
         remoteFiltersApi={remoteFiltersApi}

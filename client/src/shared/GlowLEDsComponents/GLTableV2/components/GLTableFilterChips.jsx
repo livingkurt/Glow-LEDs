@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pickBy from "lodash/pickBy";
-import { Chip, Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Chip, Button, styled } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { removeFilter, updateFilterDisplay } from "../actions/actions";
 

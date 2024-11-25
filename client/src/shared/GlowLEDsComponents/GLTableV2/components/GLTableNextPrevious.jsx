@@ -14,7 +14,7 @@ import { updatePage } from "../actions/actions";
 import { pageItems, selectedPage, totalPages } from "../glTableHelpers";
 import GLIconButton from "../../GLIconButton/GLIconButton";
 
-const CovalentTableNextPrevious = ({ count, page, namespace, rowsPerPage }) => {
+const GLTableNextPrevious = ({ count, page, namespace, rowsPerPage }) => {
   const dispatch = useDispatch();
 
   const handleFirstPageButtonClick = () => {
@@ -97,7 +97,7 @@ const CovalentTableNextPrevious = ({ count, page, namespace, rowsPerPage }) => {
   );
 };
 
-CovalentTableNextPrevious.propTypes = {
+GLTableNextPrevious.propTypes = {
   count: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
@@ -105,4 +105,4 @@ CovalentTableNextPrevious.propTypes = {
   namespace: PropTypes.string.isRequired,
 };
 
-export default CovalentTableNextPrevious;
+export default GLTableNextPrevious;

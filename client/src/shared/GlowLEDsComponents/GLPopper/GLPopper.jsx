@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Grow, Paper, Popper as MuiPopper } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Grow, Paper, Popper as MuiPopper, styled } from "@mui/material";
 
 const StyledPopper = styled(MuiPopper)(({ theme }) => ({
   zIndex: 2000,

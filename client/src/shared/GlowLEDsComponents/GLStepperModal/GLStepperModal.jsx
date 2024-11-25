@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Box, Divider, Step, StepLabel, Stepper } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Box, Divider, Step, StepLabel, Stepper, styled } from "@mui/material";
 import GLActionModal from "../GLActionModal/GLActionModal";
 
 const StyledStepper = styled(Stepper)(({ theme }) => ({

@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import { useDispatch } from "react-redux";
 import { updatePageSize } from "../actions/actions";
 import { getDisplayedRowsInfo } from "../glTableHelpers";
-import CovalentTableNextPrevious from "./GLTableNextPrevious";
+import GLTableNextPrevious from "./GLTableNextPrevious";
 import { Divider } from "@mui/material";
 import useContainerDimensions from "../../../Hooks/useContainerDimensions";
 
@@ -60,7 +60,7 @@ const GLTablePagination = ({ count, page, namespace, rowsPerPage, location }) =>
           />
         </Box>
         {width > 632 && (
-          <CovalentTableNextPrevious
+          <GLTableNextPrevious
             page={page}
             rowsPerPage={rowsPerPage}
             count={count}
@@ -86,7 +86,7 @@ const GLTablePagination = ({ count, page, namespace, rowsPerPage, location }) =>
         <>
           <Divider />
           <Box display="flex" justifyContent="center">
-            <CovalentTableNextPrevious
+            <GLTableNextPrevious
               page={page}
               rowsPerPage={rowsPerPage}
               count={count}

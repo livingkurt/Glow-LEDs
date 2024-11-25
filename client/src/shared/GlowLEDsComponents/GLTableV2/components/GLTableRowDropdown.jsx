@@ -1,10 +1,8 @@
-import { styled } from "@mui/material/styles";
-import React from "react";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import PropTypes from "prop-types";
 import { determineHover, tableColors } from "../glTableHelpers";
-import { Checkbox, darken } from "@mui/material";
+import { Checkbox, darken, styled } from "@mui/material";
 
 // Styled Components
 const StyledTableRow = styled(TableRow)(({ theme }) => ({

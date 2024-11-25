@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { useTheme } from "@mui/material/styles";
 import {
   Box,
   Typography,
@@ -17,6 +16,7 @@ import {
   AccordionDetails,
   FormHelperText,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { footerSections, socialIcons } from "./footerHelpers";
@@ -86,7 +86,6 @@ const Footer = () => {
           setIsSubscribed(false);
         }
       } catch (error) {
-
         setEmailError(error.response.data.message);
       }
     }
