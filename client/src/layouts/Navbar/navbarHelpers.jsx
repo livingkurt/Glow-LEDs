@@ -361,36 +361,6 @@ const community = addIdsRecursively({
       name: "Create Mode",
       path: "/modes/creator",
     },
-
-    // {
-    //   name: "Rave Mob",
-    //   path: "/teams/rave_mob",
-    // },
-    // {
-    //   name: "Featured",
-    //   path: "/menu/featured",
-    //   id: "featured_dropdown",
-    //   sideDrawer: {
-    //     drawerItems: [
-    //       {
-    //         name: "Glovers",
-    //         path: "/sponsors",
-    //       },
-    //       {
-    //         name: "Artists",
-    //         path: "/sponsors",
-    //       },
-    //       {
-    //         name: "Producers",
-    //         path: "/teams",
-    //       },
-    //       {
-    //         name: "VFX",
-    //         path: "/teams/category/rave_mob",
-    //       },
-    //     ],
-    //   },
-    // },
   ],
 });
 
@@ -781,13 +751,6 @@ const admin = addIdsRecursively({
       path: "/secure/glow/emails",
       onClick: x => true,
     },
-
-    {
-      name: "Features",
-      path: "/secure/glow/features",
-      onClick: x => true,
-    },
-
     {
       name: "Parcels",
       path: "/secure/glow/parcels",

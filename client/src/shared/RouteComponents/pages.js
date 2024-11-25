@@ -31,8 +31,6 @@ import { ChangePasswordPage, PasswordResetPage, ResetPasswordPage } from "../../
 import { CartPage } from "../../pages/CartPage";
 import { ProductsGridPage } from "../../pages/ProductsGridPage";
 import { ProductPage } from "../../pages/ProductPage";
-import { FeaturesGridPage } from "../../pages/FeaturesGridPage";
-import { FeaturedPage } from "../../pages/FeaturedPage";
 import { SponsorsGridPage } from "../../pages/SponsorsGridPage";
 import { SponsorPage } from "../../pages/SponsorPage";
 import { TeamsGridPage } from "../../pages/TeamsGridPage";
@@ -71,8 +69,6 @@ export const Components = {
   CartPage,
   ProductsGridPage,
   ProductPage,
-  FeaturesGridPage,
-  FeaturedPage,
   SponsorsGridPage,
   SponsorPage,
   TeamsGridPage,
