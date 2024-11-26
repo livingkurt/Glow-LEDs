@@ -1,16 +1,4 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  FormControlLabel,
-  Checkbox,
-  Box,
-  Typography,
-} from "@mui/material";
 import * as API from "../../../api";
 import { closeSalePriceModal, setSalePriceModalData } from "../productsPageSlice";
 import { useTagsQuery } from "../../../api/allRecordsApi";
@@ -43,9 +31,11 @@ const SalePriceModal = () => {
         )
       }
       onAction={() => dispatch(API.applySale({ clear: true }))}
+      actionColor="secondary"
+      cancelColor="secondary"
       confirmLabel="Apply Sale"
       cancelLabel="Cancel"
-      actionLabel="Clear"
+      actionLabel="Clear Sale"
       confirmDisabled={!isValid}
     >
       <GLForm

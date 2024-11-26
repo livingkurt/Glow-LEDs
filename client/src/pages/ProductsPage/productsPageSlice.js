@@ -39,12 +39,13 @@ const productsPage = createSlice({
     ourPicksProducts: [],
     salePriceModal: {
       isOpen: false,
-      discountType: "percentage",
-      discountValue: "",
-      startDate: "",
-      endDate: "",
+      discountType: { value: "percentage", label: "Percentage Off" },
+      discountValue: "20",
+      startDate: new Date(new Date().setDate(new Date().getDate() - 1)),
+      endDate: new Date(new Date().setDate(new Date().getDate() + 7)),
       applyToOptions: true,
       selectedTags: [],
+      exactTags: [],
       applyToAll: false,
     },
   },
@@ -95,11 +96,12 @@ const productsPage = createSlice({
     },
     closeSalePriceModal: state => {
       state.salePriceModal.isOpen = false;
-      state.salePriceModal.discountType = "percentage";
-      state.salePriceModal.discountValue = "";
-      state.salePriceModal.startDate = "";
-      state.salePriceModal.endDate = "";
+      state.salePriceModal.discountType = { value: "percentage", label: "Percentage Off" };
+      state.salePriceModal.discountValue = "20";
+      state.salePriceModal.startDate = new Date(new Date().setDate(new Date().getDate() - 1));
+      state.salePriceModal.endDate = new Date(new Date().setDate(new Date().getDate() + 7));
       state.salePriceModal.applyToOptions = true;
+      state.salePriceModal.exactTags = false;
       state.salePriceModal.selectedTags = [];
       state.salePriceModal.applyToAll = false;
     },
