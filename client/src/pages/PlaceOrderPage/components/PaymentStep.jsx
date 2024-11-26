@@ -26,7 +26,7 @@ import { determineItemsTotal } from "../../../utils/helper_functions";
 import * as API from "../../../api";
 import { useNavigate } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
-import { getHasPreOrderItems, getPreOrderReleaseDate } from "../placeOrderHelpers";
+import { getHasPreOrderItems, getPreOrderReleaseDate, hasActiveSaleItems } from "../placeOrderHelpers";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import { Sell } from "@mui/icons-material";
 
@@ -52,7 +52,6 @@ const PaymentStep = () => {
     promo_code_validations,
     create_account,
     password_validations,
-
     previousShippingPrice,
     shipment_id,
     shipping_rate,
@@ -81,6 +80,7 @@ const PaymentStep = () => {
 
   const hasPreOrderItems = getHasPreOrderItems(cartItems);
   const preOrderReleaseDate = getPreOrderReleaseDate(cartItems);
+  const hasSaleItems = hasActiveSaleItems(cartItems);
 
   const check_code = async e => {
     e.preventDefault();
@@ -290,7 +290,7 @@ const PaymentStep = () => {
                 />
               </div>
             )}
-            {show_promo_code && (
+            {show_promo_code && !hasSaleItems && (
               <div>
                 {show_promo_code_input_box && (
                   <div className="mv-10px">
@@ -356,6 +356,15 @@ const PaymentStep = () => {
                     </Box>
                   </div>
                 )}
+              </div>
+            )}
+            {hasSaleItems && (
+              <div className="mv-10px">
+                <Typography variant="body1" color="warning.main">
+                  {
+                    "Promo codes cannot be used during sales events. However, affiliate codes will still be credited for the order."
+                  }
+                </Typography>
               </div>
             )}
             <li>
