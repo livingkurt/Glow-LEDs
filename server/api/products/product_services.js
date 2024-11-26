@@ -674,6 +674,7 @@ export default {
         applyToOptions,
         selectedTags,
         applyToAll,
+        exactTags,
         clear,
       } = body;
 
@@ -693,8 +694,12 @@ export default {
         throw new Error("Invalid discount value");
       }
 
-      if (!applyToAll && selectedTags?.length > 0) {
+      if (!applyToAll && selectedTags?.length > 0 && !exactTags) {
         query.tags = { $in: selectedTags };
+      }
+
+      if (!applyToAll && selectedTags?.length > 0 && exactTags) {
+        query.tags = { $all: selectedTags };
       }
 
       // Add query to exclude option products from main query
@@ -709,6 +714,7 @@ export default {
         startDate,
         endDate,
         applyToOptions,
+        exactTags,
       });
       return { success: true, count };
     } catch (error) {

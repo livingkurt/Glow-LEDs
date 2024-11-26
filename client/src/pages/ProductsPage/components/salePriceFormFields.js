@@ -24,9 +24,14 @@ export const salePriceFormFields = ({ tags = [] }) => ({
     type: "checkbox",
     label: "Apply discount to product options",
   },
+
   applyToAll: {
     type: "checkbox",
     label: "Apply to All Products",
+  },
+  exactTags: {
+    type: "checkbox",
+    label: "Apply to Exact Tags",
   },
   selectedTags: {
     type: "autocomplete_multiple",
