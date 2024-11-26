@@ -266,3 +266,15 @@ export const isOrderComplete = ({ orderIds, orderCompleted }) => {
 export const getHasPreOrderItems = cartItems => cartItems.some(item => item.isPreOrder);
 export const getHasNonPreOrderItems = cartItems => cartItems.some(item => !item.isPreOrder);
 export const getPreOrderReleaseDate = cartItems => cartItems.find(item => item.isPreOrder)?.preOrderReleaseDate;
+
+// New helper function to check if any items in the cart have active sales
+export const hasActiveSaleItems = cartItems => {
+  const today = new Date();
+  return cartItems.some(
+    item =>
+      item.sale &&
+      today >= new Date(item.sale.start_date) &&
+      today <= new Date(item.sale.end_date) &&
+      item.sale.price !== 0
+  );
+};

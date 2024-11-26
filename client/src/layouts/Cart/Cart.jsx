@@ -18,6 +18,7 @@ import {
   openCreateProductBundleModal,
   setProductBundle,
 } from "../../slices/affiliateSlice";
+import { hasActiveSaleItems } from "../../pages/PlaceOrderPage/placeOrderHelpers";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -44,6 +45,8 @@ const Cart = () => {
     () => determine_wholesale_proceed(current_user, cartItems),
     [current_user, cartItems]
   );
+
+  const hasSaleItems = hasActiveSaleItems(cartItems);
 
   const formFields = {
     title: { label: "Title", type: "text" },
@@ -147,11 +150,21 @@ const Cart = () => {
           </Box>
           {sessionStorage.getItem("promo_code") && (
             <Box sx={{ mb: 2 }} display="flex" alignItems="center" justifyContent="space-between" gap={2}>
-              <Typography variant="body2">{"Promo code applied at checkout"}</Typography>
-              <Box sx={{ mb: 2 }} display="flex" alignItems="center" justifyContent="space-between" gap={1}>
-                <Sell />
-                <Typography variant="body2">{sessionStorage.getItem("promo_code").toUpperCase()}</Typography>
-              </Box>
+              {hasSaleItems ? (
+                <Typography variant="body2">
+                  {
+                    "Promo codes cannot be used during sales events. However, affiliate codes will still be credited for the order."
+                  }
+                </Typography>
+              ) : (
+                <Typography variant="body2">{"Promo code applied at checkout"}</Typography>
+              )}
+              {!hasSaleItems && (
+                <Box sx={{ mb: 2 }} display="flex" alignItems="center" justifyContent="space-between" gap={1}>
+                  <Sell />
+                  <Typography variant="body2">{sessionStorage.getItem("promo_code").toUpperCase()}</Typography>
+                </Box>
+              )}
             </Box>
           )}
           <Typography variant="body2" sx={{ mb: 2 }}>

@@ -137,6 +137,7 @@ export const placeOrder = createAsyncThunk(
       sessionStorage.removeItem("shippingAddress");
       sessionStorage.setItem("manualNavigation", "true");
       localStorage.removeItem("cartItems");
+      sessionStorage.removeItem("promo_code");
       return data;
     } catch (error) {
       dispatch(showError({ message: errorMessage(error), duration: 10000 }));

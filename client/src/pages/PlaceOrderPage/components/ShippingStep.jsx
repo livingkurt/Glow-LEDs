@@ -40,7 +40,7 @@ import {
 import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
-import { getHasNonPreOrderItems, getHasPreOrderItems } from "../placeOrderHelpers";
+import { getHasNonPreOrderItems, getHasPreOrderItems, hasActiveSaleItems } from "../placeOrderHelpers";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 
 const ShippingStep = () => {
@@ -208,16 +208,20 @@ const ShippingStep = () => {
         API.validatePromoCode({ promo_code: promo_code_storage.toUpperCase(), current_user, cartItems, shipping })
       );
 
+      const hasSaleItems = hasActiveSaleItems(cartItems);
+
       if (request.payload.isValid) {
-        dispatch(
-          activatePromo({
-            cartItems,
-            tax_rate,
-            activePromoCodeIndicator,
-            current_user,
-            validPromo: request.payload.promo,
-          })
-        );
+        if (!hasSaleItems) {
+          dispatch(
+            activatePromo({
+              cartItems,
+              tax_rate,
+              activePromoCodeIndicator,
+              current_user,
+              validPromo: request.payload.promo,
+            })
+          );
+        }
       } else {
         dispatch(set_promo_code_validations(request.payload.errors.promo_code));
         dispatch(set_promo_code(""));

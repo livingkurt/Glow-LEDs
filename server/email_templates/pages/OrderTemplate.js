@@ -253,97 +253,114 @@ export default ({ email, order }) => {
 													</tbody>
 												</table>
 												<table style="width:100%;border-spacing:0">
-													<tbody>
-														<tr>
-															<td style="font-family:helvetica;width:30%"></td>
-															<td style="font-family:helvetica">
-																<table style="width:100%;border-spacing:0;margin-top:20px">
-																	<tbody>
-																		<tr>
-																			   ${
-                                           !order.promo_code && !hasActiveSale(order.orderItems)
-                                             ? `
-                                            <tr>
-                                              <td style="font-family:helvetica;padding:5px 0">
-                                                <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
-                                                  <span style="font-size:16px">Subtotal</span>
-                                                </p>
-                                              </td>
-                                              <td style="font-family:helvetica;padding:5px 0;text-align:right">
-                                                <strong style="font-size:16px;color:white">$${order.itemsPrice.toFixed(2)}</strong>
-                                              </td>
-                                            </tr>
+                          <tbody>
+                            <tr>
+                              <td style="font-family:helvetica;width:30%"></td>
+                              <td style="font-family:helvetica">
+                                <table style="width:100%;border-spacing:0;margin-top:20px">
+                                  <tbody>
+                                    ${
+                                      !order.promo_code && !hasActiveSale(order.orderItems)
+                                        ? `
+                                        <tr>
+                                          <td style="font-family:helvetica;padding:5px 0">
+                                            <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                              <span style="font-size:16px">Order Total</span>
+                                            </p>
+                                          </td>
+                                          <td style="font-family:helvetica;padding:5px 0;text-align:right">
+                                            <strong style="font-size:16px;color:white">$${(
+                                              order.itemsPrice +
+                                              order.taxPrice +
+                                              order.shippingPrice +
+                                              (order.serviceFee || 0) +
+                                              (order.tip || 0)
+                                            ).toFixed(2)}</strong>
+                                          </td>
+                                        </tr>
+                                        `
+                                        : `
+                                        <tr>
+                                          <td style="font-family:helvetica;padding:5px 0">
+                                            <del style="color:red">
+                                              <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                                <span style="font-size:16px">Original Order Total</span>
+                                              </p>
+                                            </del>
+                                          </td>
+                                          <td style="font-family:helvetica;padding:5px 0;text-align:right">
+                                            <del style="color:red">
+                                              <strong style="font-size:16px;color:white">$${(
+                                                getItemsTotal(order.orderItems) +
+                                                order.taxPrice +
+                                                (order.previousShippingPrice || order.shippingPrice) +
+                                                (order.serviceFee || 0) +
+                                                (order.tip || 0)
+                                              ).toFixed(2)}</strong>
+                                            </del>
+                                          </td>
+                                        </tr>
+                                        ${
+                                          hasActiveSale(order.orderItems)
+                                            ? `
+                                          <tr>
+                                            <td style="font-family:helvetica;padding:5px 0">
+                                              <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                                <span style="font-size:16px">Sale Discount</span>
+                                              </p>
+                                            </td>
+                                            <td style="font-family:helvetica;padding:5px 0;text-align:right">
+                                              <strong style="font-size:16px;color:white">-$${(
+                                                getItemsTotal(order.orderItems) - getSaleTotal(order.orderItems)
+                                              ).toFixed(2)}</strong>
+                                            </td>
+                                          </tr>
                                           `
-                                             : `
-                                            <tr>
-                                              <td style="font-family:helvetica;padding:5px 0">
-                                                <del style="color:red">
-                                                  <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
-                                                    <span style="font-size:16px">Original Subtotal</span>
-                                                  </p>
-                                                </del>
-                                              </td>
-                                              <td style="font-family:helvetica;padding:5px 0;text-align:right">
-                                                <del style="color:red">
-                                                  <strong style="font-size:16px;color:white">$${getItemsTotal(order.orderItems).toFixed(2)}</strong>
-                                                </del>
-                                              </td>
-                                            </tr>
-                                            ${
-                                              hasActiveSale(order.orderItems)
-                                                ? `
-                                              <tr>
-                                                <td style="font-family:helvetica;padding:5px 0">
-                                                  <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
-                                                    <span style="font-size:16px">Sale Discount</span>
-                                                  </p>
-                                                </td>
-                                                <td style="font-family:helvetica;padding:5px 0;text-align:right">
-                                                  <strong style="font-size:16px;color:white">-$${(
-                                                    getItemsTotal(order.orderItems) - getSaleTotal(order.orderItems)
-                                                  ).toFixed(2)}</strong>
-                                                </td>
-                                              </tr>
-                                            `
-                                                : ""
-                                            }
-                                            ${
-                                              order.promo_code
-                                                ? `
-                                              <tr>
-                                                <td style="font-family:helvetica;padding:5px 0">
-                                                  <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
-                                                    <span style="font-size:16px">Promo Discount</span>
-                                                    <span style="font-size:14px;margin-left:5px">
-                                                      <img src="https://images2.imgbox.com/a1/63/ptqm33q2_o.png"
-                                                        style="height:16px;margin-right:10px" alt="tag_logo" />
-                                                      <span style="font-size:14px;line-height:1.1;margin-left:-4px">
-                                                        ${order.promo_code.toUpperCase()}
-                                                      </span>
-                                                    </span>
-                                                  </p>
-                                                </td>
-                                                <td style="font-family:helvetica;padding:5px 0;text-align:right">
-                                                  <strong style="font-size:16px;color:white">-$${(
-                                                    getSaleTotal(order.orderItems) - order.itemsPrice
-                                                  ).toFixed(2)}</strong>
-                                                </td>
-                                              </tr>
-                                            `
-                                                : ""
-                                            }
-                                            <tr>
-                                              <td style="font-family:helvetica;padding:5px 0">
-                                                <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
-                                                  <span style="font-size:16px">Final Subtotal</span>
-                                                </p>
-                                              </td>
-                                              <td style="font-family:helvetica;padding:5px 0;text-align:right">
-                                                <strong style="font-size:16px;color:white">$${order.itemsPrice.toFixed(2)}</strong>
-                                              </td>
-                                            </tr>
+                                            : ""
+                                        }
+                                        ${
+                                          order.promo_code && !hasActiveSale(order.orderItems)
+                                            ? `
+                                          <tr>
+                                            <td style="font-family:helvetica;padding:5px 0">
+                                              <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                                <span style="font-size:16px">Promo Discount</span>
+                                                <span style="font-size:14px;margin-left:5px">
+                                                  <img src="https://images2.imgbox.com/a1/63/ptqm33q2_o.png"
+                                                    style="height:16px;margin-right:10px" alt="tag_logo" />
+                                                  <span style="font-size:14px;line-height:1.1;margin-left:-4px">
+                                                    ${order.promo_code.toUpperCase()}
+                                                  </span>
+                                                </span>
+                                              </p>
+                                            </td>
+                                            <td style="font-family:helvetica;padding:5px 0;text-align:right">
+                                              <strong style="font-size:16px;color:white">-$${(
+                                                getSaleTotal(order.orderItems) - order.itemsPrice
+                                              ).toFixed(2)}</strong>
+                                            </td>
+                                          </tr>
                                           `
-                                         }
+                                            : ""
+                                        }
+                                        <tr>
+                                          <td style="font-family:helvetica;padding:5px 0">
+                                            <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                              <span style="font-size:16px">Final Order Total</span>
+                                            </p>
+                                          </td>
+                                          <td style="font-family:helvetica;padding:5px 0;text-align:right">
+                                            <strong style="font-size:16px;color:white">$${(
+                                              order.itemsPrice +
+                                              order.taxPrice +
+                                              order.shippingPrice +
+                                              (order.serviceFee || 0) +
+                                              (order.tip || 0)
+                                            ).toFixed(2)}</strong>
+                                          </td>
+                                        </tr>
+                                        `
+                                    }
 														<tr>
 															<td style="font-family:helvetica;padding:5px 0">
 																<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
@@ -431,19 +448,57 @@ export default ({ email, order }) => {
 												</table>
 												${
                           !order.isRefunded
-                            ? `<table
-													style="width:100%;border-spacing:0;margin-top:20px;border-top-width:2px;border-top-color:white;border-top-style:solid">
-													<tbody>
-														<tr>
-															<td style="font-family:helvetica;padding:20px 0 0">
-																<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																		style="font-size:16px">Total</span></p>
-															</td>
-															<td style="font-family:helvetica;padding:20px 0 0" align="right"><strong
-																	style="font-size:24px;color:white">$ ${order.totalPrice ? order.totalPrice?.toFixed(2) : "0.00"}</strong></td>
-														</tr>
-													</tbody>
-												</table>`
+                            ? `<table style="width:100%;border-spacing:0;margin-top:20px;border-top-width:2px;border-top-color:white;border-top-style:solid">
+                                <tbody>
+                                  ${
+                                    hasActiveSale(order.orderItems) || order.promo_code
+                                      ? `
+                                    <tr>
+                                      <td style="font-family:helvetica;padding:20px 0 0">
+                                        <del style="color:red">
+                                          <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                            <span style="font-size:16px">Original Order Total</span>
+                                          </p>
+                                        </del>
+                                      </td>
+                                      <td style="font-family:helvetica;padding:20px 0 0" align="right">
+                                        <del style="color:red">
+                                          <strong style="font-size:16px;color:white">$${(
+                                            getItemsTotal(order.orderItems) +
+                                            order.taxPrice +
+                                            (order.previousShippingPrice || order.shippingPrice) +
+                                            (order.serviceFee || 0) +
+                                            (order.tip || 0)
+                                          ).toFixed(2)}</strong>
+                                        </del>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td style="font-family:helvetica;padding:20px 0 0">
+                                        <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                          <span style="font-size:16px">Final Order Total</span>
+                                        </p>
+                                      </td>
+                                      <td style="font-family:helvetica;padding:20px 0 0" align="right">
+                                        <strong style="font-size:24px;color:white">$${order.totalPrice ? order.totalPrice.toFixed(2) : "0.00"}</strong>
+                                      </td>
+                                    </tr>
+                                  `
+                                      : `
+                                    <tr>
+                                      <td style="font-family:helvetica;padding:20px 0 0">
+                                        <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                          <span style="font-size:16px">Order Total</span>
+                                        </p>
+                                      </td>
+                                      <td style="font-family:helvetica;padding:20px 0 0" align="right">
+                                        <strong style="font-size:24px;color:white">$${order.totalPrice ? order.totalPrice.toFixed(2) : "0.00"}</strong>
+                                      </td>
+                                    </tr>
+                                  `
+                                  }
+                                </tbody>
+                              </table>`
                             : ""
                         }
 												${
@@ -554,7 +609,9 @@ export default ({ email, order }) => {
 								</tr>
 							</tbody>
 						</table>
-						<table
+            ${
+              order?.payment?.payment?.card
+                ? `<table
 							style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: #585858; border-radius: 20px; padding:15px;">
 							<tbody>
 								<tr>
@@ -583,7 +640,9 @@ export default ({ email, order }) => {
 									</td>
 								</tr>
 							</tbody>
-						</table>
+						</table>`
+                : ""
+            }
 					</center>
 				</td>
 			</tr>

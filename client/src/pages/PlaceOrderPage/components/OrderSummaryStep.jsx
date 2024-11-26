@@ -1,9 +1,9 @@
 import React from "react";
 import GLCartItem from "../../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 import { useSelector } from "react-redux";
-import { determineItemsTotal } from "../../../utils/helper_functions";
-import { Tooltip, Typography, useTheme } from "@mui/material";
-import { getHasPreOrderItems } from "../placeOrderHelpers";
+import { determineItemsTotal, formatPrice } from "../../../utils/helper_functions";
+import { Box, Tooltip, Typography, useTheme } from "@mui/material";
+import { getHasPreOrderItems, hasActiveSaleItems } from "../placeOrderHelpers";
 import ShippingPrice from "./ShippingPrice";
 
 const OrderSummaryStep = () => {
@@ -28,6 +28,8 @@ const OrderSummaryStep = () => {
     preOrderShippingPrice,
     nonPreOrderShippingPrice,
     splitOrder,
+    show_payment,
+    payment_completed,
   } = placeOrder;
 
   const hasPreOrderItems = getHasPreOrderItems(cartItems);
@@ -45,7 +47,7 @@ const OrderSummaryStep = () => {
 
   const saleTotal = determineItemsTotal(cartItems, current_user.isWholesaler);
 
-  const hasActiveSale = saleTotal < originalTotal;
+  const hasSaleItems = hasActiveSaleItems(cartItems);
 
   return (
     <div className="place_order-action">
@@ -89,7 +91,7 @@ const OrderSummaryStep = () => {
           </ul>
         </li>
 
-        {!activePromoCodeIndicator && !hasActiveSale && (
+        {!activePromoCodeIndicator && !hasSaleItems && (
           <li>
             <div>{"Subtotal"}</div>
             <div>
@@ -99,22 +101,22 @@ const OrderSummaryStep = () => {
           </li>
         )}
 
-        {(hasActiveSale || activePromoCodeIndicator) && (
+        {(hasSaleItems || activePromoCodeIndicator) && (
           <>
             <li>
               <del style={{ color: "red" }}>
-                <div style={{ color: "white" }}>{"Original Subtotal"}</div>
+                <div style={{ color: "#c5c5c5" }}>{"Original Subtotal"}</div>
               </del>
               <div>
                 <del style={{ color: "red" }}>
-                  <div style={{ color: "white" }}>
+                  <div style={{ color: "#c5c5c5" }}>
                     {"$"}
                     {originalTotal.toFixed(2)}
                   </div>
                 </del>
               </div>
             </li>
-            {hasActiveSale && (
+            {hasSaleItems && (
               <li>
                 <div>{"Sale Discount"}</div>
                 <div>
@@ -182,12 +184,40 @@ const OrderSummaryStep = () => {
             </div>
           </li>
         )}
-        <li>
-          <div>{"Order Total"}</div>
-          <div>
-            {!loading && shipping && shipping.hasOwnProperty("first_name") ? "$" + totalPrice.toFixed(2) : "------"}
-          </div>
-        </li>
+        {!loading && shipping && shipping.hasOwnProperty("first_name") && (show_payment || payment_completed) ? (
+          <>
+            {hasSaleItems || activePromoCodeIndicator ? (
+              <>
+                <li>
+                  <del style={{ color: "red" }}>
+                    <div style={{ color: "#c5c5c5" }}>{"Original Order Total"}</div>
+                  </del>
+                  <div>
+                    <del style={{ color: "red" }}>
+                      <span style={{ color: "#c5c5c5" }}>
+                        {formatPrice(originalTotal + taxPrice + serviceFee + tip)}
+                      </span>
+                    </del>
+                  </div>
+                </li>
+                <li>
+                  <div>{"Final Order Total"}</div>
+                  <div>{formatPrice(totalPrice)}</div>
+                </li>
+              </>
+            ) : (
+              <li>
+                <div>{"Order Total"}</div>
+                <div>{formatPrice(totalPrice)}</div>
+              </li>
+            )}
+          </>
+        ) : (
+          <li>
+            <div>{"Order Total"}</div>
+            <div>{"------"}</div>
+          </li>
+        )}
       </ul>
     </div>
   );
