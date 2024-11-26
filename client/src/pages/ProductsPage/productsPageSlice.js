@@ -45,7 +45,7 @@ const productsPage = createSlice({
       endDate: new Date(new Date().setDate(new Date().getDate() + 7)),
       applyToOptions: true,
       selectedTags: [],
-      exactTags: [],
+      exactTags: false,
       applyToAll: false,
     },
   },
@@ -333,10 +333,10 @@ const productsPage = createSlice({
     [API.applySale.fulfilled]: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
       state.salePriceModal.isOpen = false;
-      state.salePriceModal.discountType = "percentage";
-      state.salePriceModal.discountValue = "";
-      state.salePriceModal.startDate = "";
-      state.salePriceModal.endDate = "";
+      state.salePriceModal.discountType = { value: "percentage", label: "Percentage Off" };
+      state.salePriceModal.discountValue = "20";
+      state.salePriceModal.startDate = new Date(new Date().setDate(new Date().getDate() - 1));
+      state.salePriceModal.endDate = new Date(new Date().setDate(new Date().getDate() + 7));
       state.salePriceModal.applyToOptions = true;
       state.salePriceModal.selectedTags = [];
       state.salePriceModal.applyToAll = false;
