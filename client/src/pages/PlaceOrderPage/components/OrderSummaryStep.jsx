@@ -3,7 +3,7 @@ import GLCartItem from "../../../shared/GlowLEDsComponents/GLCartItem/GLCartItem
 import { useSelector } from "react-redux";
 import { determineItemsTotal, formatPrice } from "../../../utils/helper_functions";
 import { Box, Tooltip, Typography, useTheme } from "@mui/material";
-import { getHasPreOrderItems } from "../placeOrderHelpers";
+import { getHasPreOrderItems, hasActiveSaleItems } from "../placeOrderHelpers";
 import ShippingPrice from "./ShippingPrice";
 
 const OrderSummaryStep = () => {
@@ -47,7 +47,7 @@ const OrderSummaryStep = () => {
 
   const saleTotal = determineItemsTotal(cartItems, current_user.isWholesaler);
 
-  const hasActiveSale = saleTotal < originalTotal;
+  const hasSaleItems = hasActiveSaleItems(cartItems);
 
   return (
     <div className="place_order-action">
@@ -91,7 +91,7 @@ const OrderSummaryStep = () => {
           </ul>
         </li>
 
-        {!activePromoCodeIndicator && !hasActiveSale && (
+        {!activePromoCodeIndicator && !hasSaleItems && (
           <li>
             <div>{"Subtotal"}</div>
             <div>
@@ -101,7 +101,7 @@ const OrderSummaryStep = () => {
           </li>
         )}
 
-        {(hasActiveSale || activePromoCodeIndicator) && (
+        {(hasSaleItems || activePromoCodeIndicator) && (
           <>
             <li>
               <del style={{ color: "red" }}>
@@ -116,7 +116,7 @@ const OrderSummaryStep = () => {
                 </del>
               </div>
             </li>
-            {hasActiveSale && (
+            {hasSaleItems && (
               <li>
                 <div>{"Sale Discount"}</div>
                 <div>
@@ -186,7 +186,7 @@ const OrderSummaryStep = () => {
         )}
         {!loading && shipping && shipping.hasOwnProperty("first_name") && (show_payment || payment_completed) ? (
           <>
-            {hasActiveSale || activePromoCodeIndicator ? (
+            {hasSaleItems || activePromoCodeIndicator ? (
               <>
                 <li>
                   <del style={{ color: "red" }}>
