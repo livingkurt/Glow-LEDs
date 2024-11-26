@@ -2,6 +2,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
+import { initializePlaceOrderPage } from "../pages/PlaceOrderPage/placeOrderSlice";
 
 let my_cart;
 const cart_string = localStorage.getItem("cartItems");
@@ -20,6 +21,38 @@ if (shipping_string) {
 } else {
   shippingAddress = {};
 }
+
+const cartInitialState = {
+  loading: false,
+  bundle: null,
+  loadingAddToCart: false,
+  my_cart: { ...my_cart },
+  carts: [],
+  cart: {
+    cartItems: [],
+  },
+  message: "",
+  error: {},
+  success: false,
+  shipping: {
+    ...shippingAddress,
+    first_name: "",
+    last_name: "",
+    address_1: "",
+    address_2: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    international: false,
+    country: "",
+  },
+  remoteVersionRequirement: 0,
+  edit_cart_modal: false,
+  cart_modal: false,
+  paymentMethod: "stripe",
+  cartDrawer: false,
+  sideNavDrawer: false,
+};
 
 const cartPage = createSlice({
   name: "cartPage",
@@ -313,6 +346,9 @@ const cartPage = createSlice({
       state.loading = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
+    },
+    [initializePlaceOrderPage]: state => {
+      return cartInitialState;
     },
   },
 });

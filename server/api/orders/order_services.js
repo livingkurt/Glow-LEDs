@@ -315,12 +315,13 @@ export default {
       // Process payments and send emails for each order
       const updatedOrders = await Promise.all(
         orders.map(async order => {
-          await sendOrderEmail(order);
+          const freshOrder = await order_db.findById_orders_db(order._id);
+          await sendOrderEmail(freshOrder);
           if (order.orderItems.some(item => item.itemType === "ticket")) {
-            await sendTicketEmail(order);
+            await sendTicketEmail(freshOrder);
           }
           if (order.orderItems.some(item => item.itemType === "gift_card")) {
-            await sendGiftCardEmail(order);
+            await sendGiftCardEmail(freshOrder);
           }
 
           return order;
@@ -331,8 +332,6 @@ export default {
       await product_services.update_stock_products_s({ cartItems: order.orderItems });
       await cart_services.empty_carts_s({ id: cartId });
 
-      console.log({ promo_code: order.promo_code });
-      console.log({ giftCard: order.giftCard });
       // Handle promo code
       if (order.promo_code && order.promo_code.length !== 16) {
         await promo_services.update_code_used_promos_s({ promo_code: order.promo_code });

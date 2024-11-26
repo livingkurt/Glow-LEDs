@@ -610,7 +610,7 @@ export default ({ email, order }) => {
 							</tbody>
 						</table>
             ${
-              order?.payment.payment.card
+              order?.payment?.payment?.card
                 ? `<table
 							style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: #585858; border-radius: 20px; padding:15px;">
 							<tbody>
