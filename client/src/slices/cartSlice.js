@@ -348,7 +348,7 @@ const cartPage = createSlice({
       state.message = payload ? payload.message : "An error occurred";
     },
     [initializePlaceOrderPage]: state => {
-      return cartInitialState;
+      return { ...cartInitialState, my_cart: state.my_cart };
     },
   },
 });
