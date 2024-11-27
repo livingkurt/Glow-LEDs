@@ -62,7 +62,7 @@ const SalePriceModal = () => {
       actionColor="secondary"
       cancelColor="secondary"
       confirmLabel="Apply Sale"
-      cancelLabel="Cancel"
+      cancelLabel="Close"
       actionLabel="Clear Sale"
       confirmDisabled={!isValid}
     >

@@ -332,14 +332,6 @@ const productsPage = createSlice({
     },
     [API.applySale.fulfilled]: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
-      state.salePriceModal.isOpen = false;
-      state.salePriceModal.discountType = { value: "percentage", label: "Percentage Off" };
-      state.salePriceModal.discountValue = "20";
-      state.salePriceModal.startDate = new Date(new Date().setDate(new Date().getDate() - 1));
-      state.salePriceModal.endDate = new Date(new Date().setDate(new Date().getDate() + 7));
-      state.salePriceModal.applyToOptions = true;
-      state.salePriceModal.selectedTags = [];
-      state.salePriceModal.applyToAll = false;
     },
     [API.applySale.rejected]: (state, { payload, error }) => {
       state.error = payload ? payload.error : error.message;
