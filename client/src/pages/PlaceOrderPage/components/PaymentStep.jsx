@@ -22,7 +22,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import StripeCheckout from "./StripeCheckout/StripeCheckout";
-import { determineItemsTotal } from "../../../utils/helper_functions";
+import { determineCartTotal } from "../../../utils/helper_functions";
 import * as API from "../../../api";
 import { useNavigate } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
@@ -42,7 +42,7 @@ const PaymentStep = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, users } = userPage;
 
-  const items_price = determineItemsTotal(cartItems);
+  const items_price = determineCartTotal(cartItems);
 
   const placeOrder = useSelector(state => state.placeOrder);
   const {

@@ -1,5 +1,10 @@
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+
 export default (item, color, wholesaler) => {
-  const today = new Date();
+  const today = dayjs().utc();
 
   const formatPrice = price => {
     return typeof price === "number" ? price.toFixed(2) : price;
@@ -22,12 +27,11 @@ export default (item, color, wholesaler) => {
     item.sale?.price &&
     item.sale?.start_date &&
     item.sale?.end_date &&
-    today >= new Date(item.sale?.start_date) &&
-    today <= new Date(item.sale?.end_date)
+    today.isBetween(dayjs(item.sale.start_date).utc(), dayjs(item.sale.end_date).utc())
   ) {
     const discount = calculateDiscount(item.sale?.price, item.price);
     const quantity = item.quantity || 1;
-    const promoPrice = item.promoPrice; // Add support for promo price
+    const promoPrice = item.promoPrice;
 
     return `<div style="font-size: 18px; display: flex; align-items: center; gap: 8px; color: ${color}">
       ${item.isPreOrder ? "Preorder " : ""}
@@ -39,6 +43,7 @@ export default (item, color, wholesaler) => {
       </del>
     </div>`;
   }
+
   // Previous price display
   if (item.previous_price) {
     const discount = calculateDiscount(item.price, item.previous_price);

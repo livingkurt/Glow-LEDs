@@ -1,3 +1,8 @@
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+
 export const determine_service = rate => {
   if (rate.est_delivery_days) {
     return `Est: ${rate.est_delivery_days} ${rate.est_delivery_days === 1 ? "Day" : "Days"}`;
@@ -215,7 +220,7 @@ export const applyGiftCard = (state, eligibleTotal, validGiftCard) => {
 };
 // Calculate the new total price based on included or excluded products and categories
 export const calculateNewItemsPrice = ({ cartItems, validPromo, isWholesaler }) => {
-  const today = new Date();
+  const today = dayjs().utc();
   let totalEligibleForDiscount = 0;
 
   cartItems?.forEach(item => {
@@ -226,7 +231,10 @@ export const calculateNewItemsPrice = ({ cartItems, validPromo, isWholesaler }) 
 
     const itemPrice = isWholesaler ? item.wholesale_price || item.price : item.price;
     const salePrice =
-      today >= new Date(item.sale?.start_date) && today <= new Date(item.sale?.end_date) && item.sale?.price !== 0
+      item.sale?.start_date &&
+      item.sale?.end_date &&
+      today.isBetween(dayjs(item.sale.start_date).utc(), dayjs(item.sale.end_date).utc()) &&
+      item.sale?.price !== 0
         ? item.sale?.price
         : itemPrice;
     const finalPrice = salePrice * item.quantity;

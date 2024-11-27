@@ -1,3 +1,8 @@
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+
 export const extractCodes = promos => {
   let refreshCode, twentyFiveOffCode;
 
@@ -12,15 +17,16 @@ export const extractCodes = promos => {
 };
 
 export const determineCartTotal = (cartItems, isWholesaler) => {
-  const today = new Date();
+  const today = dayjs().utc();
   let total = 0;
   if (cartItems) {
     cartItems.forEach(item => {
       if (isWholesaler) {
         total = total + (item.wholesale_price || item.price) * item.quantity;
       } else if (
-        today >= new Date(item.sale?.start_date) &&
-        today <= new Date(item.sale?.end_date) &&
+        item.sale?.start_date &&
+        item.sale?.end_date &&
+        today.isBetween(dayjs(item.sale.start_date).utc(), dayjs(item.sale.end_date).utc()) &&
         item.sale?.price !== 0
       ) {
         total = total + item.sale?.price * item.quantity;

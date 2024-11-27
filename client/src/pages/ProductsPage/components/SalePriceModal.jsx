@@ -5,6 +5,10 @@ import { useTagsQuery } from "../../../api/allRecordsApi";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { salePriceFormFields } from "./salePriceFormFields";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
 
 const SalePriceModal = () => {
   const dispatch = useDispatch();
@@ -25,8 +29,8 @@ const SalePriceModal = () => {
         dispatch(
           API.applySale({
             ...salePriceModal,
-            startDate: new Date(salePriceModal.startDate),
-            endDate: new Date(salePriceModal.endDate),
+            startDate: dayjs(salePriceModal.startDate).utc().toDate(),
+            endDate: dayjs(salePriceModal.endDate).utc().toDate(),
           })
         )
       }

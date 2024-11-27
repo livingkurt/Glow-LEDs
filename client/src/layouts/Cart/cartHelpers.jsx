@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { set_success } from "../../slices/cartSlice";
 import { clear_order_state } from "../../slices/orderSlice";
-import { determineItemsTotal } from "../../utils/helper_functions";
+import { determineCartTotal } from "../../utils/helper_functions";
 import { showInfo } from "../../slices/snackbarSlice";
 
 export const useOutsideAlerter = (ref, dispatch) => {
@@ -45,6 +45,6 @@ export const checkoutHandler = (dispatch, navigate, current_user, closeMenu, car
 export const determine_wholesale_proceed = (current_user, cartItems) => {
   return (
     current_user?.isWholesaler &&
-    determineItemsTotal(cartItems, current_user?.isWholesaler) > current_user?.wholesaler?.minimum_order_amount
+    determineCartTotal(cartItems, current_user?.isWholesaler) > current_user?.wholesaler?.minimum_order_amount
   );
 };

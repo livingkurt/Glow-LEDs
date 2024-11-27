@@ -1,7 +1,7 @@
 import React from "react";
 import GLCartItem from "../../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 import { useSelector } from "react-redux";
-import { determineItemsTotal, formatPrice } from "../../../utils/helper_functions";
+import { determineCartTotal, formatPrice } from "../../../utils/helper_functions";
 import { Box, Tooltip, Typography, useTheme } from "@mui/material";
 import { getHasPreOrderItems, hasActiveSaleItems } from "../placeOrderHelpers";
 import ShippingPrice from "./ShippingPrice";
@@ -45,7 +45,7 @@ const OrderSummaryStep = () => {
     return total + originalPrice * item.quantity;
   }, 0);
 
-  const saleTotal = determineItemsTotal(cartItems, current_user.isWholesaler);
+  const saleTotal = determineCartTotal(cartItems, current_user.isWholesaler);
 
   const hasSaleItems = hasActiveSaleItems(cartItems);
 
