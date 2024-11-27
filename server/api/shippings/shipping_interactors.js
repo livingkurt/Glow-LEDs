@@ -4,6 +4,7 @@ import parcel_db from "../parcels/parcel_db.js";
 import { calculateTotalOunces, covertToOunces, determine_parcel } from "./shipping_helpers.js";
 
 import easy_post_api from "@easypost/api";
+
 const EasyPost = new easy_post_api(config.EASY_POST);
 
 export const buyLabel = async ({ shipment_id, shipping_rate }) => {
@@ -247,7 +248,7 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
       customs_info: {
         eel_pfc: "NOEEI 30.37(a)",
         customs_certify: true,
-        customs_signer: order.shipping.first_name + " " + order.shipping.last_name,
+        customs_signer: `${order.shipping.first_name} ${order.shipping.last_name}`,
         contents_type: "merchandise",
         restriction_type: "none",
         non_delivery_option: "return",
@@ -259,6 +260,7 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
             weight: covertToOunces(item),
             origin_country: "US",
             hs_tariff_number: getHSTariffNumber(item.category),
+            duty_paid: true,
           };
         }),
       },
@@ -266,10 +268,35 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
         commercial_invoice_letterhead: "IMAGE_1",
         commercial_invoice_signature: "IMAGE_2",
         handling_instructions: order.shipping.handling_instructions,
+        incoterm: "DDP", // Delivered Duty Paid
+        duty_payment: {
+          account: config.DUTY_PAYMENT_ACCOUNT,
+          type: "sender",
+        },
       },
     });
-    console.log({ shipment });
-    return { shipment, parcel };
+    // Calculate duties and taxes
+    const dutiesAndTaxes = await calculateInternationalDutiesAndTaxes({
+      destination_country: order.shipping.country,
+      items: shippableItems,
+      shipping_cost: shipment.selected_rate.rate,
+    });
+
+    // Add duties and taxes to each rate
+    const ratesWithDuties = shipment.rates.map(rate => ({
+      ...rate,
+      total_rate: parseFloat(rate.rate) + dutiesAndTaxes.total,
+      duties: dutiesAndTaxes.duties,
+      import_taxes: dutiesAndTaxes.taxes,
+    }));
+
+    return {
+      shipment: {
+        ...shipment,
+        rates: ratesWithDuties,
+      },
+      parcel,
+    };
   } catch (error) {
     console.log({ error, errors: error.errors });
     if (error instanceof Error) {
@@ -324,4 +351,23 @@ export const createCustomShippingRates = async ({ toShipping, fromShipping, parc
       throw new Error(error.errors?.map(error => `${error.field} ${error.message}`).join(", "));
     }
   }
+};
+
+export const calculateInternationalDutiesAndTaxes = async ({ destination_country, items, shipping_cost }) => {
+  // Integration with duty/tax calculation service would go here
+  const response = await DutyCalculatorAPI.calculate({
+    destination_country,
+    items: items.map(item => ({
+      hs_code: getHSTariffNumber(item.category),
+      value: item.price,
+      quantity: item.quantity,
+    })),
+    shipping_cost,
+  });
+
+  return {
+    duties: response.duties,
+    taxes: response.taxes,
+    total: response.total,
+  };
 };

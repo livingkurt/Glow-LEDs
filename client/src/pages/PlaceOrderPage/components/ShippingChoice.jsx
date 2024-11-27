@@ -137,7 +137,14 @@ const ShippingChoice = () => {
                 )}
               </div>
               <div className="jc-b max-w-150px w-100per">
-                <div className="">{determine_service(rate)}</div>
+                <div className="jc-b max-w-150px w-100per">
+                  <div>{determine_service(rate)}</div>
+                  <div>
+                    {"$"}
+                    {parseFloat(rate.total_rate).toFixed(2)}
+                    <div className="duties-included-text">{"(Includes duties & taxes)"}</div>
+                  </div>
+                </div>
                 <div>
                   {" $"}
                   {parseFloat(rate.rate).toFixed(2)}{" "}

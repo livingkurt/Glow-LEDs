@@ -33,9 +33,16 @@ const ShippingDisplay = ({ shipping }) => {
           <Typography>{shipping.country}</Typography>
         </Grid>
         {shipping.international && (
-          <Grid item xs={12}>
-            <Typography>{"International"}</Typography>
-          </Grid>
+          <>
+            <Grid item xs={12}>
+              <Typography>{"International"}</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="body2" color="textSecondary">
+                {"All duties, taxes, and import fees are included in the shipping rate"}
+              </Typography>
+            </Grid>
+          </>
         )}
         <Grid item xs={12}>
           <Typography>{shipping.email}</Typography>
@@ -81,13 +88,33 @@ const ShippingDisplay = ({ shipping }) => {
               <Typography component="label" className="mv-0px mr-5px">
                 {"Rate:"}
               </Typography>
-              <Typography component="label" className=" mv-0px">
+              <Typography component="label" className="mv-0px">
                 {"$"}
-                {shipping.international
-                  ? shipping.shipping_rate.rate
-                  : shipping.shipping_rate.list_rate || shipping.shipping_rate.rate}
+                {shipping.international ? (
+                  <>
+                    {shipping.shipping_rate.rate}
+                    <Typography variant="caption" display="block" color="textSecondary">
+                      {"(Includes all duties & import fees)"}
+                    </Typography>
+                  </>
+                ) : (
+                  shipping.shipping_rate.list_rate || shipping.shipping_rate.rate
+                )}
               </Typography>
             </Grid>
+            {shipping.international && shipping.shipping_rate.duties_and_taxes && (
+              <>
+                <Grid item container xs={12} alignItems="center" justifyContent="space-between">
+                  <Typography component="label" className="mv-0px mr-5px">
+                    {"Duties & Taxes:"}
+                  </Typography>
+                  <Typography component="label" className="mv-0px">
+                    {"$"}
+                    {shipping.shipping_rate.duties_and_taxes.toFixed(2)}
+                  </Typography>
+                </Grid>
+              </>
+            )}
           </>
         )}
         <Grid item xs={12}>
