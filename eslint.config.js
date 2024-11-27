@@ -6,6 +6,16 @@ import prettier from "eslint-plugin-prettier";
 import jestPlugin from "eslint-plugin-jest";
 import importPlugin from "eslint-plugin-import";
 import * as babelParser from "@babel/eslint-parser";
+import { FlatCompat } from "@eslint/eslintrc";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+});
 
 // Custom rule to add .js extensions
 const addJsExtensionRule = {
@@ -38,6 +48,9 @@ const customPlugin = {
 
 export default [
   { ignores: ["dist", "client"] },
+  js.configs.recommended,
+  ...compat.extends("airbnb-base"),
+  eslintConfigPrettier,
   {
     files: ["server/**/*.js"],
     languageOptions: {

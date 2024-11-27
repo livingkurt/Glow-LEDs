@@ -1,4 +1,8 @@
 import config from "../config.js";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc.js";
+
+dayjs.extend(utc);
 
 export const domain = () => {
   if (config.ENVIRONMENT === "production") {
@@ -29,13 +33,12 @@ export const getItemsTotal = orderItems => {
 
 export const getSaleTotal = orderItems => {
   return orderItems.reduce((total, item) => {
-    const today = new Date();
+    const today = dayjs().utc();
     const isOnSale =
       item.sale?.price &&
       item.sale?.start_date &&
       item.sale?.end_date &&
-      today >= new Date(item.sale?.start_date) &&
-      today <= new Date(item.sale?.end_date);
+      today.isBetween(dayjs(item.sale.start_date).utc(), dayjs(item.sale.end_date).utc());
 
     const price = isOnSale ? item.sale.price : item.price;
     return total + price * item.quantity;

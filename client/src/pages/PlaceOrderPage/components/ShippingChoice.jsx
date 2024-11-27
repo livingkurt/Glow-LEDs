@@ -25,7 +25,7 @@ import {
   setPreOrderShippingRate,
   set_hide_pay_button,
 } from "../placeOrderSlice";
-import { determineItemsTotal } from "../../../utils/helper_functions";
+import { determineCartTotal } from "../../../utils/helper_functions";
 import ProcessingConfirmModal from "./ProcessingConfirmModal";
 import { Tooltip, Typography } from "@mui/material";
 import { Info } from "@mui/icons-material";
@@ -37,7 +37,7 @@ const ShippingChoice = () => {
   const { shipping, my_cart } = cartPage;
   const { cartItems } = my_cart;
   const placeOrder = useSelector(state => state.placeOrder);
-  const items_price = determineItemsTotal(cartItems);
+  const items_price = determineCartTotal(cartItems);
   const {
     shipping_rates,
     freeShippingMinimum,

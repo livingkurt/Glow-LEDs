@@ -1,5 +1,5 @@
 import { tableColors } from "../../shared/GlowLEDsComponents/GLTableV2/glTableHelpers";
-import { daysBetween, determineItemsTotal } from "../../utils/helper_functions";
+import { daysBetween } from "../../utils/helper_functions";
 import { Printd } from "printd";
 import { set_order } from "../../slices/orderSlice";
 import config from "../../config";

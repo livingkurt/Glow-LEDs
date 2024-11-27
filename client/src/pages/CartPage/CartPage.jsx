@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 import { Helmet } from "react-helmet";
-import { determineItemsTotal } from "../../utils/helper_functions";
+import { determineCartTotal } from "../../utils/helper_functions";
 import { useNavigate } from "react-router-dom";
 import { Container, Typography, Box, Grid, List, ListItem, Divider, useTheme, Paper } from "@mui/material";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
@@ -79,7 +79,7 @@ const CartPage = () => {
               </Typography>
               <Typography variant="h5" gutterBottom>
                 {"$"}
-                {determineItemsTotal(cartItems, current_user?.isWholesaler).toFixed(2)}
+                {determineCartTotal(cartItems, current_user?.isWholesaler).toFixed(2)}
               </Typography>
             </Box>
             <Typography variant="body2" gutterBottom>

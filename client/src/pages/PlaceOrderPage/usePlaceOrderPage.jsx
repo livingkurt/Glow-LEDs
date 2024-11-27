@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { determineItemsTotal } from "../../utils/helper_functions";
+import { determineCartTotal } from "../../utils/helper_functions";
 
 import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
 import { initializePlaceOrderPage, setItemsPrice, setServiceFee, setTotalPrice } from "./placeOrderSlice";
@@ -124,7 +124,7 @@ const usePlaceOrderPage = () => {
     const determine_wholesale_proceed = () => {
       return (
         current_user?.isWholesaler &&
-        determineItemsTotal(cartItems, current_user?.isWholesaler) > current_user?.wholesaler?.minimum_order_amount
+        determineCartTotal(cartItems, current_user?.isWholesaler) > current_user?.wholesaler?.minimum_order_amount
       );
     };
 
@@ -148,7 +148,7 @@ const usePlaceOrderPage = () => {
         dispatch(save_shipping(JSON.parse(shipping_storage)));
       }
 
-      dispatch(setItemsPrice(determineItemsTotal(cartItems, current_user?.isWholesaler)));
+      dispatch(setItemsPrice(determineCartTotal(cartItems, current_user?.isWholesaler)));
     }
     return () => (clean = false);
   }, [cartItems, current_user?.isWholesaler, dispatch]);

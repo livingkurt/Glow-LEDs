@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Drawer, Box, Typography, Button, Divider, List, useTheme } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { determineItemsTotal } from "../../utils/helper_functions";
+import { determineCartTotal } from "../../utils/helper_functions";
 import { setCartDrawer } from "../../slices/cartSlice";
 import { checkoutHandler, determine_wholesale_proceed } from "./cartHelpers";
 import { RecentlyViewed, TopCategories } from "./components";
@@ -145,7 +145,7 @@ const Cart = () => {
             <Typography variant="subtitle1">{"Total"}</Typography>
             <Typography variant="subtitle1">
               {"$"}
-              {determineItemsTotal(cartItems, current_user?.isWholesaler)?.toFixed(2)} {"USD"}
+              {determineCartTotal(cartItems, current_user?.isWholesaler)?.toFixed(2)} {"USD"}
             </Typography>
           </Box>
           {sessionStorage.getItem("promo_code") && (

@@ -14,6 +14,12 @@ import babelEslint from "@babel/eslint-plugin";
 import * as babelParser from "@babel/eslint-parser";
 import importPlugin from "eslint-plugin-import";
 
+const GLOBALS_BROWSER_FIX = {
+  ...globals.browser,
+  AudioWorkletGlobalScope: globals.browser["AudioWorkletGlobalScope "],
+};
+delete GLOBALS_BROWSER_FIX["AudioWorkletGlobalScope "];
+
 export default [
   { ignores: ["dist"] },
   js.configs.recommended,
@@ -23,7 +29,7 @@ export default [
       ecmaVersion: "latest",
       sourceType: "module",
       globals: {
-        ...globals.browser,
+        ...GLOBALS_BROWSER_FIX,
         ...globals.es2021,
         jquery: "readonly",
         jest: "readonly",

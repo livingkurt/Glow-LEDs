@@ -13,11 +13,11 @@ export const salePriceFormFields = ({ tags = [] }) => ({
     label: "Discount Value",
   },
   startDate: {
-    type: "date",
+    type: "datetime",
     label: "Sale Start Date",
   },
   endDate: {
-    type: "date",
+    type: "datetime",
     label: "Sale End Date",
   },
   applyToOptions: {
