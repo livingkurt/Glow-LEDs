@@ -7,6 +7,11 @@ import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { salePriceFormFields } from "./salePriceFormFields";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+
+dayjs.extend(timezone);
+dayjs.extend(advancedFormat);
 
 dayjs.extend(utc);
 
@@ -19,6 +24,25 @@ const SalePriceModal = () => {
   const formFields = salePriceFormFields({ tags });
 
   const isValid = salePriceModal.discountValue && salePriceModal.startDate && salePriceModal.endDate;
+
+  const getTimezoneSummary = () => {
+    if (!salePriceModal.startDate || !salePriceModal.endDate) return null;
+
+    return (
+      <div style={{ marginTop: "10px", fontSize: "0.9em", color: "#666" }}>
+        <div>
+          {"Eastern Time: "}
+          {dayjs(salePriceModal.startDate).tz("America/New_York").format("MM/DD/YYYY, h:mm A")}
+          {" -"} {dayjs(salePriceModal.endDate).tz("America/New_York").format("MM/DD/YYYY, h:mm A")}
+        </div>
+        <div>
+          {"Central Time: "}
+          {dayjs(salePriceModal.startDate).tz("America/Chicago").format("MM/DD/YYYY, h:mm A")}
+          {" -"} {dayjs(salePriceModal.endDate).tz("America/Chicago").format("MM/DD/YYYY, h:mm A")}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <GLActionModal
@@ -49,6 +73,7 @@ const SalePriceModal = () => {
           dispatch(setSalePriceModalData(value));
         }}
       />
+      {getTimezoneSummary()}
     </GLActionModal>
   );
 };

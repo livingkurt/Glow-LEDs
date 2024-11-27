@@ -1,6 +1,6 @@
 import config from "../config.js";
 import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
+import utc from "dayjs/plugin/utc.js";
 
 dayjs.extend(utc);
 
