@@ -1,3 +1,9 @@
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 export const create_query = query => {
   if (!query) {
     return "";
@@ -160,6 +166,124 @@ export const determine_tracking_link = tracking_number => {
 
 export const prnt = info => {};
 
+export const formatDate = date => {
+  return dayjs(date).format("M/D/YYYY");
+};
+
+export const format_date = isoDateString => {
+  return dayjs(isoDateString).format("MM/DD/YYYY");
+};
+
+export const format_time = isoDateString => {
+  return dayjs(isoDateString).format("HH:mm:ss");
+};
+
+export const accurate_date = date => {
+  return dayjs(date).utc().format();
+};
+
+export const formatDateToISODate = formatted_date => {
+  return dayjs(formatted_date, "M/D/YYYY").utc().format("YYYY-MM-DD");
+};
+
+export const formatDateToISODateAndTime = (formatted_date, formatted_time) => {
+  const dateStr = `${formatted_date} ${formatted_time}`;
+  return dayjs(dateStr, "M/D/YYYY HH:mm").utc().format();
+};
+
+export const format_date_and_time = (formatted_date, formatted_time) => {
+  const dateStr = `${formatted_date} ${formatted_time}`;
+  return dayjs(dateStr, "M/D/YYYY HH:mm:ss.SSS").utc().format();
+};
+
+export const daysBetween = (date1, date2) => {
+  const d1 = dayjs(date1);
+  const d2 = dayjs(date2);
+  return Math.abs(d1.diff(d2, "days"));
+};
+
+export const decide_warning = (date_1, date_2) => {
+  const now = dayjs();
+  if (now.isAfter(dayjs(date_1)) && now.isBefore(dayjs(date_2))) {
+    return {
+      show_warning: true,
+      warning: `Glow LEDs will be out of office from ${format_date(date_1)} - ${format_date(
+        date_2
+      )}. \n\nYou may still place orders in this time, but orders will not be shipped until after ${format_date(
+        date_2
+      )}`,
+    };
+  }
+  return { show_warning: false };
+};
+
+export const determine_product_price = item => {
+  const today = dayjs().utc();
+  if (
+    item.sale &&
+    today.isAfter(dayjs(item.sale?.start_date)) &&
+    today.isBefore(dayjs(item.sale?.end_date)) &&
+    item.sale.toggle
+  ) {
+    return item.sale.price;
+  } else {
+    return item.price;
+  }
+};
+
+export const determineItemsTotal = (cartItems, isWholesaler) => {
+  const today = dayjs().utc();
+  let total = 0;
+  if (cartItems) {
+    cartItems.forEach(item => {
+      if (isWholesaler) {
+        total = total + (item.wholesale_price || item.price) * item.quantity;
+      } else if (
+        today.isAfter(dayjs(item.sale?.start_date)) &&
+        today.isBefore(dayjs(item.sale?.end_date)) &&
+        item.sale?.price !== 0
+      ) {
+        total = total + item.sale?.price * item.quantity;
+      } else {
+        total = total + item.price * item.quantity;
+      }
+    });
+    return total;
+  }
+};
+
+const colors = [
+  { color: "Black", price: 11.99 },
+  { color: "White", price: 15.99 },
+  { color: "Red", price: 15.99 },
+  { color: "Green", price: 15.99 },
+  { color: "Blue", price: 15.99 },
+  { color: "Violet", price: 15.99 },
+  { color: "Purple", price: 15.99 },
+];
+const diffuser_colors = [
+  { color: "Translucent White", price: 11.99 },
+  { color: "Red", price: 11.99 },
+  { color: "Green", price: 11.99 },
+  { color: "Blue", price: 11.99 },
+  { color: "Violet", price: 11.99 },
+  { color: "Purple", price: 11.99 },
+];
+
+export const determine_price = (color, diffuser_cap) => {
+  let price = 11.99;
+  if (diffuser_cap) {
+    price = colors.filter(cap_color => {
+      return cap_color.color === colors;
+    });
+  } else {
+    price = diffuser_colors.filter(cap_color => {
+      return cap_color.color === colors;
+    });
+  }
+  return price;
+};
+
 export const toCapitalize = string => {
   if (!string) {
     return "";
@@ -207,118 +331,6 @@ export const formatPrice = price => {
   return `$${price.toFixed(2)}`;
 };
 
-export const formatDate = date => {
-  return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-};
-
-export const format_date = isoDateString => {
-  const date = new Date(isoDateString);
-  const month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are zero indexed, so +1
-  const day = ("0" + date.getDate()).slice(-2);
-  const year = date.getFullYear();
-  return `${month}/${day}/${year}`;
-};
-export const format_time = unformatted_time => {
-  let hour = unformatted_time.slice(11, 13);
-  let formatted_hour = hour > 12 ? hour - 12 : hour;
-  const minute = unformatted_time.slice(14, 16);
-  const second = unformatted_time.slice(17, 19);
-  const formatted_time = `${formatted_hour}:${minute} ${hour >= 12 ? "PM" : "AM"}`;
-  return formatted_time;
-};
-
-export const unformat_time = formatted_time => {
-  let hour = formatted_time.slice(11, 13);
-  let formatted_hour = hour > 12 ? hour - 12 : hour;
-  const minute = formatted_time.slice(14, 16);
-  const second = formatted_time.slice(17, 19);
-  const unformatted_time = `${formatted_hour}:${minute} ${hour >= 12 ? "PM" : "AM"}`;
-  return formatted_time;
-};
-
-export const accurate_date = date => {
-  var tzo = -date.getTimezoneOffset(),
-    dif = tzo >= 0 ? "+" : "-",
-    pad = function (num) {
-      var norm = Math.floor(Math.abs(num));
-      return (norm < 10 ? "0" : "") + norm;
-    };
-
-  return (
-    date.getFullYear() +
-    "-" +
-    pad(date.getMonth() + 1) +
-    "-" +
-    pad(date.getDate()) +
-    "T" +
-    pad(date.getHours()) +
-    ":" +
-    pad(date.getMinutes()) +
-    ":" +
-    pad(date.getSeconds()) +
-    dif +
-    pad(tzo / 60) +
-    ":" +
-    pad(tzo % 60)
-  );
-};
-
-// var dt = new Date();
-
-export const formatDateToISODate = formatted_date => {
-  //
-  const date = formatted_date.split("/");
-  const day = date[1];
-  const month = date[0];
-  const year = date[2];
-  const formatDateToISODate = `${year}-${month}-${day}`;
-  return formatDateToISODate;
-};
-export const formatDateToISODateAndTime = (formatted_date, formatted_time) => {
-  const date = formatted_date.split("/");
-  const time = formatted_time.trim().split(":");
-  const day = date[1];
-  const month = date[0];
-  const year = date[2];
-  let hour;
-  const minute_time = time[1];
-  let minute = minute_time.slice(0, 2);
-  if (minute_time.slice(-2) === "PM") {
-    hour = parseInt(time[0]) + 12;
-  } else if (minute_time.slice(-2) === "AM") {
-    if (time[0].length === 1) {
-      hour = `0${time[0]}`;
-    } else if (time[0].length === 2) {
-      hour = time[0];
-    }
-  }
-
-  return `${year}-${month}-${day}T${hour}:${minute}:00`;
-};
-export const format_date_and_time = (formatted_date, formatted_time) => {
-  //
-  const date = formatted_date.split("/");
-  const time = formatted_time.split(":");
-  const day = date[1];
-  const month = date[0];
-  const year = date[2];
-  const hour = time[1];
-  const second = time[0];
-  const ms = time[2];
-  const formatDateToISODate = `${year}-${month}-${day}T${hour}.${second}.${ms}`;
-  return formatDateToISODate;
-};
-
-export const daysBetween = (date1, date2) => {
-  const date_1 = new Date(date1);
-  const date_2 = new Date(date2);
-  let diffTime = date_1.getTime() - date_2.getTime();
-  let diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-  let weekendDays = Math.floor(diffDays / 7) * 2;
-  diffDays = diffDays - weekendDays;
-  return diffDays;
-};
-
 export const occurrence = function (array) {
   //
   const result = {};
@@ -338,138 +350,6 @@ export const occurrence = function (array) {
   }
 
   return result;
-};
-
-export const decide_warning = (date_1, date_2) => {
-  if (new Date() > new Date(date_1) && new Date() < new Date(date_2)) {
-    const confirm = window.confirm(
-      `Glow LEDs will be out of office from ${format_date(date_1)} - ${format_date(
-        date_2
-      )}. \n\nYou may still place orders in this time, but orders will not be shipped until after ${format_date(
-        date_2
-      )} \n\nThank you so much for your support! 💙`
-    );
-
-    return confirm;
-  } else {
-    return true;
-  }
-};
-
-export const determineItemsTotal = (cartItems, isWholesaler) => {
-  const today = new Date();
-  let total = 0;
-  if (cartItems) {
-    cartItems.forEach(item => {
-      if (isWholesaler) {
-        total = total + (item.wholesale_price || item.price) * item.quantity;
-      } else if (
-        today >= new Date(item.sale?.start_date) &&
-        today <= new Date(item.sale?.end_date) &&
-        item.sale?.price !== 0
-      ) {
-        total = total + item.sale?.price * item.quantity;
-      } else {
-        total = total + item.price * item.quantity;
-      }
-    });
-    return total;
-  }
-};
-
-const colors = [
-  { color: "Black", price: 11.99 },
-  { color: "White", price: 15.99 },
-  { color: "Red", price: 15.99 },
-  { color: "Green", price: 15.99 },
-  { color: "Blue", price: 15.99 },
-  { color: "Violet", price: 15.99 },
-  { color: "Purple", price: 15.99 },
-];
-const diffuser_colors = [
-  { color: "Translucent White", price: 11.99 },
-  { color: "Red", price: 11.99 },
-  { color: "Green", price: 11.99 },
-  { color: "Blue", price: 11.99 },
-  { color: "Violet", price: 11.99 },
-  { color: "Purple", price: 11.99 },
-];
-
-export const determine_price = (color, diffuser_cap) => {
-  let price = 11.99;
-  if (diffuser_cap) {
-    price = colors.filter(cap_color => {
-      return cap_color.color === colors;
-    });
-  } else {
-    price = diffuser_colors.filter(cap_color => {
-      return cap_color.color === colors;
-    });
-  }
-  return price;
-};
-
-// export const hsvToRgb = (h, s, v) => {
-// 	const r, g, b;
-
-// 	const i = Math.floor(h * 6);
-// 	const f = h * 6 - i;
-// 	const p = v * (1 - s);
-// 	const q = v * (1 - f * s);
-// 	const t = v * (1 - (1 - f) * s);
-
-// 	switch (i % 6) {
-// 		case 0:
-// 			(r = v), (g = t), (b = p);
-// 			break;
-// 		case 1:
-// 			(r = q), (g = v), (b = p);
-// 			break;
-// 		case 2:
-// 			(r = p), (g = v), (b = t);
-// 			break;
-// 		case 3:
-// 			(r = p), (g = q), (b = v);
-// 			break;
-// 		case 4:
-// 			(r = t), (g = p), (b = v);
-// 			break;
-// 		case 5:
-// 			(r = v), (g = p), (b = q);
-// 			break;
-// 	}
-
-// 	return [ r * 255, g * 255, b * 255 ];
-// };
-
-export const hslToHex = (h, s, l) => {
-  //
-  h /= 360;
-  s /= 100;
-  l /= 100;
-  let r, g, b;
-  if (s === 0) {
-    r = g = b = l; // achromatic
-  } else {
-    const hue2rgb = (p, q, t) => {
-      if (t < 0) t += 1;
-      if (t > 1) t -= 1;
-      if (t < 1 / 6) return p + (q - p) * 6 * t;
-      if (t < 1 / 2) return q;
-      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-      return p;
-    };
-    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-    const p = 2 * l - q;
-    r = hue2rgb(p, q, h + 1 / 3);
-    g = hue2rgb(p, q, h);
-    b = hue2rgb(p, q, h - 1 / 3);
-  }
-  const toHex = x => {
-    const hex = Math.round(x * 255).toString(16);
-    return hex.length === 1 ? "0" + hex : hex;
-  };
-  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 };
 
 export const calculate_affiliate_usage = (affiliates, orders) => {
@@ -528,70 +408,36 @@ export const calculate_sponsor_usage = (affiliates, orders) => {
   });
 };
 
-// export const state_names = [
-// 	'Alabama',
-// 	'Alaska',
-// 	'American Samoa',
-// 	'Arizona',
-// 	'Arkansas',
-// 	'Armed Forces Pacific',
-// 	'Armed Forces Europe',
-// 	'Armed Forces America',
-// 	'California',
-// 	'Colorado',
-// 	'Connecticut',
-// 	'Delaware',
-// 	'District of Columbia',
-// 	'Federated States of Micronesia',
-// 	'Florida',
-// 	'Georgia',
-// 	'Guam',
-// 	'Hawaii',
-// 	'Idaho',
-// 	'Illinois',
-// 	'Indiana',
-// 	'Iowa',
-// 	'Kansas',
-// 	'Kentucky',
-// 	'Louisiana',
-// 	'Maine',
-// 	'Marshall Islands',
-// 	'Maryland',
-// 	'Massachusetts',
-// 	'Michigan',
-// 	'Minnesota',
-// 	'Mississippi',
-// 	'Missouri',
-// 	'Montana',
-// 	'Nebraska',
-// 	'Nevada',
-// 	'New Hampshire',
-// 	'New Jersey',
-// 	'New Mexico',
-// 	'New York',
-// 	'North Carolina',
-// 	'North Dakota',
-// 	'Northern Mariana Islands',
-// 	'Ohio',
-// 	'Oklahoma',
-// 	'Oregon',
-// 	'Palau',
-// 	'Pennsylvania',
-// 	'Puerto Rico',
-// 	'Rhode Island',
-// 	'South Carolina',
-// 	'South Dakota',
-// 	'Tennessee',
-// 	'Texas',
-// 	'Utah',
-// 	'Vermont',
-// 	'Virgin Island',
-// 	'Virginia',
-// 	'Washington',
-// 	'West Virginia',
-// 	'Wisconsin',
-// 	'Wyoming'
-// ];
+export const hslToHex = (h, s, l) => {
+  //
+  h /= 360;
+  s /= 100;
+  l /= 100;
+  let r, g, b;
+  if (s === 0) {
+    r = g = b = l; // achromatic
+  } else {
+    const hue2rgb = (p, q, t) => {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1 / 6) return p + (q - p) * 6 * t;
+      if (t < 1 / 2) return q;
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+      return p;
+    };
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    r = hue2rgb(p, q, h + 1 / 3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1 / 3);
+  }
+  const toHex = x => {
+    const hex = Math.round(x * 255).toString(16);
+    return hex.length === 1 ? "0" + hex : hex;
+  };
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+};
+
 export const state_names = [
   { long_name: "Alabama", short_name: "AL" },
   { long_name: "Alaska", short_name: "AK" },

@@ -25,6 +25,12 @@ import { generateTicketQRCodes, sendEmail } from "../emails/email_interactors.js
 import promo_db from "../promos/promo_db.js";
 import bcrypt from "bcryptjs";
 import { useGiftCard } from "../gift_cards/gift_card_interactors.js";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export const normalizeOrderFilters = input => {
   const output = {};
@@ -188,7 +194,10 @@ export const getCodeUsage = async ({ promo_code, start_date, end_date, sponsor, 
     const matchFilter = {
       deleted: false,
       status: { $nin: ["unpaid", "canceled"] },
-      createdAt: { $gte: new Date(start_date), $lte: new Date(end_date) },
+      createdAt: {
+        $gte: dayjs(start_date).utc().startOf("day").toDate(),
+        $lte: dayjs(end_date).utc().endOf("day").toDate(),
+      },
       promo_code: new RegExp(`^${promo_code}$`, "i"), // Adjusted to match the entire string
     };
 
@@ -245,7 +254,10 @@ export const getMonthlyCodeUsage = async ({ promo_code, start_date, end_date, sp
     const matchFilter = {
       deleted: false,
       status: { $nin: ["unpaid", "canceled"] },
-      createdAt: { $gte: new Date(start_date), $lte: new Date(end_date) },
+      createdAt: {
+        $gte: dayjs(start_date).utc().startOf("day").toDate(),
+        $lte: dayjs(end_date).utc().endOf("day").toDate(),
+      },
       promo_code: new RegExp(`^${promo_code}$`, "i"),
     };
 
