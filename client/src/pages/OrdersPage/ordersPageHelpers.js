@@ -142,8 +142,7 @@ export const print_label = content => {
 
 export const duplicateOrder = order => {
   return {
-    ...order,
-    _id: null,
+    orderItems: order.orderItems,
     shipping: {
       ...order.shipping,
       shipment_id: null,
@@ -155,10 +154,12 @@ export const duplicateOrder = order => {
       return_shipment_tracker: null,
       return_shipping_label: null,
     },
+    itemsPrice: order.itemsPrice,
     shippingPrice: 0,
     status: "unpaid",
     taxPrice: 0,
     totalPrice: 0,
+    user: order?.user,
     order_note: `Replacement Order for ${order.shipping.first_name} ${order.shipping.last_name} - Original Order Number is ${order._id}`,
     return_tracking_url: "",
     tracking_url: "",
