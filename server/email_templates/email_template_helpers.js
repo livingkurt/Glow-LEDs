@@ -1,6 +1,9 @@
 import config from "../config.js";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc.js";
+import isBetween from "dayjs/plugin/isBetween.js";
+// Add this import
+dayjs.extend(isBetween);
 
 dayjs.extend(utc);
 
