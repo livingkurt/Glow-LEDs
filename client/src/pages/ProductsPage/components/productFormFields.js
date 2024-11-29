@@ -892,11 +892,11 @@ export const productFormFields = ({ products, users, product, microlights, filam
           defaultValue: 0,
         },
         start_date: {
-          type: "date",
+          type: "datetime",
           label: "Sale Start Date",
         },
         end_date: {
-          type: "date",
+          type: "datetime",
           label: "Sale End Date",
         },
       },

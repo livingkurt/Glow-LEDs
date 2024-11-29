@@ -4,13 +4,7 @@ import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { DropdownDisplayV2 } from "../../SharedComponents";
 import ImageWizard from "../../SharedComponents/ImageWizard";
-import {
-  determine_shown_fields,
-  formatDate,
-  formatDateTimeLocal,
-  getEmptyObjectFromSchema,
-  getValueByStringPath,
-} from "./glFormHelpers";
+import { determine_shown_fields, formatDate, getEmptyObjectFromSchema, getValueByStringPath } from "./glFormHelpers";
 import GoogleAutocomplete from "../../../pages/PlaceOrderPage/components/GoogleAutocomplete";
 import config from "../../../config";
 import { useEffect, useState } from "react";
@@ -19,6 +13,9 @@ import GLArray from "./components/GLArray";
 import GLAutocomplete from "../GLAutocomplete/GLAutocomplete";
 import GLTextFieldV2 from "../GLTextFieldV2/GLTextFieldV2";
 import GLOptionSelector from "./components/GLOptionSelector";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
 
 const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors, classes, mode, index }) => {
   const userPage = useSelector(state => state.users.userPage);
@@ -414,12 +411,12 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     type={fieldData.type}
                     label={fieldData.label}
                     variant="outlined"
-                    value={
-                      (formattedDate !== null && formattedDate !== undefined) || Object.keys(formattedDate).length > 0
-                        ? formattedDate
-                        : ""
-                    }
-                    onChange={e => handleInputChange(fieldName, e.target.value)}
+                    value={dayjs(fieldState).utc().format("YYYY-MM-DD")}
+                    onChange={e => {
+                      // Convert the local date input back to UTC
+                      const utcValue = dayjs(e.target.value).utc().format();
+                      handleInputChange(fieldName, utcValue);
+                    }}
                   />
                 );
               }
@@ -454,8 +451,12 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     type="datetime-local"
                     label={fieldData.label}
                     variant="outlined"
-                    value={formatDateTimeLocal(fieldState)}
-                    onChange={e => handleInputChange(fieldName, e.target.value)}
+                    value={dayjs(fieldState).utc().format("YYYY-MM-DDTHH:mm")}
+                    onChange={e => {
+                      // Convert the local datetime input back to UTC
+                      const utcValue = dayjs(e.target.value).utc().format();
+                      handleInputChange(fieldName, utcValue);
+                    }}
                   />
                 );
               case "text_multiline":

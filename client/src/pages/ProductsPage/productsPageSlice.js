@@ -2,7 +2,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../../api";
-import { accurate_date, format_date, format_time } from "../../utils/helper_functions";
 import { productInitialState } from "./productsPageHelpers";
 
 const productsPage = createSlice({
@@ -193,16 +192,6 @@ const productsPage = createSlice({
     },
     [API.detailsProduct.fulfilled]: (state, { payload }) => {
       const { data, openEditModal } = payload;
-      const start_date = new Date(data.sale?.start_date);
-      const end_date = new Date(data.sale?.end_date);
-      if (data.sale?.start_date) {
-        state.sale.start_date = format_date(accurate_date(start_date));
-        state.sale.start_time = format_time(accurate_date(start_date));
-      }
-      if (data.sale?.end_date) {
-        state.sale.end_date = format_date(accurate_date(end_date));
-        state.sale.end_time = format_time(accurate_date(end_date));
-      }
       state.loading = false;
       state.product = data;
       if (openEditModal) {
