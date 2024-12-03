@@ -97,7 +97,7 @@ export default {
       return {
         data: products,
         total_count: count,
-        currentPage: parseInt(page),
+        currentPage: parseInt(page, 10),
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -178,7 +178,8 @@ export default {
   findAllGrid_products_s: async query => {
     try {
       let filter = { deleted: false, hidden: false };
-      let bestSellers, ourPicks;
+      let bestSellers;
+      let ourPicks;
       let limit = 0;
 
       const tagFilter = await handleTagFiltering(query.tags);

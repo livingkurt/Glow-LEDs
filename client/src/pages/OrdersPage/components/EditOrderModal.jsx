@@ -35,7 +35,7 @@ const EditOrderModal = () => {
   const { current_user } = userPage;
 
   const { data: allShipping, isLoading: allShippingLoading } = API.useGetAllShippingOrdersQuery();
-  const { data: products, isLoading: productsLoading } = useProductsQuery({ option: false, hidden: false });
+  const { data: products, isLoading: productsLoading } = useProductsQuery({ hidden: false, isVariation: false });
   const { data: tags, isLoading: tagsLoading } = useTagsQuery();
   const { data: events, isLoading: eventsLoading } = useEventsQuery();
   const { data: tickets, isLoading: ticketsLoading } = useTicketsQuery();
