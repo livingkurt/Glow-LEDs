@@ -1,4 +1,10 @@
-import { determine_filter } from "../../utils/util.js";
+import {
+  determine_filter,
+  format_date,
+  toCapitalize,
+  make_private_code,
+  determine_code_tier,
+} from "../../utils/util.js";
 import user_db from "../users/user_db.js";
 import email_db from "./email_db.js";
 import config from "../../config.js";
@@ -15,7 +21,6 @@ import {
   updateOrder,
 } from "./email_interactors.js";
 import order_db from "../orders/order_db.js";
-import { format_date, toCapitalize, make_private_code, determine_code_tier } from "../../utils/util.js";
 import OrderStatusTemplate from "../../email_templates/pages/OrderStatusTemplate.js";
 import product_db from "../products/product_db.js";
 import CurrentStockTemplate from "../../email_templates/pages/CurrentStockTemplate.js";
@@ -174,7 +179,7 @@ export default {
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
       to: email,
-      subject: subject,
+      subject,
       html: App({ body: OrderTemplate(bodyConfirmation), unsubscribe: false }),
     };
     await sendEmail(mailOptions);
@@ -216,7 +221,7 @@ export default {
           )}. You're payment will show up in your bank account between 5-10 business days. Please let us know if you have any questions about this process.`,
       },
       title: "Thank you for your purchase!",
-      order: order,
+      order,
     };
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
@@ -233,7 +238,7 @@ export default {
         h1: "Thank you for your Order!",
         h2: "We are starting production on your order! We will notify your as your order progresses.",
       },
-      title: "Your Order has been " + toCapitalize(status),
+      title: `Your Order has been ${toCapitalize(status)}`,
       order,
       status,
       message_to_user,
@@ -267,7 +272,7 @@ export default {
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
       to: email,
-      subject: subject,
+      subject,
       html: App({
         body: PaycheckTemplate(rest),
       }),
@@ -297,7 +302,7 @@ export default {
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
       to: email,
-      subject: subject,
+      subject,
       html: App({ body: AffiliateTemplate(body), unsubscribe: false }),
     };
     await sendEmail(mailOptions);
@@ -311,7 +316,7 @@ export default {
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
       to: email,
-      subject: subject,
+      subject,
       html: App({
         body: FeatureTemplate(body),
         unsubscribe: false,
@@ -367,7 +372,7 @@ export default {
       throw new Error("You do not have an account with us");
     }
     const resetToken = jwt.sign({ email }, config.RESET_PASSWORD_TOKEN_SECRET, { expiresIn: "1h" });
-    const url = `${domain()}/account/reset_password?token=${resetToken}`;
+    const url = `${domain()}/account/reset_password?reset_token=${resetToken}`;
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
       to: email,
@@ -507,7 +512,7 @@ export default {
           "Precedence": "bulk",
           "Auto-Submitted": "auto-generated",
         },
-        subject: test === "true" ? "TEST " + email.subject : email.subject,
+        subject: test === "true" ? `TEST ${email.subject}` : email.subject,
         html: App({
           body: AnnouncementTemplate(email),
           unsubscribe: true,
@@ -623,7 +628,7 @@ export default {
         body: VerifyTemplate({
           title: "Verify your Email",
           url: `${domain()}?token=${token}`,
-          user: user,
+          user,
         }),
         unsubscribe: false,
       }),
@@ -632,7 +637,7 @@ export default {
     return first_name;
   },
   send_shipping_status_emails_s: async event => {
-    if (event["object"] === "Event" && event["description"] === "tracker.updated") {
+    if (event.object === "Event" && event.description === "tracker.updated") {
       const tracker = event.result;
       const order = await order_db.findBy_orders_db({ tracking_number: tracker.tracking_code, deleted: false });
 
@@ -640,9 +645,9 @@ export default {
         const body = {
           email: {},
           title: determine_status(tracker.status),
-          order: order,
+          order,
           status: tracker.status,
-          tracker: tracker,
+          tracker,
         };
         const mailOptions = {
           from: config.DISPLAY_INFO_EMAIL,
@@ -700,7 +705,7 @@ export default {
         );
         mailBodyData = {
           name: team.team_name,
-          promo_code: promo_code,
+          promo_code,
           percentage_off: null,
           number_of_uses: stats.number_of_uses,
           earnings: team.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,
@@ -721,7 +726,7 @@ export default {
         );
         mailBodyData = {
           name: affiliate.artist_name,
-          promo_code: promo_code,
+          promo_code,
           percentage_off: determine_code_tier(affiliate, stats.number_of_uses),
           number_of_uses: stats.number_of_uses,
           earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,
