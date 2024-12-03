@@ -23,7 +23,7 @@ const ProductRevenue = () => {
   const productsPage = useSelector(state => state.products.productsPage);
   const { product } = productsPage;
   const { start_date, end_date } = dashboardPage;
-  const { data: products, isLoading: productsLoading } = useProductsQuery({ option: false, hidden: false });
+  const { data: products, isLoading: productsLoading } = useProductsQuery({ hidden: false, isVariation: false });
   const {
     data: productRevenue,
     isLoading: productRevenueLoading,

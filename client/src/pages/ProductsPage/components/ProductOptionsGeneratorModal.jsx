@@ -30,7 +30,7 @@ const ProductOptionsGeneratorModal = () => {
   const dispatch = useDispatch();
   const productsPage = useSelector(state => state.products.productsPage);
   const { productOptionsGeneratorModal } = productsPage;
-  const productsQuery = useProductsQuery({ option: false, hidden: false });
+  const productsQuery = useProductsQuery({ hidden: false, isVariation: false });
   const theme = useTheme();
 
   const { isOpen, templateProduct, selectedProducts, useTemplate } = productOptionsGeneratorModal;

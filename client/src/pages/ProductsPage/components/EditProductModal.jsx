@@ -19,11 +19,7 @@ const EditProductModal = () => {
   const dispatch = useDispatch();
   const productsPage = useSelector(state => state.products.productsPage);
   const { edit_product_modal, product, loading, editProductHistory } = productsPage;
-  const { data: products, isLoading: productsLoading } = useProductsQuery({
-    option: false,
-    hidden: false,
-    isVariation: false,
-  });
+  const { data: products, isLoading: productsLoading } = useProductsQuery({ hidden: false, isVariation: false });
   const { data: tags, isLoading: tagsLoading } = useTagsQuery();
   const { data: users, isLoading: usersLoading } = useUsersQuery();
   const { data: microlights, isLoading: microlightsLoading } = useMicrolightsQuery();
