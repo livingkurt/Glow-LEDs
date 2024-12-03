@@ -158,7 +158,7 @@ export default {
     if (user) {
       const isMatch = await bcrypt.compare(config.TEMP_PASS, user.password);
       if (isMatch) {
-        return { user: user, matched: true };
+        return { user, matched: true };
       } else {
         throw new Error("User Already Exists");
       }

@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
 import { useLocation, useNavigate } from "react-router-dom";
 import { openLoginModal } from "../../../slices/userSlice";
@@ -12,7 +11,7 @@ const ResetPasswordPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const urlParams = new URLSearchParams(location.search);
-  const token = urlParams.get("token");
+  const token = urlParams.get("reset_token");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
 

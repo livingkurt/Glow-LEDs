@@ -199,7 +199,7 @@ export default {
         const access_token = getAccessToken(user);
         return res.status(200).send({
           success: true,
-          access_token: access_token,
+          access_token,
           refresh_token: user.refresh_token,
         });
       }
@@ -232,7 +232,7 @@ export default {
           const access_token = getAccessToken(user);
           return res.status(200).send({
             success: true,
-            access_token: access_token,
+            access_token,
             refresh_token: user.refresh_token,
           });
         }
@@ -252,7 +252,7 @@ export default {
         const access_token = getAccessToken(user);
         return res.status(200).send({
           success: true,
-          access_token: access_token,
+          access_token,
           // Include the refresh_token in the response
           refresh_token: user.refresh_token,
         });
@@ -264,7 +264,7 @@ export default {
   },
   logout_users_c: async (req, res) => {
     try {
-      //delete the refresh token saved in database:
+      // delete the refresh token saved in database:
       const { refresh_token } = req.body;
       //
       await Token.findOneAndDelete({ token: refresh_token });
