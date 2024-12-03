@@ -23,7 +23,7 @@ export const sendRegistrationEmail = async user => {
         body: VerifyTemplate({
           title: "Verify your Email",
           url: `${domain()}?token=${token}`,
-          user: user,
+          user,
         }),
 
         unsubscribe: false,
@@ -46,7 +46,7 @@ export const sendEmailVerifiedSuccess = async user => {
       subject: "Glow LEDs Account Created",
       html: App({
         body: AccountCreatedTemplate({
-          user: user,
+          user,
           categories: contents && contents[0]?.menus[0]?.menu_items,
           title: "Glow LEDs Account Created",
         }),
@@ -111,7 +111,7 @@ export const sendPasswordResetSuccessEmail = async user => {
 
 export const sendVerifyEmailPasswordResetSuccessEmail = async (user, resetToken) => {
   try {
-    const url = `${domain()}/account/reset_password?token=${resetToken}`;
+    const url = `${domain()}/account/reset_password?reset_token=${resetToken}`;
 
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
