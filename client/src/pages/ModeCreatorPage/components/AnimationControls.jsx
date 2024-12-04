@@ -15,7 +15,7 @@ const AnimationSlider = styled(Slider)({
     opacity: 0.5,
     backgroundColor: "#bfbfbf",
   },
-  width: "150px", // Add fixed width for sliders
+  width: "350px", // Add fixed width for sliders
 });
 
 const SliderContainer = styled(Box)({
@@ -44,18 +44,7 @@ const AnimationControls = ({ controls }) => {
   const sliderProps = getSliderProps(canvasRef);
 
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        top: 16,
-        left: 16,
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
-        borderRadius: 2,
-        p: 2,
-        color: "white",
-        maxWidth: "300px",
-      }}
-    >
+    <Box>
       <Typography variant="h6" sx={{ mb: 2, color: "white" }}>
         {"Animation Controls"}
       </Typography>
