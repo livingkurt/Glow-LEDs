@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Typography, Grid, Chip, ListItem, useTheme, useMediaQuery } from "@mui/material";
+import { Box, Typography, Grid, ListItem, useTheme, useMediaQuery } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { setCartDrawer } from "../../../slices/cartSlice";
 import GLSelect from "../GLSelect/GLSelect";
@@ -14,6 +14,7 @@ import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import { formatDate } from "../../../utils/helpers/universal_helpers";
 import { isSafari } from "react-device-detect";
 import GLPrice from "../GLPrice/GLPrice";
+import GLProductOptions from "../GLProductOptions/GLProductOptions";
 
 const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
   const { current_user } = useSelector(state => state.users.userPage);
@@ -23,35 +24,7 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const closeMenu = useCallback(() => dispatch(setCartDrawer(false)), [dispatch]);
 
-  const processedOptions = item.selectedOptions?.map(option => ({
-    ...option,
-    normalizedColorCode: option.filament?.color_code || option.colorCode,
-  }));
-
   const productUrl = generateProductUrl(item);
-
-  const renderOptions = () => (
-    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-      {processedOptions?.map((option, optionIndex) => {
-        const bgColor = option.normalizedColorCode || theme.palette.background.default;
-        if (!option.name) return null;
-        return (
-          <Chip
-            key={optionIndex}
-            label={`${item.currentOptions[optionIndex]?.name}: ${option?.name}`}
-            size="small"
-            sx={{
-              backgroundColor: option.name === "Clear" ? "transparent" : bgColor,
-              border: option.name === "Clear" ? "1px solid white !important" : "none !important",
-              color: option.name === "Clear" ? "white" : theme.palette.getContrastText(bgColor),
-              fontSize: "1rem",
-              fontWeight: "500",
-            }}
-          />
-        );
-      })}
-    </Box>
-  );
 
   const renderQuantityAndDelete = () =>
     showQuantity && !isOrderItem ? (
@@ -160,7 +133,7 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            {renderOptions()}
+            <GLProductOptions selectedOptions={item.selectedOptions} currentOptions={item.currentOptions} />
           </Grid>
           {!isOrderItem && (
             <Grid item xs={12}>
@@ -182,7 +155,10 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
                 {item.quantity > 1 ? `${item.quantity}x` : ""} {item.name}
               </Typography>
             </Grid>
-            <Grid item>{renderOptions()}</Grid>
+            <Grid item>
+              {" "}
+              <GLProductOptions selectedOptions={item.selectedOptions} currentOptions={item.currentOptions} />
+            </Grid>
             <Grid item>
               {item.isPreOrder && (
                 <Typography variant="body2" fontWeight={800} mt={1} display="flex" alignItems="center">
