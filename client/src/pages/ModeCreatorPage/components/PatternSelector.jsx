@@ -1,6 +1,5 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Autocomplete, Box, Paper, TextField, Typography } from "@mui/material";
 import PropTypes from "prop-types";
-import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 
 const PatternSelector = ({ pattern, onChange, microlight }) => {
   if (!microlight?.flashing_patterns?.length) {
@@ -27,15 +26,22 @@ const PatternSelector = ({ pattern, onChange, microlight }) => {
       <Typography variant="h6" gutterBottom>
         {"Pattern Selection"}
       </Typography>
-      <GLAutocomplete
+      <Autocomplete
         options={microlight.flashing_patterns}
         value={pattern}
         onChange={handlePatternSelect}
         getOptionLabel={option => option.name}
         isOptionEqualToValue={(option, value) => option._id === value._id}
-        label="Select Pattern"
-        size="medium"
-        placeholder="Search patterns..."
+        sx={{
+          input: { color: "white" },
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": { borderColor: "white" },
+            "&:hover fieldset": { borderColor: "white" },
+          },
+        }}
+        renderInput={params => (
+          <TextField {...params} label="Select Pattern" size="medium" placeholder="Search patterns..." />
+        )}
       />
     </Box>
   );

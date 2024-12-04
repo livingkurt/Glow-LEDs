@@ -1,30 +1,16 @@
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import {
-  Box,
-  Button,
-  Container,
-  TextField,
-  Typography,
-  MenuItem,
-  Paper,
-  Grid,
-  FormControl,
-  InputLabel,
-  Select,
-} from "@mui/material";
+import { Box, Button, TextField, Typography, MenuItem, Grid, FormControl, InputLabel, Select } from "@mui/material";
 import PatternSelector from "./components/PatternSelector";
 import ModePreview from "./components/ModePreview";
-import { DragDropContext, Droppable } from "@hello-pangea/dnd";
-import ColorPalette from "./components/ColorPalette";
 import { GLAutocomplete } from "../../shared/GlowLEDsComponents";
 import { snakeCase } from "lodash";
 import { modeInitialState, set_mode } from "../../slices/modeSlice";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import useModeCreatorPage from "./useModeCreatorPage";
 import ModeCreatorPageSkeleton from "./components/ModeCreatorPageSkeleton";
-import ColorSlot from "./components/ColorSlot";
+import AvailableColors from "./components/AvailableColors";
 import { isMobile } from "react-device-detect";
 
 const ModeCreatorPage = () => {
@@ -50,7 +36,7 @@ const ModeCreatorPage = () => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Box sx={{ bgcolor: "black", minHeight: "100vh" }}>
       <Helmet>
         <title>
           {id ? "Edit Mode" : "Create Mode"}
@@ -58,7 +44,7 @@ const ModeCreatorPage = () => {
         </title>
       </Helmet>
 
-      <Paper elevation={3} sx={{ p: 3 }}>
+      <Box sx={{ p: 2, bgcolor: "black", color: "white" }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h2" textAlign="center">
@@ -80,62 +66,6 @@ const ModeCreatorPage = () => {
               {"Reset"}
             </GLButtonV2>
           </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Mode Name"
-              value={mode?.name || ""}
-              onChange={e => dispatch(set_mode({ name: e.target.value, pathname: snakeCase(e.target.value) }))}
-              fullWidth
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Author Name"
-              value={mode?.author || ""}
-              onChange={e => dispatch(set_mode({ author: e.target.value }))}
-              fullWidth
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              label="Description"
-              value={mode?.description || ""}
-              onChange={e => dispatch(set_mode({ description: e.target.value }))}
-              multiline
-              rows={2}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Video"
-              value={mode?.video || ""}
-              onChange={e => dispatch(set_mode({ video: e.target.value }))}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl fullWidth>
-              <InputLabel>{"Visibility"}</InputLabel>
-              <Select
-                value={mode?.visibility || "public"}
-                onChange={e => dispatch(set_mode({ visibility: e.target.value }))}
-                label="Visibility"
-              >
-                <MenuItem value="public">{"Public"}</MenuItem>
-                <MenuItem value="private">{"Private"}</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-
           {!macro && (
             <Grid item xs={12}>
               <GLAutocomplete
@@ -150,98 +80,139 @@ const ModeCreatorPage = () => {
               />
             </Grid>
           )}
-
-          {mode?.microlight && (
-            <DragDropContext onDragEnd={handleDragEnd}>
-              <Grid item xs={12}>
-                <Box>
-                  <Typography variant="h6" gutterBottom>
-                    {"Available Colors"}
-                  </Typography>
-                  <ColorPalette colors={selectedMicrolight.colors} onColorClick={handleColorClick} />
-
-                  <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
-                    {"Selected Colors ("}
-                    {selectedMicrolight.colors_per_mode} {"max)"}
-                  </Typography>
-
-                  {isMobile && (
-                    <Typography variant="subtitle2" gutterBottom>
-                      {"Click on a color slot for controls"}
-                    </Typography>
-                  )}
-                  {!isMobile && (
-                    <Typography variant="subtitle2" gutterBottom>
-                      {"Hover over a color slot for controls"}
-                    </Typography>
-                  )}
-
-                  <Droppable droppableId="color-slots" direction="horizontal">
-                    {provided => (
-                      <Box
-                        ref={provided.innerRef}
-                        {...provided.droppableProps}
-                        sx={{
-                          display: "grid",
-                          gridTemplateColumns: "repeat(auto-fill, minmax(70px, 1fr))",
-                          gap: 2,
-                          px: 1, // Changed from px: 2 to px: 1 to match ColorPalette
-                          minHeight: 80,
-                        }}
-                      >
-                        {Array(selectedMicrolight.colors_per_mode)
-                          .fill(null)
-                          .map((_, i) => mode?.colors[i] || null)
-                          .map((color, index) => (
-                            <ColorSlot
-                              key={`slot-${index}`}
-                              color={color}
-                              index={index}
-                              onRemove={index => {
-                                const newColors = [...mode.colors];
-                                newColors.splice(index, 1);
-                                dispatch(set_mode({ colors: newColors }));
-                              }}
-                              onUpdate={(index, updatedColor) => {
-                                const newColors = [...mode.colors];
-                                newColors[index] = updatedColor;
-                                dispatch(set_mode({ colors: newColors }));
-                              }}
-                              onDuplicate={index => {
-                                const newColors = [...mode.colors];
-                                if (newColors.length < selectedMicrolight.colors_per_mode) {
-                                  newColors.splice(index + 1, 0, { ...newColors[index] });
-                                  dispatch(set_mode({ colors: newColors }));
-                                }
-                              }}
-                              microlight={selectedMicrolight}
-                            />
-                          ))}
-                        {provided.placeholder}
-                      </Box>
-                    )}
-                  </Droppable>
-                </Box>
-              </Grid>
-            </DragDropContext>
+          {isMobile && (
+            <AvailableColors
+              selectedMicrolight={selectedMicrolight}
+              mode={mode}
+              handleDragEnd={handleDragEnd}
+              handleColorClick={handleColorClick}
+            />
           )}
 
           {mode?.microlight && (
             <>
+              {isMobile && (
+                <Grid item xs={12}>
+                  <PatternSelector
+                    pattern={mode?.flashing_pattern}
+                    microlight={selectedMicrolight}
+                    onChange={pattern => dispatch(set_mode({ ...mode, flashing_pattern: pattern }))}
+                  />
+                </Grid>
+              )}
               <Grid item xs={12}>
-                <PatternSelector
-                  pattern={mode?.flashing_pattern}
-                  microlight={selectedMicrolight}
-                  onChange={pattern => dispatch(set_mode({ ...mode, flashing_pattern: pattern }))}
+                <ModePreview
+                  mode={mode}
+                  selectedMicrolight={selectedMicrolight}
+                  handleDragEnd={handleDragEnd}
+                  handleColorClick={handleColorClick}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="h4">{"Mode Details"}</Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Mode Name"
+                  value={mode?.name || ""}
+                  onChange={e => dispatch(set_mode({ name: e.target.value, pathname: snakeCase(e.target.value) }))}
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                    sx: { color: "white" },
+                  }}
+                  sx={{
+                    input: { color: "white" },
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": { borderColor: "white" },
+                      "&:hover fieldset": { borderColor: "white" },
+                    },
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Author Name"
+                  value={mode?.author || ""}
+                  onChange={e => dispatch(set_mode({ author: e.target.value }))}
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                    sx: { color: "white" },
+                  }}
+                  sx={{
+                    input: { color: "white" },
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": { borderColor: "white" },
+                      "&:hover fieldset": { borderColor: "white" },
+                    },
+                  }}
                 />
               </Grid>
 
               <Grid item xs={12}>
-                <ModePreview mode={mode} pattern={mode?.flashing_pattern} />
+                <TextField
+                  label="Description"
+                  value={mode?.description || ""}
+                  onChange={e => dispatch(set_mode({ description: e.target.value }))}
+                  multiline
+                  rows={2}
+                  fullWidth
+                  InputLabelProps={{
+                    sx: { color: "white" },
+                  }}
+                  sx={{
+                    textarea: { color: "white" },
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": { borderColor: "white" },
+                      "&:hover fieldset": { borderColor: "white" },
+                    },
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Youtube Video ID"
+                  value={mode?.video || ""}
+                  onChange={e => dispatch(set_mode({ video: e.target.value }))}
+                  fullWidth
+                  InputLabelProps={{
+                    sx: { color: "white" },
+                  }}
+                  sx={{
+                    input: { color: "white" },
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": { borderColor: "white" },
+                      "&:hover fieldset": { borderColor: "white" },
+                    },
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel sx={{ color: "white" }}>{"Visibility"}</InputLabel>
+                  <Select
+                    value={mode?.visibility || "public"}
+                    onChange={e => dispatch(set_mode({ visibility: e.target.value }))}
+                    label="Visibility"
+                    sx={{
+                      color: "white",
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "white",
+                      },
+                      "& .MuiSvgIcon-root": {
+                        color: "white",
+                      },
+                    }}
+                  >
+                    <MenuItem value="public">{"Public"}</MenuItem>
+                    <MenuItem value="private">{"Private"}</MenuItem>
+                  </Select>
+                </FormControl>
               </Grid>
 
               <Grid item xs={12}>
-                <Box display="flex" justifyContent="flex-end" gap={2}>
+                <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} justifyContent="flex-end" gap={2}>
                   <Button variant="contained" color="secondary" onClick={() => navigate(-1)}>
                     {"Cancel"}
                   </Button>
@@ -266,8 +237,8 @@ const ModeCreatorPage = () => {
             </Grid>
           )}
         </Grid>
-      </Paper>
-    </Container>
+      </Box>
+    </Box>
   );
 };
 
