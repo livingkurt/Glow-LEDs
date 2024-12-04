@@ -28,18 +28,37 @@ export const useModePreview = ({ mode }) => {
     const resizeCanvas = () => {
       const dpr = window.devicePixelRatio || 1;
       const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
+
+      // First, scale the CSS dimensions to fill the container
+      const parentWidth = canvas.parentElement.clientWidth;
+      canvas.style.width = `${parentWidth}px`;
+      canvas.style.height = `${parentWidth}px`; // Keep 1:1 aspect ratio
+
+      // Now set the actual canvas dimensions
+      canvas.width = Math.floor(parentWidth * dpr);
+      canvas.height = Math.floor(parentWidth * dpr);
+
+      // Clear any transforms and set the new scale
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
+
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = "high";
     };
 
     resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
 
+    // Debounce the resize handler to prevent too many updates
+    let resizeTimer;
+    const handleResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(resizeCanvas, 100);
+    };
+
+    window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(resizeTimer);
     };
   }, []);
 
@@ -99,12 +118,16 @@ export const useModePreview = ({ mode }) => {
   const drawTrail = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
+    const dpr = window.devicePixelRatio || 1;
     const params = getAnimationParams(speed, trailLength, size, blur, radius, canvasRef);
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Get the actual drawing dimensions
+    const drawWidth = canvas.width / dpr;
+    const drawHeight = canvas.height / dpr;
 
+    ctx.clearRect(0, 0, drawWidth, drawHeight);
     ctx.fillStyle = "rgba(0, 0, 0, 1)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, drawWidth, drawHeight);
 
     for (let i = trailRef.current.length - 1; i >= 0; i--) {
       const point = trailRef.current[i];
@@ -115,6 +138,7 @@ export const useModePreview = ({ mode }) => {
       const outerAlpha = params.blurFac !== 0 ? (innerAlpha / params.blurFac).toFixed(2) : innerAlpha;
 
       const gradient = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, params.dotSize);
+
       gradient.addColorStop(0, `rgba(${point.color.red}, ${point.color.green}, ${point.color.blue}, ${innerAlpha})`);
       gradient.addColorStop(0.8, `rgba(${point.color.red}, ${point.color.green}, ${point.color.blue}, ${outerAlpha})`);
       gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
@@ -125,7 +149,6 @@ export const useModePreview = ({ mode }) => {
       ctx.fill();
     }
   };
-
   const initPattern = () => {
     currentColorIndexRef.current = 0;
     groupCounterRef.current = pattern.group_size > 0 ? pattern.group_size : mode.colors.length;
