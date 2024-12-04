@@ -1,4 +1,4 @@
-import { Box, Link } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import { useModePreview } from "./useModePreview";
 import AnimationControls from "./AnimationControls";
 import AvailableColors from "./AvailableColors";
@@ -6,13 +6,16 @@ import PatternSelector from "./PatternSelector";
 import { useDispatch } from "react-redux";
 import { set_mode } from "../../../slices/modeSlice";
 
-const ModePreview = ({ mode, handleDragEnd, handleColorClick }) => {
+const ModePreview = ({ mode, handleDragEnd, handleColorClick, selectedMicrolight }) => {
   const dispatch = useDispatch();
   const previewControls = useModePreview({ mode });
   const { canvasRef } = previewControls;
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+      <Typography variant="h4" sx={{ color: "black", textAlign: "center" }}>
+        {"Mode Preview"}
+      </Typography>
       <Box sx={{ position: "relative", width: "100%" }}>
         <canvas
           ref={canvasRef}
@@ -24,6 +27,7 @@ const ModePreview = ({ mode, handleDragEnd, handleColorClick }) => {
             display: "block",
           }}
         />
+
         <Box
           sx={{
             position: "absolute",
@@ -38,14 +42,14 @@ const ModePreview = ({ mode, handleDragEnd, handleColorClick }) => {
           }}
         >
           <AvailableColors
-            selectedMicrolight={mode.selectedMicrolight} // Pass the full microlight object instead of just the ID
+            selectedMicrolight={selectedMicrolight}
             mode={mode}
             handleDragEnd={handleDragEnd}
             handleColorClick={handleColorClick}
           />
           <PatternSelector
             pattern={mode?.flashing_pattern}
-            microlight={mode.selectedMicrolight}
+            microlight={selectedMicrolight}
             onChange={pattern => dispatch(set_mode({ ...mode, flashing_pattern: pattern }))}
           />
         </Box>

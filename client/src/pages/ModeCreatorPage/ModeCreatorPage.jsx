@@ -150,7 +150,8 @@ const ModeCreatorPage = () => {
             <>
               <Grid item xs={12}>
                 <ModePreview
-                  mode={{ ...mode, selectedMicrolight }} // Add selectedMicrolight to the mode object
+                  mode={mode}
+                  selectedMicrolight={selectedMicrolight}
                   handleDragEnd={handleDragEnd}
                   handleColorClick={handleColorClick}
                 />
