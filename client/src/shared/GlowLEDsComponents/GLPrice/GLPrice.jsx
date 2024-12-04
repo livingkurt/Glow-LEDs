@@ -1,10 +1,13 @@
-import React from "react";
 import { useSelector } from "react-redux";
 
 const GLPrice = ({ product }) => {
   const today = new Date();
 
   const { current_user } = useSelector(state => state.users.userPage);
+
+  const shouldShowPreOrder = () => {
+    return product.isPreOrder && product.preOrderReleaseDate && today < new Date(product.preOrderReleaseDate);
+  };
 
   const formatPrice = price => {
     return typeof price === "number" ? price.toFixed(2) : price;
@@ -22,6 +25,7 @@ const GLPrice = ({ product }) => {
   if (current_user.isWholesaler && product.wholesale_price) {
     return (
       <div className="fs-18px" style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+        {shouldShowPreOrder() && "Preorder "}
         {"WSP: $"}
         {formatPrice(product.wholesale_price)}
       </div>
@@ -40,7 +44,7 @@ const GLPrice = ({ product }) => {
 
     return (
       <div className="fs-18px" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-        {product.isPreOrder && "Preorder "}
+        {shouldShowPreOrder() && "Preorder "}
         <span>
           {"$"}
           {formatPrice(product.sale?.price)}
@@ -68,7 +72,7 @@ const GLPrice = ({ product }) => {
 
     return (
       <div className="fs-18px" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-        {product.isPreOrder && "Preorder "}
+        {shouldShowPreOrder() && "Preorder "}
         <span>
           {"$"}
           {formatPrice(product.price)}
@@ -93,7 +97,7 @@ const GLPrice = ({ product }) => {
   // Regular price display
   return (
     <div className="fs-18px" style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-      {product.isPreOrder && "Preorder "}
+      {shouldShowPreOrder() && "Preorder "}
       {"$"}
       {formatPrice(product.price)}
     </div>

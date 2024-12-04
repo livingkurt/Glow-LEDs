@@ -69,7 +69,7 @@ const BundleItemCard = ({ item, bundle }) => {
                 {item.product.fact}
               </Typography>
             )}
-            <Typography variant="h6">
+            <Typography variant="h6" display="flex" alignItems="center" gap={1}>
               {"Price: "}
               <GLPrice product={item} />
             </Typography>

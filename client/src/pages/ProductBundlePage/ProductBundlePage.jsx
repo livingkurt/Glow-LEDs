@@ -129,17 +129,33 @@ const ProductBundlePage = () => {
                   {bundle.short_description}
                 </Typography>
 
-                <Typography variant="h6" gutterBottom mt={2} mb={2} sx={{ typography: { sm: "h5", xs: "h6" } }}>
-                  {"Price: "}
+                <Box display="flex" gap={1} alignItems="flex-end">
+                  <Typography
+                    variant="h6"
+                    sx={{ display: "flex", alignItems: "center", typography: { sm: "h5", xs: "h6" } }}
+                  >
+                    {"Price: "}
+                  </Typography>
+
                   <GLPrice
                     product={{
-                      product: {
-                        price: bundle.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
+                      price: bundle.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
+                      previous_price: bundle.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
+                      sale: {
+                        price:
+                          bundle.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0) *
+                          (1 - bundle.affiliate.public_code.percentage_off / 100),
+                        start_date: new Date(),
+                        end_date: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), // 1 year from now
                       },
                     }}
                   />
+                </Box>
+                <Typography variant="caption" display="block">
+                  {"Use code "}
+                  <strong>{bundle.affiliate.public_code.promo_code.toUpperCase()}</strong>
+                  {" at checkout"}
                 </Typography>
-
                 <Box mt={2}>
                   <GLButtonV2
                     variant="contained"

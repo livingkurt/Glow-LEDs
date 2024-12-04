@@ -12,7 +12,6 @@ import GLPrice from "../../../shared/GlowLEDsComponents/GLPrice/GLPrice";
 const BundleItemsList = ({ item, idx, bundle }) => {
   const dispatch = useDispatch();
   const my_cart = useSelector(state => state.carts.cartPage.my_cart);
-  const { current_user } = useSelector(state => state.users.userPage);
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false);
 
   const handleQuickAdd = () => {
