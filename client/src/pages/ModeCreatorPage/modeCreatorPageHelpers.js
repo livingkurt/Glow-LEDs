@@ -166,20 +166,56 @@ export const getAnimationParams = (speed, trailLength, size, blur, baseRadius, c
   const canvas = canvasRef.current;
   const rect = canvas.getBoundingClientRect();
 
-  // Use logical (CSS) pixels for calculations, not physical pixels
-  const logicalWidth = rect.width;
-  const logicalHeight = rect.height;
-  const maxDimension = Math.min(logicalWidth, logicalHeight);
-  const baseSize = maxDimension * 0.4;
+  // Ensure canvas dimensions are positive numbers
+  const canvasWidth = Math.max(rect.width, 1);
+  const canvasHeight = Math.max(rect.height, 1);
+  const canvasSize = Math.min(canvasWidth, canvasHeight);
 
   return {
-    rotationSpeed: (Math.PI / 180) * (speed / 30),
+    rotationSpeed: (speed * (Math.PI / 180)) / 1000, // radians per millisecond
     trailLength: Math.max(1, trailLength),
-    dotSize: (size / 500) * baseSize,
+    dotSize: Math.max(1, (size / 100) * (canvasSize / 2)), // Size based on percentage of canvas radius
     blurFac: blur / 10,
-    circleRadius: (baseRadius / 100) * baseSize,
+    circleRadius: (baseRadius / 100) * (canvasSize / 2), // Radius based on percentage of canvas radius
   };
 };
+
+// export const getAnimationParams = (speed, trailLength, size, blur, baseRadius, canvasRef) => {
+//   const canvas = canvasRef.current;
+//   const rect = canvas.getBoundingClientRect();
+
+//   // Use logical (CSS) pixels for calculations, not physical pixels
+//   const logicalWidth = rect.width;
+//   const logicalHeight = rect.height;
+//   const maxDimension = Math.min(logicalWidth, logicalHeight);
+//   const baseSize = maxDimension * 0.4;
+//   const canvasSize = Math.max(rect.width, rect.height);
+//   const safeCanvasSize = canvasSize > 0 ? canvasSize : 1;
+
+//   return {
+//     rotationSpeed: (speed * (Math.PI / 180)) / 1000,
+//     trailLength: Math.max(1, trailLength),
+//     dotSize: (size / 500) * baseSize,
+//     blurFac: blur / 10,
+//     circleRadius: (baseRadius / 100) * (safeCanvasSize / 2),
+//   };
+// };
+
+// export const getAnimationParams = (speed, trailLength, size, blur, baseRadius, canvasRef) => {
+//   const canvas = canvasRef.current;
+//   const rect = canvas.getBoundingClientRect();
+
+//   const canvasSize = Math.max(rect.width, rect.height);
+//   const safeCanvasSize = canvasSize > 0 ? canvasSize : 1;
+
+//   return {
+//     rotationSpeed: (speed * (Math.PI / 180)) / 1000, // radians per millisecond
+//     trailLength: Math.max(1, trailLength),
+// dotSize: Math.max(1, (size / 100) * (safeCanvasSize / 2)),
+// blurFac: blur / 10,
+// circleRadius: (baseRadius / 100) * (safeCanvasSize / 2),
+//   };
+// };
 
 export const getPosition = (angle, radius, canvasRef) => {
   const canvas = canvasRef.current;
@@ -198,16 +234,16 @@ export const getPosition = (angle, radius, canvasRef) => {
 export const getSliderProps = () => {
   return {
     speed: {
-      min: 20,
-      max: 300,
+      min: 30, // degrees per second
+      max: 1000,
     },
     trail: {
       min: 0,
       max: 100,
     },
     size: {
-      min: 20,
-      max: 150,
+      min: 1,
+      max: 100,
     },
     blur: {
       min: 0,
@@ -215,11 +251,7 @@ export const getSliderProps = () => {
     },
     radius: {
       min: 0,
-      max: 100, // Now represents percentage of canvas size
-    },
-    timeMultiplier: {
-      min: 1,
-      max: 10,
+      max: 100,
     },
   };
 };

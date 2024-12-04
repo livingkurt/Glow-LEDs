@@ -4,12 +4,11 @@ import { isMobile } from "react-device-detect";
 
 export const useModePreview = ({ mode }) => {
   // Animation control states
-  const [speed, setSpeed] = useState(isMobile ? 200 : 150);
-  const [trailLength, setTrailLength] = useState(100);
+  const [speed, setSpeed] = useState(500);
+  const [trailLength, setTrailLength] = useState(50);
   const [size, setSize] = useState(50);
   const [blur, setBlur] = useState(20);
   const [radius, setRadius] = useState(100);
-  const [timeMultiplier, setTimeMultiplier] = useState(5);
   const [isInView, setIsInView] = useState(false); // Track if canvas is in view
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
@@ -27,7 +26,6 @@ export const useModePreview = ({ mode }) => {
 
     const resizeCanvas = () => {
       const dpr = window.devicePixelRatio || 1;
-      const rect = canvas.getBoundingClientRect();
 
       // First, scale the CSS dimensions to fill the container
       const parentWidth = canvas.parentElement.clientWidth;
@@ -85,20 +83,19 @@ export const useModePreview = ({ mode }) => {
     radiiRef.current = [radius * 0.6, radius * 0.8, radius];
   }, [radius]);
 
-  const updateTrail = (color, intensity = 1) => {
+  const updateTrail = (color, intensity = 1, deltaTime) => {
     let rgbColor;
     if (typeof color === "string") {
       rgbColor = hexToRgb(color);
     } else {
       rgbColor = { ...color };
     }
-
     const params = getAnimationParams(speed, trailLength, size, blur, radius, canvasRef);
 
     radiiRef.current.forEach((radiusMultiplier, index) => {
       const circleRadius = (radiusMultiplier / 100) * params.circleRadius;
+      anglesRef.current[index] = (anglesRef.current[index] + params.rotationSpeed * deltaTime) % (Math.PI * 2);
       const newPos = getPosition(anglesRef.current[index], circleRadius, canvasRef);
-      anglesRef.current[index] = (anglesRef.current[index] + params.rotationSpeed) % (Math.PI * 2);
 
       trailRef.current.unshift({
         x: newPos.x,
@@ -132,6 +129,12 @@ export const useModePreview = ({ mode }) => {
     for (let i = trailRef.current.length - 1; i >= 0; i--) {
       const point = trailRef.current[i];
       if (!point.color) continue;
+
+      // Check for valid values
+      if (!isFinite(point.x) || !isFinite(point.y) || !isFinite(params.dotSize) || params.dotSize <= 0) {
+        console.error("Invalid values in drawTrail:", { x: point.x, y: point.y, dotSize: params.dotSize });
+        continue;
+      }
 
       const fadeAlpha = (1 - i / params.trailLength).toFixed(2);
       const innerAlpha = fadeAlpha * point.alpha;
@@ -208,12 +211,13 @@ export const useModePreview = ({ mode }) => {
       }
 
       const deltaTime = timestamp - lastUpdateTimeRef.current;
+      const BASE_SPEED = 150;
+      const speedFactor = BASE_SPEED / speed;
       let duration;
-
       // Handle the current state's display
       switch (stateRef.current) {
         case PatternState.STATE_DISABLED:
-          updateTrail(mode.colors[0].colorCode, 0);
+          updateTrail(mode.colors[0].colorCode, 0, deltaTime);
           duration = 0;
           break;
 
@@ -235,24 +239,29 @@ export const useModePreview = ({ mode }) => {
               currentColorIndexRef.current = (currentColorIndexRef.current + 1) % mode.colors.length;
             }
           } else {
-            updateTrail(mode.colors[currentColorIndexRef.current].colorCode);
+            updateTrail(mode.colors[currentColorIndexRef.current].colorCode, 1, deltaTime);
           }
-          duration = pattern.on_dur * timeMultiplier;
+          duration = pattern.on_dur * speedFactor;
           break;
+
         case PatternState.STATE_BLINK_OFF:
-          updateTrail(mode.colors[currentColorIndexRef.current].colorCode, 0);
-          duration = pattern.off_dur * timeMultiplier;
+          updateTrail(mode.colors[currentColorIndexRef.current].colorCode, 0, deltaTime);
+          duration = pattern.off_dur * speedFactor;
           break;
 
         case PatternState.STATE_IN_GAP:
         case PatternState.STATE_IN_GAP2:
-          updateTrail(mode.colors[currentColorIndexRef.current].colorCode, 0);
-          duration = pattern.gap_dur * timeMultiplier;
+          updateTrail(mode.colors[currentColorIndexRef.current].colorCode, 0, deltaTime);
+          duration = pattern.gap_dur * speedFactor;
           break;
 
         case PatternState.STATE_IN_DASH:
-          updateTrail(mode.colors[currentColorIndexRef.current].colorCode);
-          duration = pattern.dash_dur * timeMultiplier;
+          updateTrail(mode.colors[currentColorIndexRef.current].colorCode, 1, deltaTime);
+          duration = pattern.dash_dur * speedFactor;
+          break;
+        default:
+          updateTrail(mode.colors[currentColorIndexRef.current].colorCode, 0, deltaTime);
+          duration = 0;
           break;
       }
 
@@ -349,7 +358,5 @@ export const useModePreview = ({ mode }) => {
     radius,
     setRadius,
     canvasRef,
-    timeMultiplier,
-    setTimeMultiplier,
   };
 };
