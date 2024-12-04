@@ -50,9 +50,13 @@ const ModePreview = ({ mode }) => {
       <Typography variant="h6">{"Mode Preview"}</Typography>
       <canvas
         ref={canvasRef}
-        width={120}
-        height={120}
-        style={{ width: "100%", backgroundColor: "black", borderRadius: "8px", aspectRatio: "1 / 1" }}
+        style={{
+          width: "100%",
+          backgroundColor: "black",
+          borderRadius: "8px",
+          aspectRatio: "1 / 1",
+          display: "block", // Add this to prevent any layout issues
+        }}
       />
 
       <Typography variant="h6">{"Animation Controls"}</Typography>

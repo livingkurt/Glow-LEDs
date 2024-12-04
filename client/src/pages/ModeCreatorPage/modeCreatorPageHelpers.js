@@ -166,22 +166,26 @@ export const getAnimationParams = (speed, trailLength, size, blur, baseRadius, c
   const canvas = canvasRef.current;
   const rect = canvas.getBoundingClientRect();
 
-  // Calculate dimensions relative to canvas size
-  const maxDimension = Math.min(rect.width, rect.height);
-  const baseSize = maxDimension * 0.4; // 40% of canvas size as base reference
+  // Use logical (CSS) pixels for calculations, not physical pixels
+  const logicalWidth = rect.width;
+  const logicalHeight = rect.height;
+  const maxDimension = Math.min(logicalWidth, logicalHeight);
+  const baseSize = maxDimension * 0.4;
 
   return {
     rotationSpeed: (Math.PI / 180) * (speed / 30),
     trailLength: Math.max(1, trailLength),
-    dotSize: (size / 500) * baseSize, // Scale dot size relative to canvas
+    dotSize: (size / 500) * baseSize,
     blurFac: blur / 10,
-    circleRadius: (baseRadius / 100) * baseSize, // Convert radius to percentage of canvas size
+    circleRadius: (baseRadius / 100) * baseSize,
   };
 };
 
 export const getPosition = (angle, radius, canvasRef) => {
   const canvas = canvasRef.current;
   const rect = canvas.getBoundingClientRect();
+
+  // Use logical (CSS) pixels for center calculation
   const centerX = rect.width / 2;
   const centerY = rect.height / 2;
 
