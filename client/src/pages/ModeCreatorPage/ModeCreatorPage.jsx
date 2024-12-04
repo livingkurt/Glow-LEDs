@@ -47,7 +47,7 @@ const ModeCreatorPage = () => {
   }
 
   return (
-    <Box>
+    <Box sx={{ bgcolor: "black", minHeight: "100vh" }}>
       <Helmet>
         <title>
           {id ? "Edit Mode" : "Create Mode"}
@@ -55,7 +55,7 @@ const ModeCreatorPage = () => {
         </title>
       </Helmet>
 
-      <Paper elevation={3} sx={{ p: 2 }}>
+      <Box sx={{ p: 2, bgcolor: "black", color: "white" }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h2" textAlign="center">
@@ -130,6 +130,14 @@ const ModeCreatorPage = () => {
                   fullWidth
                   InputLabelProps={{
                     shrink: true,
+                    sx: { color: "white" },
+                  }}
+                  sx={{
+                    input: { color: "white" },
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": { borderColor: "white" },
+                      "&:hover fieldset": { borderColor: "white" },
+                    },
                   }}
                 />
               </Grid>
@@ -141,6 +149,14 @@ const ModeCreatorPage = () => {
                   fullWidth
                   InputLabelProps={{
                     shrink: true,
+                    sx: { color: "white" },
+                  }}
+                  sx={{
+                    input: { color: "white" },
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": { borderColor: "white" },
+                      "&:hover fieldset": { borderColor: "white" },
+                    },
                   }}
                 />
               </Grid>
@@ -153,23 +169,52 @@ const ModeCreatorPage = () => {
                   multiline
                   rows={2}
                   fullWidth
+                  InputLabelProps={{
+                    sx: { color: "white" },
+                  }}
+                  sx={{
+                    textarea: { color: "white" },
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": { borderColor: "white" },
+                      "&:hover fieldset": { borderColor: "white" },
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label="Video"
+                  label="Youtube Video ID"
                   value={mode?.video || ""}
                   onChange={e => dispatch(set_mode({ video: e.target.value }))}
                   fullWidth
+                  InputLabelProps={{
+                    sx: { color: "white" },
+                  }}
+                  sx={{
+                    input: { color: "white" },
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": { borderColor: "white" },
+                      "&:hover fieldset": { borderColor: "white" },
+                    },
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel>{"Visibility"}</InputLabel>
+                  <InputLabel sx={{ color: "white" }}>{"Visibility"}</InputLabel>
                   <Select
                     value={mode?.visibility || "public"}
                     onChange={e => dispatch(set_mode({ visibility: e.target.value }))}
                     label="Visibility"
+                    sx={{
+                      color: "white",
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "white",
+                      },
+                      "& .MuiSvgIcon-root": {
+                        color: "white",
+                      },
+                    }}
                   >
                     <MenuItem value="public">{"Public"}</MenuItem>
                     <MenuItem value="private">{"Private"}</MenuItem>
@@ -203,7 +248,7 @@ const ModeCreatorPage = () => {
             </Grid>
           )}
         </Grid>
-      </Paper>
+      </Box>
     </Box>
   );
 };

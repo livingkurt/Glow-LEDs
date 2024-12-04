@@ -32,7 +32,8 @@ const ModePreview = ({ mode, handleDragEnd, handleColorClick, selectedMicrolight
                 position: "absolute",
                 top: 16,
                 marginLeft: "16px",
-                backgroundColor: "#333333",
+                backgroundColor: "#000000cf",
+                border: "1px solid white",
                 borderRadius: 2,
                 p: 2,
                 color: "white",
@@ -58,7 +59,8 @@ const ModePreview = ({ mode, handleDragEnd, handleColorClick, selectedMicrolight
                 top: 16,
                 right: 16,
                 marginLeft: "16px",
-                backgroundColor: "#333333",
+                backgroundColor: "#000000cf",
+                border: "1px solid white",
                 borderRadius: 2,
                 p: 2,
                 color: "white",
@@ -92,14 +94,15 @@ const ModePreview = ({ mode, handleDragEnd, handleColorClick, selectedMicrolight
         {isMobile && (
           <Typography
             sx={{
-              color: "black",
+              color: "white",
               display: "flex",
+              justifyContent: "center",
               gap: 1,
               alignItems: "center",
             }}
           >
             {"Preview inspired by"}{" "}
-            <Link href="https://lightshow.lol/" target="_blank">
+            <Link href="https://lightshow.lol/" target="_blank" sx={{ color: "white" }}>
               {"lightshow.lol"}
             </Link>
           </Typography>
