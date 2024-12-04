@@ -25,21 +25,8 @@ const SliderContainer = styled(Box)({
 });
 
 const AnimationControls = ({ controls }) => {
-  const {
-    canvasRef,
-    speed,
-    setSpeed,
-    trailLength,
-    setTrailLength,
-    size,
-    setSize,
-    blur,
-    setBlur,
-    radius,
-    setRadius,
-    timeMultiplier,
-    setTimeMultiplier,
-  } = controls;
+  const { canvasRef, speed, setSpeed, trailLength, setTrailLength, size, setSize, blur, setBlur, radius, setRadius } =
+    controls;
 
   const sliderProps = getSliderProps(canvasRef);
 
@@ -50,16 +37,6 @@ const AnimationControls = ({ controls }) => {
       </Typography>
 
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <SliderContainer>
-          <Typography sx={{ width: 80, color: "white" }}>{"Scale"}</Typography>
-          <AnimationSlider
-            value={timeMultiplier}
-            onChange={(_, value) => setTimeMultiplier(value)}
-            min={sliderProps.timeMultiplier.min}
-            max={sliderProps.timeMultiplier.max}
-          />
-        </SliderContainer>
-
         <SliderContainer>
           <Typography sx={{ width: 80, color: "white" }}>{"Speed"}</Typography>
           <AnimationSlider
