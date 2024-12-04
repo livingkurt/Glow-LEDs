@@ -14,9 +14,6 @@ const ModePreview = ({ mode, handleDragEnd, handleColorClick, selectedMicrolight
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-      <Typography variant="h4" sx={{ color: "black", textAlign: "center" }}>
-        {"Mode Preview"}
-      </Typography>
       <Box sx={{ position: "relative", width: "100%" }}>
         <canvas
           ref={canvasRef}

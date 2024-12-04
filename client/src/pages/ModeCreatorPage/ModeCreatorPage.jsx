@@ -77,62 +77,6 @@ const ModeCreatorPage = () => {
               {"Reset"}
             </GLButtonV2>
           </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Mode Name"
-              value={mode?.name || ""}
-              onChange={e => dispatch(set_mode({ name: e.target.value, pathname: snakeCase(e.target.value) }))}
-              fullWidth
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Author Name"
-              value={mode?.author || ""}
-              onChange={e => dispatch(set_mode({ author: e.target.value }))}
-              fullWidth
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              label="Description"
-              value={mode?.description || ""}
-              onChange={e => dispatch(set_mode({ description: e.target.value }))}
-              multiline
-              rows={2}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Video"
-              value={mode?.video || ""}
-              onChange={e => dispatch(set_mode({ video: e.target.value }))}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl fullWidth>
-              <InputLabel>{"Visibility"}</InputLabel>
-              <Select
-                value={mode?.visibility || "public"}
-                onChange={e => dispatch(set_mode({ visibility: e.target.value }))}
-                label="Visibility"
-              >
-                <MenuItem value="public">{"Public"}</MenuItem>
-                <MenuItem value="private">{"Private"}</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-
           {!macro && (
             <Grid item xs={12}>
               <GLAutocomplete
@@ -175,9 +119,66 @@ const ModeCreatorPage = () => {
                   handleColorClick={handleColorClick}
                 />
               </Grid>
+              <Grid item xs={12}>
+                <Typography variant="h4">{"Mode Details"}</Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Mode Name"
+                  value={mode?.name || ""}
+                  onChange={e => dispatch(set_mode({ name: e.target.value, pathname: snakeCase(e.target.value) }))}
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Author Name"
+                  value={mode?.author || ""}
+                  onChange={e => dispatch(set_mode({ author: e.target.value }))}
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
 
               <Grid item xs={12}>
-                <Box display="flex" justifyContent="flex-end" gap={2}>
+                <TextField
+                  label="Description"
+                  value={mode?.description || ""}
+                  onChange={e => dispatch(set_mode({ description: e.target.value }))}
+                  multiline
+                  rows={2}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Video"
+                  value={mode?.video || ""}
+                  onChange={e => dispatch(set_mode({ video: e.target.value }))}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel>{"Visibility"}</InputLabel>
+                  <Select
+                    value={mode?.visibility || "public"}
+                    onChange={e => dispatch(set_mode({ visibility: e.target.value }))}
+                    label="Visibility"
+                  >
+                    <MenuItem value="public">{"Public"}</MenuItem>
+                    <MenuItem value="private">{"Private"}</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} justifyContent="flex-end" gap={2}>
                   <Button variant="contained" color="secondary" onClick={() => navigate(-1)}>
                     {"Cancel"}
                   </Button>
