@@ -1,18 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import {
-  Box,
-  Button,
-  TextField,
-  Typography,
-  MenuItem,
-  Paper,
-  Grid,
-  FormControl,
-  InputLabel,
-  Select,
-} from "@mui/material";
+import { Box, Button, TextField, Typography, MenuItem, Grid, FormControl, InputLabel, Select } from "@mui/material";
 import PatternSelector from "./components/PatternSelector";
 import ModePreview from "./components/ModePreview";
 import { GLAutocomplete } from "../../shared/GlowLEDsComponents";
