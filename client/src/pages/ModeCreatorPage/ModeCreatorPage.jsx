@@ -50,7 +50,7 @@ const ModeCreatorPage = () => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Box sx={{ p: 4 }}>
       <Helmet>
         <title>
           {id ? "Edit Mode" : "Create Mode"}
@@ -267,7 +267,7 @@ const ModeCreatorPage = () => {
           )}
         </Grid>
       </Paper>
-    </Container>
+    </Box>
   );
 };
 
