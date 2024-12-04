@@ -137,6 +137,7 @@ const ProductPage = () => {
                           mb: 1,
                           borderRadius: 1,
                           fontSize: "1.2rem",
+                          whiteSpace: "nowrap",
                           fontWeight: 800,
                           color: theme.palette.getContrastText(product?.primary_color || theme.palette.primary.main),
                         }}
@@ -161,24 +162,6 @@ const ProductPage = () => {
                     <Box display="flex" gap={1} alignItems="flex-end">
                       {"Price:"} <GLPrice product={customizedProduct} />
                     </Box>
-                    {customizedProduct.isPreOrder && (
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        sx={{
-                          ml: 1,
-                          bgcolor: theme.palette.primary.main,
-                          px: 0.5,
-                          py: 0.5,
-                          fontSize: "1.2rem",
-                          borderRadius: 1,
-                          fontWeight: 800,
-                          color: theme.palette.getContrastText(theme.palette.primary.main),
-                        }}
-                      >
-                        {"Pre-Order"}
-                      </Typography>
-                    )}
                   </Typography>
 
                   {customizedProduct.isPreOrder && (

@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
 const GLPrice = ({ product }) => {
@@ -10,13 +11,35 @@ const GLPrice = ({ product }) => {
   };
 
   const formatPrice = price => {
-    return typeof price === "number" ? price.toFixed(2) : price;
+    return typeof price === "number" ? `$${price.toFixed(2)}` : price;
   };
 
   const calculateDiscount = (currentPrice, originalPrice) => {
     if (!currentPrice || !originalPrice) return null;
     // Use parseFloat instead of parseInt to maintain decimal precision
     return (100 * (1 - parseFloat(currentPrice) / parseFloat(originalPrice))).toFixed(0);
+  };
+  const preOrderChip = () => {
+    return (
+      shouldShowPreOrder() && (
+        <Typography
+          component="span"
+          variant="body2"
+          sx={{
+            ml: 1,
+            bgcolor: theme => theme.palette.primary.main,
+            px: 0.5,
+            py: 0.5,
+            fontSize: "1.2rem",
+            borderRadius: 1,
+            fontWeight: 800,
+            color: theme => theme.palette.getContrastText(theme.palette.primary.main),
+          }}
+        >
+          {"Pre-Order"}
+        </Typography>
+      )
+    );
   };
 
   if (!product) return null;
@@ -25,9 +48,9 @@ const GLPrice = ({ product }) => {
   if (current_user.isWholesaler && product.wholesale_price) {
     return (
       <div className="fs-18px" style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-        {shouldShowPreOrder() && "Preorder "}
-        {"WSP: $"}
+        {"WSP:"}
         {formatPrice(product.wholesale_price)}
+        {preOrderChip()}
       </div>
     );
   }
@@ -44,11 +67,7 @@ const GLPrice = ({ product }) => {
 
     return (
       <div className="fs-18px" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-        {shouldShowPreOrder() && "Preorder "}
-        <span>
-          {"$"}
-          {formatPrice(product.sale?.price)}
-        </span>
+        <span>{formatPrice(product.sale?.price)}</span>
         {discount && (
           <span>
             {"("}
@@ -57,11 +76,9 @@ const GLPrice = ({ product }) => {
           </span>
         )}
         <del style={{ color: "#ff0000" }}>
-          <span style={{ color: "#c5c5c5" }}>
-            {"$"}
-            {formatPrice(product.price)}
-          </span>
+          <span style={{ color: "#c5c5c5" }}>{formatPrice(product.price)}</span>
         </del>
+        {preOrderChip()}
       </div>
     );
   }
@@ -72,11 +89,7 @@ const GLPrice = ({ product }) => {
 
     return (
       <div className="fs-18px" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-        {shouldShowPreOrder() && "Preorder "}
-        <span>
-          {"$"}
-          {formatPrice(product.price)}
-        </span>
+        <span>{formatPrice(product.price)}</span>
         {discount && (
           <span>
             {"("}
@@ -85,11 +98,9 @@ const GLPrice = ({ product }) => {
           </span>
         )}
         <del style={{ color: "#ff0000" }}>
-          <span style={{ color: "#c5c5c5" }}>
-            {"$"}
-            {formatPrice(product.previous_price)}
-          </span>
+          <span style={{ color: "#c5c5c5" }}>{formatPrice(product.previous_price)}</span>
         </del>
+        {preOrderChip()}
       </div>
     );
   }
@@ -97,9 +108,8 @@ const GLPrice = ({ product }) => {
   // Regular price display
   return (
     <div className="fs-18px" style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-      {shouldShowPreOrder() && "Preorder "}
-      {"$"}
       {formatPrice(product.price)}
+      {preOrderChip()}
     </div>
   );
 };
