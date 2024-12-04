@@ -21,6 +21,8 @@ import { modeInitialState, set_mode } from "../../slices/modeSlice";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import useModeCreatorPage from "./useModeCreatorPage";
 import ModeCreatorPageSkeleton from "./components/ModeCreatorPageSkeleton";
+import AvailableColors from "./components/AvailableColors";
+import { isMobile } from "react-device-detect";
 
 const ModeCreatorPage = () => {
   const { id } = useParams();
@@ -45,7 +47,7 @@ const ModeCreatorPage = () => {
   }
 
   return (
-    <Box sx={{ p: 4 }}>
+    <Box>
       <Helmet>
         <title>
           {id ? "Edit Mode" : "Create Mode"}
@@ -53,7 +55,7 @@ const ModeCreatorPage = () => {
         </title>
       </Helmet>
 
-      <Paper elevation={3} sx={{ p: 3 }}>
+      <Paper elevation={3} sx={{ p: 2 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h2" textAlign="center">
@@ -145,9 +147,26 @@ const ModeCreatorPage = () => {
               />
             </Grid>
           )}
+          {isMobile && (
+            <AvailableColors
+              selectedMicrolight={selectedMicrolight}
+              mode={mode}
+              handleDragEnd={handleDragEnd}
+              handleColorClick={handleColorClick}
+            />
+          )}
 
           {mode?.microlight && (
             <>
+              {isMobile && (
+                <Grid item xs={12}>
+                  <PatternSelector
+                    pattern={mode?.flashing_pattern}
+                    microlight={selectedMicrolight}
+                    onChange={pattern => dispatch(set_mode({ ...mode, flashing_pattern: pattern }))}
+                  />
+                </Grid>
+              )}
               <Grid item xs={12}>
                 <ModePreview
                   mode={mode}
