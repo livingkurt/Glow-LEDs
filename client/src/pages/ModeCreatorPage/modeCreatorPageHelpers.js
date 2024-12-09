@@ -165,15 +165,18 @@ export const interpolate = (current, next, blendSpeed) => {
 export const getAnimationParams = (speed, trailLength, size, blur, baseRadius, canvasRef) => {
   const canvas = canvasRef.current;
   const rect = canvas.getBoundingClientRect();
-
-  // Use logical (CSS) pixels for calculations, not physical pixels
   const logicalWidth = rect.width;
   const logicalHeight = rect.height;
   const maxDimension = Math.min(logicalWidth, logicalHeight);
   const baseSize = maxDimension * 0.4;
 
+  // Convert speed (degrees/second) to radians/ms:
+  // If speed is degrees/second, then degrees/ms = speed/1000
+  // radians/ms = (speed * Math.PI/180) / 1000
+  // We'll just store degrees/second and convert in updateTrail.
+
   return {
-    rotationSpeed: (Math.PI / 180) * (speed / 30),
+    speed, // store as degrees/second
     trailLength: Math.max(1, trailLength),
     dotSize: (size / 500) * baseSize,
     blurFac: blur / 10,
@@ -197,29 +200,10 @@ export const getPosition = (angle, radius, canvasRef) => {
 
 export const getSliderProps = () => {
   return {
-    speed: {
-      min: 20,
-      max: 300,
-    },
-    trail: {
-      min: 0,
-      max: 100,
-    },
-    size: {
-      min: 20,
-      max: 150,
-    },
-    blur: {
-      min: 0,
-      max: 100,
-    },
-    radius: {
-      min: 0,
-      max: 100, // Now represents percentage of canvas size
-    },
-    timeMultiplier: {
-      min: 1,
-      max: 10,
-    },
+    speed: { min: 20, max: 300 },
+    trail: { min: 0, max: 100 },
+    size: { min: 20, max: 150 },
+    blur: { min: 0, max: 100 },
+    radius: { min: 0, max: 100 },
   };
 };

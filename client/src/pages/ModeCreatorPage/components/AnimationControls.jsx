@@ -2,20 +2,12 @@ import { Slider, Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { getSliderProps } from "../modeCreatorPageHelpers";
 
-// Update the styled AnimationSlider
 const AnimationSlider = styled(Slider)({
   color: "#1976d2",
-  "& .MuiSlider-thumb": {
-    backgroundColor: "#fff",
-  },
-  "& .MuiSlider-track": {
-    border: "none",
-  },
-  "& .MuiSlider-rail": {
-    opacity: 0.5,
-    backgroundColor: "#bfbfbf",
-  },
-  width: "350px", // Add fixed width for sliders
+  "& .MuiSlider-thumb": { backgroundColor: "#fff" },
+  "& .MuiSlider-track": { border: "none" },
+  "& .MuiSlider-rail": { opacity: 0.5, backgroundColor: "#bfbfbf" },
+  width: "350px",
 });
 
 const SliderContainer = styled(Box)({
@@ -25,41 +17,17 @@ const SliderContainer = styled(Box)({
 });
 
 const AnimationControls = ({ controls }) => {
-  const {
-    canvasRef,
-    speed,
-    setSpeed,
-    trailLength,
-    setTrailLength,
-    size,
-    setSize,
-    blur,
-    setBlur,
-    radius,
-    setRadius,
-    timeMultiplier,
-    setTimeMultiplier,
-  } = controls;
+  const { speed, setSpeed, trailLength, setTrailLength, size, setSize, blur, setBlur, radius, setRadius } = controls;
 
-  const sliderProps = getSliderProps(canvasRef);
+  const sliderProps = getSliderProps();
 
   return (
     <Box>
       <Typography variant="h6" sx={{ mb: 2, color: "white" }}>
         {"Animation Controls"}
       </Typography>
-
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <SliderContainer>
-          <Typography sx={{ width: 80, color: "white" }}>{"Scale"}</Typography>
-          <AnimationSlider
-            value={timeMultiplier}
-            onChange={(_, value) => setTimeMultiplier(value)}
-            min={sliderProps.timeMultiplier.min}
-            max={sliderProps.timeMultiplier.max}
-          />
-        </SliderContainer>
-
+        {/* Removed Scale Slider */}
         <SliderContainer>
           <Typography sx={{ width: 80, color: "white" }}>{"Speed"}</Typography>
           <AnimationSlider
