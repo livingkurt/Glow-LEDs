@@ -6,7 +6,7 @@ import Affiliate from "../affiliates/affiliate.js";
 export default {
   findAll_tutorials_s: async query => {
     try {
-      const sort_options = ["title", "video", "level", "order"];
+      const sort_options = ["active", "title", "video", "order", "level"];
       const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "title" });
 
       const tutorials = await tutorial_db.findAll_tutorials_db(filter, sort, limit, page);
@@ -21,7 +21,7 @@ export default {
     try {
       const { filter, sort, limit, page } = getFilteredData({
         query,
-        sort_options: ["active", "title", "author"],
+        sort_options: ["active", "title", "video", "order", "level"],
       });
       const tutorials = await tutorial_db.findAll_tutorials_db(filter, sort, limit, page);
       const count = await tutorial_db.count_tutorials_db(filter);
@@ -39,7 +39,7 @@ export default {
   findAllGrid_tutorials_s: async query => {
     try {
       let filter = { deleted: false };
-      let limit = query.limit ? query.limit : 0;
+      const limit = query.limit ? query.limit : 0;
 
       const tagFilter = await handleTagFiltering(query.tags);
       filter = { ...filter, ...tagFilter };
@@ -74,10 +74,12 @@ export default {
           case "createdAt":
             sortOption = { createdAt: 1 };
             break;
+          default:
+            sortOption = { order: 1 };
         }
       }
 
-      let tutorials = await tutorial_db.findAllGrid_tutorials_db(filter, sortOption, limit);
+      const tutorials = await tutorial_db.findAllGrid_tutorials_db(filter, sortOption, limit);
 
       return tutorials;
     } catch (error) {

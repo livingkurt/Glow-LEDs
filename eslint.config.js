@@ -103,6 +103,7 @@ export default [
       "no-implicit-coercion": "warn",
       "import/no-unresolved": "off",
       "import/order": "off",
+      "no-underscore-dangle": "off",
       "max-depth": ["warn", 4],
       "max-classes-per-file": ["warn", 1],
       "no-param-reassign": ["error", { props: true, ignorePropertyModificationsFor: ["state"] }],

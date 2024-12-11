@@ -6,6 +6,7 @@ const article_schema = new mongoose.Schema(
     title: { type: String },
     short_description: { type: String },
     content: { type: String },
+    order: { type: Number },
     image: { type: mongoose.Schema.Types.ObjectId, ref: "Image" },
     images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],

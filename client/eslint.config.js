@@ -95,6 +95,7 @@ export default [
       "react/no-access-state-in-setstate": "warn",
       "import/no-unresolved": "off",
       "import/order": "off",
+      "no-underscore-dangle": "off",
       "react/sort-comp": "warn",
       "max-depth": ["warn", 4],
       "max-classes-per-file": ["warn", 1],

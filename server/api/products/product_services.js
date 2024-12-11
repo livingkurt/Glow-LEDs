@@ -219,6 +219,8 @@ export default {
           case "createdAt":
             sortOption = { release_date: 1 };
             break;
+          default:
+            sortOption = { order: 1 };
         }
       }
 
