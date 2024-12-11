@@ -25,7 +25,7 @@ function generateUrlXML(url, lastmod = null) {
 
 function generateUrlJSX(url) {
   return `<li>
-    <Link to="${url}">${url}</Link>
+    <Link to="${url}">{"${url}"}</Link>
   </li>`;
 }
 
@@ -40,6 +40,9 @@ async function generateSitemap() {
       "/learn/:pathname": data.articles,
       "/events/:pathname": data.events,
       "/menu/:pathname": data.contents,
+      "/tutorials/:pathname": data.tutorials,
+      "/bundles/:pathname": data.bundles,
+      "/modes/:pathname": data.modes,
     };
 
     let sitemapXML = '<?xml version="1.0" encoding="UTF-8"?>';

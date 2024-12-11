@@ -9,6 +9,7 @@ import Event from "../events/event.js";
 import Content from "../contents/content.js";
 import Cart from "../carts/cart.js";
 import Mode from "../modes/mode.js";
+import Tutorial from "../tutorials/tutorial.js";
 
 const router = express.Router();
 
@@ -50,7 +51,7 @@ router.put("/increment", async (req, res) => {
 });
 router.put("/sitemap", async (req, res) => {
   try {
-    const [products, sponsors, teams, articles, events, contents, carts, modes] = await Promise.all([
+    const [products, sponsors, teams, articles, events, contents, carts, modes, tutorials] = await Promise.all([
       Product.find(
         { deleted: false, hidden: false },
         "pathname name category subcategory product_collection updatedAt"
@@ -62,17 +63,18 @@ router.put("/sitemap", async (req, res) => {
       Content.findOne({ deleted: false, active: true }).sort({ updatedAt: -1 }).select("menus").lean(),
       Cart.find({ deleted: false, active: true, affiliate: { $exists: true } }, "pathname updatedAt").lean(),
       Mode.find({ deleted: false, active: true, visibility: "public" }, "pathname updatedAt").lean(),
+      Tutorial.find({ deleted: false, active: true }, "pathname updatedAt").lean(),
     ]);
     const normalizeData = (data, prefix = "") =>
       data.map(item => ({
         pathname: prefix + item.pathname,
-        name: item.name || item.pathname.split("-").join(" "),
+        name: item.name || item.title,
         lastmod: item?.updatedAt?.toISOString()?.split("T")[0],
       }));
 
     const normalizedProducts = products.map(product => ({
       pathname: `/products/${product.pathname}`,
-      name: product.name || product.pathname.split("-").join(" "),
+      name: product.name,
       lastmod: product?.updatedAt?.toISOString()?.split("T")[0],
     }));
 
@@ -85,6 +87,7 @@ router.put("/sitemap", async (req, res) => {
       contents: normalizeData(contents?.menus || [], "/menu/"),
       bundles: normalizeData(carts, "/bundles/"),
       modes: normalizeData(modes, "/modes/"),
+      tutorials: normalizeData(tutorials, "/tutorials/"),
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
