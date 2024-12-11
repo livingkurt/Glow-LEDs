@@ -38,7 +38,7 @@ const ArticlePage = () => {
           <GLButtonV2 onClick={() => dispatch(open_edit_article_modal(article))}>{"Edit Article"}</GLButtonV2>
         )}
       </Box>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h1" gutterBottom>
         {article.title}
       </Typography>
       <Typography variant="subtitle1" gutterBottom>
