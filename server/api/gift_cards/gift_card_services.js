@@ -15,7 +15,7 @@ export default {
       return {
         data: gift_cards,
         total_count: count,
-        currentPage: parseInt(page),
+        currentPage: parseInt(page, 10),
       };
     } catch (error) {
       console.log({ error });

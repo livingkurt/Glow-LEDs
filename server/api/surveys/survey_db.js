@@ -9,7 +9,7 @@ export default {
         .populate("survey")
         .sort(sort)
         .limit(parseInt(limit))
-        .skip(Math.max(parseInt(page), 0) * parseInt(limit))
+        .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit))
         .exec();
     } catch (error) {
       if (error instanceof Error) {

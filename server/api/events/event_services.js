@@ -26,7 +26,7 @@ export default {
       return {
         data: events,
         total_count: count,
-        currentPage: parseInt(page),
+        currentPage: parseInt(page, 10),
       };
     } catch (error) {
       if (error instanceof Error) {
