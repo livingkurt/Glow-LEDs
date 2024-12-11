@@ -68,7 +68,9 @@ const reducers = {
   }),
   modes: combineReducers({
     modePage: modeSlice,
-    modeTable: glTableReducer("modeTable", {}),
+    modeTable: glTableReducer("modeTable", {
+      sorting: [4, "desc"],
+    }),
   }),
   contents: combineReducers({
     contentPage: contentSlice,

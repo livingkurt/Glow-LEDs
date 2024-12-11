@@ -24,6 +24,14 @@ export const getCarts = async ({ search, sorting, filters, page, pageSize }) => 
   }
 };
 
+export const reorderCarts = async ({ reorderedItems }) => {
+  try {
+    return await axios.put(`/api/carts/reorder`, { reorderedItems });
+  } catch (error) {
+    store.dispatch(showError({ message: errorMessage(error) }));
+  }
+};
+
 export const listCarts = createAsyncThunk("carts/listCarts", async (query, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/carts?${create_query(query)}`);
