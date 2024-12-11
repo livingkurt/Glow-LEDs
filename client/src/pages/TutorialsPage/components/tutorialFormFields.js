@@ -28,8 +28,8 @@ export const tutorialFormFields = ({ affiliates, tags }) => {
     },
     tags: tagField({ tags }),
     order: {
-      type: "text",
       label: "Order",
+      type: "number",
     },
     active: {
       type: "checkbox",
