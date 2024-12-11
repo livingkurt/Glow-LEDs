@@ -1,6 +1,7 @@
 import express from "express";
 import email_controller from "./email_controller.js";
 import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
+
 const router = express.Router();
 import cors from "cors";
 

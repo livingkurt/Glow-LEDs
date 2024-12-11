@@ -1,6 +1,7 @@
 import express from "express";
 import wholesaler_controller from "./wholesaler_controller.js";
 import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
+
 const router = express.Router();
 
 router
