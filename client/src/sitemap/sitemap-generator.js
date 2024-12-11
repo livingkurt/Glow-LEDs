@@ -23,10 +23,18 @@ function generateUrlXML(url, lastmod = null) {
   return xml;
 }
 
+function toCapitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function generateUrlJSX(url) {
   return `<li>
     <Link to="${url}">{"${url}"}</Link>
   </li>`;
+}
+function getSection(url, sections) {
+  const path = url.split("/")[1]; // Get first part of path
+  return sections[path] ? path : "other";
 }
 
 async function generateSitemap() {
@@ -47,6 +55,42 @@ async function generateSitemap() {
 
     let sitemapXML = '<?xml version="1.0" encoding="UTF-8"?>';
     sitemapXML += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+    const sections = {
+      account: [],
+      checkout: [],
+      products: [],
+      sponsors: [],
+      teams: [],
+      learn: [],
+      events: [],
+      bundles: [],
+      modes: [],
+      tutorials: [],
+      other: [],
+    };
+
+    // Helper function to determine section
+
+    // Modified route processing
+    routes.forEach(route => {
+      let url = route.path;
+
+      if (url.includes(":")) {
+        const param = url.split(":")[1];
+        const values = paramsConfig[url];
+
+        values?.forEach(value => {
+          const dynamicUrl = url.replace(`:${param}`, value.pathname);
+          sitemapXML += generateUrlXML(`https://www.glow-leds.com${dynamicUrl}`, value.lastmod);
+          sections[getSection(dynamicUrl, sections)].push(generateUrlJSX(dynamicUrl));
+        });
+      } else {
+        sitemapXML += generateUrlXML(`https://www.glow-leds.com${url}`);
+        sections[getSection(url, sections)].push(generateUrlJSX(url));
+      }
+    });
+
+    // Generate JSX with sections
     let sitemapJSX = `import { Link } from "react-router-dom";
                     import { Helmet } from "react-helmet";
                     import { Container } from "@mui/material";
@@ -76,37 +120,34 @@ async function generateSitemap() {
                           <div className="inner_content">
                             <h1 style={{ textAlign: "center" }}>{"Glow LEDs Sitemap"}</h1>
                             <div>
-                              <ul style={{ listStyle: "none", padding: 0 }}>`;
+                            <h2 style={{ textTransform: "capitalize" }}>Home</h2>
+                            <ul style={{ listStyle: "none", padding: 0 }}>
+                              <li><Link to="/">{"/"}</Link></li>
+                            </ul>
+                            `;
 
-    routes.forEach(route => {
-      let url = route.path;
-
-      // Handle dynamic routes
-      if (url.includes(":")) {
-        const param = url.split(":")[1];
-        const values = paramsConfig[url];
-
-        values?.forEach(value => {
-          const dynamicUrl = url.replace(`:${param}`, value.pathname);
-          sitemapXML += generateUrlXML(`https://www.glow-leds.com${dynamicUrl}`, value.lastmod);
-          sitemapJSX += generateUrlJSX(dynamicUrl);
-        });
-      } else {
-        sitemapXML += generateUrlXML(`https://www.glow-leds.com${url}`);
-        sitemapJSX += generateUrlJSX(url);
+    // Add each section with header
+    Object.entries(sections).forEach(([section, links]) => {
+      if (links.length > 0) {
+        sitemapJSX += `
+          <div style={{ marginBottom: "2rem" }}>
+            <h2 style={{ textTransform: "capitalize" }}>{"${toCapitalize(section)} Pages"}</h2>
+            <ul style={{ listStyle: "none", padding: 0 }}>
+              ${links.join("\n")}
+            </ul>
+          </div>`;
       }
     });
 
-    sitemapXML += "</urlset>";
-    sitemapJSX += `</ul>
-                  </div>
-                </div>
-              </Container>
-            );
-          };
+    sitemapJSX += `    </div>
+                    </div>
+                  </Container>
+                );
+              };
 
-          export default SitemapPage;
-          `;
+              export default SitemapPage;
+              `;
+    sitemapXML += "</urlset>";
 
     fs.writeFileSync(path.join(__dirname, "../../public/sitemap.xml"), sitemapXML);
     fs.writeFileSync(path.join(__dirname, "../pages/SitemapPage/SitemapPage.jsx"), sitemapJSX);
