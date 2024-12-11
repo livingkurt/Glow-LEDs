@@ -9,6 +9,7 @@ import { daysBetween } from "../../../utils/helper_functions";
 import { Close } from "@mui/icons-material";
 import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
+import { Typography } from "@mui/material";
 
 const AskForEmailModal = () => {
   const [email, set_email] = useState("");
@@ -95,44 +96,50 @@ const AskForEmailModal = () => {
         tooltip="Close"
         onClick={() => {
           set_show_modal(false);
-          // localStorage.setItem('popup', today);
           localStorage.setItem("popup", JSON.stringify({ date: today, email: false }));
         }}
       >
         <Close />
       </GLIconButton>
       {complete ? (
-        <ul className="column jc-b ai-c p-20px">
-          <li className="mb-2rem">
-            <label className={`title_font ${width < 535 ? "fs-20px lh-30px" : "fs-28px lh-40px"} ta-c jc-c `}>
+        <div className="column jc-b ai-c p-20px">
+          <div className="mb-2rem">
+            <Typography
+              variant="h2"
+              className={`title_font ${width < 535 ? "fs-20px lh-30px" : "fs-28px lh-40px"} ta-c jc-c `}
+            >
               {"Thank you for Signing Up!"}
-            </label>
-          </li>
+            </Typography>
+          </div>
 
-          <li>
-            {/* <p className={`title_font ${width < 535 ? 'fs-16px lh-30px' : 'fs-20px lh-40px'} ta-c jc-c `}>
-							Shine Brighter than ever
-						</p> */}
+          <div>
             <GLLazyImage
               src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg"
               alt=""
               className="w-100per h-auto br-20px max-w-250px"
             />
-          </li>
-          <li>
+          </div>
+          <div>
             <p className="p_descriptions fs-16px ta-c jc-c">{"Check your email for your 10% off Promo Code!"}</p>
-          </li>
-        </ul>
+          </div>
+        </div>
       ) : (
         <form onSubmit={submitHandler} className="modal-content-floating ">
           <div className="h-100per jc-b column">
-            <label className="p_descriptions fs-16px ta-c jc-c">{"Come Into the Light"}</label>
-            <label className={`title_font ${width < 535 ? "fs-20px lh-30px" : "fs-30px lh-40px"} ta-c jc-c `}>
+            <Typography variant="h3" className="p_descriptions fs-16px ta-c jc-c">
+              {"Come Into the Light"}
+            </Typography>
+            <Typography
+              variant="h2"
+              className={`title_font ${width < 535 ? "fs-20px lh-30px" : "fs-30px lh-40px"} ta-c jc-c `}
+            >
               {"Get 10% Off Your Next Order"}
-            </label>
-            <label className="p_descriptions fs-16px ta-c jc-c">{"It's Brighter Over Here"}</label>
-            <ul>
-              <li>
+            </Typography>
+            <Typography variant="h3" className="p_descriptions fs-16px ta-c jc-c">
+              {"It's Brighter Over Here"}
+            </Typography>
+            <div>
+              <div>
                 <input
                   type="email"
                   name="email"
@@ -141,13 +148,13 @@ const AskForEmailModal = () => {
                   className="w-100per"
                   onChange={e => set_email(e.target.value)}
                 />
-              </li>
-              <li className="mt-10px">
-                <label className="validation_text" style={{ textAlign: "center" }}>
+              </div>
+              <div className="mt-10px">
+                <div className="validation_text" style={{ textAlign: "center" }}>
                   {email_validations}
-                </label>
-              </li>
-              <li>
+                </div>
+              </div>
+              <div>
                 <GLButton
                   type="submit"
                   variant="inherit"
@@ -155,8 +162,8 @@ const AskForEmailModal = () => {
                 >
                   {"Join Us"}
                 </GLButton>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
         </form>
       )}
