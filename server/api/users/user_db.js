@@ -33,8 +33,8 @@ export default {
         })
         .populate("employee_code")
         .populate("wholesaler")
-        .limit(parseInt(limit))
-        .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit));
+        .limit(parseInt(limit, 10))
+        .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit, 10));
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

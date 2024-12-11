@@ -46,7 +46,7 @@ export const areCartItemsEqual = (item1, item2) => {
 };
 
 export const updateCartItems = (existingItems, newItems) => {
-  let messages = [];
+  const messages = [];
   let updatedItems = [...existingItems];
 
   const getEffectiveMaxQuantity = item => {
@@ -217,4 +217,37 @@ export const normalizeBundleFilters = async query => {
     },
     sort: sortFilter,
   };
+};
+
+export const normalizeCartFilters = input => {
+  const output = {};
+  Object.keys(input).forEach(key => {
+    switch (key) {
+      case "type":
+        input.type.forEach(type => {
+          if (type === "bundle") {
+            output.affiliate = { $exists: true };
+            output.title = { $exists: true, $ne: "" };
+          }
+        });
+        break;
+
+      default:
+        break;
+    }
+  });
+  return output;
+};
+
+export const normalizeCartSearch = query => {
+  const search = query.search
+    ? {
+        title: {
+          $regex: query.search.toLowerCase(),
+          $options: "i",
+        },
+      }
+    : {};
+
+  return search;
 };

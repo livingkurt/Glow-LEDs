@@ -14,6 +14,7 @@ router.route("/:id/cart_item/:item_index").put(cart_controller.remove_cart_item_
 router.route("/product_bundles").get(cart_controller.product_bundles_carts_c);
 
 router.route("/reorder").put(cart_controller.reorder_carts_c);
+router.route("/filters").get(cart_controller.create_filters_carts_c);
 router
   .route("/:id")
   .get(cart_controller.findById_carts_c)

@@ -67,6 +67,7 @@ const CartsPage = () => {
 
   const remoteApi = useCallback(options => API.getCarts(options), []);
   const remoteReorderApi = useCallback(options => API.reorderCarts(options), []);
+  const remoteFiltersApi = useCallback(() => API.getCartFilters(), []);
 
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
@@ -76,6 +77,7 @@ const CartsPage = () => {
 
       <GLTableV2
         remoteApi={remoteApi}
+        remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
         tableName="Carts"
         namespaceScope="carts"

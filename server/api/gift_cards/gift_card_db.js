@@ -5,8 +5,8 @@ export default {
     try {
       return await GiftCard.find(filter)
         .sort(sort)
-        .limit(parseInt(limit))
-        .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit))
+        .limit(parseInt(limit, 10))
+        .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit, 10))
         .exec();
     } catch (error) {
       throw new Error(error.message);

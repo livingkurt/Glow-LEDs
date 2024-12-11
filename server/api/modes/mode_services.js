@@ -65,7 +65,7 @@ export default {
 
       // Update each article's order using the reorderedItems array
       const updatePromises = reorderedItems.map(async item => {
-        await mode_db.update_modes_db({ id: item._id }, { ...item, order: item.order });
+        await mode_db.update_modes_db(item._id, { ...item, order: item.order });
       });
 
       // Wait for all update operations to complete

@@ -6,7 +6,9 @@ import {
   handleBundleSortFiltering,
   handleBundleTagFiltering,
   normalizeBundleFilters,
+  normalizeCartFilters,
   normalizeCartItem,
+  normalizeCartSearch,
   updateCartItems,
 } from "./cart_helpers.js";
 
@@ -26,7 +28,13 @@ export default {
   table_carts_s: async query => {
     try {
       const sort_options = ["active", "updatedAt", "title", "order"];
-      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: { updatedAt: 1 } });
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        search_name: { updatedAt: 1 },
+        normalizeFilters: normalizeCartFilters,
+        normalizeSearch: normalizeCartSearch,
+      });
       const carts = await cart_db.findAll_carts_db(filter, sort, limit, page);
       const count = await cart_db.count_carts_db(filter);
       return {
@@ -40,7 +48,7 @@ export default {
       }
     }
   },
-  reorder_modes_s: async body => {
+  reorder_carts_s: async body => {
     try {
       const { reorderedItems } = body;
 
@@ -54,6 +62,18 @@ export default {
 
       // Send success response
       return "Modes reordered successfully.";
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  create_filters_carts_s: async query => {
+    try {
+      const availableFilters = {
+        type: ["bundle"],
+      };
+      return { availableFilters };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

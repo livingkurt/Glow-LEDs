@@ -32,6 +32,11 @@ export const reorderCarts = async ({ reorderedItems }) => {
   }
 };
 
+export const getCartFilters = async () => {
+  const { data } = await axios.get(`/api/carts/filters`);
+  return data;
+};
+
 export const listCarts = createAsyncThunk("carts/listCarts", async (query, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/carts?${create_query(query)}`);

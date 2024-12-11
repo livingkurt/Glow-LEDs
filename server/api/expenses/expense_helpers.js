@@ -9,23 +9,23 @@ export const normalizeExpenseFilters = input => {
     switch (key) {
       case "category":
         for (const category of input.category) {
-          output["category"] = category;
+          output.category = category;
         }
         break;
       case "card":
         for (const card of input.card) {
-          output["card"] = card;
+          output.card = card;
         }
         break;
       case "place_of_purchase":
         for (const place_of_purchase of input.place_of_purchase) {
-          output["place_of_purchase"] = place_of_purchase;
+          output.place_of_purchase = place_of_purchase;
         }
         break;
 
       case "irs_category":
         for (const irs_category of input.irs_category) {
-          output["irs_category"] = irs_category;
+          output.irs_category = irs_category;
         }
         break;
 

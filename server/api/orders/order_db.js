@@ -81,8 +81,8 @@ export default {
       };
 
       // Corrected Pagination stages
-      const skipAmount = Math.max(parseInt(page, 10), 0) * parseInt(limit);
-      const limitAmount = parseInt(limit);
+      const skipAmount = Math.max(parseInt(page, 10), 0) * parseInt(limit, 10);
+      const limitAmount = parseInt(limit, 10);
 
       const limitStage = { $limit: limitAmount };
       const skipStage = { $skip: skipAmount };
@@ -189,8 +189,8 @@ export default {
         .populate("orderItems.selectedOptions.filament")
         .populate("orderItems.tags")
         .sort(sort)
-        .limit(parseInt(limit))
-        .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit))
+        .limit(parseInt(limit, 10))
+        .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit, 10))
 
         .exec();
     } catch (error) {
@@ -212,8 +212,8 @@ export default {
         .populate("orderItems.selectedOptions.filament")
         .populate("orderItems.tags")
         .sort(sort)
-        .limit(parseInt(limit))
-        .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit))
+        .limit(parseInt(limit, 10))
+        .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit, 10))
 
         .exec();
     } catch (error) {
