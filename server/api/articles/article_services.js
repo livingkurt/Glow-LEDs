@@ -6,7 +6,7 @@ import User from "../users/user.js";
 export default {
   findAll_articles_s: async query => {
     try {
-      const sort_options = ["title", "video", "level", "order"];
+      const sort_options = ["active", "title", "author", "order"];
       const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "title" });
 
       const articles = await article_db.findAll_articles_db(filter, sort, limit, page);
@@ -21,14 +21,14 @@ export default {
     try {
       const { filter, sort, limit, page } = getFilteredData({
         query,
-        sort_options: ["active", "title", "author"],
+        sort_options: ["active", "title", "author", "order"],
       });
       const articles = await article_db.findAll_articles_db(filter, sort, limit, page);
       const count = await article_db.count_articles_db(filter);
       return {
         data: articles,
         total_count: count,
-        currentPage: parseInt(page),
+        currentPage: parseInt(page, 10),
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -39,7 +39,7 @@ export default {
   findAllGrid_articles_s: async query => {
     try {
       let filter = { deleted: false };
-      let limit = query.limit ? query.limit : 0;
+      const limit = query.limit ? query.limit : 0;
 
       const tagFilter = await handleTagFiltering(query.tags);
       filter = { ...filter, ...tagFilter };
@@ -57,7 +57,7 @@ export default {
         filter.$or = [{ title: searchRegex }, { "tags.pathname": searchRegex }];
       }
 
-      let sortOption = { createdAt: -1 }; // Default sort by newest
+      let sortOption = { order: 1 }; // Default sort by newest
       if (query.sort) {
         switch (query.sort) {
           case "-views":
@@ -72,10 +72,12 @@ export default {
           case "createdAt":
             sortOption = { createdAt: 1 };
             break;
+          default:
+            sortOption = { order: 1 };
         }
       }
 
-      let articles = await article_db.findAllGrid_articles_db(filter, sortOption, limit);
+      const articles = await article_db.findAllGrid_articles_db(filter, sortOption, limit);
 
       return articles;
     } catch (error) {

@@ -40,8 +40,8 @@ const TutorialsPage = () => {
       },
       { title: "Title", display: "title" },
       { title: "Video", display: "video" },
-      { title: "Level", display: "level" },
       { title: "Order", display: "order" },
+      { title: "Level", display: "level" },
       { title: "Tags", display: tutorial => tutorial.tags.map(tag => tag.name).join(", ") },
       {
         title: "",

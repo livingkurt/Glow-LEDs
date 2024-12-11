@@ -44,7 +44,12 @@ const ArticlesPage = () => {
         title: "Author",
         display: article => (article?.author ? `${article?.author?.first_name} ${article?.author?.last_name}` : ""),
       },
-      { title: "Tags", display: article => article.tags.map(tag => tag.name).join(", ") },
+      {
+        title: "Order",
+        display: row => Number(row.order),
+        sortBy: row => Number(row.order),
+        width: 100,
+      },
       {
         title: "",
         nonSelectable: true,

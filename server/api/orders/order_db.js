@@ -81,7 +81,7 @@ export default {
       };
 
       // Corrected Pagination stages
-      const skipAmount = Math.max(parseInt(page), 0) * parseInt(limit);
+      const skipAmount = Math.max(parseInt(page, 10), 0) * parseInt(limit);
       const limitAmount = parseInt(limit);
 
       const limitStage = { $limit: limitAmount };
@@ -190,7 +190,7 @@ export default {
         .populate("orderItems.tags")
         .sort(sort)
         .limit(parseInt(limit))
-        .skip(Math.max(parseInt(page), 0) * parseInt(limit))
+        .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit))
 
         .exec();
     } catch (error) {
@@ -213,7 +213,7 @@ export default {
         .populate("orderItems.tags")
         .sort(sort)
         .limit(parseInt(limit))
-        .skip(Math.max(parseInt(page), 0) * parseInt(limit))
+        .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit))
 
         .exec();
     } catch (error) {
