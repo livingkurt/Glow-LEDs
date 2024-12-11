@@ -52,18 +52,19 @@ router.put("/increment", async (req, res) => {
 router.put("/sitemap", async (req, res) => {
   try {
     const [products, sponsors, teams, articles, events, contents, carts, modes, tutorials] = await Promise.all([
-      Product.find(
-        { deleted: false, hidden: false },
-        "pathname name category subcategory product_collection updatedAt"
-      ).lean(),
+      Product.find({ deleted: false, hidden: false }, "pathname name category subcategory product_collection updatedAt")
+        .lean()
+        .sort({ order: 1 }),
       Affiliate.find({ deleted: false, active: true, sponsor: true }, "pathname updatedAt").lean(),
       Team.find({ deleted: false, active: true }, "pathname updatedAt").lean(),
-      Article.find({ deleted: false, active: true }, "pathname updatedAt").lean(),
+      Article.find({ deleted: false, active: true }, "pathname updatedAt").lean().sort({ order: 1 }),
       Event.find({ deleted: false, active: true }, "pathname updatedAt").lean(),
       Content.findOne({ deleted: false, active: true }).sort({ updatedAt: -1 }).select("menus").lean(),
-      Cart.find({ deleted: false, active: true, affiliate: { $exists: true } }, "pathname updatedAt").lean(),
-      Mode.find({ deleted: false, active: true, visibility: "public" }, "pathname updatedAt").lean(),
-      Tutorial.find({ deleted: false, active: true }, "pathname updatedAt").lean(),
+      Cart.find({ deleted: false, active: true, affiliate: { $exists: true } }, "pathname updatedAt")
+        .lean()
+        .sort({ order: 1 }),
+      Mode.find({ deleted: false, active: true, visibility: "public" }, "pathname updatedAt").lean().sort({ order: 1 }),
+      Tutorial.find({ deleted: false, active: true }, "pathname updatedAt").lean().sort({ order: 1 }),
     ]);
     const normalizeData = (data, prefix = "") =>
       data.map(item => ({
