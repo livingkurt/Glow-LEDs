@@ -27,6 +27,10 @@ export const modeFormFields = ({ mode, microlights, users, affiliates }) => {
       options: microlights,
       labelProp: "name",
     },
+    order: {
+      label: "Order",
+      type: "number",
+    },
     video: {
       label: "Video",
       type: "text",

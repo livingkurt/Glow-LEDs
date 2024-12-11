@@ -38,7 +38,7 @@ export default {
   },
   table_modes_s: async query => {
     try {
-      const sort_options = ["name", "company", "category", "programmable"];
+      const sort_options = ["name", "description", "author", "microlight", "order", "visibility"];
       const { filter, sort, limit, page } = getFilteredData({
         query,
         sort_options,
@@ -53,6 +53,26 @@ export default {
         total_count: count,
         currentPage: page,
       };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  reorder_modes_s: async body => {
+    try {
+      const { reorderedItems } = body;
+
+      // Update each article's order using the reorderedItems array
+      const updatePromises = reorderedItems.map(async item => {
+        await mode_db.update_modes_db({ id: item._id }, { ...item, order: item.order });
+      });
+
+      // Wait for all update operations to complete
+      await Promise.all(updatePromises);
+
+      // Send success response
+      return "Modes reordered successfully.";
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
