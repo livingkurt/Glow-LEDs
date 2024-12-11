@@ -48,7 +48,7 @@ import MenuPage from "../../pages/MenuPage/MenuPage";
 import EventsPage from "../../pages/EventsPage/EventsPage";
 import EventPage from "../../pages/EventPage/EventPage";
 import TicketsPage from "../../pages/TicketsPage/TicketsPage";
-import ArticlePage from "../../pages/AboutPage/ArticlePage/ArticlePage";
+import ArticlePage from "../../pages/ArticlePage/ArticlePage";
 import ArticlesPage from "../../pages/ArticlesPage/ArticlesPage";
 import ArticlesGridPage from "../../pages/ArticlesGridPage/ArticlesGridPage";
 import AcademyPage from "../../pages/AcademyPage/AcademyPage";

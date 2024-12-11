@@ -16,6 +16,7 @@ const mode_schema = new mongoose.Schema(
     video: { type: String },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     colors: [mode_color_schema],
+    order: { type: Number },
     microlight: { type: mongoose.Schema.Types.ObjectId, ref: "Microlight" },
     flashing_pattern: microlight_flashing_pattern_schema,
     visibility: { type: String, enum: ["public", "private"] },

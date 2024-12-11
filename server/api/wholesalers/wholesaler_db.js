@@ -6,8 +6,8 @@ export default {
       return await Wholesaler.find(filter)
         .sort(sort)
         .populate("user")
-        .limit(parseInt(limit))
-        .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit))
+        .limit(parseInt(limit, 10))
+        .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit, 10))
         .exec();
     } catch (error) {
       if (error instanceof Error) {

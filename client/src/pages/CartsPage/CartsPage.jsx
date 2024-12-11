@@ -7,7 +7,6 @@ import { open_create_cart_modal, open_edit_cart_modal } from "../../slices/cartS
 import { EditCartModal } from "./components";
 import * as API from "../../api";
 import { Box, Button, Container } from "@mui/material";
-import { getCarts } from "../../api";
 import { determineColor } from "./cartsPageHelpers";
 import { format_date } from "../../utils/helper_functions";
 import EditIcon from "@mui/icons-material/Edit";
@@ -44,6 +43,7 @@ const CartsPage = () => {
       },
       { title: "Date Updated", display: row => format_date(row.updatedAt) },
       { title: "Title", display: row => row.title },
+      { title: "Order", display: row => row.order },
       { title: "User", display: row => (row?.user ? `${row?.user.first_name} ${row?.user.last_name}` : "Guest") },
       { title: "Cart Items", display: row => row.cartItems.map(item => item.name).join(", ") },
       {
@@ -65,7 +65,9 @@ const CartsPage = () => {
     [dispatch]
   );
 
-  const remoteApi = useCallback(options => getCarts(options), []);
+  const remoteApi = useCallback(options => API.getCarts(options), []);
+  const remoteReorderApi = useCallback(options => API.reorderCarts(options), []);
+  const remoteFiltersApi = useCallback(() => API.getCartFilters(), []);
 
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
@@ -75,13 +77,16 @@ const CartsPage = () => {
 
       <GLTableV2
         remoteApi={remoteApi}
+        remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
         tableName="Carts"
         namespaceScope="carts"
         namespace="cartTable"
         determineColor={determineColor}
+        remoteReorderApi={remoteReorderApi}
         columnDefs={columnDefs}
         enableRowSelect={true}
+        enableDragDrop
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_cart_modal())}>
             {"Create Cart"}

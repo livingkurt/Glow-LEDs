@@ -7,6 +7,10 @@ import Team from "../teams/team.js";
 import Article from "../articles/article.js";
 import Event from "../events/event.js";
 import Content from "../contents/content.js";
+import Cart from "../carts/cart.js";
+import Mode from "../modes/mode.js";
+import Tutorial from "../tutorials/tutorial.js";
+
 const router = express.Router();
 
 router.get("/environment", async (req, res) => {
@@ -47,37 +51,44 @@ router.put("/increment", async (req, res) => {
 });
 router.put("/sitemap", async (req, res) => {
   try {
-    const [products, sponsors, teams, articles, events, contents] = await Promise.all([
-      Product.find(
-        { deleted: false, isVariation: false, hidden: false },
-        "pathname name category subcategory product_collection updatedAt"
-      ).lean(),
+    const [products, sponsors, teams, articles, events, contents, carts, modes, tutorials] = await Promise.all([
+      Product.find({ deleted: false, hidden: false }, "pathname name category subcategory product_collection updatedAt")
+        .lean()
+        .sort({ order: 1 }),
       Affiliate.find({ deleted: false, active: true, sponsor: true }, "pathname updatedAt").lean(),
       Team.find({ deleted: false, active: true }, "pathname updatedAt").lean(),
-      Article.find({ deleted: false, active: true }, "pathname updatedAt").lean(),
+      Article.find({ deleted: false, active: true }, "pathname updatedAt").lean().sort({ order: 1 }),
       Event.find({ deleted: false, active: true }, "pathname updatedAt").lean(),
       Content.findOne({ deleted: false, active: true }).sort({ updatedAt: -1 }).select("menus").lean(),
+      Cart.find({ deleted: false, active: true, affiliate: { $exists: true } }, "pathname updatedAt")
+        .lean()
+        .sort({ order: 1 }),
+      Mode.find({ deleted: false, active: true, visibility: "public" }, "pathname updatedAt").lean().sort({ order: 1 }),
+      Tutorial.find({ deleted: false, active: true }, "pathname updatedAt").lean().sort({ order: 1 }),
     ]);
-
-    const normalizeData = data =>
+    const normalizeData = (data, prefix = "") =>
       data.map(item => ({
-        pathname: item.pathname,
+        pathname: prefix + item.pathname,
+        name: item.name || item.title,
         lastmod: item?.updatedAt?.toISOString()?.split("T")[0],
       }));
 
     const normalizedProducts = products.map(product => ({
-      pathname: product.pathname,
+      pathname: `/products/${product.pathname}`,
+      name: product.name,
       lastmod: product?.updatedAt?.toISOString()?.split("T")[0],
     }));
 
     res.json({
       products: normalizedProducts,
-      sponsors: normalizeData(sponsors),
-      teams: normalizeData(teams),
-      articles: normalizeData(articles),
-      events: normalizeData(events),
-      contents: normalizeData(contents.menus),
-      articles: normalizeData(articles),
+      sponsors: normalizeData(sponsors, "/sponsors/"),
+      teams: normalizeData(teams, "/teams/"),
+      articles: normalizeData(articles, "/learn/"),
+      events: normalizeData(events, "/events/"),
+      contents: normalizeData(contents?.menus || [], "/menu/"),
+      bundles: normalizeData(carts, "/bundles/"),
+      modes: normalizeData(modes, "/modes/"),
+      tutorials: normalizeData(tutorials, "/tutorials/"),
     });
   } catch (err) {
     res.status(500).json({ message: err.message });

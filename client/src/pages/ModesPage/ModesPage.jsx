@@ -29,10 +29,12 @@ const ModesPage = () => {
         title: "Description",
         display: "description",
       },
+      { title: "Author", display: "author" },
       {
         title: "Microlight",
         display: mode => mode.microlight?.name || "N/A",
       },
+      { title: "Order", display: row => row.order },
       {
         title: "Visibility",
         display: mode => toCapitalize(mode.visibility),
@@ -70,6 +72,7 @@ const ModesPage = () => {
   );
 
   const remoteApi = useCallback(options => API.getModes(options), []);
+  const remoteReorderApi = useCallback(options => API.reorderModes(options), []);
 
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
@@ -79,6 +82,7 @@ const ModesPage = () => {
 
       <GLTableV2
         remoteApi={remoteApi}
+        remoteReorderApi={remoteReorderApi}
         remoteVersionRequirement={remoteVersionRequirement}
         tableName="Modes"
         namespaceScope="modes"
@@ -86,6 +90,7 @@ const ModesPage = () => {
         columnDefs={columnDefs}
         loading={loading}
         enableRowSelect={true}
+        enableDragDrop
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_mode_modal())}>
             {"Create Mode"}

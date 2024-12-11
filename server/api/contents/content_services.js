@@ -70,7 +70,7 @@ export default {
       if (count !== undefined) {
         return {
           contents,
-          totalPages: Math.ceil(count / parseInt(limit)),
+          totalPages: Math.ceil(count / parseInt(limit, 10)),
           currentPage: page,
         };
       } else {

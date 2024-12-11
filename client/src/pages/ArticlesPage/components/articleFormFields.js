@@ -16,6 +16,10 @@ export const articleFormFields = ({ users, tags, article }) => {
       label: "Images",
       album: `${article.title} Images`,
     },
+    order: {
+      label: "Order",
+      type: "number",
+    },
 
     tags: tagField({ tags }),
     pathname: { type: "text", label: "Pathname" },

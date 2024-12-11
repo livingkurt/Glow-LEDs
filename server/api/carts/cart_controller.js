@@ -25,6 +25,24 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  reorder_carts_c: async (req, res) => {
+    const { body } = req;
+    try {
+      const carts = await cart_services.reorder_carts_s(body);
+      return res.status(200).send(carts);
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
+  create_filters_carts_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const filters = await cart_services.create_filters_carts_s(query);
+      return res.status(200).send(filters);
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   product_bundles_carts_c: async (req, res) => {
     const { query } = req;
 

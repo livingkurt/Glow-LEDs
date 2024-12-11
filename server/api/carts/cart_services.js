@@ -6,14 +6,16 @@ import {
   handleBundleSortFiltering,
   handleBundleTagFiltering,
   normalizeBundleFilters,
+  normalizeCartFilters,
   normalizeCartItem,
+  normalizeCartSearch,
   updateCartItems,
 } from "./cart_helpers.js";
 
 export default {
   findAll_carts_s: async query => {
     try {
-      const sort_options = ["active", "updatedAt", "user", "cartItems"];
+      const sort_options = ["active", "updatedAt", "title", "order"];
       const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: { updatedAt: 1 } });
       const carts = await cart_db.findAll_carts_db(filter, sort, limit, page);
       return carts;
@@ -25,8 +27,14 @@ export default {
   },
   table_carts_s: async query => {
     try {
-      const sort_options = ["active", "updatedAt", "user", "cartItems"];
-      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: { updatedAt: 1 } });
+      const sort_options = ["active", "updatedAt", "title", "order"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        search_name: { updatedAt: 1 },
+        normalizeFilters: normalizeCartFilters,
+        normalizeSearch: normalizeCartSearch,
+      });
       const carts = await cart_db.findAll_carts_db(filter, sort, limit, page);
       const count = await cart_db.count_carts_db(filter);
       return {
@@ -34,6 +42,38 @@ export default {
         total_count: count,
         currentPage: page,
       };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  reorder_carts_s: async body => {
+    try {
+      const { reorderedItems } = body;
+
+      // Update each article's order using the reorderedItems array
+      const updatePromises = reorderedItems.map(async item => {
+        await cart_db.update_carts_db({ id: item._id }, { ...item, order: item.order });
+      });
+
+      // Wait for all update operations to complete
+      await Promise.all(updatePromises);
+
+      // Send success response
+      return "Modes reordered successfully.";
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  create_filters_carts_s: async query => {
+    try {
+      const availableFilters = {
+        type: ["bundle"],
+      };
+      return { availableFilters };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -98,7 +138,7 @@ export default {
             pipeline.push({ $sort: { createdAt: -1 } });
         }
       } else {
-        pipeline.push({ $sort: { createdAt: -1 } });
+        pipeline.push({ $sort: { order: 1 } });
       }
 
       const bundles = await cart_db.aggregate_carts_db(pipeline);
@@ -257,18 +297,16 @@ export default {
           const new_cart = await cart_db.findById_carts_db(actualId);
           return new_cart;
         }
-      } else {
-        if (my_cart && my_cart.cartItems.length > 0) {
-          my_cart.cartItems.splice(actualItemIndex, 1);
+      } else if (my_cart && my_cart.cartItems.length > 0) {
+        my_cart.cartItems.splice(actualItemIndex, 1);
 
-          if (my_cart.cartItems.length === 0) {
-            return { message: "Cart is now empty" };
-          } else {
-            return { cartItems: my_cart.cartItems };
-          }
+        if (my_cart.cartItems.length === 0) {
+          return { message: "Cart is now empty" };
         } else {
-          throw new Error("There is no cart to modify");
+          return { cartItems: my_cart.cartItems };
         }
+      } else {
+        throw new Error("There is no cart to modify");
       }
     } catch (error) {
       if (error instanceof Error) {

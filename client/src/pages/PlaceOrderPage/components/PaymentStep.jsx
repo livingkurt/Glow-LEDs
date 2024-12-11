@@ -251,7 +251,7 @@ const PaymentStep = () => {
 
   return (
     <div>
-      <ul className="mv-0px">
+      <div className="mv-0px">
         <div className="jc-b mv-10px">
           <Typography variant="h4">{"3. Payment & Review"}</Typography>
           {payment_completed && !show_payment && (
@@ -367,7 +367,7 @@ const PaymentStep = () => {
                 </Typography>
               </div>
             )}
-            <li>
+            <div>
               <div className="w-100per mb-1rem">
                 <label htmlFor="tip" className="fs-16px">
                   {"Leave a tip for our production team 💙"}
@@ -386,9 +386,9 @@ const PaymentStep = () => {
                   }}
                 />
               </div>
-            </li>
-            {!current_user.hasOwnProperty("first_name") && (
-              <li>
+            </div>
+            {!current_user.first_name && (
+              <div>
                 <div className="mv-2rem">
                   <input
                     type="checkbox"
@@ -405,21 +405,23 @@ const PaymentStep = () => {
                   />
                   <label htmlFor="create_account mb-20px">{"Create an account for faster checkout"}</label>
                 </div>
-              </li>
+              </div>
             )}
             {current_user && !current_user.first_name && create_account && (
-              <li className="column mb-2rem">
-                <label htmlFor="password">{"Password"}</label>
-                <input // className="form_input"
+              <div className="column mb-2rem">
+                <label htmlFor="new_password">{"Password"}</label>
+                <input
                   type="password"
-                  id="password"
+                  id="new_password"
                   name="password"
                   onChange={e => dispatch(set_new_password(e.target.value))}
                 />
-                <label className="validation_text fs-16px jc-c ">{password_validations}</label>
-              </li>
+                <label htmlFor="new_password" className="validation_text fs-16px jc-c">
+                  {password_validations}
+                </label>
+              </div>
             )}
-            <li>
+            <div>
               {cartItems.length > 0 && totalPrice ? (
                 <StripeCheckout hasPreOrderItems={hasPreOrderItems} preOrderReleaseDate={preOrderReleaseDate} />
               ) : (
@@ -439,12 +441,12 @@ const PaymentStep = () => {
                   </GLButton>
                 </>
               )}
-            </li>
+            </div>
             {current_user.isAdmin && (
               <div className="mt-2rem">
                 {current_user.isAdmin && users && (
                   <div>
-                    <li>
+                    <div>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -458,7 +460,7 @@ const PaymentStep = () => {
                         }
                         label="Already Paid?"
                       />
-                    </li>
+                    </div>
                     {paid && (
                       <div className="ai-c h-25px mv-10px mt-2rem mb-30px jc-c">
                         <div className="custom-select w-100per">
@@ -519,7 +521,7 @@ const PaymentStep = () => {
             )}
           </div>
         )}
-      </ul>
+      </div>
       {width < 400 && <hr />}
     </div>
   );

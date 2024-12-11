@@ -8,8 +8,8 @@ export default {
         .populate("user")
         .populate("affiliate")
         .populate("team")
-        .limit(parseInt(limit))
-        .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit))
+        .limit(parseInt(limit, 10))
+        .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit, 10))
         .exec();
     } catch (error) {
       if (error instanceof Error) {
@@ -25,8 +25,8 @@ export default {
         .populate("affiliate")
         .populate("team")
         .sort(sort)
-        .limit(parseInt(limit))
-        .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit))
+        .limit(parseInt(limit, 10))
+        .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit, 10))
 
         .exec();
     } catch (error) {

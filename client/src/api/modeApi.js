@@ -21,6 +21,14 @@ export const getModes = async ({ search, sorting, filters, page, pageSize }) => 
   }
 };
 
+export const reorderModes = async ({ reorderedItems }) => {
+  try {
+    return await axios.put(`/api/modes/reorder`, { reorderedItems });
+  } catch (error) {
+    store.dispatch(showError({ message: errorMessage(error) }));
+  }
+};
+
 export const listModes = createAsyncThunk("modes/listModes", async (query, { dispatch, rejectWithValue }) => {
   try {
     const { data } = await axios.get(`/api/modes?${create_query(query)}`);

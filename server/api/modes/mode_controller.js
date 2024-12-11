@@ -25,6 +25,15 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  reorder_modes_c: async (req, res) => {
+    const { body } = req;
+    try {
+      const modes = await mode_services.reorder_modes_s(body);
+      return res.status(200).send(modes);
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findById_modes_c: async (req, res) => {
     const { params } = req;
     try {
