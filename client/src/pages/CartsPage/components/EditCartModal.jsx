@@ -27,7 +27,7 @@ const EditCartModal = () => {
   const { data: events, isLoading: eventsLoading } = useEventsQuery();
   const { data: tickets, isLoading: ticketsLoading } = useTicketsQuery();
   const { data: tags, isLoading: tagsLoading } = useTagsQuery();
-  const { data: products, isLoading: productsLoading } = useProductsQuery({ hidden: false, isVariation: false });
+  const { data: products, isLoading: productsLoading } = useProductsQuery({ hidden: false });
   const { data: affiliates, isLoading: affiliatesLoading } = useAffiliatesQuery();
   const { data: users, isLoading: usersLoading } = useUsersQuery();
 

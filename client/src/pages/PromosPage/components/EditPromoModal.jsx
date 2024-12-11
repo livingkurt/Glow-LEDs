@@ -14,7 +14,7 @@ const EditPromoModal = () => {
   const { data: affiliates, isLoading: loadingAffiliates } = useAffiliatesQuery({ active: true });
   const { data: users, isLoading: loadingUsers } = useUsersQuery({});
   const { data: tags, isLoading: loadingTags } = useTagsQuery({});
-  const { data: products, isLoading: loadingProducts } = useProductsQuery({ hidden: false, isVariation: false });
+  const { data: products, isLoading: loadingProducts } = useProductsQuery({ hidden: false });
 
   const formFields = promoFormFields({
     affiliates: loadingAffiliates ? [] : affiliates || [],
