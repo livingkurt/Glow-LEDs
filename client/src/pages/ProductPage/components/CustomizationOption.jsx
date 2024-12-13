@@ -25,18 +25,17 @@ const CustomizationOption = ({
       updateValidationError(index, null);
     } else {
       if (option.optionType === "text") {
-        // For text input, create a custom option with the text value and use option's additionalCost
+        // For text input, create a custom option with the text value
         const customOption = {
           name: value,
-          additionalCost: option.additionalCost || 0, // Use option-level additionalCost
-          product: null,
+          additionalCost: option.values[0]?.additionalCost || 0,
+          product: option.values[0]?.product,
         };
         selectOption({ index, selectedOption: customOption, option });
         updateValidationError(index, null);
       } else {
-        // For non-text options, find the selected value and its additionalCost
-        const fullSelectedOption = option.values?.find(opt => opt.name === value);
-        if (fullSelectedOption && (!fullSelectedOption.product || fullSelectedOption.product.count_in_stock > 0)) {
+        const fullSelectedOption = option.values.find(opt => opt.name === value);
+        if (fullSelectedOption && fullSelectedOption.product.count_in_stock > 0) {
           selectOption({ index, selectedOption: fullSelectedOption, option });
           updateValidationError(index, null);
         }

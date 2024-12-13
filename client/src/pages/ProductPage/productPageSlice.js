@@ -94,29 +94,20 @@ const productPage = createSlice({
     },
     selectOption: (state, { payload }) => {
       const { selectedOption, index, option, fromUrlParams } = payload;
-
-      // Only proceed with selection if:
-      // 1. It's not an add-on option, or
-      // 2. It is an add-on option AND its specific addon is checked
-      if (!option.isAddOn || (option.isAddOn && state.addonCheckedStates[index])) {
-        if (selectedOption === undefined) {
-          // If the selected option is undefined, remove it from the selectedOptions array
-          state.customizedProduct.selectedOptions[index] = {};
-          const additionalCost = calculateAdditionalCost(
-            state.customizedProduct.selectedOptions,
-            state.customizedProduct.currentOptions
-          );
-          updatePrice(state, additionalCost);
-        } else {
-          state.customizedProduct.selectedOptions[index] = {
-            ...selectedOption,
-            isAddOn: option.isAddOn,
-            replacePrice: option.replacePrice,
-            additionalCost: selectedOption.additionalCost,
-          };
-          updateProductDetailsFromOption(state, selectedOption, option, fromUrlParams);
-          handlePriceReplacement(state, option, selectedOption);
-        }
+      if (selectedOption === undefined) {
+        // If the selected option is undefined, remove it from the selectedOptions array
+        state.customizedProduct.selectedOptions[index] = {};
+        const additionalCost = calculateAdditionalCost(state.customizedProduct.selectedOptions);
+        updatePrice(state, additionalCost);
+      } else {
+        state.customizedProduct.selectedOptions[index] = {
+          ...selectedOption,
+          isAddOn: option.isAddOn,
+          replacePrice: option.replacePrice,
+          additionalCost: selectedOption.additionalCost,
+        };
+        updateProductDetailsFromOption(state, selectedOption, option, fromUrlParams);
+        handlePriceReplacement(state, option, selectedOption);
       }
     },
     setQuantity: (state, { payload }) => {
