@@ -25,24 +25,24 @@ const CustomizationOption = ({
       updateValidationError(index, null);
     } else {
       if (option.optionType === "text") {
-        // For text input, create a custom option with the text value
+        // For text input, create a custom option with the text value and use option's additionalCost
         const customOption = {
           name: value,
-          additionalCost: option.values[0]?.additionalCost || 0,
-          product: option.values[0]?.product,
+          additionalCost: option.additionalCost || 0, // Use option-level additionalCost
+          product: null,
         };
         selectOption({ index, selectedOption: customOption, option });
         updateValidationError(index, null);
       } else {
-        const fullSelectedOption = option.values.find(opt => opt.name === value);
-        if (fullSelectedOption && fullSelectedOption.product.count_in_stock > 0) {
+        // For non-text options, find the selected value and its additionalCost
+        const fullSelectedOption = option.values?.find(opt => opt.name === value);
+        if (fullSelectedOption && (!fullSelectedOption.product || fullSelectedOption.product.count_in_stock > 0)) {
           selectOption({ index, selectedOption: fullSelectedOption, option });
           updateValidationError(index, null);
         }
       }
     }
   };
-
   const handleAddonCheckboxChange = event => {
     setIsAddonChecked(event.target.checked);
     if (!event.target.checked) {
@@ -139,7 +139,9 @@ const CustomizationOption = ({
               {"Add "}
               {option.name}
               {" + $"}
-              {option.values[0].additionalCost?.toFixed(2)}{" "}
+              {option?.values[0]?.additionalCost
+                ? option?.values[0].additionalCost.toFixed(2)
+                : option?.additionalCost.toFixed(2)}{" "}
               {option.details && <GLInfoPopover details={option.details} />}
             </Box>
           }

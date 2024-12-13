@@ -40,8 +40,20 @@ export const updatePrice = (state, additionalCost) => {
     };
   }
 };
-export const calculateAdditionalCost = selectedOptions => {
-  const total = selectedOptions.reduce((total, option) => total + (option?.additionalCost || 0), 0);
+export const calculateAdditionalCost = (selectedOptions, currentOptions) => {
+  const total = selectedOptions.reduce((total, selectedOption, index) => {
+    // Get the corresponding option definition
+    const optionDefinition = currentOptions[index];
+
+    // Add option-level additional cost (for things like custom text)
+    const optionCost = optionDefinition?.additionalCost || 0;
+
+    // Add value-level additional cost (for specific selections)
+    const valueCost = selectedOption?.additionalCost || 0;
+
+    return total + optionCost + valueCost;
+  }, 0);
+
   return Number(total.toFixed(2));
 };
 
@@ -136,8 +148,10 @@ export const updateProductDetailsFromOption = (state, selectedOption, option, fr
 };
 
 export const handlePriceReplacement = (state, option, selectedOption) => {
-  const additionalCost = calculateAdditionalCost(state.customizedProduct.selectedOptions);
-
+  const additionalCost = calculateAdditionalCost(
+    state.customizedProduct.selectedOptions,
+    state.customizedProduct.currentOptions
+  );
   // Find any selected option that has replacePrice: true
   const priceReplacingOption = state.customizedProduct.currentOptions?.find((opt, index) => {
     if (opt.replacePrice) {

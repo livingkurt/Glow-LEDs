@@ -33,6 +33,7 @@ export const optionSchema = new mongoose.Schema({
   optionType: { type: String },
   replacePrice: { type: Boolean, default: false },
   isAddOn: { type: Boolean, default: false },
+  additionalCost: { type: Number, default: 0 },
   details: { type: String },
   active: { type: Boolean, default: true },
 });
