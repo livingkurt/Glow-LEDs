@@ -1,7 +1,7 @@
 import axios from "axios";
 import config from "../config.js";
-const baseId = "app1s1rBexc8nLb9s";
-const tableIdOrName = "tblsCcVphzBosLDmU";
+
+import dayjs from "dayjs";
 
 export const domain = () => {
   if (config.ENVIRONMENT === "production") {
@@ -14,22 +14,11 @@ export const domain = () => {
 };
 
 export const last_month_date_range = () => {
-  const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth();
+  const lastMonth = dayjs().subtract(1, "month");
 
-  // Calculate the year and month of the previous month
-  let prevYear = currentYear;
-  let prevMonth = currentMonth - 1;
-  if (prevMonth < 0) {
-    prevYear -= 1;
-    prevMonth = 11;
-  }
-  const prevNumDays = new Date(prevYear, prevMonth + 1, 0).getDate();
+  const start_date = lastMonth.startOf("month").format("YYYY-MM-DD HH:mm:ss");
+  const end_date = lastMonth.endOf("month").format("YYYY-MM-DD HH:mm:ss");
 
-  const startDate = new Date(prevYear, prevMonth, 1);
-  const endDate = new Date(prevYear, prevMonth, prevNumDays);
-  const start_date = startDate.toISOString().split("T")[0];
-  const end_date = endDate.toISOString().split("T")[0];
   return { start_date, end_date };
 };
 

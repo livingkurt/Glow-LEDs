@@ -1,3 +1,8 @@
+/* eslint-disable import/prefer-default-export */
+/* eslint-disable no-console */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-promise-executor-return */
+/* eslint-disable no-restricted-syntax */
 import axios from "axios";
 import { last_month_date_range, determine_code_tier, domain } from "../worker_helpers.js";
 
@@ -42,7 +47,7 @@ export const payout_affiliates = async () => {
         promo_code: affiliate?.public_code?._id,
         uses: promo_code_usage.number_of_uses,
         stripe_connect_id: affiliate?.user?.stripe_connect_id || null,
-        paid: affiliate?.user?.stripe_connect_id ? true : false,
+        paid: !!affiliate?.user?.stripe_connect_id,
         description: `Monthly Payout for ${affiliate?.user?.first_name} ${affiliate?.user?.last_name}`,
         paid_at: new Date(),
         email: affiliate?.user?.email,
@@ -55,7 +60,7 @@ export const payout_affiliates = async () => {
         promo_code: affiliate?.public_code?._id,
         uses: promo_code_usage.number_of_uses,
         stripe_connect_id: affiliate?.user?.stripe_connect_id || null,
-        paid: affiliate?.user?.stripe_connect_id ? true : false,
+        paid: !!affiliate?.user?.stripe_connect_id,
         description: `Monthly Payout for ${affiliate?.user?.first_name} ${affiliate?.user?.last_name}`,
         paid_at: new Date(),
         email: affiliate.user.email,
@@ -69,14 +74,6 @@ export const payout_affiliates = async () => {
         percentage_off,
       });
       console.log({ percentage_off });
-
-      // Create gift cards for sponsors
-      if (affiliate.sponsor) {
-        await axios.post(`${domainUrl}/api/gift_cards/sponsor-benefits`, {
-          userId: affiliate.user._id,
-          monthlyRevenue: promo_code_usage.revenue,
-        });
-      }
 
       // Delay between each iteration
       await new Promise(resolve => setTimeout(resolve, 1000));
