@@ -95,69 +95,14 @@ export default {
   bulk_create_expenses_s: async body => {
     const { expenses } = body;
     try {
-      const irs_categories = [
-        "Advertising and Promotion",
-        "Bank Fees",
-        "Car and Truck Expenses",
-        "Contract Labor",
-        "Employee Benefit Programs",
-        "Inventory Purchase",
-        "Legal and Professional Services",
-        "Meals",
-        "Office Expense",
-        "Other Expenses",
-        "Rent or Lease",
-        "Shipping and Postage",
-        "Supplies",
-        "Tools and Equipment",
-        "Travel",
-        "Utilities",
-      ];
-
-      // Validate incoming data
-      if (!Array.isArray(expenses) || expenses.length === 0) {
-        throw new Error("Invalid expense data format");
-      }
-
-      const formatted_expenses = expenses.reduce((acc, row) => {
-        // Validate required fields
-        if (!row.Date || !row.Amount) {
-          throw new Error("Missing required fields");
-        }
-
-        // Skip records with invalid categories
-        if (!irs_categories.includes(row.Category)) {
-          return acc;
-        }
-
-        // Add data validation
-        const amount = Math.abs(parseFloat(row.Amount));
-        if (Number.isNaN(amount)) {
-          throw new Error("Invalid amount format");
-        }
-
-        acc.push({
-          date_of_purchase: new Date(row.Date),
-          amount,
-          category: row.Category,
-          irs_category: row.Category,
-          expense_name: row["Original Statement"] || "No Description",
-          place_of_purchase: row.Merchant || "Unknown",
-          card: row.Account || "Unknown",
-        });
-
-        return acc;
-      }, []);
-
-      const savedExpenses = await expense_db.bulk_create_expenses_db(formatted_expenses);
-      return savedExpenses;
+      return await expense_db.bulk_create_expenses_db(expenses);
     } catch (error) {
       if (error instanceof Error) {
-        throw new Error(`Failed to import expenses: ${error.message}`);
+        throw new Error(error.message);
       }
-      throw error;
     }
   },
+
   create_all_expenses_s: async body => {
     const { data, card, properties } = body;
     try {
@@ -182,7 +127,7 @@ export default {
             date_of_purchase: formatDateToISODate(expense.date),
             expense_name: expense.description,
             place_of_purchase: determine_place(expense.description),
-            card,
+            card: card,
             url: "",
             application: determine_application(expense.description),
             category: determine_category(expense.description),

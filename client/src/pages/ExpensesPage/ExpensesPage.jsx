@@ -7,7 +7,7 @@ import { EditExpenseModal } from "./components";
 import * as API from "../../api";
 import { Box, Button, Container } from "@mui/material";
 import { getExpenses } from "../../api";
-import { open_create_expense_modal, open_edit_expense_modal, set_loading } from "../../slices/expenseSlice";
+import { open_create_expense_modal, open_edit_expense_modal } from "../../slices/expenseSlice";
 import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageModal";
 import { close_image_display_modal } from "../../slices/imageSlice";
 import { determineExpenseColors } from "./expensesPageHelpers";
@@ -18,7 +18,6 @@ import BackupTableIcon from "@mui/icons-material/BackupTable";
 import { ContentCopy } from "@mui/icons-material";
 import Papa from "papaparse";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
-import { showError, showInfo } from "../../slices/snackbarSlice";
 
 const ExpensesPage = () => {
   const expensePage = useSelector(state => state.expenses.expensePage);
@@ -114,65 +113,35 @@ const ExpensesPage = () => {
 
   const showFiles = async e => {
     const file = e.target.files[0];
-    dispatch(set_loading(true));
 
     Papa.parse(file, {
       header: true,
-      skipEmptyLines: true, // Add this to skip empty lines
-      transformHeader: header => header.trim(), // Add this to clean headers
-      complete: async function (results) {
-        try {
-          // Debug the parsing results
-          console.log("Parse results:", {
-            data: results.data,
-            errors: results.errors,
-            meta: results.meta,
-          });
-
-          if (results.errors.length > 0) {
-            console.error("CSV parsing errors:", results.errors);
-            throw new Error(`CSV parsing failed: ${results.errors[0].message}`);
-          }
-
-          // Filter out any rows with empty or invalid dates
-          const validData = results.data.filter(row => row.Date && row.Amount && !isNaN(new Date(row.Date).getTime()));
-
-          if (validData.length === 0) {
-            throw new Error("No valid data found in CSV");
-          }
-
-          const response = await dispatch(API.bulkSaveExpenses(validData));
-
-          dispatch(
-            showInfo({
-              message: `Successfully imported ${response.length} expenses (${results.data.length - response.length} skipped)`,
-              type: "success",
-            })
-          );
-        } catch (error) {
-          console.error("Import error:", error);
-          dispatch(
-            showError({
-              message: error.message || "Failed to import expenses",
-              type: "error",
-            })
-          );
-        } finally {
-          dispatch(set_loading(false));
-        }
-      },
-      error: error => {
-        console.error("Papa Parse error:", error);
-        dispatch(
-          showError({
-            message: `Failed to read CSV file: ${error.message}`,
-            type: "error",
-          })
-        );
-        dispatch(set_loading(false));
+      complete: function (results) {
+        const expenses = results.data
+          .filter(
+            row =>
+              row.date_of_purchase &&
+              row.amount &&
+              row.category &&
+              row.irs_category &&
+              row.expense_name &&
+              row.place_of_purchase &&
+              row.card
+          )
+          .map(row => ({
+            date_of_purchase: new Date(row.date_of_purchase),
+            amount: parseFloat(row.amount),
+            category: row.category,
+            irs_category: row.irs_category,
+            expense_name: row.expense_name,
+            place_of_purchase: row.place_of_purchase,
+            card: row.card,
+          }));
+        dispatch(API.bulkSaveExpenses(expenses));
       },
     });
   };
+
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
       <Helmet>
