@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Box, Checkbox, FormControlLabel, Typography, TextField } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import GLToggleButtons from "../../../shared/GlowLEDsComponents/GLToggleButtons/GLToggleButtons";
 import GLSelect from "../../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 import GLColorButtons from "../../../shared/GlowLEDsComponents/GLColorButtons/GLColorButtons";
@@ -43,9 +43,11 @@ const CustomizationOption = ({
       }
     }
   };
+
   const handleAddonCheckboxChange = event => {
-    setIsAddonChecked(event.target.checked);
+    setIsAddonChecked({ index, checked: event.target.checked });
     if (!event.target.checked) {
+      // Clear the selection when unchecking
       selectOption({ index, selectedOption: undefined, option });
       updateValidationError(index, null);
     }
@@ -139,9 +141,7 @@ const CustomizationOption = ({
               {"Add "}
               {option.name}
               {" + $"}
-              {option?.values[0]?.additionalCost
-                ? option?.values[0].additionalCost.toFixed(2)
-                : option?.additionalCost.toFixed(2)}{" "}
+              {option?.additionalCost?.toFixed(2) || "0.00"}
               {option.details && <GLInfoPopover details={option.details} />}
             </Box>
           }
@@ -186,7 +186,6 @@ CustomizationOption.propTypes = {
 
 CustomizationOption.defaultProps = {
   selectedOption: null,
-  setIsAddonChecked: () => {},
 };
 
 export default CustomizationOption;

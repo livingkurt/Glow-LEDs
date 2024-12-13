@@ -40,8 +40,15 @@ import GLPrice from "../../shared/GlowLEDsComponents/GLPrice/GLPrice";
 const ProductPage = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const { customizedProduct, current_user, my_cart, productPageLoading, product, isAddonChecked, isPasswordProtected } =
-    useProductPage();
+  const {
+    customizedProduct,
+    current_user,
+    my_cart,
+    productPageLoading,
+    product,
+    addonCheckedStates,
+    isPasswordProtected,
+  } = useProductPage();
   const [validationErrors, setValidationErrors] = useState({});
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(isPasswordProtected);
 
@@ -50,7 +57,7 @@ const ProductPage = () => {
     customizedProduct.currentOptions?.forEach((option, index) => {
       if (!option.isAddOn && !customizedProduct.selectedOptions[index]?.name) {
         errors[index] = `Please select a ${option.name}`;
-      } else if (option.isAddOn && isAddonChecked && !customizedProduct.selectedOptions[index]?.name) {
+      } else if (option.isAddOn && addonCheckedStates[index] && !customizedProduct.selectedOptions[index]?.name) {
         errors[index] = `Please select an option for ${option.name}`;
       }
     });
@@ -104,7 +111,7 @@ const ProductPage = () => {
                   <GLButtonV2
                     variant="contained"
                     color="secondary"
-                    onClick={e => dispatch(openEditProductModal(product))}
+                    onClick={() => dispatch(openEditProductModal(product))}
                   >
                     {"Edit Product"}
                   </GLButtonV2>
@@ -184,7 +191,7 @@ const ProductPage = () => {
                         selectedOption={customizedProduct?.selectedOptions[index] || null}
                         updateValidationError={updateValidationError}
                         selectOption={data => dispatch(selectOption(data))}
-                        isAddonChecked={isAddonChecked}
+                        isAddonChecked={addonCheckedStates[index] || false}
                         setIsAddonChecked={data => dispatch(setIsAddonChecked(data))}
                         validationErrors={validationErrors}
                       />

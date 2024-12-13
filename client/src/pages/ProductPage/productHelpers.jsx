@@ -45,6 +45,11 @@ export const calculateAdditionalCost = (selectedOptions, currentOptions) => {
     // Get the corresponding option definition
     const optionDefinition = currentOptions[index];
 
+    // Skip add-on options that aren't selected
+    if (optionDefinition?.isAddOn && !selectedOption?.name) {
+      return total;
+    }
+
     // Add option-level additional cost (for things like custom text)
     const optionCost = optionDefinition?.additionalCost || 0;
 
@@ -56,7 +61,6 @@ export const calculateAdditionalCost = (selectedOptions, currentOptions) => {
 
   return Number(total.toFixed(2));
 };
-
 export const updateProductDetailsFromOption = (state, selectedOption, option, fromUrlParams = false) => {
   const { product } = selectedOption;
 

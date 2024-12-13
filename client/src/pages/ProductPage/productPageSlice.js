@@ -35,7 +35,7 @@ const productPage = createSlice({
     review_modal: "none",
     rating: 5,
     comment: "",
-    isAddonChecked: false,
+    addonCheckedStates: {},
     productPageLoading: true,
     product: productInitialState,
     customizedProduct: {
@@ -94,31 +94,53 @@ const productPage = createSlice({
     },
     selectOption: (state, { payload }) => {
       const { selectedOption, index, option, fromUrlParams } = payload;
-      if (selectedOption === undefined) {
-        // If the selected option is undefined, remove it from the selectedOptions array
-        state.customizedProduct.selectedOptions[index] = {};
-        const additionalCost = calculateAdditionalCost(state.customizedProduct.selectedOptions);
-        updatePrice(state, additionalCost);
-      } else {
-        state.customizedProduct.selectedOptions[index] = {
-          ...selectedOption,
-          isAddOn: option.isAddOn,
-          replacePrice: option.replacePrice,
-          additionalCost: selectedOption.additionalCost,
-        };
-        updateProductDetailsFromOption(state, selectedOption, option, fromUrlParams);
-        handlePriceReplacement(state, option, selectedOption);
+
+      // Only proceed with selection if:
+      // 1. It's not an add-on option, or
+      // 2. It is an add-on option AND its specific addon is checked
+      if (!option.isAddOn || (option.isAddOn && state.addonCheckedStates[index])) {
+        if (selectedOption === undefined) {
+          // If the selected option is undefined, remove it from the selectedOptions array
+          state.customizedProduct.selectedOptions[index] = {};
+          const additionalCost = calculateAdditionalCost(
+            state.customizedProduct.selectedOptions,
+            state.customizedProduct.currentOptions
+          );
+          updatePrice(state, additionalCost);
+        } else {
+          state.customizedProduct.selectedOptions[index] = {
+            ...selectedOption,
+            isAddOn: option.isAddOn,
+            replacePrice: option.replacePrice,
+            additionalCost: selectedOption.additionalCost,
+          };
+          updateProductDetailsFromOption(state, selectedOption, option, fromUrlParams);
+          handlePriceReplacement(state, option, selectedOption);
+        }
       }
     },
     setQuantity: (state, { payload }) => {
       state.customizedProduct.quantity = payload;
     },
     setIsAddonChecked: (state, { payload }) => {
-      state.isAddonChecked = payload;
+      const { index, checked } = payload;
+      state.addonCheckedStates[index] = checked;
+
+      // When unchecking an add-on, clear its selection
+      if (!checked) {
+        state.customizedProduct.selectedOptions[index] = {};
+
+        // Recalculate price without the unchecked add-on
+        const additionalCost = calculateAdditionalCost(
+          state.customizedProduct.selectedOptions,
+          state.customizedProduct.currentOptions
+        );
+        updatePrice(state, additionalCost);
+      }
     },
   },
   extraReducers: {
-    [detailsProductPage.pending]: (state, { payload }) => {
+    [detailsProductPage.pending]: state => {
       state.productPageLoading = true;
     },
     [detailsProductPage.fulfilled]: (state, { payload }) => {
@@ -128,6 +150,7 @@ const productPage = createSlice({
         ...state,
         productPageLoading: false,
         product: data,
+        addonCheckedStates: {},
         customizedProduct: {
           product: data._id,
           name: data.name,
