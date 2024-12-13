@@ -129,14 +129,20 @@ const productPage = createSlice({
       // When unchecking an add-on, clear its selection
       if (!checked) {
         state.customizedProduct.selectedOptions[index] = {};
-
-        // Recalculate price without the unchecked add-on
-        const additionalCost = calculateAdditionalCost(
-          state.customizedProduct.selectedOptions,
-          state.customizedProduct.currentOptions
-        );
-        updatePrice(state, additionalCost);
+      } else {
+        // When checking an add-on, initialize empty object for text options
+        const option = state.customizedProduct.currentOptions[index];
+        if (option?.optionType === "text") {
+          state.customizedProduct.selectedOptions[index] = {};
+        }
       }
+
+      // Recalculate price with the updated add-on state
+      const additionalCost = calculateAdditionalCost(
+        state.customizedProduct.selectedOptions,
+        state.customizedProduct.currentOptions
+      );
+      updatePrice(state, additionalCost);
     },
   },
   extraReducers: {

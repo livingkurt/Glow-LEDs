@@ -40,22 +40,29 @@ export const updatePrice = (state, additionalCost) => {
     };
   }
 };
-export const calculateAdditionalCost = (selectedOptions, currentOptions) => {
+
+export const calculateAdditionalCost = (selectedOptions, currentOptions, addonCheckedStates = {}) => {
   const total = selectedOptions.reduce((total, selectedOption, index) => {
     // Get the corresponding option definition
     const optionDefinition = currentOptions[index];
 
-    // Skip add-on options that aren't selected
-    if (optionDefinition?.isAddOn && !selectedOption?.name) {
+    // Skip if no option definition exists
+    if (!optionDefinition) {
       return total;
     }
 
-    // Add option-level additional cost (for things like custom text)
-    const optionCost = optionDefinition?.additionalCost || 0;
+    // For add-ons, only include costs if the add-on is checked
+    if (optionDefinition.isAddOn) {
+      // Only include costs if the add-on is checked
+      if (addonCheckedStates[index]) {
+        return total + (optionDefinition.additionalCost || 0) + (selectedOption?.additionalCost || 0);
+      }
+      return total;
+    }
 
-    // Add value-level additional cost (for specific selections)
+    // For non-add-ons, always include option-level cost and selected value cost
+    const optionCost = optionDefinition.additionalCost || 0;
     const valueCost = selectedOption?.additionalCost || 0;
-
     return total + optionCost + valueCost;
   }, 0);
 
