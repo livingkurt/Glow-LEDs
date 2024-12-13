@@ -28,7 +28,7 @@ const CustomizationOption = ({
         // For text input, create a custom option with the text value
         const customOption = {
           name: value,
-          additionalCost: option.values[0]?.additionalCost || 0,
+          additionalCost: option?.additionalCost || 0,
           product: option.values[0]?.product,
         };
         selectOption({ index, selectedOption: customOption, option });
@@ -140,7 +140,7 @@ const CustomizationOption = ({
               {"Add "}
               {option.name}
               {" + $"}
-              {option?.additionalCost?.toFixed(2) || "0.00"}
+              {option?.additionalCost?.toFixed(2) || option.values[0]?.additionalCost?.toFixed(2)}
               {option.details && <GLInfoPopover details={option.details} />}
             </Box>
           }
