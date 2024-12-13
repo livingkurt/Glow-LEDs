@@ -95,7 +95,7 @@ const ArticlesGridPageFilters = ({
       </Box>
       <Collapse in={isExpanded}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6}>
             <FormControl fullWidth sx={autocompleteStyle}>
               <InputLabel
                 id="sort-select-label"
@@ -129,7 +129,7 @@ const ArticlesGridPageFilters = ({
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6}>
             <Autocomplete
               multiple
               options={tagOptions}
@@ -168,26 +168,6 @@ const ArticlesGridPageFilters = ({
                   newValue.map(v => v.value)
                 )
               }
-              sx={autocompleteStyle}
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Autocomplete
-              options={allAuthors}
-              getOptionLabel={option => option.first_name + " " + option.last_name}
-              renderInput={params => (
-                <TextField
-                  {...params}
-                  label="Filter By Author"
-                  fullWidth
-                  InputLabelProps={{
-                    style: { color: "white" },
-                  }}
-                />
-              )}
-              value={selectedAuthor}
-              onChange={(event, newValue) => handleAuthorChange(event, newValue)}
-              isOptionEqualToValue={(option, value) => option._id === value?._id}
               sx={autocompleteStyle}
             />
           </Grid>

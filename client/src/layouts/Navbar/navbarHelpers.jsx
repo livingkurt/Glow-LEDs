@@ -400,16 +400,16 @@ const learn = addIdsRecursively({
   path: "/academy",
   rows: [
     {
-      name: "Academy Home",
-      path: "/academy",
-    },
-    {
       name: "All Articles",
       path: "/learn",
     },
     {
       name: "What is Gloving?",
       path: "/learn/what_is_gloving",
+    },
+    {
+      name: "Where do I start?",
+      path: "/learn/where_do_i_start",
     },
     {
       name: "Anatomy of the Glove Set",
@@ -420,16 +420,12 @@ const learn = addIdsRecursively({
       path: "/learn/anatomy_of_the_lightshow",
     },
     {
+      name: "Gloving Dictionary",
+      path: "/learn/gloving_dictionary",
+    },
+    {
       name: "Deep Dive into Accessories",
       path: "/learn/deep_dive_into_accessories",
-    },
-    {
-      name: "Concept/Term Dictionary",
-      path: "/learn/concept_term_dictionary",
-    },
-    {
-      name: "Gloving History",
-      path: "/learn/gloving_history",
     },
   ],
 });
@@ -836,13 +832,13 @@ export const navItems = [
   },
   {
     name: "ACADEMY",
-    // path: "/tutorials",
+    path: "/academy",
     id: "academy_dropdown",
     // path: "/learn",
     dataTestId: "learn_button",
     // columns: [learn],
     columns: [learn, tutorials],
-    otherColumns: [tips],
+    // otherColumns: [tips],
     navbarLocation: "center",
   },
   {
