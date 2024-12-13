@@ -122,7 +122,7 @@ const ProductsPage = () => {
   const remoteApi = useCallback(options => API.getProducts(options), []);
   const remoteReorderApi = useCallback(options => API.reorderProducts(options), []);
   const remoteFiltersApi = useCallback(() => API.getProductFilters(), []);
-  const defaultFilters = { hidden: [], options: [] };
+  const defaultFilters = { hidden: [] };
 
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>

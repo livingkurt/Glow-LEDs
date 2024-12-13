@@ -35,7 +35,7 @@ const productPage = createSlice({
     review_modal: "none",
     rating: 5,
     comment: "",
-    isAddonChecked: false,
+    addonCheckedStates: {},
     productPageLoading: true,
     product: productInitialState,
     customizedProduct: {
@@ -114,11 +114,23 @@ const productPage = createSlice({
       state.customizedProduct.quantity = payload;
     },
     setIsAddonChecked: (state, { payload }) => {
-      state.isAddonChecked = payload;
+      const { index, checked } = payload;
+      state.addonCheckedStates[index] = checked;
+
+      // When unchecking an add-on, clear its selection
+      if (!checked) {
+        state.customizedProduct.selectedOptions[index] = {};
+      } else {
+        // When checking an add-on, initialize empty object for text options
+        const option = state.customizedProduct.currentOptions[index];
+        if (option?.optionType === "text") {
+          state.customizedProduct.selectedOptions[index] = {};
+        }
+      }
     },
   },
   extraReducers: {
-    [detailsProductPage.pending]: (state, { payload }) => {
+    [detailsProductPage.pending]: state => {
       state.productPageLoading = true;
     },
     [detailsProductPage.fulfilled]: (state, { payload }) => {
@@ -128,6 +140,7 @@ const productPage = createSlice({
         ...state,
         productPageLoading: false,
         product: data,
+        addonCheckedStates: {},
         customizedProduct: {
           product: data._id,
           name: data.name,

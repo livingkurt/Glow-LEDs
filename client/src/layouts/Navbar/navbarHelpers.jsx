@@ -123,8 +123,8 @@ const features = addIdsRecursively({
       extraContent: "💰",
     },
     {
-      name: "Stickers",
-      path: "/products?tags[]=merch&stags[]=stickers",
+      name: "Merch",
+      path: "/products?tags[]=merch",
     },
   ],
 });

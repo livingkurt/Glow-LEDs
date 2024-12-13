@@ -93,6 +93,7 @@ export const productFormFields = ({ products, users, product, microlights, filam
 
             album: `${product.name} Option Images`,
           },
+          additionalCost: { type: "number", label: "Additional Cost" },
           replacePrice: { type: "checkbox", label: "Option Price Replaces Price" },
           active: {
             type: "checkbox",

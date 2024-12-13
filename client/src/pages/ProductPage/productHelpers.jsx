@@ -136,8 +136,10 @@ export const updateProductDetailsFromOption = (state, selectedOption, option, fr
 };
 
 export const handlePriceReplacement = (state, option, selectedOption) => {
-  const additionalCost = calculateAdditionalCost(state.customizedProduct.selectedOptions);
-
+  const additionalCost = calculateAdditionalCost(
+    state.customizedProduct.selectedOptions,
+    state.customizedProduct.currentOptions
+  );
   // Find any selected option that has replacePrice: true
   const priceReplacingOption = state.customizedProduct.currentOptions?.find((opt, index) => {
     if (opt.replacePrice) {

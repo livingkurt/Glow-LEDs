@@ -165,22 +165,17 @@ export const normalizeProductFilters = input => {
     switch (key) {
       case "category":
         for (const category of input.category) {
-          output["category"] = category;
+          output.category = category;
         }
         break;
       case "subcategory":
         for (const subcategory of input.subcategory) {
-          output["subcategory"] = subcategory;
+          output.subcategory = subcategory;
         }
         break;
       case "hidden":
         if (input.hidden && !input.hidden.includes(1)) {
-          output["hidden"] = false;
-        }
-        break;
-      case "options":
-        if (input.options && !input.options.includes(1)) {
-          output["option"] = false;
+          output.hidden = false;
         }
 
         break;
@@ -191,9 +186,7 @@ export const normalizeProductFilters = input => {
   if (input.hidden && input.hidden.includes("only_hidden")) {
     output.hidden = true;
   }
-  if (input.options && input.options.includes("only_options")) {
-    output.option = true;
-  }
+
   return output;
 };
 

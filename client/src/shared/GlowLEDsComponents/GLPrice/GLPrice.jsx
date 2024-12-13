@@ -11,7 +11,7 @@ const GLPrice = ({ product }) => {
   };
 
   const formatPrice = price => {
-    return typeof price === "number" ? `$${price.toFixed(2)}` : price;
+    return `$${Number(price).toFixed(2)}`;
   };
 
   const calculateDiscount = (currentPrice, originalPrice) => {

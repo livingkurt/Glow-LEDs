@@ -158,14 +158,10 @@ export default {
           "secondary_colors",
         ],
         hidden: ["only_hidden"],
-        options: ["only_options"],
       };
       const booleanFilters = {
         hidden: {
           label: "Show Hidden",
-        },
-        options: {
-          label: "Show Options",
         },
       };
       return { availableFilters, booleanFilters };
