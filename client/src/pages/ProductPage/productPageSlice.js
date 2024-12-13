@@ -127,13 +127,17 @@ const productPage = createSlice({
           state.customizedProduct.selectedOptions[index] = {};
         }
       }
-
-      // Recalculate price with the updated add-on state
-      const additionalCost = calculateAdditionalCost(
-        state.customizedProduct.selectedOptions,
-        state.customizedProduct.currentOptions
-      );
-      updatePrice(state, additionalCost);
+      const option = state.customizedProduct.currentOptions[index];
+      if (option?.optionType === "text") {
+        // Recalculate price with the updated add-on state
+        const additionalCost = state.customizedProduct.currentOptions.reduce((total, option, idx) => {
+          if (state.addonCheckedStates[idx] && option?.additionalCost) {
+            return total + option.additionalCost;
+          }
+          return total;
+        }, 0);
+        updatePrice(state, additionalCost);
+      }
     },
   },
   extraReducers: {
