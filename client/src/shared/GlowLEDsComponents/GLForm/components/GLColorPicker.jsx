@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import { Grid } from "@mui/material";
+import Grid from "@mui/material/Grid";
+
 import { MuiColorInput } from "mui-color-input";
 
 const GLColorPicker = ({ fieldName, fieldState, fieldData, handleInputChange }) => {

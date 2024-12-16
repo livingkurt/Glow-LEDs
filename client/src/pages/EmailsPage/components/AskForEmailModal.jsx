@@ -6,10 +6,11 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import useWindowDimensions from "../../../shared/Hooks/useWindowDimensions";
 import * as API from "../../../api";
 import { daysBetween } from "../../../utils/helper_functions";
-import { Close } from "@mui/icons-material";
+import Close from "@mui/icons-material/Close";
+
 import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 const AskForEmailModal = () => {
   const [email, set_email] = useState("");

@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 const LoadingShipment = ({ children }) => {
   const placeOrder = useSelector(state => state.placeOrder);

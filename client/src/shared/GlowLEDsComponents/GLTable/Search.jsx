@@ -1,6 +1,7 @@
 import React from "react";
 import { GLButton } from "..";
-import { IconButton } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+
 import GLIconButton from "../GLIconButton/GLIconButton";
 
 const Search = ({ handleListItems, className, search, set_search }) => {
@@ -15,6 +16,7 @@ const Search = ({ handleListItems, className, search, set_search }) => {
           onChange={e => set_search(e.target.value)}
           className="form_input search mv-0px"
         />
+
         <GLIconButton type="submit" variant="contained" className="w-50px mb-0px" tooltip="Search">
           <Search />
         </GLIconButton>

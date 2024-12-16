@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { applySearch } from "../actions/actions";
 import GLTextFieldV2 from "../../GLTextFieldV2/GLTextFieldV2";
-import { Search } from "@mui/icons-material";
+import Search from "@mui/icons-material/Search";
 
 const GLTableSearch = ({ placeholder, namespace, width, autoFocus, restrictSearchChars, search }) => {
   const dispatch = useDispatch();

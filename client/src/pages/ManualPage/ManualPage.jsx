@@ -3,7 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { humanize, manuals, toCapitalize } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { Container } from "@mui/material";
+import Container from "@mui/material/Container";
+
 import GLLazyImage from "../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const ManualPage = () => {

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { Container } from "@mui/material";
+import Container from "@mui/material/Container";
 
 const SitemapPage = () => {
   return (
@@ -15,10 +15,12 @@ const SitemapPage = () => {
           name="description"
           content="Glow LEDs Sitemap of all the places you can be on our website. Explore and you may find a place you've never been before."
         />
+
         <meta
           property="og:description"
           content="Glow LEDs Sitemap of all the places you can be on our website. Explore and you may find a place you've never been before."
         />
+
         <meta
           name="twitter:description"
           content="Glow LEDs Sitemap of all the places you can be on our website. Explore and you may find a place you've never been before."

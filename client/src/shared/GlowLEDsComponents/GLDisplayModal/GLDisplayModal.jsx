@@ -2,7 +2,8 @@ import { useState } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { IconButton } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+
 import CloseIcon from "@mui/icons-material/Close";
 import GLIconButton from "../GLIconButton/GLIconButton";
 

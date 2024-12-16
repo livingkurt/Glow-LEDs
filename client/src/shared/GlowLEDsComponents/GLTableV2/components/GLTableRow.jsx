@@ -86,6 +86,7 @@ const GLTableRow = ({
             backgroundColor: `${
               determineColor ? darken(determineColor(row) || tableColors.active, 0.3) : darken(tableColors.active, 0.3)
             } !important`,
+
             "&:hover": {
               backgroundColor: `${
                 determineColor

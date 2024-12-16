@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import LinearProgress from "@mui/material/LinearProgress";
-import { Alert } from "@mui/material";
+import Alert from "@mui/material/Alert";
 
 const SnackBarReqLoadBar = ({
   formData,

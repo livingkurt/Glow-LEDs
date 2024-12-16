@@ -1,4 +1,4 @@
-import { Rating } from "@mui/material";
+import Rating from "@mui/material/Rating";
 
 const StarRating = props => {
   return (

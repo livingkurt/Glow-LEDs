@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { unmountComponentAtNode } from "react-dom";
 import Snackbar from "@mui/material/Snackbar";
-import { Alert } from "@mui/material";
+import Alert from "@mui/material/Alert";
 
 const ShowSnackbar = ({ containerNode, message, open, severity, duration, horizontal, vertical }) => {
   const handleClose = () => {

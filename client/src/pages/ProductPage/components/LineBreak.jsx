@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 
 const LineBreak = ({ line_break }) => {
   if (!line_break) return null;

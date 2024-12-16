@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material";
+import useTheme from "@mui/material/styles/useTheme";
 import { Link } from "react-router-dom";
 import * as API from "../../api";
 import GLLazyImage from "../GlowLEDsComponents/GLLazyImage/GLLazyImage";
