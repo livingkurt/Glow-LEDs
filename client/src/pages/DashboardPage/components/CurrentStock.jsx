@@ -11,8 +11,61 @@ const CurrentStock = () => {
   const [tabIndex, setTabIndex] = React.useState(0);
 
   const handleEdit = async value => {
-    dispatch(API.saveProduct(value));
-    currentStock.refetch();
+    try {
+      // First update the main product
+      await dispatch(API.saveProduct(value));
+
+      // Get the fresh product data after update
+      const product = await dispatch(API.detailsProduct({ pathname: value._id })).unwrap();
+
+      if (product) {
+        if (product.subcategory === "sampler") {
+          // For sampler packs, update each size variant
+          const sizeOption = product.options.find(
+            option => option.name.toLowerCase().includes("size") || option.name.toLowerCase().includes("pack")
+          );
+
+          if (sizeOption) {
+            await Promise.all(
+              sizeOption.values.map(async value => {
+                if (value.product) {
+                  const sizeProduct = {
+                    ...(await dispatch(API.detailsProduct({ pathname: value.product })).unwrap()),
+                    count_in_stock: product.count_in_stock,
+                    max_quantity: product.count_in_stock,
+                  };
+                  return dispatch(API.saveProduct(sizeProduct));
+                }
+              })
+            );
+          }
+        } else if (product.category === "batteries") {
+          // For batteries, update all related option products
+          const optionProducts = product.options.flatMap(option => option.values).filter(value => value.product);
+
+          if (optionProducts.length > 0) {
+            await Promise.all(
+              optionProducts.map(async value => {
+                const optionProduct = await dispatch(API.detailsProduct({ pathname: value.product })).unwrap();
+                const batchStock = Math.floor(product.count_in_stock / Number(optionProduct.size));
+                return dispatch(
+                  API.saveProduct({
+                    ...optionProduct,
+                    count_in_stock: batchStock,
+                    max_quantity: batchStock,
+                  })
+                );
+              })
+            );
+          }
+        }
+      }
+
+      // Refresh the data
+      currentStock.refetch();
+    } catch (error) {
+      console.error("Error updating stock:", error);
+    }
   };
 
   const gloveColumnDefs = [
@@ -116,7 +169,16 @@ const CurrentStock = () => {
           rows={!currentStock.isLoading && currentStock.data?.filter(row => row.name.toLowerCase().includes("refresh"))}
           defaultSortColumn="Name"
           defaultSort="desc"
-          columnDefs={gloveColumnDefs}
+          columnDefs={[
+            { title: "Name", display: "name", sortable: true, editable: false },
+            {
+              title: "Count in Stock",
+              display: row => row?.count_in_stock,
+              attribute: "count_in_stock",
+              sortable: true,
+              editable: false,
+            },
+          ]}
         />
       </GLTabPanel>
 
@@ -126,19 +188,43 @@ const CurrentStock = () => {
           loading={currentStock.isLoading && currentStock.data}
           rows={!currentStock.isLoading && currentStock?.data?.filter(row => row.category === "batteries")}
           defaultSorting={[0, "desc"]}
-          onEdit={async value => {
-            dispatch(API.saveProduct(value));
-            if (value.option_products.length > 0) {
-              const optionProductsActions = await Promise.all(
-                value.option_products.map(id => dispatch(API.detailsProduct({ pathname: id })))
+          onEdit={async updatedProduct => {
+            // First update the main product
+            await dispatch(
+              API.saveProduct({
+                ...updatedProduct,
+                max_quantity: updatedProduct.count_in_stock,
+                max_display_quantity: updatedProduct.count_in_stock > 30 ? 30 : updatedProduct.count_in_stock,
+              })
+            );
+
+            // Get option products from the optionProducts array
+            if (updatedProduct.options && updatedProduct.options.length > 0) {
+              await Promise.all(
+                updatedProduct.options.map(async option => {
+                  await Promise.all(
+                    option.values.map(async value => {
+                      const { data: valueProduct } = await dispatch(
+                        API.detailsProduct({ pathname: value.product })
+                      ).unwrap();
+                      // Use the name field as the size
+                      const setSize = Number(value.name);
+                      const batchStock = Math.floor(updatedProduct.count_in_stock / setSize);
+                      return dispatch(
+                        API.saveProduct({
+                          _id: valueProduct._id,
+                          name: valueProduct.name,
+                          count_in_stock: batchStock,
+                          max_quantity: batchStock,
+                          max_display_quantity: batchStock > 30 ? 30 : batchStock,
+                        })
+                      );
+                    })
+                  );
+                })
               );
-              const optionProducts = optionProductsActions.map(action => action.payload);
-              const updatedProducts = optionProducts.map(product => {
-                const batchStock = Number(value.count_in_stock) / Number(product.size);
-                return { ...product, count_in_stock: Math.floor(batchStock) };
-              });
-              await Promise.all(updatedProducts.map(product => dispatch(API.saveProduct(product))));
             }
+
             currentStock.refetch();
           }}
           defaultSortColumn="Name"
