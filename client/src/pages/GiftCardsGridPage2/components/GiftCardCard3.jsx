@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Card, CardContent, Typography, Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import { random } from "lodash";
+import random from "lodash/random";
 import { formatPrice } from "../../../utils/helper_functions";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 

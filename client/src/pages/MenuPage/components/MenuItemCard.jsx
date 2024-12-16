@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardContent, Typography, Box, useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
-import { random } from "lodash";
+import random from "lodash/random";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const MenuItemCard = ({ item }) => {

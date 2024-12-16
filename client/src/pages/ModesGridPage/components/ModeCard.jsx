@@ -2,7 +2,7 @@ import { Box, Card, CardContent, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useModePreview } from "../../ModeCreatorPage/components/useModePreview";
-import { random } from "lodash";
+import random from "lodash/random";
 
 const ModeCard = ({ mode }) => {
   const { canvasRef } = useModePreview({ mode });

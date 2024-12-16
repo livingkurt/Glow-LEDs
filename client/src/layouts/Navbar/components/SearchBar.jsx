@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { TextField, InputAdornment, IconButton, Box, Container } from "@mui/material";
 import { Search } from "@mui/icons-material";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import useWindowDimensions from "../../../shared/Hooks/useWindowDimensions";
 import { setSearch } from "../../../pages/ProductsGridPage/productsGridPageSlice";
 

@@ -4,7 +4,7 @@ import { openLoginModal } from "../../slices/userSlice";
 import * as API from "../../api";
 import { AccountCircle, AdminPanelSettings } from "@mui/icons-material";
 
-import { uniqueId } from "lodash";
+import uniqueId from "lodash/uniqueId";
 
 export const determineDropdown = (item, current_user) => {
   // If it's the login item and there's no current user, don't show the dropdown

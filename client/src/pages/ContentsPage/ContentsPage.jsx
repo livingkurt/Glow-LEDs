@@ -26,7 +26,7 @@ import {
 } from "../../api/allRecordsApi";
 import GLArray from "../../shared/GlowLEDsComponents/GLForm/components/GLArray";
 import GLTabPanel from "../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import { set_content } from "../../slices/contentSlice";
 import HomePageEditor from "./components/HomePageEditor";
 

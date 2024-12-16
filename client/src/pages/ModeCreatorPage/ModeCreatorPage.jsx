@@ -5,7 +5,7 @@ import { Box, Button, TextField, Typography, MenuItem, Grid, FormControl, InputL
 import PatternSelector from "./components/PatternSelector";
 import ModePreview from "./components/ModePreview";
 import { GLAutocomplete } from "../../shared/GlowLEDsComponents";
-import { snakeCase } from "lodash";
+import snakeCase from "lodash/snakeCase";
 import { modeInitialState, set_mode } from "../../slices/modeSlice";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import useModeCreatorPage from "./useModeCreatorPage";

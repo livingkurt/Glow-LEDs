@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Typography, Box, Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { random } from "lodash";
+import random from "lodash/random";
 
 const StyledImage = styled("img")({
   width: "100%",

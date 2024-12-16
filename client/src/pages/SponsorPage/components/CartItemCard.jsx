@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, CardContent, Typography, Box, useTheme, Chip, Button } from "@mui/material";
-import { random } from "lodash";
+import random from "lodash/random";
 import { useSelector, useDispatch } from "react-redux";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
