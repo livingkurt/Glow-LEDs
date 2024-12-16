@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Drawer, Box, Typography, Button, Divider, List, useTheme } from "@mui/material";
+
 import CloseIcon from "@mui/icons-material/Close";
 import { determineCartTotal } from "../../utils/helper_functions";
 import { setCartDrawer } from "../../slices/cartSlice";

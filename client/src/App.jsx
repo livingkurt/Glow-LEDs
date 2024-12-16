@@ -1,7 +1,8 @@
 import { createElement, useEffect } from "react";
 import { Route, BrowserRouter as Router, Routes, useLocation, useNavigate } from "react-router-dom";
 import { ScrollToTop } from "./shared/SharedComponents";
-import { createTheme, ThemeProvider } from "@mui/material";
+import createTheme from "@mui/material/createTheme";
+import ThemeProvider from "@mui/material/ThemeProvider";
 import GLTheme from "./theme";
 import { AskForEmailModal } from "./pages/EmailsPage/components";
 import { Four04Page } from "./pages/Four04Page";
