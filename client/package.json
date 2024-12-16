@@ -14,7 +14,8 @@
     "prettier:fix": "prettier --write .",
     "generate-sitemap": "node src/sitemap/sitemap-generator.js",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "exact:imports": "node scripts/updateMuiImports.js"
   },
   "dependencies": {
     "@bugsnag/js": "^7.23.0",
