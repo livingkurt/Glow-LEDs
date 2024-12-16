@@ -6,10 +6,8 @@
   "main": "dist/server.js",
   "dependencies": {
     "@easypost/api": "^7.3.0",
-    "app-root-path": "^3.1.0",
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
-    "cheerio": "^1.0.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dayjs": "^1.11.13",
@@ -29,7 +27,6 @@
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.13",
     "papaparse": "^5.4.1",
-    "parse-address": "^1.1.2",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "qrcode": "^1.5.4",
