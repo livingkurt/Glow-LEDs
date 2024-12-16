@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { determine_terms_link } from "../profileHelpers";
-import useClipboard from "react-hook-clipboard";
 import { Box, Button } from "@mui/material";
 import { determine_promoter_code_tier, determine_sponsor_code_tier } from "../../../utils/helper_functions";
 import { Loading } from "../../../shared/SharedComponents";
@@ -10,7 +9,6 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
 const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEarnings }) => {
-  const [, copyToClipboard] = useClipboard();
   const userPage = useSelector(state => state.users.userPage);
   const { user } = userPage;
 
@@ -113,18 +111,6 @@ const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEar
             </label>
           </div>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              onClick={() =>
-                copyToClipboard(
-                  `https://www.glow-leds.com?code=${user?.affiliate?.public_code.promo_code.toUpperCase()}`
-                )
-              }
-            >
-              {"Copy Link to Clipboard"}
-            </Button>
             <a
               href={determine_terms_link(user.affiliate)}
               target="_blank"
