@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Box, Divider, FormHelperText, Paper, Typography } from "@mui/material";
+
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import CustomizationOption from "../../ProductPage/components/CustomizationOption";
 import { generateGradientFromIndex } from "../../../utils/helpers/universal_helpers";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 import { calculateAdditionalCost } from "../../ProductPage/productHelpers";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import FormHelperText from "@mui/material/FormHelperText";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 
 const BundleOptionsModal = ({ isOpen, onClose, bundleItems, onConfirm }) => {
   // Initialize state for each bundle item
@@ -186,6 +191,7 @@ const BundleOptionsModal = ({ isOpen, onClose, bundleItems, onConfirm }) => {
                             setIsAddonChecked={setIsAddonChecked}
                             validationErrors={validationErrors}
                           />
+
                           {validationErrors[index] && (
                             <FormHelperText>
                               <Box

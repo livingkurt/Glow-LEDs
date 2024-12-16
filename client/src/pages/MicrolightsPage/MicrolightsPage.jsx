@@ -5,16 +5,20 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import EditMicrolightModal from "./components/EditMicrolightModal";
 import * as API from "../../api";
-import { Box, Button, Container } from "@mui/material";
+
 import { open_create_microlight_modal, open_edit_microlight_modal } from "../../slices/microlightSlice";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { FileCopy } from "@mui/icons-material";
+
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import FileCopy from "@mui/icons-material/FileCopy";
 
 const MicrolightsPage = () => {
   const microlightPage = useSelector(state => state.microlights.microlightPage);
@@ -69,6 +73,7 @@ const MicrolightsPage = () => {
         ),
       },
     ],
+
     []
   );
 
@@ -98,6 +103,7 @@ const MicrolightsPage = () => {
           </Button>
         }
       />
+
       <EditMicrolightModal />
     </Container>
   );

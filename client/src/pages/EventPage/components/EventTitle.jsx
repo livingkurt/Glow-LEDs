@@ -1,6 +1,9 @@
 import React from "react";
-import { Box, Typography, useTheme } from "@mui/material";
+
 import { isSafari } from "react-device-detect";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
 
 const EventTitle = ({ event }) => {
   const theme = useTheme();
@@ -22,6 +25,7 @@ const EventTitle = ({ event }) => {
           height: "auto",
         }}
       />
+
       <Typography
         align="center"
         sx={{

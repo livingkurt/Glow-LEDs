@@ -1,10 +1,15 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-import { Button, Checkbox, FormControlLabel, Grid, TextField } from "@mui/material";
+
 import { clear_image } from "../../slices/imageSlice";
 import { useDispatch } from "react-redux";
 import { Loading } from ".";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
 
 const ImageUploader = ({ onChange, album, type, isMultiple }) => {
   const dispatch = useDispatch();
@@ -110,6 +115,7 @@ const ImageUploader = ({ onChange, album, type, isMultiple }) => {
                 accept="image/*"
                 ref={fileInputRef}
               />
+
               <label htmlFor={`${album}-upload-input`}>
                 <Button variant="contained" component="span">
                   {"Select"}

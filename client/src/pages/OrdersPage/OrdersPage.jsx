@@ -7,7 +7,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_order_modal } from "../../slices/orderSlice";
 import { EditOrderModal, OrderDropdown } from "./components";
 import * as API from "../../api";
-import { Button, Container } from "@mui/material";
+
 import { orderStatusColors, determineOrderColors, orderExceptionStatusColors } from "./ordersPageHelpers";
 import ShippingModal from "./components/ShippingModal";
 import { openCreateLabelModal, open_create_pickup_modal } from "../../slices/shippingSlice";
@@ -18,6 +18,8 @@ import { toTitleCase } from "../../utils/helper_functions";
 import LinkLabelModal from "./components/LinkLabelModal";
 import { useOrdersPage } from "./useOrdersPage";
 import { showConfirm } from "../../slices/snackbarSlice";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 
 const OrdersPage = () => {
   const dispatch = useDispatch();
@@ -124,6 +126,7 @@ const OrdersPage = () => {
           </div>
         }
       />
+
       <EditOrderModal />
       <ShippingModal />
       <CreatePickupModal />

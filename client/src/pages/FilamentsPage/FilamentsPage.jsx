@@ -5,15 +5,19 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_filament_modal, open_edit_filament_modal } from "../../slices/filamentSlice";
 import * as API from "../../api";
-import { Box, Button, Container } from "@mui/material";
+
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditFilamentModal from "./components/EditFilamentModal";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import { useLocation } from "react-router-dom";
-import { ContentCopy } from "@mui/icons-material";
+
 import { determineFilamentColors } from "./filamentHelpers";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import ContentCopy from "@mui/icons-material/ContentCopy";
 
 const FilamentsPage = () => {
   const location = useLocation();
@@ -93,6 +97,7 @@ const FilamentsPage = () => {
         ),
       },
     ],
+
     [dispatch, location.pathname]
   );
 
@@ -121,6 +126,7 @@ const FilamentsPage = () => {
           </Button>
         }
       />
+
       <EditFilamentModal />
     </Container>
   );

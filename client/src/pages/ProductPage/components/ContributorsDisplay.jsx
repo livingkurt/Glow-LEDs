@@ -1,6 +1,9 @@
 import React from "react";
-import { Grid, Typography, Avatar, Box, useTheme } from "@mui/material";
-
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
 const ContributorsDisplay = ({ contributors, text_color, secondary_color, header_text_color }) => {
   const theme = useTheme();
   return (

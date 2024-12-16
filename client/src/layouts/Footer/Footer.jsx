@@ -1,27 +1,26 @@
 import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { useTheme } from "@mui/material/styles";
-import {
-  Box,
-  Typography,
-  Container,
-  Grid,
-  Link,
-  IconButton,
-  TextField,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  FormHelperText,
-  useMediaQuery,
-} from "@mui/material";
+import useTheme from "@mui/material/styles/useTheme";
+
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { footerSections, socialIcons } from "./footerHelpers";
 import { useDispatch } from "react-redux";
 import * as API from "../../api";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import Container from "@mui/material/Container";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormHelperText from "@mui/material/FormHelperText";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import Link from "@mui/material/Link";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const Footer = () => {
   const theme = useTheme();
@@ -123,6 +122,7 @@ const Footer = () => {
                   "& .MuiInputBase-input": { color: "white" },
                 }}
               />
+
               <FormControlLabel
                 control={
                   <Checkbox
@@ -134,6 +134,7 @@ const Footer = () => {
                 label="By checking this box you are agreeing to receive brand updates, promotions and content from Glow LEDs."
                 sx={{ mb: 1 }}
               />
+
               {checkboxError && <FormHelperText>{checkboxError}</FormHelperText>}
               <Button
                 type="submit"

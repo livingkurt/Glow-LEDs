@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Typography, Grid } from "@mui/material";
-
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 const InTheBox = ({ in_the_box, text_color, header_text_color }) => {
   if (in_the_box?.hidden) return null;
 

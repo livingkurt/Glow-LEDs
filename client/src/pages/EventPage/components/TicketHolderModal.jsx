@@ -1,11 +1,19 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, CircularProgress, darken, Paper, Typography } from "@mui/material";
+
 import * as API from "../../../api";
 import GLTableV2 from "../../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+import { darken } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
 const TicketHoldersModal = ({ open, onClose, event, allTickets }) => {
   const dispatch = useDispatch();
   const { ticketHolders, loading } = useSelector(state => state.events.eventPage);

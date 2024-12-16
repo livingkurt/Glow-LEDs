@@ -1,10 +1,14 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import * as API from "../../api";
-import { Box, Container, Grid, Typography } from "@mui/material";
+
 import MenuPageHead from "./components/MenuPageHead";
 import MenuItemCard from "./components/MenuItemCard";
 import MenuPageSkeletons from "./components/MenuPageSkeletons";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const MenuPage = () => {
   const params = useParams();

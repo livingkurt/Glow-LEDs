@@ -1,8 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
+
 import { Link } from "react-router-dom";
 import ProductCard from "../../ProductsGridPage/components/ProductCard";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
 
 const ElevateYourExperience = ({ elevateYourExperience, text_color, header_text_color }) => {
   const { title, description, products, hidden } = elevateYourExperience;

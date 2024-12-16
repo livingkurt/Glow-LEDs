@@ -3,18 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import * as API from "../../api";
-import {
-  Container,
-  Typography,
-  Box,
-  Grid,
-  Card,
-  CardContent,
-  CardMedia,
-  Button,
-  IconButton,
-  Divider,
-} from "@mui/material";
+
 import { EditAffiliateModal } from "../AffiliatesPage/components";
 import { open_edit_affiliate_modal } from "../../slices/affiliateSlice";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -32,6 +21,16 @@ import { EditCartModal } from "../CartsPage/components";
 import ProductBundleCard from "../ProductBundlesGridPage/components/ProductBundleCard";
 import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
 import ModeCard from "../ModesGridPage/components/ModeCard";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Container from "@mui/material/Container";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 
 const SponsorPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -89,6 +88,7 @@ const SponsorPage = () => {
           <GLBreadcrumbs
             items={[{ name: "ALL SPONSORS", to: "/sponsors" }, { name: affiliate.artist_name.toUpperCase() }]}
           />
+
           {current_user.isAdmin && (
             <Button onClick={() => dispatch(open_edit_affiliate_modal(affiliate))} sx={{ mb: 2, color: "#fff" }}>
               {"Edit Sponsor"}

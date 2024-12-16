@@ -1,8 +1,9 @@
-import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import { Link } from "react-router-dom";
 import GLDisplayModal from "../../../shared/GlowLEDsComponents/GLDisplayModal/GLDisplayModal";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 const TutorialModal = ({ selectedTutorial, handleClose, open }) => {
   return (

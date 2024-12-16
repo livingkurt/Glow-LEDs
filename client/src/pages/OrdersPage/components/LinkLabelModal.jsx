@@ -3,13 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import * as API from "../../../api";
 import { closeLinkLabelModal } from "../../../slices/shippingSlice";
-import { Grid, Typography, List, ListItem, ListItemText, Collapse } from "@mui/material";
+
 import LoadingInside from "../../../shared/SharedComponents/LoadingInside";
 import GLTableV2 from "../../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { format_date } from "../../../utils/helper_functions";
 import { fullName } from "../../UsersPage/usersHelpers";
 import { applySearch, clearTable, selectAllRows } from "../../../shared/GlowLEDsComponents/GLTableV2/actions/actions";
 import { showConfirm } from "../../../slices/snackbarSlice";
+import Collapse from "@mui/material/Collapse";
+import Grid from "@mui/material/Grid";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Typography from "@mui/material/Typography";
 
 const LinkLabelModal = () => {
   const dispatch = useDispatch();
@@ -50,6 +56,7 @@ const LinkLabelModal = () => {
         display: shipment => shipment?.selected_rate.service,
       },
     ],
+
     []
   );
 
@@ -122,6 +129,7 @@ const LinkLabelModal = () => {
                 singleSelect={true}
                 minTableWidth="unset"
               />
+
               <Collapse in={selectedShipment}>
                 <div className="mt-10px">
                   <Typography variant="h6" gutterBottom>

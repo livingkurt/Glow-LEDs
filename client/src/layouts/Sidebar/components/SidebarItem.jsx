@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ListItem, Typography, Button, lighten } from "@mui/material";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
+
 import NestedItems from "./NestedItems";
 import { setSideNavDrawer } from "../../../slices/cartSlice";
 import { useNavigate, useLocation } from "react-router-dom";
 import { determineBackgroundColor, determineDropdown, determineName, hasChildren } from "../../Navbar/navbarHelpers";
 import useFeatureFlags from "../../../shared/Hooks/useFeatureFlags";
+import Button from "@mui/material/Button";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import { lighten } from "@mui/material";
+import ListItem from "@mui/material/ListItem";
+import Typography from "@mui/material/Typography";
 
 const SidebarItem = ({ item, level, handleDrawerToggle }) => {
   const [open, setOpen] = useState(false);

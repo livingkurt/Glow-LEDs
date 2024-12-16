@@ -1,7 +1,8 @@
-import { Info } from "@mui/icons-material";
-import { IconButton, Popover, Typography } from "@mui/material";
 import { useState } from "react";
-
+import IconButton from "@mui/material/IconButton";
+import Info from "@mui/icons-material/Info";
+import Popover from "@mui/material/Popover";
+import Typography from "@mui/material/Typography";
 const GLInfoPopover = ({ details }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 

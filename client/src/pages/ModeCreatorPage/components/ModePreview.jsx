@@ -1,4 +1,3 @@
-import { Box, Link, Typography } from "@mui/material";
 import { useModePreview } from "./useModePreview";
 import AnimationControls from "./AnimationControls";
 import AvailableColors from "./AvailableColors";
@@ -6,6 +5,9 @@ import PatternSelector from "./PatternSelector";
 import { useDispatch } from "react-redux";
 import { set_mode } from "../../../slices/modeSlice";
 import { isMobile } from "react-device-detect";
+import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
 
 const ModePreview = ({ mode, handleDragEnd, handleColorClick, selectedMicrolight }) => {
   const dispatch = useDispatch();
@@ -25,6 +27,7 @@ const ModePreview = ({ mode, handleDragEnd, handleColorClick, selectedMicrolight
             display: "block",
           }}
         />
+
         {!isMobile && (
           <>
             <Box
@@ -47,6 +50,7 @@ const ModePreview = ({ mode, handleDragEnd, handleColorClick, selectedMicrolight
                 handleDragEnd={handleDragEnd}
                 handleColorClick={handleColorClick}
               />
+
               <PatternSelector
                 pattern={mode?.flashing_pattern}
                 microlight={selectedMicrolight}

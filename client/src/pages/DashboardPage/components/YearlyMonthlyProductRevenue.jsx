@@ -3,7 +3,9 @@ import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTable";
 import { set_product } from "../../ProductsPage/productsPageSlice";
 import { months } from "../dashboardHelpers";
-import { Divider, Paper, Typography } from "@mui/material";
+import Divider from "@mui/material/Divider";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 
 const YearlyMonthlyProductRevenue = ({
   month,

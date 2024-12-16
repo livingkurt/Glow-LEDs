@@ -1,7 +1,10 @@
 import PropTypes from "prop-types";
 import { Droppable, Draggable } from "@hello-pangea/dnd";
-import { Box, Tooltip, Typography } from "@mui/material";
+
 import { isMobile } from "react-device-detect";
+import Box from "@mui/material/Box";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 
 const ColorPalette = ({ colors, onColorClick }) => {
   const renderColor = (color, index) => {

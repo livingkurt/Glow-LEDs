@@ -5,14 +5,18 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import EditModeModal from "./components/EditModeModal";
 import * as API from "../../api";
-import { Box, Button, Container } from "@mui/material";
+
 import { open_create_mode_modal, open_edit_mode_modal } from "../../slices/modeSlice";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { FileCopy } from "@mui/icons-material";
+
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import { toCapitalize } from "../../utils/helper_functions";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import FileCopy from "@mui/icons-material/FileCopy";
 
 const ModesPage = () => {
   const modePage = useSelector(state => state.modes.modePage);
@@ -68,6 +72,7 @@ const ModesPage = () => {
         ),
       },
     ],
+
     []
   );
 
@@ -97,6 +102,7 @@ const ModesPage = () => {
           </Button>
         }
       />
+
       <EditModeModal />
     </Container>
   );

@@ -1,7 +1,11 @@
 import React from "react";
-import { Grid, Typography, Box, Button } from "@mui/material";
+
 import { styled } from "@mui/material/styles";
 import random from "lodash/random";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const StyledImage = styled("img")({
   width: "100%",
@@ -95,6 +99,7 @@ const ImageGrid = ({ image_grid, image_grid_hidden, text_color, header_text_colo
                           height: "100%",
                         }}
                       />
+
                       <TextOverlay>
                         <Typography variant="h4" gutterBottom color={header_text_color ? header_text_color : "white"}>
                           {grid.title}

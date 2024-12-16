@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, Typography, useTheme } from "@mui/material";
+
 import { HashLink } from "react-router-hash-link";
 import { isSafari } from "react-device-detect";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
 
 const ColumnItemButton = ({ to, align, ariaLabel, children, onClick, sx, hasColumnRows, ...otherProps }) => {
   const theme = useTheme();

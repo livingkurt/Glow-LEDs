@@ -5,13 +5,17 @@ import { Helmet } from "react-helmet";
 import { open_create_wholesaler_modal, open_edit_wholesaler_modal } from "../../slices/wholesalerSlice";
 import { EditWholesalerModal } from "./components";
 import * as API from "../../api";
-import { Button, Container } from "@mui/material";
+
 import { getWholesalers } from "../../api";
 import { determineColor } from "./wholesalerHelper";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
-import { Delete, Edit } from "@mui/icons-material";
+
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Delete from "@mui/icons-material/Delete";
+import Edit from "@mui/icons-material/Edit";
 
 const WholesalersPage = () => {
   const wholesalerPage = useSelector(state => state.wholesalers.wholesalerPage);
@@ -61,6 +65,7 @@ const WholesalersPage = () => {
         ),
       },
     ],
+
     [dispatch]
   );
 
@@ -88,6 +93,7 @@ const WholesalersPage = () => {
           </Button>
         }
       />
+
       <EditWholesalerModal />
     </Container>
   );

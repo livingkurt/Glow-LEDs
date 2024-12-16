@@ -29,7 +29,7 @@ const SitemapPage = () => {
       <div className="inner_content">
         <h1 style={{ textAlign: "center" }}>{"Glow LEDs Sitemap"}</h1>
         <div>
-          <h2 style={{ textTransform: "capitalize" }}>Home</h2>
+          <h2 style={{ textTransform: "capitalize" }}>{"Home"}</h2>
           <ul style={{ listStyle: "none", padding: 0 }}>
             <li>
               <Link to="/">{"/"}</Link>

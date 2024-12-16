@@ -5,13 +5,16 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_article_modal, open_edit_article_modal } from "../../slices/articleSlice";
 import * as API from "../../api";
-import { Box, Button, Container } from "@mui/material";
+
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import EditArticleModal from "./components/EditArticleModal";
-import { ContentCopy } from "@mui/icons-material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import ContentCopy from "@mui/icons-material/ContentCopy";
 
 const ArticlesPage = () => {
   const articlePage = useSelector(state => state.articles.articlePage);
@@ -87,6 +90,7 @@ const ArticlesPage = () => {
         ),
       },
     ],
+
     [dispatch]
   );
 
@@ -117,6 +121,7 @@ const ArticlesPage = () => {
           </Button>
         }
       />
+
       <EditArticleModal />
     </Container>
   );

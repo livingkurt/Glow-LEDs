@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Box, Typography, TextField, Button, Modal, darken } from "@mui/material";
+
 import * as API from "../../../api";
 import { Link, useLocation } from "react-router-dom";
-import { Key } from "@mui/icons-material";
-
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import { darken } from "@mui/material";
+import Key from "@mui/icons-material/Key";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 const PasswordPromptModal = ({ productId, onUnlock, product }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -156,6 +161,7 @@ const PasswordPromptModal = ({ productId, onUnlock, product }) => {
                 },
               }}
             />
+
             <Typography variant="h6" sx={{ mt: 2, minHeight: "3em", textAlign: "center" }}>
               {unlockFailed ? stillLockedPhrases[unlockingPhase] : unlockingPhrases[unlockingPhase]}
             </Typography>
@@ -182,6 +188,7 @@ const PasswordPromptModal = ({ productId, onUnlock, product }) => {
               error={Boolean(error)}
               helperText={error}
             />
+
             <Button
               type="submit"
               variant="contained"

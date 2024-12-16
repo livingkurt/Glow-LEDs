@@ -1,12 +1,19 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { Card, CardContent, Typography, Box, useMediaQuery, useTheme, IconButton } from "@mui/material";
+
 import { Link } from "react-router-dom";
 import { random } from "lodash/_DataView";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 import { generateGradientFromIndex } from "../../../utils/helpers/universal_helpers";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 
 const ProductBundleCard = ({ bundle, affiliate, goHorizontal = true, index }) => {
   const theme = useTheme();

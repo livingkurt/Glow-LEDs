@@ -1,11 +1,15 @@
 import React from "react";
-import { Box, Container, Grid, Typography } from "@mui/material";
+
 import { Helmet } from "react-helmet";
 import { useProductBundlesGridPage } from "./useProductBundlesGridPage";
 import ProductBundleCard from "./components/ProductBundleCard";
 import ProductBundlesGridPageSkeletons from "./components/ProductsGridPageSkeletons";
 import ProductBundlesGridPageFilters from "./components/ProductsGridPageFilters";
 import { sortOptions } from "../ProductsGridPage/productGridPageHelpers";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const ProductBundlesGridPage = () => {
   const {

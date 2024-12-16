@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
-import { Container, Button, Box, AppBar, Tabs, Tab, Paper } from "@mui/material";
+
 import * as API from "../../api";
 import { GLForm } from "../../shared/GlowLEDsComponents/GLForm";
 import {
@@ -29,6 +29,13 @@ import GLTabPanel from "../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
 import debounce from "lodash/debounce";
 import { set_content } from "../../slices/contentSlice";
 import HomePageEditor from "./components/HomePageEditor";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
 
 const ContentsPage = () => {
   const dispatch = useDispatch();

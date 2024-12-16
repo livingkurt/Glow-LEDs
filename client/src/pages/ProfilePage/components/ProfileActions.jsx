@@ -5,13 +5,16 @@ import { openChangePasswordModal, open_edit_user_modal } from "../../../slices/u
 import { openMonthlyCheckinModal, open_edit_affiliate_modal } from "../../../slices/affiliateSlice";
 import { open_edit_wholesaler_modal } from "../../../slices/wholesalerSlice";
 import * as API from "../../../api";
-import { Box, Button, Typography } from "@mui/material";
+
 import { EditAffiliateModal } from "../../AffiliatesPage/components";
 import { EditWholesalerModal } from "../../WholesalersPage/components";
 import ChangePasswordModal from "./ChangePasswordModal";
 import { open_edit_team_modal } from "../../../slices/teamSlice";
 import EditTeamModal from "../../TeamsPage/EditTeamModal";
 import { checkinButtonLabel, monthCheckinStatus } from "../profileHelpers";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 export const ProfileActions = () => {
   const dispatch = useDispatch();
@@ -81,24 +84,24 @@ export const ProfileActions = () => {
       {user.is_affiliated && (user?.affiliate?.sponsor || user?.affiliate?.teamCaptain) && (
         <>
           {/* {!previousCheckin && (
-            <Typography variant="body1" gutterBottom>
-              You have not checked in for the month of {previousMonth}
-            </Typography>
+           <Typography variant="body1" gutterBottom>
+             You have not checked in for the month of {previousMonth}
+           </Typography>
           )}
           {!previousCheckin && (
-            <Button
-              variant="contained"
-              color={previousCheckin ? "secondary" : "primary"}
-              onClick={() => {
-                dispatch(openMonthlyCheckinModal({ month: previousMonth, year: currentYear }));
-              }}
-            >
-              {checkinButtonLabel({
-                checkin: previousCheckin,
-                teamCaptain: user?.affiliate?.teamCaptain,
-                month: previousMonth,
-              })}
-            </Button>
+           <Button
+             variant="contained"
+             color={previousCheckin ? "secondary" : "primary"}
+             onClick={() => {
+               dispatch(openMonthlyCheckinModal({ month: previousMonth, year: currentYear }));
+             }}
+           >
+             {checkinButtonLabel({
+               checkin: previousCheckin,
+               teamCaptain: user?.affiliate?.teamCaptain,
+               month: previousMonth,
+             })}
+           </Button>
           )} */}
           {!checkinCompleted && (
             <Typography variant="body1" gutterBottom>

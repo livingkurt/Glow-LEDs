@@ -5,7 +5,9 @@ import * as API from "../../../api";
 import { useLocation, useNavigate } from "react-router-dom";
 import { openLoginModal } from "../../../slices/userSlice";
 import { Loading } from "../../../shared/SharedComponents";
-import { Button, Grid, TextField } from "@mui/material";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
 
 const ResetPasswordPage = () => {
   const navigate = useNavigate();
@@ -72,6 +74,7 @@ const ResetPasswordPage = () => {
           </div>
         }
       />
+
       <form onSubmit={submitHandler} className="max-w-350px w-100per m-auto">
         <Grid container spacing={3}>
           <Grid item xs={12}>

@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Container, Typography, TextField, Button, Paper, Link } from "@mui/material";
+
 import { useLocation } from "react-router-dom";
 import * as API from "../../api";
 import { Loading } from "../../shared/SharedComponents";
-
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 const UnsubscribePage = () => {
   const dispatch = useDispatch();
   const { loading, message, error } = useSelector(state => state.users.userPage);
@@ -26,13 +32,15 @@ const UnsubscribePage = () => {
           sx={{ p: 4, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}
         >
           <Typography variant="h4" component="h1" gutterBottom>
-            Unsubscribe
+            {"Unsubscribe"}
           </Typography>
 
           {!isUnsubscribed ? (
             <>
               <Typography variant="body1" sx={{ mb: 3, textAlign: "center" }}>
-                Don't want to receive Glow LEDs emails? You can choose to update your preferences or unsubscribe below.
+                {
+                  "Don't want to receive Glow LEDs emails? You can choose to update your preferences or unsubscribe below."
+                }
               </Typography>
 
               <TextField
@@ -63,14 +71,14 @@ const UnsubscribePage = () => {
           ) : (
             <Box sx={{ textAlign: "center" }}>
               <Typography variant="h6" gutterBottom>
-                You've been successfully unsubscribed
+                {"You've been successfully unsubscribed"}
               </Typography>
               <Typography variant="body1">
-                You will no longer receive marketing emails from Glow LEDs. If you change your mind, you can always
+                {"You will no longer receive marketing emails from Glow LEDs. If you change your mind, you can always"}
                 <Link href="/account/preferences" underline="hover" sx={{ ml: 1 }}>
-                  update your preferences
+                  {"update your preferences"}
                 </Link>
-                .
+                {"."}
               </Typography>
             </Box>
           )}

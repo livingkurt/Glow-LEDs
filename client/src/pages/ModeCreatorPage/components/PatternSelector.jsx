@@ -1,6 +1,9 @@
-import { Autocomplete, Box, Paper, TextField, Typography } from "@mui/material";
 import PropTypes from "prop-types";
-
+import Autocomplete from "@mui/material/Autocomplete";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 const PatternSelector = ({ pattern, onChange, microlight }) => {
   if (!microlight?.flashing_patterns?.length) {
     return (

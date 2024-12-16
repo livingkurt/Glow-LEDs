@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Typography, Box, useTheme, useMediaQuery } from "@mui/material";
+
 import { isEvenIndex, isFourthSection, isNotFourthSection, isOddIndex } from "./aboutPageHelpers";
 
 import HeroVideo from "../../shared/GlowLEDsComponents/HeroVideo/HeroVideo";
@@ -7,6 +7,11 @@ import AboutPageHeader from "./components/AboutPageHeader";
 import * as API from "../../api";
 import SectionContent from "./components/SectionContent";
 import SectionImage from "./components/SectionImage";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 
 const AboutPage = () => {
   const theme = useTheme();

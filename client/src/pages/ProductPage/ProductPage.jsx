@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Container, FormHelperText, Grid, Rating, Typography, useTheme } from "@mui/material";
+
 import { useDispatch } from "react-redux";
 import ProductPageHead from "./components/ProductPageHead";
 import { EditProductModal } from "../ProductsPage/components";
@@ -36,6 +36,13 @@ import { formatDate } from "../../utils/helpers/universal_helpers";
 import PasswordPromptModal from "./components/PasswordPromptModal";
 import FeaturedModes from "../HomePage/components/FeaturedModes";
 import GLPrice from "../../shared/GlowLEDsComponents/GLPrice/GLPrice";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import FormHelperText from "@mui/material/FormHelperText";
+import Grid from "@mui/material/Grid";
+import Rating from "@mui/material/Rating";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
 
 const ProductPage = () => {
   const theme = useTheme();
@@ -106,6 +113,7 @@ const ProductPage = () => {
                     : productPageBreadCrumbs(product).filter(item => item.name !== "WHOLESALE")
                 }
               />
+
               {current_user?.isAdmin && (
                 <Box className="br-10px">
                   <GLButtonV2
@@ -195,6 +203,7 @@ const ProductPage = () => {
                         setIsAddonChecked={data => dispatch(setIsAddonChecked(data))}
                         validationErrors={validationErrors}
                       />
+
                       {validationErrors[index] && (
                         <FormHelperText>
                           <Box
@@ -231,6 +240,7 @@ const ProductPage = () => {
                     valueKey="name"
                     fullWidth
                   />
+
                   {product.isPreOrder && (
                     <Typography variant="body2" fontWeight={800} mt={1}>
                       {"Pre-Order: Estimated Availability"}{" "}
@@ -341,6 +351,7 @@ const ProductPage = () => {
                         line_break={product?.line_break}
                         header_text_color={product.header_text_color}
                       />
+
                       <LineBreak line_break={product?.line_break} />
                     </Grid>
                   )}
@@ -369,6 +380,7 @@ const ProductPage = () => {
                         line_break={product?.line_break}
                         header_text_color={product.header_text_color}
                       />
+
                       <LineBreak line_break={product?.line_break} />
                     </Grid>
                   )}
@@ -447,6 +459,7 @@ const ProductPage = () => {
                         secondary_color={product.secondary_color}
                         header_text_color={product.header_text_color}
                       />
+
                       <LineBreak line_break={product?.line_break} />
                     </Grid>
                   )}

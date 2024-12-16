@@ -1,6 +1,8 @@
 import React from "react";
-import { Box, Container, Grid, Skeleton } from "@mui/material";
-
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Skeleton from "@mui/material/Skeleton";
 const ProductBundlePageSkeleton = () => {
   return (
     <Box>
@@ -19,6 +21,7 @@ const ProductBundlePageSkeleton = () => {
               height={400}
               sx={{ bgcolor: "#4e5061", borderRadius: "20px" }}
             />
+
             <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
               {[...Array(4)].map((_, index) => (
                 <Skeleton
@@ -41,24 +44,28 @@ const ProductBundlePageSkeleton = () => {
                 height={40}
                 sx={{ bgcolor: "#4e5061", borderRadius: "4px", mb: 2 }}
               />
+
               <Skeleton
                 variant="rectangular"
                 width="60%"
                 height={30}
                 sx={{ bgcolor: "#4e5061", borderRadius: "4px", mb: 2 }}
               />
+
               <Skeleton
                 variant="rectangular"
                 width="40%"
                 height={24}
                 sx={{ bgcolor: "#4e5061", borderRadius: "4px", mb: 3 }}
               />
+
               <Skeleton
                 variant="rectangular"
                 width="100%"
                 height={80}
                 sx={{ bgcolor: "#4e5061", borderRadius: "4px", mb: 3 }}
               />
+
               <Skeleton
                 variant="rectangular"
                 width="30%"
@@ -82,6 +89,7 @@ const ProductBundlePageSkeleton = () => {
                   height={32}
                   sx={{ bgcolor: "#4e5061", borderRadius: "4px", mb: 2 }}
                 />
+
                 {[...Array(3)].map((_, index) => (
                   <Box key={index} sx={{ mb: 2 }}>
                     <Skeleton
@@ -107,6 +115,7 @@ const ProductBundlePageSkeleton = () => {
             height={40}
             sx={{ bgcolor: "#4e5061", borderRadius: "4px", mb: 3 }}
           />
+
           {[...Array(3)].map((_, index) => (
             <Box key={index} sx={{ mb: 4 }}>
               <Grid container spacing={2}>
@@ -126,18 +135,21 @@ const ProductBundlePageSkeleton = () => {
                       height={32}
                       sx={{ bgcolor: "#4e5061", borderRadius: "4px", mb: 2 }}
                     />
+
                     <Skeleton
                       variant="rectangular"
                       width="40%"
                       height={24}
                       sx={{ bgcolor: "#4e5061", borderRadius: "4px", mb: 2 }}
                     />
+
                     <Skeleton
                       variant="rectangular"
                       width="100%"
                       height={80}
                       sx={{ bgcolor: "#4e5061", borderRadius: "4px", mb: 2 }}
                     />
+
                     <Skeleton
                       variant="rectangular"
                       width={120}

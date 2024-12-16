@@ -1,6 +1,8 @@
 import React from "react";
-import { Collapse, List } from "@mui/material";
+
 import SidebarItem from "./SidebarItem";
+import Collapse from "@mui/material/Collapse";
+import List from "@mui/material/List";
 
 const NestedItems = ({ item, level, open, handleDrawerToggle, parentId }) => {
   const renderNestedItems = (nestedItems, level) => {

@@ -3,12 +3,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import * as API from "../../api";
-import { Box, Button, Container } from "@mui/material";
+
 import { open_create_palette_modal, open_edit_palette_modal } from "../../slices/paletteSlice";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import EditPaletteModal from "./components/EditPaletteModal";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 
 const PalettesPage = () => {
   const palettePage = useSelector(state => state.palettes.palettePage);
@@ -39,6 +42,7 @@ const PalettesPage = () => {
         ),
       },
     ],
+
     []
   );
 
@@ -64,6 +68,7 @@ const PalettesPage = () => {
           </Button>
         }
       />
+
       <EditPaletteModal />
     </Container>
   );

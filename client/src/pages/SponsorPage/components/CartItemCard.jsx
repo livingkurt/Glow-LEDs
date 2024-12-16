@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, CardContent, Typography, Box, useTheme, Chip, Button } from "@mui/material";
+
 import random from "lodash/random";
 import { useSelector, useDispatch } from "react-redux";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
@@ -10,6 +10,13 @@ import * as API from "../../../api";
 import { showInfo } from "../../../slices/snackbarSlice";
 import PropTypes from "prop-types";
 import GLPrice from "../../../shared/GlowLEDsComponents/GLPrice/GLPrice";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Chip from "@mui/material/Chip";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
 
 const CartItemCard = ({ item }) => {
   const dispatch = useDispatch();

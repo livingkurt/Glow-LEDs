@@ -1,7 +1,9 @@
-import { Button, CircularProgress, Tooltip, useTheme } from "@mui/material";
 import PropTypes from "prop-types";
 import React from "react";
-
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import Tooltip from "@mui/material/Tooltip";
+import useTheme from "@mui/material/styles/useTheme";
 const GLButtonV2 = ({
   children,
   tooltip,

@@ -2,9 +2,10 @@ import { updateVersion } from "../../api";
 import { clear_order_state } from "../../slices/orderSlice";
 import { openLoginModal } from "../../slices/userSlice";
 import * as API from "../../api";
-import { AccountCircle, AdminPanelSettings } from "@mui/icons-material";
 
 import uniqueId from "lodash/uniqueId";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import AdminPanelSettings from "@mui/icons-material/AdminPanelSettings";
 
 export const determineDropdown = (item, current_user) => {
   // If it's the login item and there's no current user, don't show the dropdown
@@ -874,6 +875,7 @@ export const rightNav = (dispatch, sidebarOnly) => {
         ) : (
           <AccountCircle color="white" />
         ),
+
       path: "/secure/account/profile",
       onClick: current_user =>
         !(current_user && current_user.hasOwnProperty("first_name") && current_user.first_name) &&
@@ -896,6 +898,7 @@ export const rightNav = (dispatch, sidebarOnly) => {
         ) : (
           <AdminPanelSettings color="white" />
         ),
+
       id: "admin_dropdown",
       dataTestId: "support_button",
       permissions: current_user => current_user.isAdmin,

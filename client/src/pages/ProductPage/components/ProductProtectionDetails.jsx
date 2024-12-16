@@ -1,6 +1,8 @@
 import React from "react";
-import { Box, Typography, Grid, Paper } from "@mui/material";
-
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 const ProductProtectionDetails = () => {
   return (
     <Paper sx={{ color: "white", backgroundColor: "#00000021", padding: 4, borderRadius: "10px" }}>

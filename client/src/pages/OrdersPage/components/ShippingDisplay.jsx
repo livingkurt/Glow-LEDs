@@ -1,7 +1,11 @@
 import React from "react";
-import { Typography, Box, Button, Grid } from "@mui/material";
+
 import { sendEmail } from "../ordersPageHelpers";
 import { determine_service, toTitleCaseSnakeCase } from "../../PlaceOrderPage/placeOrderHelpers";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const ShippingDisplay = ({ shipping }) => {
   return (

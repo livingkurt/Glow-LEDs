@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Breadcrumbs, Link as MUILink, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { NavigateNext } from "@mui/icons-material";
-
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import MUILink from "@mui/material/Link";
+import NavigateNext from "@mui/icons-material/NavigateNext";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 const GLBreadcrumbs = ({ items }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));

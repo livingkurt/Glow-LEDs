@@ -1,4 +1,3 @@
-import { Box, Button, Checkbox, FormControlLabel, Paper, Skeleton, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
 import PropTypes from "prop-types";
@@ -15,6 +14,13 @@ import GLTextFieldV2 from "../GLTextFieldV2/GLTextFieldV2";
 import GLOptionSelector from "./components/GLOptionSelector";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Paper from "@mui/material/Paper";
+import Skeleton from "@mui/material/Skeleton";
+import Typography from "@mui/material/Typography";
 dayjs.extend(utc);
 
 const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors, classes, mode, index }) => {
@@ -152,6 +158,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                         handleEnterKeyPress(event, fieldData, fieldName);
                       }}
                     />
+
                     {fieldData.showEditButton && (
                       <>
                         {selected?.name && (
@@ -200,6 +207,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     isMultiple={fieldData.type === "image_upload_multiple"}
                   />
                 );
+
               case "autocomplete_multiple":
                 return (
                   <DropdownDisplayV2
@@ -227,6 +235,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     showItems
                   />
                 );
+
               case "checkbox":
                 return (
                   <FormControlLabel
@@ -244,6 +253,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     label={fieldData.label}
                   />
                 );
+
               case "simple_array":
                 return (
                   <GLForm
@@ -257,6 +267,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     loading={loading}
                   />
                 );
+
               case "title":
                 return (
                   <Typography
@@ -267,6 +278,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     {fieldData.label}
                   </Typography>
                 );
+
               case "autocomplete_address":
                 return (
                   <GoogleAutocomplete
@@ -306,6 +318,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     onChange={e => handleInputChange(fieldName, e.target.value)}
                   />
                 );
+
               case "text":
                 return (
                   <GLTextFieldV2
@@ -345,6 +358,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     onChange={e => handleInputChange(fieldName, e.target.value)}
                   />
                 );
+
               case "number":
                 return (
                   <GLTextFieldV2
@@ -379,6 +393,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     onChange={e => handleInputChange(fieldName, e.target.value)}
                   />
                 );
+
               case "date": {
                 const formattedDate = formatDate(fieldState);
 
@@ -459,6 +474,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     }}
                   />
                 );
+
               case "text_multiline":
                 return (
                   <GLTextFieldV2
@@ -497,6 +513,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     onChange={e => handleInputChange(fieldName, e.target.value)}
                   />
                 );
+
               case "object": {
                 const selectedOption = fieldData.valueAttribute
                   ? fieldData.options.find(opt => opt[fieldData.valueAttribute] === fieldState)
@@ -567,6 +584,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     getEmptyObjectFromSchema={getEmptyObjectFromSchema}
                   />
                 );
+
               case "color_picker":
                 return (
                   <GLColorPicker
@@ -578,6 +596,7 @@ const GLForm = ({ formData, onChange, state, loading, formErrors, setFormErrors,
                     state={state}
                   />
                 );
+
               case "option_selector":
                 return (
                   <GLOptionSelector

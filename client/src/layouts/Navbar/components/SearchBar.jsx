@@ -1,11 +1,16 @@
 import React, { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { TextField, InputAdornment, IconButton, Box, Container } from "@mui/material";
-import { Search } from "@mui/icons-material";
+
 import debounce from "lodash/debounce";
 import useWindowDimensions from "../../../shared/Hooks/useWindowDimensions";
 import { setSearch } from "../../../pages/ProductsGridPage/productsGridPageSlice";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Search from "@mui/icons-material/Search";
+import TextField from "@mui/material/TextField";
 
 const SearchBar = () => {
   const navigate = useNavigate();

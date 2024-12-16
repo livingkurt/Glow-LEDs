@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
+
 import { toTitleCase } from "../../utils/helper_functions";
 import ProductsGridPageFilters from "./components/ProductsGridPageFilters";
 import ProductCard from "./components/ProductCard";
@@ -7,6 +7,12 @@ import { useProductsGridPage } from "./useProductsGridPage";
 import { sortOptions } from "./productGridPageHelpers";
 import ProductsGridPageSkeletons from "./components/ProductsGridPageSkeletons";
 import CategoryBanner from "./components/CategoryBanner";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 
 const ProductGridPage = () => {
   const {

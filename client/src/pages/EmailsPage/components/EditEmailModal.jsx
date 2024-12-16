@@ -2,11 +2,14 @@ import { useDispatch, useSelector } from "react-redux";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_email_modal, set_email } from "../../../slices/emailSlice";
 import * as API from "../../../api";
-import { Box, Grid, Paper } from "@mui/material";
+
 import { useEffect, useState, useRef } from "react";
 import EmailTemplateEditor from "./EmailTemplateEditor";
 import GLForm from "../../../shared/GlowLEDsComponents/GLForm/GLForm";
 import { emailFormFields } from "./emailFormFields";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 
 let debounceTimer;
 
@@ -81,6 +84,7 @@ const EditEmailModal = () => {
                 setDebounceValue(value);
               }}
             />
+
             <EmailTemplateEditor initialModules={email.modules || []} onChange={handleEmailChange} />
           </Grid>
           <Grid item xs={6}>

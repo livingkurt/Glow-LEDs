@@ -27,13 +27,16 @@ import {
   setShippingSaved,
   setModalText,
 } from "../placeOrderSlice";
-import { Checkbox, FormControlLabel, Paper } from "@mui/material";
+
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { isRequired, validateSection } from "../placeOrderHelpers";
 import { makeStyles } from "@mui/styles";
 import { fullName } from "../../UsersPage/usersHelpers";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
-import { Info } from "@mui/icons-material";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Info from "@mui/icons-material/Info";
+import Paper from "@mui/material/Paper";
 
 // const useStyles = makeStyles(theme => ({
 //   // input: {

@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pickBy from "lodash/pickBy";
-import { Chip, Button } from "@mui/material";
+
 import { styled } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import { removeFilter, updateFilterDisplay } from "../actions/actions";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
 
 const Container = styled("div")({
   display: "flex",

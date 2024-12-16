@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { Button, TextField, Typography } from "@mui/material";
+
 import ImageUploader from "./ImageUploader";
 import ImageDisplay from "./ImageDisplay";
 import PropTypes from "prop-types";
 import * as API from "../../api";
 import { useDispatch } from "react-redux";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 const ImageWizard = ({ fieldData, fieldState, onChange, fieldName, isMultiple }) => {
   const dispatch = useDispatch();
@@ -72,6 +75,7 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName, isMultiple })
         type="image"
         isMultiple={isMultiple}
       />
+
       <div className="ai-c g-10px">
         <TextField
           label="Enter an Image Link"
@@ -82,6 +86,7 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName, isMultiple })
           value={link}
           onChange={e => setLink(e.target.value)}
         />
+
         <Button variant="contained" sx={{ height: "40px" }} onClick={handleSaveId}>
           {"Save"}
         </Button>

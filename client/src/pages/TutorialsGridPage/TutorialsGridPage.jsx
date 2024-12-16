@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+
 import { toTitleCase } from "../../utils/helper_functions";
 import useTutorialsGridPage from "./useTutorialsGridPage";
 import TutorialsGridPageSkeletons from "./component/TutorialsGridPageSkeletons";
@@ -7,6 +7,11 @@ import TutorialCard from "./component/TutorialsCard";
 import TutorialsGridPageFilters from "./component/TutorialsGridPageFilters";
 import TutorialModal from "./component/TutorialModal";
 import { Link } from "react-router-dom";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const TutorialsGridPage = () => {
   const {
@@ -74,6 +79,7 @@ const TutorialsGridPage = () => {
           allGlovers={allGlovers}
           handleGloverChange={handleGloverChange}
         />
+
         <Grid container spacing={2}>
           {tutorials.length > 0 ? (
             tutorials.map(tutorial => (

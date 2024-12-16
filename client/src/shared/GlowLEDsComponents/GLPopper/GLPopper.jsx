@@ -1,9 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Grow, Paper, Popper as MuiPopper } from "@mui/material";
-import { styled } from "@mui/material/styles";
 
-const StyledPopper = styled(MuiPopper)(({ theme }) => ({
+import { styled } from "@mui/material/styles";
+import Grow from "@mui/material/Grow";
+import Paper from "@mui/material/Paper";
+import Popper from "@mui/material/Popper";
+
+const StyledPopper = styled(Popper)(({ theme }) => ({
   zIndex: 2000,
   fontSize: "16px",
   '&[x-placement*="bottom"] .arrow': {

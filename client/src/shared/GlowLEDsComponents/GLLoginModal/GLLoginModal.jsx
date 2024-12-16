@@ -19,8 +19,14 @@ import {
 } from "../../../slices/userSlice";
 import { validate_login, validate_registration } from "../../../utils/validations";
 import { Loading } from "../../SharedComponents";
-import { Box, Button, Grid, Modal, TextField, Typography } from "@mui/material";
+
 import config from "../../../config";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 const GLLoginModal = () => {
   const dispatch = useDispatch();
@@ -161,6 +167,7 @@ const GLLoginModal = () => {
             </div>
           }
         />
+
         {token && (
           <div>
             <h2 className="ta-c">{"Your Glow LEDs Account has been created!"}</h2>
@@ -254,6 +261,7 @@ const GLLoginModal = () => {
                       </div>
                     }
                   />
+
                   <Loading
                     loading={loadingPasswordReset}
                     error={error}
@@ -264,6 +272,7 @@ const GLLoginModal = () => {
                       </div>
                     }
                   />
+
                   {!showForgotPassword && showRegister && (
                     <>
                       <Grid item xs={12}>

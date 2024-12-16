@@ -1,6 +1,12 @@
 import React from "react";
-import { Container, Typography, Box, Grid, Card, CardContent, Skeleton, Divider } from "@mui/material";
-
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Container from "@mui/material/Container";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
+import Skeleton from "@mui/material/Skeleton";
+import Typography from "@mui/material/Typography";
 const TeamPageSkeleton = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -13,6 +19,7 @@ const TeamPageSkeleton = () => {
             height={36}
             sx={{ borderRadius: "4px", bgcolor: "#4e5061" }}
           />
+
           <Skeleton
             animation="wave"
             variant="rectangular"
@@ -69,6 +76,7 @@ const TeamPageSkeleton = () => {
         height={40}
         sx={{ borderRadius: "4px", bgcolor: "#4e5061", margin: "0 auto 20px" }}
       />
+
       <Grid container spacing={3}>
         {[...Array(4)].map((_, index) => (
           <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
@@ -80,6 +88,7 @@ const TeamPageSkeleton = () => {
                 height={200}
                 sx={{ borderRadius: "1rem", bgcolor: "#4e5061" }}
               />
+
               <CardContent>
                 <Skeleton animation="wave" variant="text" width="80%" sx={{ mb: 1, bgcolor: "#4e5061" }} />
                 <Skeleton animation="wave" variant="text" width="60%" sx={{ mb: 1, bgcolor: "#4e5061" }} />
@@ -105,6 +114,7 @@ const TeamPageSkeleton = () => {
         height={40}
         sx={{ borderRadius: "4px", bgcolor: "#4e5061", margin: "0 auto 20px" }}
       />
+
       <Skeleton
         animation="wave"
         variant="rectangular"
@@ -122,6 +132,7 @@ const TeamPageSkeleton = () => {
         height={40}
         sx={{ borderRadius: "4px", bgcolor: "#4e5061", margin: "0 auto 20px" }}
       />
+
       <Skeleton
         animation="wave"
         variant="rectangular"
@@ -137,6 +148,7 @@ const TeamPageSkeleton = () => {
         height={40}
         sx={{ borderRadius: "4px", bgcolor: "#4e5061", margin: "0 auto 20px" }}
       />
+
       <Grid container spacing={2} justifyContent="center">
         {[...Array(3)].map((_, index) => (
           <Grid item key={index} xs={12} sm={6} md={4}>

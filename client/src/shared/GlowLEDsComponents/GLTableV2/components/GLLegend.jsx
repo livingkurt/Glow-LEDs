@@ -2,9 +2,14 @@ import { useRef, useState } from "react";
 import { styled } from "@mui/material/styles";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import GLPopper from "../../GLPopper/GLPopper";
-import { Paper, List, ListItem, ListItemText, Typography } from "@mui/material";
-import { Info } from "@mui/icons-material";
+
 import GLIconButton from "../../GLIconButton/GLIconButton";
+import Info from "@mui/icons-material/Info";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 
 const Root = styled("div")(({ theme }) => ({
   display: "flex",

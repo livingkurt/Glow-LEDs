@@ -2,13 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import config from "../../../config";
-import { Button, Divider, Grid } from "@mui/material";
+
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
-import { ArrowBack } from "@mui/icons-material";
 
 import { useDispatch } from "react-redux";
 import { initializePlaceOrderPage } from "../placeOrderSlice";
 import CheckoutSteps from "../../../shared/SharedComponents/CheckoutSteps";
+import ArrowBack from "@mui/icons-material/ArrowBack";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
 
 const OrderComplete = ({ current_user, orderIds }) => {
   const dispatch = useDispatch();

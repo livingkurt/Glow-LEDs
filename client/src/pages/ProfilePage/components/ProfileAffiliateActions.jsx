@@ -1,12 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { determine_terms_link } from "../profileHelpers";
-import { Box, Button } from "@mui/material";
+
 import { determine_promoter_code_tier, determine_sponsor_code_tier } from "../../../utils/helper_functions";
 import { Loading } from "../../../shared/SharedComponents";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEarnings }) => {
   const userPage = useSelector(state => state.users.userPage);

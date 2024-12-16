@@ -1,10 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Box, Typography, Grid, Divider } from "@mui/material";
+
 import { Link as RouterLink } from "react-router-dom";
 import DownloadIcon from "@mui/icons-material/Download";
 import LaunchIcon from "@mui/icons-material/Launch";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const SupportLink = ({ icon, text, href, isExternal, color, id }) => {
   const linkStyle = {
@@ -77,6 +81,7 @@ const ProductSupport = ({ productSupport, text_color, header_text_color }) => {
                     color={header_text_color ? header_text_color : "white"}
                     isExternal={quick_guide.startsWith("http")}
                   />
+
                   <Divider sx={{ my: 2, backgroundColor: "white" }} />
                 </>
               )}
@@ -92,6 +97,7 @@ const ProductSupport = ({ productSupport, text_color, header_text_color }) => {
                     color={header_text_color ? header_text_color : "white"}
                     isExternal={manual.startsWith("http")}
                   />
+
                   <Divider sx={{ my: 2, backgroundColor: "white" }} />
                 </>
               )}
@@ -107,6 +113,7 @@ const ProductSupport = ({ productSupport, text_color, header_text_color }) => {
                     color={header_text_color ? header_text_color : "white"}
                     isExternal={support_link.startsWith("http")}
                   />
+
                   <Divider sx={{ my: 2, backgroundColor: "white" }} />
                 </>
               )}

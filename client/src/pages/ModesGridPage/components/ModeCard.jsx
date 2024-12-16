@@ -1,8 +1,11 @@
-import { Box, Card, CardContent, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useModePreview } from "../../ModeCreatorPage/components/useModePreview";
 import random from "lodash/random";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
 
 const ModeCard = ({ mode }) => {
   const { canvasRef } = useModePreview({ mode });

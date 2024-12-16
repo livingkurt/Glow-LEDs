@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Modal, Grid, TextField, Button } from "@mui/material";
+
 import { closeChangePasswordModal, setChangePassword, setChangeValidations } from "../../../slices/userSlice";
 import * as API from "../../../api";
 import { Loading } from "../../../shared/SharedComponents";
 import { validate_change_password } from "../../../utils/validations";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
 
 const ChangePasswordModal = () => {
   const dispatch = useDispatch();

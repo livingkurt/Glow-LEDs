@@ -1,7 +1,9 @@
-import { Box, Button, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import ModeCard from "../../ModesGridPage/components/ModeCard";
 import { useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 const FeaturedModes = ({ featured_modes, featured_modes_hidden }) => {
   const navigate = useNavigate();

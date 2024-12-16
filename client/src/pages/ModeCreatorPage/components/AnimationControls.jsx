@@ -1,8 +1,10 @@
-import { Slider, Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { getSliderProps } from "../modeCreatorPageHelpers";
 
 // Update the styled AnimationSlider
+import Box from "@mui/material/Box";
+import Slider from "@mui/material/Slider";
+import Typography from "@mui/material/Typography";
 const AnimationSlider = styled(Slider)({
   color: "#1976d2",
   "& .MuiSlider-thumb": {

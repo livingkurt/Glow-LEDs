@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { openRefundModal, open_edit_order_modal, setRemoteVersionRequirement } from "../../slices/orderSlice";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
-import { Box, List } from "@mui/material";
+
 import { duplicateOrder, sinceOrdered, socket } from "./ordersPageHelpers";
 import { fullName } from "../UsersPage/usersHelpers";
 import { format_date } from "../../utils/helper_functions";
@@ -14,9 +14,12 @@ import FileCopy from "@mui/icons-material/FileCopy";
 import Landscape from "@mui/icons-material/Landscape";
 import Money from "@mui/icons-material/Money";
 import { showConfirm, showSuccess } from "../../slices/snackbarSlice";
-import { ShoppingCart } from "@mui/icons-material";
+
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
+import Box from "@mui/material/Box";
+import List from "@mui/material/List";
+import ShoppingCart from "@mui/icons-material/ShoppingCart";
 
 export const useOrdersPage = ({ userId }) => {
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -227,6 +230,7 @@ export const useOrdersPage = ({ userId }) => {
           ) : null,
       },
     ],
+
     [dispatch]
   );
 

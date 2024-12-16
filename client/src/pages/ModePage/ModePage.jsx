@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Box, Container, Grid, Typography, Tooltip } from "@mui/material";
-import { Edit } from "@mui/icons-material";
+
 import { Helmet } from "react-helmet";
 import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
@@ -13,6 +12,12 @@ import HeroVideo from "../HomePage/components/HeroVideo";
 import ColorCircle from "../ModeCreatorPage/components/ColorCircle";
 import { useProductsGridQuery } from "../../api/allRecordsApi";
 import ProductCard from "../ProductsGridPage/components/ProductCard";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Edit from "@mui/icons-material/Edit";
+import Grid from "@mui/material/Grid";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 
 const ModePage = () => {
   const dispatch = useDispatch();

@@ -1,10 +1,17 @@
 import React, { useState } from "react";
-import { Box, FormControlLabel, Radio, RadioGroup, Typography, Grid, Paper } from "@mui/material";
+
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { useDispatch, useSelector } from "react-redux";
 import { close_modals } from "../../../slices/userSlice";
 import { attributes } from "../usersHelpers";
 import * as API from "../../../api";
+import Box from "@mui/material/Box";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import Typography from "@mui/material/Typography";
 
 const CombineUserModal = () => {
   const dispatch = useDispatch();

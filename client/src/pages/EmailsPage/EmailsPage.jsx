@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { EditEmailModal } from "./components";
 import * as API from "../../api";
-import { Autocomplete, Box, Button, Container, TextField } from "@mui/material";
+
 import { format_date, humanize } from "../../utils/helper_functions";
 import { open_create_email_modal, open_edit_email_modal } from "../../slices/emailSlice";
 import DescriptionIcon from "@mui/icons-material/Description";
@@ -14,11 +14,19 @@ import SendIcon from "@mui/icons-material/Send";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { BugReport, ContentCopy, Email } from "@mui/icons-material";
+
 import { determineEmailColors, templates } from "./emailsPageHelpers";
 import { showConfirm } from "../../slices/snackbarSlice";
 import { Loading } from "../../shared/SharedComponents";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import Autocomplete from "@mui/material/Autocomplete";
+import Box from "@mui/material/Box";
+import BugReport from "@mui/icons-material/BugReport";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import ContentCopy from "@mui/icons-material/ContentCopy";
+import Email from "@mui/icons-material/Email";
+import TextField from "@mui/material/TextField";
 
 const EmailsPage = () => {
   const emailPage = useSelector(state => state.emails.emailPage);
@@ -114,6 +122,7 @@ const EmailsPage = () => {
         ),
       },
     ],
+
     []
   );
 
@@ -156,6 +165,7 @@ const EmailsPage = () => {
                 />
               )}
             />
+
             <div>
               <Button color="primary" variant="contained" onClick={() => dispatch(open_create_email_modal())}>
                 {"Create Email"}
@@ -164,6 +174,7 @@ const EmailsPage = () => {
           </Box>
         }
       />
+
       <EditEmailModal />
     </Container>
   );

@@ -3,12 +3,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import * as API from "../../api";
-import { Container, Typography, Box, Grid, Card, CardContent, CardMedia, Button, Divider } from "@mui/material";
+
 import GLLazyImage from "../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 import EditTeamModal from "../TeamsPage/EditTeamModal";
 import { open_edit_team_modal } from "../../slices/teamSlice";
 import SponsorsCard from "../SponsorsGridPage/components/SponsorCard";
 import TeamPageSkeleton from "./components/TeamPageSkeleton";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Container from "@mui/material/Container";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const TeamPage = () => {
   const params = useParams();

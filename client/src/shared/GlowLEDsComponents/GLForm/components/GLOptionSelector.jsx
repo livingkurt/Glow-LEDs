@@ -1,6 +1,8 @@
-import { Box, Paper, Typography } from "@mui/material";
 import GLAutocomplete from "../../GLAutocomplete/GLAutocomplete";
 import PropTypes from "prop-types";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 
 const GLOptionSelector = ({ fieldName, fieldData, onChange, classes, formErrors, index }) => {
   const currentOptions = fieldData.getCurrentOptions?.(index) || [];

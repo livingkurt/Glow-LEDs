@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Paper, Grid, Typography, Box } from "@mui/material";
+
 import { format_date } from "../../../utils/helper_functions";
 import * as API from "../../../api";
 import { useProductsQuery } from "../../../api/allRecordsApi";
@@ -7,6 +7,10 @@ import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 import { set_product } from "../../ProductsPage/productsPageSlice";
 
 // eslint-disable-next-line react/prop-types
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 const StatisticItem = ({ label, value, prefix = "", suffix = "" }) => (
   <Typography variant="body1" sx={{ mb: 1 }}>
     {label}
@@ -90,6 +94,7 @@ const ProductRevenue = () => {
                         value={data.totalShippingRevenue?.toFixed(2)}
                         prefix="$"
                       />
+
                       <StatisticItem label="Total Tax Revenue" value={data.totalTaxRevenue?.toFixed(2)} prefix="$" />
                       <StatisticItem label="Total Tips" value={data.totalTips?.toFixed(2)} prefix="$" />
                       <StatisticItem label="Total Discounts" value={data.totalDiscounts?.toFixed(2)} prefix="$" />
@@ -108,10 +113,12 @@ const ProductRevenue = () => {
                         value={data.averageRevenuePerCustomer?.toFixed(2)}
                         prefix="$"
                       />
+
                       <StatisticItem
                         label="Average Quantity Per Order"
                         value={data.averageQuantityPerOrder?.toFixed(2)}
                       />
+
                       <StatisticItem label="Max Quantity In Single Order" value={data.maxQuantityInOrder} />
                       <StatisticItem label="Pre-orders" value={data.preOrderCount} />
                     </Paper>
@@ -140,11 +147,13 @@ const ProductRevenue = () => {
                         label="Average Orders per Month"
                         value={(data.numberOfOrders / data.monthlyOrderFrequency).toFixed(1)}
                       />
+
                       <StatisticItem label="International Orders" value={data.internationalOrderCount} />
                       <StatisticItem
                         label="Domestic Orders"
                         value={data.numberOfOrders - data.internationalOrderCount}
                       />
+
                       <StatisticItem
                         label="International Order Rate"
                         value={((data.internationalOrderCount / data.numberOfOrders) * 100).toFixed(1)}

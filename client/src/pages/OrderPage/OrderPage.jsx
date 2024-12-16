@@ -10,8 +10,11 @@ import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 import { determineOrderColors } from "../OrdersPage/ordersPageHelpers";
-import { Box, Button, Container } from "@mui/material";
+
 import { getItemsTotal } from "../../helpers/sharedHelpers";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 
 const OrderPage = () => {
   const params = useParams();

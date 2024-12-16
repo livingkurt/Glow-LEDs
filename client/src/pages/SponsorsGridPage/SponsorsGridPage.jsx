@@ -1,8 +1,11 @@
 import { Helmet } from "react-helmet";
-import { Container, Grid, Typography } from "@mui/material";
+
 import { useAffiliatesQuery } from "../../api/allRecordsApi";
 import SponsorsCard from "./components/SponsorCard";
 import SponsorsGridPageSkeleton from "./components/SponsorGridPageSkeleton";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const SponsorsGridPage = () => {
   const { data: affiliates, isLoading } = useAffiliatesQuery({ sponsor: true });

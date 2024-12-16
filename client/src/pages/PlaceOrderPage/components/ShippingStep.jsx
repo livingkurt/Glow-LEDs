@@ -37,11 +37,13 @@ import {
   closeSplitOrderModal,
   openSplitOrderModal,
 } from "../placeOrderSlice";
-import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { getHasNonPreOrderItems, getHasPreOrderItems, hasActiveSaleItems } from "../placeOrderHelpers";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Typography from "@mui/material/Typography";
 
 const ShippingStep = () => {
   const { width } = useWindowDimensions();
@@ -362,6 +364,7 @@ const ShippingStep = () => {
                         id="last_name"
                         onChange={e => dispatch(save_shipping({ ...shipping, [e.target.name]: e.target.value }))}
                       />
+
                       <div
                         className="validation_text"
                         style={{
@@ -506,6 +509,7 @@ const ShippingStep = () => {
                     }
                     label="International"
                   />
+
                   {shipping.international && (
                     <>
                       <li>

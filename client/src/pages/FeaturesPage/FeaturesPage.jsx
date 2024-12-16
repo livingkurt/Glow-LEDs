@@ -3,13 +3,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import * as API from "../../api";
-import { Box, Button, Container } from "@mui/material";
+
 import { format_date } from "../../utils/helper_functions";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import EditFeatureModal from "./components/EditFeatureModal";
 import { open_create_feature_modal, open_edit_feature_modal } from "../../slices/featureSlice";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 
 const FeaturesPage = () => {
   const featurePage = useSelector(state => state.features.featurePage);
@@ -48,6 +51,7 @@ const FeaturesPage = () => {
         ),
       },
     ],
+
     []
   );
 
@@ -73,6 +77,7 @@ const FeaturesPage = () => {
           </Button>
         }
       />
+
       <EditFeatureModal />
     </Container>
   );

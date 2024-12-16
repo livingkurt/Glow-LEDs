@@ -1,13 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
+
 import GLToggleButtons from "../../../shared/GlowLEDsComponents/GLToggleButtons/GLToggleButtons";
 import GLSelect from "../../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 import GLColorButtons from "../../../shared/GlowLEDsComponents/GLColorButtons/GLColorButtons";
-import { CheckBox, CheckBoxOutlineBlank, Clear } from "@mui/icons-material";
+
 import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLInfoPopover from "../../../shared/GlowLEDsComponents/GLInfoPopover/GLInfoPopover";
 import GLTextFieldV2 from "../../../shared/GlowLEDsComponents/GLTextFieldV2/GLTextFieldV2";
+import Box from "@mui/material/Box";
+import Checkbox from "@mui/material/Checkbox";
+import CheckBox from "@mui/icons-material/CheckBox";
+import CheckBoxOutlineBlank from "@mui/icons-material/CheckBoxOutlineBlank";
+import Clear from "@mui/icons-material/Clear";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Typography from "@mui/material/Typography";
 
 const CustomizationOption = ({
   index,
@@ -76,6 +83,7 @@ const CustomizationOption = ({
             )}
           />
         );
+
       case "buttons":
         return (
           <GLToggleButtons
@@ -86,6 +94,7 @@ const CustomizationOption = ({
             disabledOptions={option.values.filter(opt => opt.product?.count_in_stock === 0).map(opt => opt.name)}
           />
         );
+
       case "colors":
         return (
           <GLColorButtons
@@ -97,6 +106,7 @@ const CustomizationOption = ({
             disabledOptions={option.values.filter(opt => opt.product?.count_in_stock === 0).map(opt => opt.name)}
           />
         );
+
       case "text":
         return (
           <GLTextFieldV2
@@ -113,6 +123,7 @@ const CustomizationOption = ({
             }}
           />
         );
+
       default:
         return null;
     }

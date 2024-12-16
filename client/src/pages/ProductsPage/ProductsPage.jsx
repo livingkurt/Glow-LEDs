@@ -6,7 +6,7 @@ import { openProductOptionsGeneratorModal, open_create_product_modal, openSalePr
 import { EditProductModal, SalePriceModal } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
-import { Box, Button, Container } from "@mui/material";
+
 import { determineColor, productColors } from "./productsPageHelpers";
 import ProductOptionsGeneratorModal from "./components/ProductOptionsGeneratorModal";
 import EditIcon from "@mui/icons-material/Edit";
@@ -20,6 +20,9 @@ import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconBut
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import { showConfirm } from "../../slices/snackbarSlice";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 
 const ProductsPage = () => {
   const productsPage = useSelector(state => state.products.productsPage);
@@ -116,6 +119,7 @@ const ProductsPage = () => {
         ),
       },
     ],
+
     [dispatch]
   );
 
@@ -201,6 +205,7 @@ const ProductsPage = () => {
           </div>
         }
       />
+
       <EditProductModal />
       <ProductOptionsGeneratorModal />
       <SalePriceModal />

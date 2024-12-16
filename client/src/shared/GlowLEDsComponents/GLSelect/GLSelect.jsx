@@ -1,6 +1,9 @@
 import React from "react";
-import { FormControl, Select, MenuItem, Box, useTheme } from "@mui/material";
-
+import Box from "@mui/material/Box";
+import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import useTheme from "@mui/material/styles/useTheme";
 const GLSelect = ({ value, onChange, placeholder, options, getOptionLabel, valueKey, fullWidth, width, size }) => {
   const theme = useTheme();
 

@@ -6,7 +6,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_team_modal, open_edit_team_modal } from "../../slices/teamSlice";
 import * as API from "../../api";
 import PolylineIcon from "@mui/icons-material/Polyline";
-import { Box, Button, Container, Tooltip } from "@mui/material";
+
 import { getTeams } from "../../api";
 import { determineColor } from "./teamHelpers";
 import { useLocation } from "react-router-dom";
@@ -18,6 +18,10 @@ import { open_edit_promo_modal } from "../../slices/promoSlice";
 import EditTeamModal from "./EditTeamModal";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Tooltip from "@mui/material/Tooltip";
 
 const TeamsPage = () => {
   const location = useLocation();
@@ -97,6 +101,7 @@ const TeamsPage = () => {
         ),
       },
     ],
+
     [dispatch]
   );
 
@@ -124,6 +129,7 @@ const TeamsPage = () => {
           </Button>
         }
       />
+
       <EditTeamModal />
       <EditPromoModal />
     </Container>

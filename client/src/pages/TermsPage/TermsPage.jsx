@@ -1,6 +1,7 @@
-import { Container, Typography } from "@mui/material";
 import React from "react";
 import { Helmet } from "react-helmet";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 
 const TermsPage = () => {
   return (
@@ -15,10 +16,12 @@ const TermsPage = () => {
           name="description"
           content="Glow LEDs wants everyone to use our platform for what it was meant to be used for."
         />
+
         <meta
           property="og:description"
           content="Glow LEDs wants everyone to use our platform for what it was meant to be used for."
         />
+
         <meta
           name="twitter:description"
           content="Glow LEDs wants everyone to use our platform for what it was meant to be used for."

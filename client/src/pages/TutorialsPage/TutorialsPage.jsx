@@ -6,11 +6,14 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_tutorial_modal, open_edit_tutorial_modal } from "../../slices/tutorialSlice";
 import { EditTutorialModal } from "./components";
 import * as API from "../../api";
-import { Box, Button, Container } from "@mui/material";
+
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 
 const TutorialsPage = () => {
   const tutorialPage = useSelector(state => state.tutorials.tutorialPage);
@@ -63,6 +66,7 @@ const TutorialsPage = () => {
         ),
       },
     ],
+
     [dispatch]
   );
 
@@ -93,6 +97,7 @@ const TutorialsPage = () => {
           </Button>
         }
       />
+
       <EditTutorialModal />
     </Container>
   );

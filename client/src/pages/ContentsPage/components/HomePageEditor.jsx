@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Grid, MenuItem, Select, Typography, Paper } from "@mui/material";
+
 import GLForm from "../../../shared/GlowLEDsComponents/GLForm/GLForm";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -8,6 +8,12 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import { toTitleCase } from "../../../utils/helper_functions";
 import { homePageFields } from "./contentFormFields";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import MenuItem from "@mui/material/MenuItem";
+import Paper from "@mui/material/Paper";
+import Select from "@mui/material/Select";
+import Typography from "@mui/material/Typography";
 
 const MODULE_TYPES = [
   { value: "slideshow", label: "Slideshow" },

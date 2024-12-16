@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import * as API from "../../../api";
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 
 const Banner = () => {
   const theme = useTheme();

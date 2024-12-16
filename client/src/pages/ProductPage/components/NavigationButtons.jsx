@@ -1,7 +1,10 @@
 import React from "react";
-import { Box, darken, Typography, useTheme } from "@mui/material";
-import { scrollToElement } from "../productHelpers";
 
+import { scrollToElement } from "../productHelpers";
+import Box from "@mui/material/Box";
+import { darken } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
 const NavigationButtons = ({ primary_color }) => {
   const theme = useTheme();
 
