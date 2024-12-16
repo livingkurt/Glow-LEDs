@@ -1,10 +1,15 @@
 import React from "react";
-import { Box, Button, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 import { Link } from "react-router-dom";
 import * as API from "../../api";
 import GLLazyImage from "../GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
-const SupportBanner = ({ text_color, header_text_color, primary_color }) => {
+const SupportBanner = ({ primary_color }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 

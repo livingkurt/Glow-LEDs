@@ -1,10 +1,14 @@
 import React from "react";
-import { Box, Typography, Grid, Button } from "@mui/material";
+
 import { Link } from "react-router-dom";
 import * as API from "../../api";
 import AcademyPageSkeleton from "./component/AcademyPageSkeleton";
 import TutorialCard from "../TutorialsGridPage/component/TutorialsCard";
 import ArticleCard from "../ArticlesGridPage/component/ArticleCard";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const AcademyPage = () => {
   const { data: currentContent, isLoading } = API.useCurrentContentQuery();

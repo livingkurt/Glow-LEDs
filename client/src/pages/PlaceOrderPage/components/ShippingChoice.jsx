@@ -27,9 +27,11 @@ import {
 } from "../placeOrderSlice";
 import { determineCartTotal } from "../../../utils/helper_functions";
 import ProcessingConfirmModal from "./ProcessingConfirmModal";
-import { Tooltip, Typography } from "@mui/material";
-import { Info } from "@mui/icons-material";
+
 import * as API from "../../../api";
+import Info from "@mui/icons-material/Info";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 
 const ShippingChoice = () => {
   const dispatch = useDispatch();

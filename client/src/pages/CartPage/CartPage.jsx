@@ -4,10 +4,19 @@ import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 import { Helmet } from "react-helmet";
 import { determineCartTotal } from "../../utils/helper_functions";
 import { useNavigate } from "react-router-dom";
-import { Container, Typography, Box, Grid, List, ListItem, Divider, useTheme, Paper } from "@mui/material";
+
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import * as API from "../../api";
 import { showInfo } from "../../slices/snackbarSlice";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
 
 const CartPage = () => {
   const dispatch = useDispatch();

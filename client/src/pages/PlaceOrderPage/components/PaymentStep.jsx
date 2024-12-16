@@ -20,7 +20,7 @@ import {
 } from "../placeOrderSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
+
 import StripeCheckout from "./StripeCheckout/StripeCheckout";
 import { determineCartTotal } from "../../../utils/helper_functions";
 import * as API from "../../../api";
@@ -28,7 +28,11 @@ import { useNavigate } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
 import { getHasPreOrderItems, getPreOrderReleaseDate, hasActiveSaleItems } from "../placeOrderHelpers";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
-import { Sell } from "@mui/icons-material";
+import Box from "@mui/material/Box";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Sell from "@mui/icons-material/Sell";
+import Typography from "@mui/material/Typography";
 
 const PaymentStep = () => {
   const navigate = useNavigate();
@@ -308,6 +312,7 @@ const PaymentStep = () => {
                           dispatch(set_promo_code(e.target.value.toUpperCase()));
                         }}
                       />
+
                       <GLButton
                         type="submit"
                         variant="primary"
@@ -403,6 +408,7 @@ const PaymentStep = () => {
                       dispatch(set_create_account(e.target.checked));
                     }}
                   />
+
                   <label htmlFor="create_account mb-20px">{"Create an account for faster checkout"}</label>
                 </div>
               </div>
@@ -416,6 +422,7 @@ const PaymentStep = () => {
                   name="password"
                   onChange={e => dispatch(set_new_password(e.target.value))}
                 />
+
                 <label htmlFor="new_password" className="validation_text fs-16px jc-c">
                   {password_validations}
                 </label>
@@ -507,6 +514,7 @@ const PaymentStep = () => {
                         dispatch(set_user(newValue));
                       }}
                     />
+
                     <GLButton onClick={create_order_without_paying} variant="secondary" className="w-100per mb-12px">
                       {"Create Order For User"}
                     </GLButton>

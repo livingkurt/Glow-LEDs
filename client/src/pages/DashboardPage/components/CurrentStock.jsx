@@ -1,9 +1,14 @@
 import React from "react";
 import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTable";
-import { Typography, AppBar, Tabs, Tab, Paper } from "@mui/material";
+
 import { useDispatch } from "react-redux";
 import * as API from "../../../api";
 import GLTabPanel from "../../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
+import AppBar from "@mui/material/AppBar";
+import Paper from "@mui/material/Paper";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import Typography from "@mui/material/Typography";
 
 const CurrentStock = () => {
   const dispatch = useDispatch();

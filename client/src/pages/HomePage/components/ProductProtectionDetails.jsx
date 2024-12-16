@@ -1,6 +1,8 @@
-import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import PropTypes from "prop-types";
-
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 const ProductProtectionDetails = ({ product_protection_details }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));

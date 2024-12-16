@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 const LoadingPayments = ({ loading }) => {
   const glovingTips = [
@@ -14,6 +14,7 @@ const LoadingPayments = ({ loading }) => {
     "Fun fact: You can practice gloving anywhere, with the lights on or off, and with your gloves on or off.",
     "Remember: Proper glove care can significantly extend the life of your LEDs.",
   ];
+
   const [dots, setDots] = useState("");
   const [tip, setTip] = useState(glovingTips[Math.floor(Math.random() * glovingTips.length)]);
   const [hue, setHue] = useState(0);

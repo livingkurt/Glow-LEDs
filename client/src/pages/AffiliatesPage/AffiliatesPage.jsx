@@ -7,7 +7,7 @@ import { open_create_affiliate_modal, open_edit_affiliate_modal } from "../../sl
 import { EditAffiliateModal } from "./components";
 import * as API from "../../api";
 import PolylineIcon from "@mui/icons-material/Polyline";
-import { Box, Button, Container, Tooltip } from "@mui/material";
+
 import { getAffiliates } from "../../api";
 import { determineColor } from "./affiliateHelpers";
 import { useLocation } from "react-router-dom";
@@ -18,6 +18,10 @@ import { EditPromoModal } from "../PromosPage/components";
 import { open_edit_promo_modal } from "../../slices/promoSlice";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Tooltip from "@mui/material/Tooltip";
 
 const AffiliatesPage = () => {
   const location = useLocation();
@@ -100,6 +104,7 @@ const AffiliatesPage = () => {
         ),
       },
     ],
+
     [dispatch]
   );
 
@@ -127,6 +132,7 @@ const AffiliatesPage = () => {
           </Button>
         }
       />
+
       <EditAffiliateModal />
       <EditPromoModal />
     </Container>

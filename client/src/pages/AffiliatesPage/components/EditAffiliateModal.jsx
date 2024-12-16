@@ -6,7 +6,7 @@ import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { affiliateFormFields } from "./affiliateFormFields";
-import { Box, Typography } from "@mui/material";
+
 import GLStepperModal from "../../../shared/GlowLEDsComponents/GLStepperModal/GLStepperModal";
 import { Loading } from "../../../shared/SharedComponents";
 import {
@@ -17,6 +17,8 @@ import {
   usePromosQuery,
   useUsersQuery,
 } from "../../../api/allRecordsApi";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 const EditAffiliateModal = () => {
   const dispatch = useDispatch();

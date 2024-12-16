@@ -1,7 +1,10 @@
-import { Typography, Grid, Container, Paper, useTheme } from "@mui/material";
 import React from "react";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
-
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
 const CategoryBanner = ({ banner }) => {
   const theme = useTheme();
   if (!banner) return null;

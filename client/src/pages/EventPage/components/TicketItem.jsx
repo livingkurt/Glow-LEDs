@@ -1,11 +1,18 @@
 import React from "react";
-import { Box, Typography, Button, useMediaQuery, useTheme, lighten, IconButton } from "@mui/material";
+
 import DateBox from "./DateBox";
 import { open_edit_ticket_modal } from "../../../slices/ticketSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { Edit } from "@mui/icons-material";
-import { isSafari } from "react-device-detect";
 
+import { isSafari } from "react-device-detect";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Edit from "@mui/icons-material/Edit";
+import IconButton from "@mui/material/IconButton";
+import { lighten } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 const TicketItem = ({ ticket, event, onSelectTicket, ticketColors }) => {
   const dispatch = useDispatch();
   const theme = useTheme();

@@ -4,7 +4,7 @@ import { Loading } from "../../../shared/SharedComponents";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import StarRating from "../../../shared/GlowLEDsComponents/GLRating/StarRating";
 import * as API from "../../../api";
-import { Container } from "@mui/material";
+import Container from "@mui/material/Container";
 
 const Survey = () => {
   const [questionAnswers, setQuestionAnswers] = useState({});

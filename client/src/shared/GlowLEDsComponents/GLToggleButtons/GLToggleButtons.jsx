@@ -1,6 +1,8 @@
 import React from "react";
-import { ToggleButtonGroup, ToggleButton, Box, useTheme } from "@mui/material";
-
+import Box from "@mui/material/Box";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import useTheme from "@mui/material/styles/useTheme";
 const GLToggleButtons = ({ ariaLabel, value, onChange, options, additionalCostLabel, sx, disabledOptions }) => {
   const theme = useTheme();
   return (

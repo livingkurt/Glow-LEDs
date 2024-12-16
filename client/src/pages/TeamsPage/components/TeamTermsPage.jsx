@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import Container from "@mui/material/Container";
 import React from "react";
 import { Helmet } from "react-helmet";
 
@@ -15,10 +15,12 @@ const TeamTermsPage = () => {
           name="description"
           content="Glow LEDs wants everyone to use our platform for what it was meant to be used for."
         />
+
         <meta
           property="og:description"
           content="Glow LEDs wants everyone to use our platform for what it was meant to be used for."
         />
+
         <meta
           name="twitter:description"
           content="Glow LEDs wants everyone to use our platform for what it was meant to be used for."
@@ -156,8 +158,8 @@ const TeamTermsPage = () => {
           </ul>
           <li>{"Share at least one Glow LEDs post a week (Choose whatever one you feel strongly about)"}</li>
           {/* <li>
-						Post a Lightshow with a Glow LEDs product, Glow LEDs Logo and promo code at least twice a month
-					</li> */}
+            Post a Lightshow with a Glow LEDs product, Glow LEDs Logo and promo code at least twice a month
+            </li> */}
           <li>
             {"Each member sends Glow LEDs a lightshow with a Glow LEDs product to be featured, at least once a month"}
           </li>

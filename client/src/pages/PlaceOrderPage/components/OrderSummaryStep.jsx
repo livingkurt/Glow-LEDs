@@ -2,9 +2,13 @@ import React from "react";
 import GLCartItem from "../../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 import { useSelector } from "react-redux";
 import { determineCartTotal, formatPrice } from "../../../utils/helper_functions";
-import { Box, Tooltip, Typography, useTheme } from "@mui/material";
+
 import { getHasPreOrderItems, hasActiveSaleItems } from "../placeOrderHelpers";
 import ShippingPrice from "./ShippingPrice";
+import Box from "@mui/material/Box";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
 
 const OrderSummaryStep = () => {
   const theme = useTheme();
@@ -157,6 +161,7 @@ const OrderSummaryStep = () => {
               originalPrice={previousNonPreOrderShippingPrice}
               newPrice={nonPreOrderShippingPrice}
             />
+
             <ShippingPrice
               label="Pre-order Items Shipping"
               originalPrice={previousPreOrderShippingPrice}

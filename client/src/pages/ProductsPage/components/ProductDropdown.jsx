@@ -1,16 +1,3 @@
-import {
-  TableCell,
-  TableRow,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Box,
-  Chip,
-  Divider,
-  Tooltip,
-  useTheme,
-} from "@mui/material";
 import { toCapitalize } from "../../../utils/helper_functions";
 import * as API from "../../../api";
 import { useDispatch } from "react-redux";
@@ -21,8 +8,21 @@ import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIcon
 import GLFlexGrid from "../../../shared/GlowLEDsComponents/GLFlexGrid/GLFlexGrid";
 import GLBoolean from "../../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import { hasUpdatedProductOptionProduct } from "../productsPageHelpers";
-import { AssignmentTurnedIn, CreateNewFolder } from "@mui/icons-material";
+
 import { openProductOptionsGeneratorModal } from "../productsPageSlice";
+import AssignmentTurnedIn from "@mui/icons-material/AssignmentTurnedIn";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
+import CreateNewFolder from "@mui/icons-material/CreateNewFolder";
+import Divider from "@mui/material/Divider";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
 
 const ProductDropdown = ({ row, determineColor, colspan }) => {
   const theme = useTheme();
@@ -163,24 +163,24 @@ const ProductDropdown = ({ row, determineColor, colspan }) => {
                     </ListItem>
                   ))}
                   {/* <ListItem sx={{ p: 0 }}>
-                    <ListItemText
-                      primary={
-                        <Button
-                          variant="contained"
-                          fullWidth
-                          onClick={() =>
-                            dispatch(
-                              addOption({
-                                row,
-                                optionId: option._id,
-                              })
-                            )
-                          }
-                        >
-                          Add Option
-                        </Button>
-                      }
-                    />
+                   <ListItemText
+                     primary={
+                       <Button
+                         variant="contained"
+                         fullWidth
+                         onClick={() =>
+                           dispatch(
+                             addOption({
+                               row,
+                               optionId: option._id,
+                             })
+                           )
+                         }
+                       >
+                         Add Option
+                       </Button>
+                     }
+                   />
                   </ListItem> */}
                 </List>
               </Box>

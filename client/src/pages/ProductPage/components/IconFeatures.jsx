@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
+
 import BatteryFullIcon from "@mui/icons-material/BatteryFull";
 import BluetoothIcon from "@mui/icons-material/Bluetooth";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
@@ -11,6 +11,9 @@ import FlashOnIcon from "@mui/icons-material/FlashOn";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import SyncIcon from "@mui/icons-material/Sync";
 import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const IconFeatures = ({ icon_specs }) => {
   const getIcon = iconName => {

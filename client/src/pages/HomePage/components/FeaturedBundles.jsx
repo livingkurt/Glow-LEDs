@@ -1,6 +1,7 @@
-import { Box, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import ProductBundleCard from "../../ProductBundlesGridPage/components/ProductBundleCard";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 const FeaturedBundles = ({ featured_product_bundles }) => {
   return (

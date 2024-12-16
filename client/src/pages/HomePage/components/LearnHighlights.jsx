@@ -1,8 +1,14 @@
-import { Box, Typography, Button, Grid, Paper, Container, useTheme, useMediaQuery } from "@mui/material";
 import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
-
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 const LearnHighlights = learn_highlights => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -53,6 +59,7 @@ const LearnHighlights = learn_highlights => {
                           position: "relative",
                         }}
                       />
+
                       <Typography
                         variant="h4"
                         sx={{

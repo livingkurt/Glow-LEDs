@@ -5,7 +5,7 @@ import { determineTabName } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { DatePicker } from "./components";
 import { Loading } from "../../shared/SharedComponents";
-import { AppBar, Button, Container, Paper, Tab, Tabs } from "@mui/material";
+
 import { openGcodeContinuousModal, setTabIndex } from "./dashboardSlice";
 import GLTabPanel from "../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
 import YearlyMonthlyDailyRevenue from "./components/YearlyMonthlyDailyRevenue";
@@ -17,6 +17,12 @@ import AllProductRevenue from "./components/AllProductRevenue";
 import SponsorCheckins from "./components/SponsorCheckins";
 import GcodeGeneratorModal from "./components/GcodeGeneratorModal/GcodeGeneratorModal";
 import ProductRevenue from "./components/ProductRevenue";
+import AppBar from "@mui/material/AppBar";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
@@ -55,6 +61,7 @@ const DashboardPage = () => {
           end_date={end_date}
           start_end_date={start_end_date}
         />
+
         <TotalsTable
           range_revenue={range_revenue}
           tips_range_revenue={tips_range_revenue}
@@ -63,6 +70,7 @@ const DashboardPage = () => {
           month={month}
           year={year}
         />
+
         <Paper>
           <AppBar position="sticky" color="transparent">
             <Tabs

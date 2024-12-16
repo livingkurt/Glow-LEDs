@@ -6,7 +6,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_combine_users_modal, open_create_user_modal, open_edit_user_modal } from "../../slices/userSlice";
 import { CombineUsersModal, EditUserModal } from "./components";
 import * as API from "../../api";
-import { Box, Button, Container } from "@mui/material";
+
 import { determineColor, duplicateUser, fullName } from "./usersHelpers";
 import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
@@ -17,6 +17,9 @@ import EmailIcon from "@mui/icons-material/Email";
 import { Loading } from "../../shared/SharedComponents";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 
 const UsersPage = () => {
   const userPage = useSelector(state => state.users.userPage);
@@ -86,6 +89,7 @@ const UsersPage = () => {
         ),
       },
     ],
+
     [dispatch]
   );
 
@@ -163,6 +167,7 @@ const UsersPage = () => {
           </div>
         }
       />
+
       <EditUserModal />
       <CombineUsersModal />
     </Container>

@@ -1,6 +1,11 @@
 import React from "react";
-import { Container, Typography, Grid, Card, CardContent, Box, Skeleton } from "@mui/material";
-
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Skeleton from "@mui/material/Skeleton";
+import Typography from "@mui/material/Typography";
 const ArticlesGridPageSkeletons = () => {
   return (
     <Container maxWidth="xl">
@@ -49,12 +54,14 @@ const ArticlesGridPageSkeletons = () => {
                   variant="text"
                   width="80%"
                 />
+
                 <Skeleton
                   animation="wave"
                   sx={{ bgcolor: "#4e5061", borderRadius: "20px" }}
                   variant="text"
                   width="60%"
                 />
+
                 <Skeleton
                   animation="wave"
                   sx={{ bgcolor: "#4e5061", borderRadius: "20px" }}

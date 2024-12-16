@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import React from "react";
 import { isEvenIndex, isFourthSection, isNotFourthSection, isOddIndex } from "../aboutPageHelpers";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";

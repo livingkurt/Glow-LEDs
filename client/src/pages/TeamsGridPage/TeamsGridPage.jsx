@@ -1,8 +1,11 @@
 import { Helmet } from "react-helmet";
-import { Container, Grid, Typography } from "@mui/material";
+
 import TeamCard from "./components/TeamCard";
 import { useTeamsQuery } from "../../api/allRecordsApi";
 import TeamsGridPageSkeletons from "./components/TeamGridPageSkeletons";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const TeamsGridPage = () => {
   const { data: teams, isLoading } = useTeamsQuery();

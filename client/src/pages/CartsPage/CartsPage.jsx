@@ -6,13 +6,16 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_cart_modal, open_edit_cart_modal } from "../../slices/cartSlice";
 import { EditCartModal } from "./components";
 import * as API from "../../api";
-import { Box, Button, Container } from "@mui/material";
+
 import { determineColor } from "./cartsPageHelpers";
 import { format_date } from "../../utils/helper_functions";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 
 const CartsPage = () => {
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -62,6 +65,7 @@ const CartsPage = () => {
         ),
       },
     ],
+
     [dispatch]
   );
 
@@ -93,6 +97,7 @@ const CartsPage = () => {
           </Button>
         }
       />
+
       <EditCartModal />
     </Container>
   );

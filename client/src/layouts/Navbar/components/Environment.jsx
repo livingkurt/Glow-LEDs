@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
+
 import { toCapitalize } from "../../../utils/helper_functions";
 
 const Environment = () => {

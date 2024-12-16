@@ -1,17 +1,26 @@
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { Box, Button, TextField, Typography, MenuItem, Grid, FormControl, InputLabel, Select } from "@mui/material";
+
 import PatternSelector from "./components/PatternSelector";
 import ModePreview from "./components/ModePreview";
 import { GLAutocomplete } from "../../shared/GlowLEDsComponents";
-import { snakeCase } from "lodash";
+import snakeCase from "lodash/snakeCase";
 import { modeInitialState, set_mode } from "../../slices/modeSlice";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import useModeCreatorPage from "./useModeCreatorPage";
 import ModeCreatorPageSkeleton from "./components/ModeCreatorPageSkeleton";
 import AvailableColors from "./components/AvailableColors";
 import { isMobile } from "react-device-detect";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import Grid from "@mui/material/Grid";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 const ModeCreatorPage = () => {
   const { id } = useParams();

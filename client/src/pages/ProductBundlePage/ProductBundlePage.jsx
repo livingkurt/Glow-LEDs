@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { useState, useMemo } from "react";
-import { Box, Container, Grid, Typography, List } from "@mui/material";
+
 import { useDispatch } from "react-redux";
-import { Add } from "@mui/icons-material";
+
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import GLBreadcrumbs from "../../shared/GlowLEDsComponents/GLBreadcrumbs/GLBreadcrumbs";
 import ProductImages from "../ProductPage/components/ProductImages";
@@ -17,6 +17,12 @@ import { generateGradient, setPromoCode } from "../../utils/helpers/universal_he
 import HeroVideo from "../HomePage/components/HeroVideo";
 import BundleOptionsModal from "./components/BundleOptionsModal";
 import GLPrice from "../../shared/GlowLEDsComponents/GLPrice/GLPrice";
+import Add from "@mui/icons-material/Add";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
 
 const ProductBundlePage = () => {
   const dispatch = useDispatch();
@@ -61,6 +67,7 @@ const ProductBundlePage = () => {
                 { name: bundle.title?.toUpperCase() },
               ]}
             />
+
             {(current_user.isAdmin || current_user?.affiliate === bundle?.affiliate?._id) && (
               <Box className="br-10px">
                 <GLButtonV2
@@ -214,6 +221,7 @@ const ProductBundlePage = () => {
             bundleItems={bundle?.cartItems || []}
             onConfirm={handleOptionsConfirm}
           />
+
           <EditCartModal />
         </>
       )}

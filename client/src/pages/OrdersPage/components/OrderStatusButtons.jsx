@@ -5,10 +5,14 @@ import { API_Emails } from "../../../utils";
 import { toTitleCase } from "../../../utils/helper_functions";
 import { Loading } from "../../../shared/SharedComponents";
 import config from "../../../config";
-import { Box, Button, Grid, Typography } from "@mui/material";
+
 import { orderStatusColors, nextStatus } from "../ordersPageHelpers";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 import { showConfirm } from "../../../slices/snackbarSlice";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const OrderStatusButtons = ({ order }) => {
   const dispatch = useDispatch();

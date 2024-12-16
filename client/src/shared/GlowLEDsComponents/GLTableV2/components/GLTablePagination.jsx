@@ -9,7 +9,8 @@ import { useDispatch } from "react-redux";
 import { updatePageSize } from "../actions/actions";
 import { getDisplayedRowsInfo } from "../glTableHelpers";
 import CovalentTableNextPrevious from "./GLTableNextPrevious";
-import { Divider } from "@mui/material";
+import Divider from "@mui/material/Divider";
+
 import useContainerDimensions from "../../../Hooks/useContainerDimensions";
 
 const GLTablePagination = ({ count, page, namespace, rowsPerPage, location }) => {

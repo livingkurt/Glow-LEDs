@@ -1,8 +1,9 @@
-import { Box, Container } from "@mui/material";
 import HomePageHead from "./components/HomePageHead";
 import { HOME_PAGE_COMPONENTS } from "./homePageComponents";
 import * as API from "../../api";
 import { useEffect } from "react";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 
 const HomePage = () => {
   const { data: currentContent, isLoading, refetch } = API.useCurrentContentQuery();

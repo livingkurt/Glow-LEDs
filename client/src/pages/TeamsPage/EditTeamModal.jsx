@@ -6,10 +6,12 @@ import * as API from "../../api";
 import { GLForm } from "../../shared/GlowLEDsComponents/GLForm";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { teamFormFields } from "./components/teamFormFields";
-import { Box, Typography } from "@mui/material";
+
 import GLStepperModal from "../../shared/GlowLEDsComponents/GLStepperModal/GLStepperModal";
 import { Loading } from "../../shared/SharedComponents";
 import { useAffiliatesQuery, usePromosQuery, useUsersQuery } from "../../api/allRecordsApi";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 const EditTeamModal = () => {
   const dispatch = useDispatch();

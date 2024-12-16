@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Container, Typography, Box } from "@mui/material";
+
 import ReactMarkdown from "react-markdown";
 import { detailsArticle } from "../../api";
 import GLButtonV2 from "../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
@@ -9,6 +9,9 @@ import EditArticleModal from "../ArticlesPage/components/EditArticleModal";
 import { open_edit_article_modal } from "../../slices/articleSlice";
 import GLLazyImage from "../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 import ArticlePageSkeleton from "./components/ArticlePageSkeletons";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 
 const ArticlePage = () => {
   const dispatch = useDispatch();

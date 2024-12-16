@@ -1,10 +1,19 @@
 import PropTypes from "prop-types";
-import { AppBar, Tabs, Tab, Paper, Typography, Box, Button } from "@mui/material";
-import { Close, ArrowBack, ArrowForward, FileCopy } from "@mui/icons-material";
+
 import GLForm from "../GLForm";
 import GLTabPanel from "../../GLTabPanel/GLTabPanel";
 import GLIconButton from "../../GLIconButton/GLIconButton";
-
+import AppBar from "@mui/material/AppBar";
+import ArrowBack from "@mui/icons-material/ArrowBack";
+import ArrowForward from "@mui/icons-material/ArrowForward";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Close from "@mui/icons-material/Close";
+import FileCopy from "@mui/icons-material/FileCopy";
+import Paper from "@mui/material/Paper";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import Typography from "@mui/material/Typography";
 const GLArray = ({
   fieldName,
   fieldState = [],

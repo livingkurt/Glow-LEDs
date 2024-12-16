@@ -1,7 +1,10 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import Environment from "../../layouts/Navbar/components/Environment";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const PlaceOrderLayout = ({ children }) => {
   return (
@@ -26,6 +29,7 @@ const PlaceOrderLayout = ({ children }) => {
                   alt="Glow LEDs Logo"
                   title="Big Logo"
                 />
+
                 <Typography
                   variant="glow_leds"
                   sx={{

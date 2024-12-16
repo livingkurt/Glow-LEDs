@@ -6,12 +6,15 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_event_modal, open_edit_event_modal } from "../../slices/eventSlice";
 import { EditEventModal } from "./components";
 import * as API from "../../api";
-import { Box, Button, Container } from "@mui/material";
+
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import { formatDateTimeLocal } from "./eventsPageHelpers";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 
 const EventsPage = () => {
   const eventPage = useSelector(state => state.events.eventPage);
@@ -63,6 +66,7 @@ const EventsPage = () => {
         ),
       },
     ],
+
     [dispatch]
   );
 
@@ -93,6 +97,7 @@ const EventsPage = () => {
           </Button>
         }
       />
+
       <EditEventModal />
     </Container>
   );

@@ -1,20 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import {
-  Box,
-  AppBar,
-  Toolbar,
-  useMediaQuery,
-  useTheme,
-  Container,
-  Typography,
-  TextField,
-  InputAdornment,
-  IconButton,
-  Collapse,
-} from "@mui/material";
-import { Search, ShoppingCart } from "@mui/icons-material";
+
 import { listContents } from "../../api";
 import { setCartDrawer, setSideNavDrawer } from "../../slices/cartSlice";
 import { GLButton } from "../../shared/GlowLEDsComponents";
@@ -26,13 +13,25 @@ import NavbarColumn from "./components/NavbarColumn";
 import NavbarDrawer from "./components/NavbarDrawer";
 import NavbarSubDrawer from "./components/NavbarSubDrawer";
 import ColumnItemButton from "./components/ColumnItemButton";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import { setSearch } from "../../pages/ProductsGridPage/productsGridPageSlice";
 import { set_first_name } from "../../slices/userSlice";
 import { getCartQuantity } from "../../helpers/sharedHelpers";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
-import * as API from "../../api";
 import useFeatureFlags from "../../shared/Hooks/useFeatureFlags";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Search from "@mui/icons-material/Search";
+import ShoppingCart from "@mui/icons-material/ShoppingCart";
+import TextField from "@mui/material/TextField";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -154,6 +153,7 @@ const Navbar = () => {
                 alt="Glow LEDs Logo"
                 title="Big Logo"
               />
+
               <Typography
                 variant="glow_leds"
                 sx={{

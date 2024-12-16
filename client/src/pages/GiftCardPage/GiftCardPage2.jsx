@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Box, Container, Grid, InputAdornment, TextField, Typography } from "@mui/material";
+
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { formatPrice } from "../../utils/helper_functions";
@@ -14,7 +14,14 @@ import SupportBanner from "../../shared/SupportBanner/SupportBanner";
 import GLLazyImage from "../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 import GLSelect from "../../shared/GlowLEDsComponents/GLSelect/GLSelect";
 import GLTextFieldV2 from "../../shared/GlowLEDsComponents/GLTextFieldV2/GLTextFieldV2";
-import { AttachMoney, Money } from "@mui/icons-material";
+import AttachMoney from "@mui/icons-material/AttachMoney";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import InputAdornment from "@mui/material/InputAdornment";
+import Money from "@mui/icons-material/Money";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 const GiftCardPage = () => {
   const { amount } = useParams();
@@ -40,6 +47,7 @@ const GiftCardPage = () => {
     { name: "GIFT CARDS", to: "/gift_cards" },
     { name: isCustom ? "CUSTOM" : `$${amount} GiftCard` },
   ];
+
   const images = {
     20: { link: "https://i.imgur.com/mkHVKV2.jpeg", _id: "6728f1c2f14eefb0e86889ef" },
     50: { link: "https://i.imgur.com/bKwv02C.png", _id: "6728f1caf14eefb0e86889f4" },
@@ -169,6 +177,7 @@ const GiftCardPage = () => {
               valueKey="name"
               fullWidth
             />
+
             <Typography variant="h6" gutterBottom mt={2} mb={2}>
               {"Price: "}
               {formatPrice(giftCardAmount)}

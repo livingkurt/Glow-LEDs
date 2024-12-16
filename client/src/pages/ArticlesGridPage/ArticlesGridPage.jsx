@@ -1,11 +1,16 @@
 import React from "react";
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+
 import { toTitleCase } from "../../utils/helper_functions";
 import useArticlesGridPage from "./useArticlesGridPage";
 import ArticlesGridPageSkeletons from "./component/ArticlesGridPageSkeletons";
 import ArticleCard from "./component/ArticleCard";
 import ArticlesGridPageFilters from "./component/ArticlesGridPageFilters";
 import { Link } from "react-router-dom";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const ArticlesGridPage = () => {
   const {
@@ -64,6 +69,7 @@ const ArticlesGridPage = () => {
           selectedAuthor={selectedAuthor}
           handleAuthorChange={handleAuthorChange}
         />
+
         <Grid container spacing={2}>
           {articles.length > 0 ? (
             articles.map(article => (

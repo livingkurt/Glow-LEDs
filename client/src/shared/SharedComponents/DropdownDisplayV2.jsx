@@ -4,13 +4,18 @@ import PropTypes from "prop-types";
 
 import Autocomplete from "@mui/material/Autocomplete";
 import Chip from "@mui/material/Chip";
-import { Box, Icon, List, Paper, Typography } from "@mui/material";
+
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import GLIconButton from "../GlowLEDsComponents/GLIconButton/GLIconButton";
+import Box from "@mui/material/Box";
+import Icon from "@mui/material/Icon";
+import List from "@mui/material/List";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 
 const DropdownDisplayV2 = ({
   options,
@@ -81,6 +86,7 @@ const DropdownDisplayV2 = ({
                       })
                     }
                   />
+
                   {showItems && value && Array.isArray(value) && (
                     <List>
                       {value.map((item, index) => (

@@ -6,15 +6,19 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_paycheck_modal, open_edit_paycheck_modal } from "../../slices/paycheckSlice";
 import { EditPaycheckModal } from "./components";
 import * as API from "../../api";
-import { Box, Button, Container } from "@mui/material";
+
 import { determineColor } from "./paychecksHelpers";
 import { fullName } from "../UsersPage/usersHelpers";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import Edit from "@mui/icons-material/Edit";
 import FileCopy from "@mui/icons-material/FileCopy";
-import { CheckCircle } from "@mui/icons-material";
+
 import Delete from "@mui/icons-material/Delete";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CheckCircle from "@mui/icons-material/CheckCircle";
+import Container from "@mui/material/Container";
 
 const PaychecksPage = () => {
   const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
@@ -96,6 +100,7 @@ const PaychecksPage = () => {
         ),
       },
     ],
+
     []
   );
 
@@ -141,6 +146,7 @@ const PaychecksPage = () => {
           </div>
         }
       />
+
       <EditPaycheckModal />
     </Container>
   );

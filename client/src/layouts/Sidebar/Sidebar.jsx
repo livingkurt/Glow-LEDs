@@ -1,10 +1,14 @@
 import React from "react";
-import { Drawer, List, useMediaQuery, useTheme } from "@mui/material";
+
 import { sidebarItems } from "../Navbar/navbarHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { setSideNavDrawer } from "../../slices/cartSlice";
 import SidebarCloseButton from "./components/SidebarCloseButton";
 import SidebarItem from "./components/SidebarItem";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 
 const Sidebar = () => {
   const dispatch = useDispatch();

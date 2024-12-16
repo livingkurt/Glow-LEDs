@@ -2,8 +2,12 @@ import React, { useState, useCallback } from "react";
 import { QrReader } from "react-qr-reader";
 import { useDispatch } from "react-redux";
 import * as API from "../../../api";
-import { Box, Button, Typography, CircularProgress } from "@mui/material";
+
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import Typography from "@mui/material/Typography";
 
 const TicketScanner = ({ openScannerModal, setOpenScannerModal, event }) => {
   const [scanResult, setScanResult] = useState(null);
@@ -75,6 +79,7 @@ const TicketScanner = ({ openScannerModal, setOpenScannerModal, event }) => {
               onError={handleError}
               style={{ width: "100%" }}
             />
+
             {isProcessing && (
               <Box
                 position="absolute"

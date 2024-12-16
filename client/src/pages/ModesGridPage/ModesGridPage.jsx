@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { Box, Button, Container, Grid, Paper, Typography, useTheme, useMediaQuery } from "@mui/material";
+
 import GLLoading from "../../shared/GlowLEDsComponents/GLLoading/GLLoading";
 import AddIcon from "@mui/icons-material/Add";
 import { useModesQuery } from "../../api/allRecordsApi";
@@ -8,6 +8,14 @@ import ModeCard from "./components/ModeCard";
 import { useEffect } from "react";
 import { modeInitialState, set_mode } from "../../slices/modeSlice";
 import { useDispatch } from "react-redux";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 const ModesGridPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

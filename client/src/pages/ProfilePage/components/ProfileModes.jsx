@@ -1,14 +1,19 @@
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, Paper, Typography } from "@mui/material";
+
 import GLTableV2 from "../../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import * as API from "../../../api";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { FileCopy } from "@mui/icons-material";
+
 import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import AddIcon from "@mui/icons-material/Add";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import FileCopy from "@mui/icons-material/FileCopy";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 
 const ProfileModes = () => {
   const dispatch = useDispatch();
@@ -64,6 +69,7 @@ const ProfileModes = () => {
         ),
       },
     ],
+
     [dispatch, navigate]
   );
 

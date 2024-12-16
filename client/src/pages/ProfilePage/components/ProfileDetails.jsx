@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
-import { Box, Typography, Stack } from "@mui/material";
-
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 const ProfileDetails = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, user } = userPage;

@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Button,
-  TextField,
-  Grid,
-} from "@mui/material";
+
 import { useDispatch, useSelector } from "react-redux";
 import { closeConfirm } from "../../../slices/snackbarSlice";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
 
 const GLConfirmModal = () => {
   const dispatch = useDispatch();

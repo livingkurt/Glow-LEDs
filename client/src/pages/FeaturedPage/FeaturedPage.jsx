@@ -6,7 +6,8 @@ import { humanize } from "../../utils/helper_functions";
 import { useNavigate } from "react-router-dom";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
-import { Container } from "@mui/material";
+import Container from "@mui/material/Container";
+
 import GLLazyImage from "../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
 const FeaturedPage = () => {
@@ -42,10 +43,12 @@ const FeaturedPage = () => {
           name="description"
           content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
         />
+
         <meta
           property="og:description"
           content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
         />
+
         <meta
           name="twitter:description"
           content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
@@ -103,8 +106,8 @@ const FeaturedPage = () => {
           </div>
 
           {/* <p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
-						Check out {feature.artist_name} with the {feature.product && humanize(feature.product)}!
-					</p> */}
+          Check out {feature.artist_name} with the {feature.product && humanize(feature.product)}!
+          </p> */}
           <div className="mt-2rem wrap jc-c ">
             <div className="ml-10px fs-25px jc-b w-100per max-w-500px">
               {feature.facebook_name && (

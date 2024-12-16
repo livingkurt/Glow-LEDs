@@ -7,26 +7,25 @@ import { humanize, update_products_url } from "../../utils/helper_functions";
 import * as API from "../../api";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { setSuccessContactSend } from "../../slices/emailSlice";
-import {
-  Container,
-  TextField,
-  Button,
-  Typography,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Box,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Autocomplete,
-} from "@mui/material";
-import { ExpandMore } from "@mui/icons-material";
+
 import HeroVideo from "../HomePage/components/HeroVideo";
 import { scrollToId } from "../../utils/helpers/universal_helpers";
 import { useMicrolightsQuery } from "../../api/allRecordsApi";
 import config from "../../config";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Autocomplete from "@mui/material/Autocomplete";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 const SupportCenterPage = () => {
   const params = useParams();
@@ -117,10 +116,12 @@ const SupportCenterPage = () => {
           name="description"
           content="If you have any questions, do not hesitate to use our contact page for support."
         />
+
         <meta
           property="og:description"
           content="If you have any questions, do not hesitate to use our contact page for support."
         />
+
         <meta
           name="twitter:description"
           content="If you have any questions, do not hesitate to use our contact page for support."
@@ -193,6 +194,7 @@ const SupportCenterPage = () => {
                   },
                 }}
               />
+
               <Link to={`/checkout/order/${orderNumber}`}>
                 <Button variant="contained" color="primary" fullWidth>
                   {"View Order"}
@@ -240,6 +242,7 @@ const SupportCenterPage = () => {
           </Box>
         }
       />
+
       {contactSent && (
         <div className="column jc-c">
           <h2 className="ta-c">{"Thank You for Contacting Glow LEDs!"}</h2>
@@ -299,6 +302,7 @@ const SupportCenterPage = () => {
               helperText={validations.first_name}
               margin="normal"
             />
+
             <TextField
               fullWidth
               label="Last Name"
@@ -321,6 +325,7 @@ const SupportCenterPage = () => {
               helperText={validations.last_name}
               margin="normal"
             />
+
             <TextField
               fullWidth
               label="Email"
@@ -344,6 +349,7 @@ const SupportCenterPage = () => {
               helperText={validations.email}
               margin="normal"
             />
+
             <TextField
               fullWidth
               label="Order Number"
@@ -366,6 +372,7 @@ const SupportCenterPage = () => {
               helperText={validations.order_number}
               margin="normal"
             />
+
             <FormControl fullWidth margin="normal" variant="filled">
               <InputLabel>{"Reason for Contact"}</InputLabel>
               <Select
@@ -421,6 +428,7 @@ const SupportCenterPage = () => {
               }}
               margin="normal"
             />
+
             <Button type="submit" fullWidth variant="contained" color="primary" sx={{ mt: 3, mb: 2 }}>
               {"Send"}
             </Button>

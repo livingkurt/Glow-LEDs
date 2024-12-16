@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../api";
-import { Typography, Box, CircularProgress, Button, Paper, Link } from "@mui/material";
+
 import TicketItem from "./components/TicketItem";
 import TicketModal from "./components/TicketModal";
 import EventContainer from "./components/EventContainer";
@@ -13,6 +13,12 @@ import { EditEventModal } from "../EventsPage/components";
 import { open_edit_event_modal } from "../../slices/eventSlice";
 import { EditTicketModal } from "../TicketsPage/components";
 import TicketHoldersModal from "./components/TicketHolderModal";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 
 const EventPage = () => {
   const { pathname } = useParams();
@@ -68,6 +74,7 @@ const EventPage = () => {
             count_in_stock: selectedTicket.count_in_stock,
           },
         ],
+
         type: "add_to_cart",
       })
     );
@@ -172,6 +179,7 @@ const EventPage = () => {
         event={event}
         allTickets={allTickets}
       />
+
       <EditEventModal />
       <EditTicketModal />
     </EventContainer>

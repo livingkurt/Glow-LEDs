@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Paper, Typography, Portal, Dialog, useMediaQuery, useTheme } from "@mui/material";
+
 import { isMobile } from "react-device-detect";
 import {
   hexToHSV,
@@ -8,7 +8,15 @@ import {
   generateSaturationLevels,
   getDisplayLevel,
 } from "../modeCreatorPageHelpers";
-import { ContentCopy, Delete } from "@mui/icons-material";
+import Box from "@mui/material/Box";
+import ContentCopy from "@mui/icons-material/ContentCopy";
+import Delete from "@mui/icons-material/Delete";
+import Dialog from "@mui/material/Dialog";
+import Paper from "@mui/material/Paper";
+import Portal from "@mui/material/Portal";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 
 const ColorControls = ({
   color,

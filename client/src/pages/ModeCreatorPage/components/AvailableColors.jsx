@@ -1,10 +1,12 @@
-import { Box, Grid, Typography } from "@mui/material";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import ColorPalette from "./ColorPalette";
 import { isMobile } from "react-device-detect";
 import ColorSlot from "./ColorSlot";
 import { useDispatch } from "react-redux";
 import { set_mode } from "../../../slices/modeSlice";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const AvailableColors = ({ selectedMicrolight, mode, handleDragEnd, handleColorClick }) => {
   const dispatch = useDispatch();

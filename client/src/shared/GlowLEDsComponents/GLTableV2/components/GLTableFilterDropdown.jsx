@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import first from "lodash/first";
 import sortBy from "lodash/sortBy";
-import { Button, Switch, Badge, Checkbox, ClickAwayListener, Divider, MenuItem, MenuList } from "@mui/material";
+
 import { applyFilter, enableClearAll, filterLabelsMap, sortItem } from "../glTableHelpers";
 import {
   applyFilterSearch,
@@ -15,7 +15,16 @@ import {
 import GLPopper from "../../GLPopper/GLPopper";
 import { humanize, toCapitalize } from "../../../../utils/helper_functions";
 import GLTextFieldV2 from "../../GLTextFieldV2/GLTextFieldV2";
-import { FilterList, Search } from "@mui/icons-material";
+import Badge from "@mui/material/Badge";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Divider from "@mui/material/Divider";
+import FilterList from "@mui/icons-material/FilterList";
+import MenuItem from "@mui/material/MenuItem";
+import MenuList from "@mui/material/MenuList";
+import Search from "@mui/icons-material/Search";
+import Switch from "@mui/material/Switch";
 
 const GLTableFilterDropdown = ({
   availableFilters,
@@ -188,6 +197,7 @@ const GLTableFilterDropdown = ({
                       checked={first(filters[menuSelection]) === 1}
                       onChange={() => dispatch(toggleFilter(namespace, { row: menuSelection, item: 1 }))}
                     />
+
                     {humanize(booleanFilters[menuSelection].label)}
                     <Button
                       data-test="matrix-sub-menu-clear-button"

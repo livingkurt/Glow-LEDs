@@ -1,6 +1,10 @@
 import React from "react";
-import { Box, ToggleButton, ToggleButtonGroup, useTheme, useMediaQuery, lighten } from "@mui/material";
-
+import Box from "@mui/material/Box";
+import { lighten } from "@mui/material/styles";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 const GLColorButtons = ({ ariaLabel, value, onChange, options, disabledOptions }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));

@@ -6,7 +6,7 @@ import { hslToHex } from "./utils/helper_functions";
 import { API_Content } from "./utils";
 import config from "./config";
 import { domain } from "./helpers/sharedHelpers";
-import { Container } from "@mui/material";
+import Container from "@mui/material/Container";
 
 const Links = () => {
   const [multiplier, set_multiplier] = useState(0);

@@ -1,16 +1,16 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { determine_terms_link } from "../profileHelpers";
-import useClipboard from "react-hook-clipboard";
-import { Box, Button } from "@mui/material";
+
 import { determine_promoter_code_tier, determine_sponsor_code_tier } from "../../../utils/helper_functions";
 import { Loading } from "../../../shared/SharedComponents";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEarnings }) => {
-  const [, copyToClipboard] = useClipboard();
   const userPage = useSelector(state => state.users.userPage);
   const { user } = userPage;
 
@@ -54,33 +54,33 @@ const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEar
           </Loading>
           <div className="mb-20px">
             <h3>{"Public Code"}</h3>
-            <label>{user?.affiliate?.public_code.promo_code.toUpperCase()}</label>
+            <div>{user?.affiliate?.public_code.promo_code.toUpperCase()}</div>
           </div>
 
           <div className="mb-20px">
             <h3>{"Private Code"}</h3>
-            <label>{user?.affiliate?.private_code.promo_code.toUpperCase()}</label>
+            <div>{user?.affiliate?.private_code.promo_code.toUpperCase()}</div>
           </div>
           {user?.affiliate?.artist_name && (
             <div className="mb-20px">
               <h3>{"Projected Private Code Discount"}</h3>
-              <label>
+              <div>
                 {user?.affiliate?.sponsor
                   ? determine_sponsor_code_tier(currentMonthEarnings?.data?.number_of_uses)
                   : determine_promoter_code_tier(currentMonthEarnings?.data?.number_of_uses)}
                 {"% Off"}
-              </label>
+              </div>
             </div>
           )}
           {user?.affiliate?.sponsor && (
             <>
               <div className="mb-20px">
                 <h3>{"Monthly Sponsor Code ($25 off)"}</h3>
-                <label>{sponsorCodes?.data?.twentyFiveOffCode?.toUpperCase()}</label>
+                <div>{sponsorCodes?.data?.twentyFiveOffCode?.toUpperCase()}</div>
               </div>
               <div className="mb-20px">
                 <h3>{"Refresh Pack Sponsor Code"}</h3>
-                <label>{sponsorCodes?.data?.refreshCode?.toUpperCase()}</label>
+                <div>{sponsorCodes?.data?.refreshCode?.toUpperCase()}</div>
               </div>
             </>
           )}
@@ -94,37 +94,25 @@ const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEar
                   {"Revenue Generated"}
                 </h3>
 
-                <label>
+                <div>
                   {"Example: $20 * 10% = $18 *"}{" "}
                   {user?.affiliate?.sponsorTeamCaptain
                     ? "20% = $3.60"
                     : user?.affiliate?.sponsor
                       ? "15% = $2.70"
                       : "10% = $2.00"}
-                </label>
+                </div>
               </div>
             </>
           )}
           <div className="mb-20px">
             <h3>{"Promo Code URL"}</h3>
-            <label>
+            <div>
               {"https://www.glow-leds.com?code="}
               {user?.affiliate?.public_code.promo_code.toUpperCase()}
-            </label>
+            </div>
           </div>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              onClick={() =>
-                copyToClipboard(
-                  `https://www.glow-leds.com?code=${user?.affiliate?.public_code.promo_code.toUpperCase()}`
-                )
-              }
-            >
-              {"Copy Link to Clipboard"}
-            </Button>
             <a
               href={determine_terms_link(user.affiliate)}
               target="_blank"

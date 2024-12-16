@@ -1,7 +1,8 @@
-import { Box, Typography } from "@mui/material";
 import React from "react";
 import PropTypes from "prop-types";
 import ProductCard from "../../ProductsGridPage/components/ProductCard";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 const FeaturedProducts = ({ featured_products, featured_products_hidden }) => {
   return !featured_products_hidden ? (

@@ -11,11 +11,17 @@ import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLAc
 import * as API from "../../../api";
 import { closeCreateLabelModal } from "../../../slices/shippingSlice";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { Button, FormControlLabel, Grid, Radio, RadioGroup, Typography } from "@mui/material";
+
 import { humanize, state_names, toCapitalize } from "../../../utils/helper_functions";
 import config from "../../../config";
 import { Loading } from "../../../shared/SharedComponents";
 import { printLabel } from "../ordersPageHelpers";
+import Button from "@mui/material/Button";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Grid from "@mui/material/Grid";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import Typography from "@mui/material/Typography";
 
 const CreateLabelModal = () => {
   const dispatch = useDispatch();
@@ -459,6 +465,7 @@ const CreateLabelModal = () => {
         formErrors={formErrors} // Pass the errors here
         setFormErrors={setFormErrors}
       />
+
       {!label && shippingRates.length === 0 && (
         <Button
           variant="contained"

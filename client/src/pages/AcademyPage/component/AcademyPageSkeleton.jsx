@@ -1,6 +1,8 @@
 import React from "react";
-import { Box, Typography, Grid, Skeleton } from "@mui/material";
-
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Skeleton from "@mui/material/Skeleton";
+import Typography from "@mui/material/Typography";
 const AcademyPageSkeleton = () => {
   return (
     <Box sx={{ padding: 4 }}>

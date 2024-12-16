@@ -1,7 +1,7 @@
 import { createElement, useEffect } from "react";
 import { Route, BrowserRouter as Router, Routes, useLocation, useNavigate } from "react-router-dom";
 import { ScrollToTop } from "./shared/SharedComponents";
-import { createTheme, ThemeProvider } from "@mui/material";
+
 import GLTheme from "./theme";
 import { AskForEmailModal } from "./pages/EmailsPage/components";
 import { Four04Page } from "./pages/Four04Page";
@@ -20,6 +20,8 @@ import MainLayout from "./shared/Layouts/MainLayout";
 import PlaceOrderLayout from "./shared/Layouts/PlaceOrderLayout";
 import GLConfirmModal from "./shared/GlowLEDsComponents/GLConfirmModal/GLConfirmModal";
 import HomePage from "./pages/HomePage/HomePage";
+import createTheme from "@mui/material/styles/createTheme";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
 const CustomRedirect = ({ from, to }) => {
   const navigate = useNavigate();
@@ -67,6 +69,7 @@ const App = () => {
                 <CustomRedirect from="/collections/all/products/helios_gloveset" to="/products/helios_gloveset" />
               }
             />
+
             {privateRoutes.map((route, index) => (
               <Route
                 key={index}
@@ -171,6 +174,7 @@ const App = () => {
                 </MainLayout>
               }
             />
+
             <Route
               element={
                 <MainLayout>

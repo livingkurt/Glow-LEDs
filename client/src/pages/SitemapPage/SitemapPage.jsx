@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { Container } from "@mui/material";
+import Container from "@mui/material/Container";
 
 const SitemapPage = () => {
   return (
@@ -15,10 +15,12 @@ const SitemapPage = () => {
           name="description"
           content="Glow LEDs Sitemap of all the places you can be on our website. Explore and you may find a place you've never been before."
         />
+
         <meta
           property="og:description"
           content="Glow LEDs Sitemap of all the places you can be on our website. Explore and you may find a place you've never been before."
         />
+
         <meta
           name="twitter:description"
           content="Glow LEDs Sitemap of all the places you can be on our website. Explore and you may find a place you've never been before."
@@ -27,7 +29,7 @@ const SitemapPage = () => {
       <div className="inner_content">
         <h1 style={{ textAlign: "center" }}>{"Glow LEDs Sitemap"}</h1>
         <div>
-          <h2 style={{ textTransform: "capitalize" }}>Home</h2>
+          <h2 style={{ textTransform: "capitalize" }}>{"Home"}</h2>
           <ul style={{ listStyle: "none", padding: 0 }}>
             <li>
               <Link to="/">{"/"}</Link>

@@ -93,7 +93,7 @@ async function generateSitemap() {
     // Generate JSX with sections
     let sitemapJSX = `import { Link } from "react-router-dom";
                     import { Helmet } from "react-helmet";
-                    import { Container } from "@mui/material";
+                    import Container from "@mui/material/Container";
 
                     const SitemapPage = () => {
                       return (

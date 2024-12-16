@@ -1,6 +1,10 @@
 import React from "react";
-import { Box, Container, Grid, Skeleton, useMediaQuery, useTheme } from "@mui/material";
-
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Skeleton from "@mui/material/Skeleton";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 const ProductPageLoading = ({ loading, children }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -29,6 +33,7 @@ const ProductPageLoading = ({ loading, children }) => {
             width="100%"
             height={isMobile ? 500 : 700}
           />
+
           <Box mt={2} display="flex" justifyContent="center">
             {[...Array(6)].map((_, index) => (
               <Skeleton
@@ -51,6 +56,7 @@ const ProductPageLoading = ({ loading, children }) => {
             width="80%"
             height={40}
           />
+
           <Skeleton
             sx={{ bgcolor: "#4e5061", borderRadius: "10px" }}
             animation="wave"
@@ -58,6 +64,7 @@ const ProductPageLoading = ({ loading, children }) => {
             width="60%"
             height={30}
           />
+
           <Box mt={2} mb={2}>
             <Skeleton
               sx={{ bgcolor: "#4e5061", borderRadius: "10px" }}
@@ -84,6 +91,7 @@ const ProductPageLoading = ({ loading, children }) => {
               width="40%"
               height={24}
             />
+
             <Box display="flex" mt={1}>
               {[...Array(8)].map((_, index) => (
                 <Skeleton
@@ -108,6 +116,7 @@ const ProductPageLoading = ({ loading, children }) => {
               width="40%"
               height={24}
             />
+
             <Box display="flex" mt={1}>
               {[...Array(8)].map((_, index) => (
                 <Skeleton
@@ -132,6 +141,7 @@ const ProductPageLoading = ({ loading, children }) => {
               width="20%"
               height={24}
             />
+
             <Skeleton
               sx={{ bgcolor: "#4e5061", borderRadius: "5px" }}
               animation="wave"
@@ -150,6 +160,7 @@ const ProductPageLoading = ({ loading, children }) => {
               width="40%"
               height={24}
             />
+
             <Skeleton
               sx={{ bgcolor: "#4e5061", borderRadius: "5px" }}
               animation="wave"
@@ -168,6 +179,7 @@ const ProductPageLoading = ({ loading, children }) => {
               width="30%"
               height={24}
             />
+
             <Skeleton
               sx={{ bgcolor: "#4e5061", borderRadius: "5px" }}
               animation="wave"
@@ -202,6 +214,7 @@ const ProductPageLoading = ({ loading, children }) => {
                 width="30%"
                 height={30}
               />
+
               <Skeleton
                 sx={{ bgcolor: "#4e5061", borderRadius: "5px" }}
                 animation="wave"

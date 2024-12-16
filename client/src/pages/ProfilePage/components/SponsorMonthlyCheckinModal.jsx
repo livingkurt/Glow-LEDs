@@ -1,9 +1,14 @@
 import { useSelector, useDispatch } from "react-redux";
-import { TextField, Typography, Grid, Button, Link } from "@mui/material";
+
 import { closeMonthlyCheckinModal, setCheckin, setNumberOfContent, setQuestion } from "../../../slices/affiliateSlice";
 import * as API from "../../../api";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { useEffect } from "react";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 const SponsorMonthlyCheckinModal = ({ type }) => {
   const dispatch = useDispatch();

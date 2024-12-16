@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Box, lighten, Typography } from "@mui/material";
-
+import Box from "@mui/material/Box";
+import { lighten } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 const TicketPrice = ({ ticket, tickets }) => {
   const [maxWidth, setMaxWidth] = useState(0);
   const textRef = useRef(null);

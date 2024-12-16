@@ -1,6 +1,8 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+
 import { isSafari } from "react-device-detect";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 const DateBox = ({ startDate, endDate, color }) => {
   const start = new Date(startDate);

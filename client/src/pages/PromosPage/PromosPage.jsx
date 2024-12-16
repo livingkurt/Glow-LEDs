@@ -6,7 +6,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_promo_modal, open_edit_promo_modal } from "../../slices/promoSlice";
 import { EditPromoModal } from "./components";
 import * as API from "../../api";
-import { Box, Button, Container } from "@mui/material";
+
 import { determineColor } from "./promosHelpers";
 import { format_date } from "../../utils/helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
@@ -14,6 +14,9 @@ import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 
 const PromosPage = () => {
   const promoPage = useSelector(state => state.promos.promoPage);
@@ -69,6 +72,7 @@ const PromosPage = () => {
         ),
       },
     ],
+
     []
   );
 
@@ -99,12 +103,12 @@ const PromosPage = () => {
               {"Create Sponsor Codes"}
             </Button>
             {/* <Button
-              color="secondary"
-              variant="contained"
-              className="h-40px"
-              onClick={async () => await API_Emails.send_code_used_emails_a("cosmo")}
+             color="secondary"
+             variant="contained"
+             className="h-40px"
+             onClick={async () => await API_Emails.send_code_used_emails_a("cosmo")}
             >
-              Send Code Used Email
+             Send Code Used Email
             </Button> */}
             {selectedRows.length > 1 && (
               <Button
@@ -126,6 +130,7 @@ const PromosPage = () => {
           </div>
         }
       />
+
       <EditPromoModal />
     </Container>
   );

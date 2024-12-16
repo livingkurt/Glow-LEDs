@@ -1,20 +1,19 @@
 import React from "react";
-import {
-  Box,
-  Typography,
-  Modal,
-  Button,
-  Divider,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  lighten,
-  useMediaQuery,
-  useTheme,
-  Container,
-} from "@mui/material";
-import { CalendarToday, LocationOn } from "@mui/icons-material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CalendarToday from "@mui/icons-material/CalendarToday";
+import Container from "@mui/material/Container";
+import Divider from "@mui/material/Divider";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import { lighten } from "@mui/material/styles";
+import LocationOn from "@mui/icons-material/LocationOn";
+import MenuItem from "@mui/material/MenuItem";
+import Modal from "@mui/material/Modal";
+import Select from "@mui/material/Select";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 
 const TicketModal = ({ open, onClose, selectedTicket, event, quantity, setQuantity, onAddToCart }) => {
   const theme = useTheme();

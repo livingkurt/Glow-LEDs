@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { Box, Grid, Typography, useTheme } from "@mui/material";
+
 import { useDispatch, useSelector } from "react-redux";
-import { Add } from "@mui/icons-material";
+
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 import * as API from "../../../api";
@@ -11,6 +11,11 @@ import { setPromoCode } from "../../../utils/helpers/universal_helpers";
 import BundleOptionsModal from "./BundleOptionsModal";
 import GLPrice from "../../../shared/GlowLEDsComponents/GLPrice/GLPrice";
 import GLProductOptions from "../../../shared/GlowLEDsComponents/GLProductOptions/GLProductOptions";
+import Add from "@mui/icons-material/Add";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
 
 const BundleItemCard = ({ item, bundle }) => {
   const dispatch = useDispatch();

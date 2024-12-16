@@ -1,22 +1,24 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Collapse,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import { Autocomplete, TextField, Chip } from "@mui/material";
-import { FilterList, Clear } from "@mui/icons-material";
+
 import { toTitleCase } from "../../../utils/helper_functions";
 import { autocompleteStyle, selectStyle } from "../../ProductsGridPage/productGridPageHelpers";
 import { isSafari } from "react-device-detect";
+import Autocomplete from "@mui/material/Autocomplete";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
+import Clear from "@mui/icons-material/Clear";
+import Collapse from "@mui/material/Collapse";
+import FilterList from "@mui/icons-material/FilterList";
+import FormControl from "@mui/material/FormControl";
+import Grid from "@mui/material/Grid";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 
 const sortOptions = [
   { label: "Newest", value: "-createdAt" },

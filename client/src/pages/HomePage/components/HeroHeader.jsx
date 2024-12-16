@@ -1,4 +1,3 @@
-import { Box, Typography, Button, useTheme, useMediaQuery } from "@mui/material";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -13,6 +12,11 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 
 const HeroHeader = ({ slideshow, slideshow_hidden }) => {
   const navigate = useNavigate();
@@ -64,6 +68,7 @@ const HeroHeader = ({ slideshow, slideshow_hidden }) => {
                   objectFit: "cover",
                 }}
               />
+
               <Box
                 sx={{
                   position: "absolute",

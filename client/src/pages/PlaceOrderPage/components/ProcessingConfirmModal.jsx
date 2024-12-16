@@ -1,7 +1,8 @@
 import React from "react";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
-import { Typography } from "@mui/material";
-import { Info } from "@mui/icons-material";
+import Typography from "@mui/material/Typography";
+import Info from "@mui/icons-material/Info";
+
 import GLBold from "../../../shared/GlowLEDsComponents/GLBold/GLBold";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";

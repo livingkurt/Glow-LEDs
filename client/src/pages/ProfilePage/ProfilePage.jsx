@@ -13,13 +13,19 @@ import ProfileAffiliateMetrics from "./components/ProfileAffiliateActions";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { determineColor } from "../PaychecksPage/paychecksHelpers";
 import { orderStatusColors, determineOrderColors } from "../OrdersPage/ordersPageHelpers";
-import { Container, Grid, Box, Divider, Typography, Button } from "@mui/material";
+
 import SponsorMonthlyCheckinModal from "./components/SponsorMonthlyCheckinModal";
 import { useUserProfilePage } from "./useUserProfilePage";
 import useAffiliateProfilePage from "./useAffiliateProfilePage";
 import { GLDisplayTable } from "../../shared/GlowLEDsComponents/GLDisplayTable";
 import { months } from "../DashboardPage/dashboardHelpers";
 import ModeCard from "../ModesGridPage/components/ModeCard";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();

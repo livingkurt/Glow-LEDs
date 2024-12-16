@@ -11,7 +11,7 @@ import {
 } from "../../slices/imageSlice";
 import { EditImageModal } from "./components";
 import * as API from "../../api";
-import { Box, Button, Container } from "@mui/material";
+
 import { getImages } from "../../api";
 import { format_date } from "../../utils/helper_functions";
 import UploadImageModal from "./components/UploadImageModal";
@@ -20,6 +20,9 @@ import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconBut
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import GLLazyImage from "../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 
 const ImagesPage = () => {
   const imagePage = useSelector(state => state.images.imagePage);
@@ -67,6 +70,7 @@ const ImagesPage = () => {
         ),
       },
     ],
+
     []
   );
 
@@ -93,11 +97,13 @@ const ImagesPage = () => {
           </Button>
         }
       />
+
       <GLImageModal
         open={image_display_modal}
         onClose={() => dispatch(close_image_display_modal(false))}
         selected_image={selected_image}
       />
+
       <UploadImageModal />
       <EditImageModal />
     </Container>

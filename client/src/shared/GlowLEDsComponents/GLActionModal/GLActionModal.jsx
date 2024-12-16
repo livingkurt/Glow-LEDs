@@ -2,7 +2,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./GLActionModal.module.scss";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const GLActionModal = ({
   id,

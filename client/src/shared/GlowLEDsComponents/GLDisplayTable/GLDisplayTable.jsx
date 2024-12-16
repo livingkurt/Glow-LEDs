@@ -6,10 +6,17 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
-import { Divider, Typography, TextField, Button, Box, TableSortLabel, InputAdornment } from "@mui/material";
+
 import { useEffect, useState } from "react";
 import { applySort } from "../GLTableV2/glTableHelpers";
-import { Search } from "@mui/icons-material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import InputAdornment from "@mui/material/InputAdornment";
+import Search from "@mui/icons-material/Search";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit, defaultSorting }) => {
   const [editRowIndex, setEditRowIndex] = useState(null);
@@ -150,6 +157,7 @@ const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit, defaultSorti
                               }
                             }}
                           />
+
                           <Button
                             variant="contained"
                             sx={{ height: 22 }}

@@ -4,7 +4,8 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import PropTypes from "prop-types";
 import { determineHover, tableColors } from "../glTableHelpers";
-import { Checkbox, darken } from "@mui/material";
+import Checkbox from "@mui/material/Checkbox";
+import { darken } from "@mui/material/styles";
 
 // Styled Components
 const StyledTableRow = styled(TableRow)(({ theme }) => ({

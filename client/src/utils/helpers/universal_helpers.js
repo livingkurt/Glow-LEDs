@@ -1,4 +1,4 @@
-import { random } from "lodash";
+import random from "lodash/random";
 import { tagField } from "../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 import { showInfo } from "../../slices/snackbarSlice";
 import { toCapitalize } from "../helper_functions";

@@ -13,7 +13,7 @@ import {
   handleQtyChange,
   handleTicketChange,
 } from "../ordersPageHelpers";
-import { Checkbox, FormControlLabel } from "@mui/material";
+
 import {
   useTagsQuery,
   useEventsQuery,
@@ -23,6 +23,8 @@ import {
   useUsersQuery,
 } from "../../../api/allRecordsApi";
 import { showConfirm } from "../../../slices/snackbarSlice";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 const EditOrderModal = () => {
   const dispatch = useDispatch();
@@ -101,6 +103,7 @@ const EditOrderModal = () => {
           }
           label="Update Prices"
         />
+
         <GLForm
           formData={formFields}
           state={order}

@@ -1,9 +1,13 @@
-import { Box, Typography, Button, Grid, useTheme, useMediaQuery } from "@mui/material";
 import React from "react";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
-
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 const LearnMoreProducts = ({ learn_more_products, learn_more_products_hidden }) => {
   const navigate = useNavigate();
   const theme = useTheme();
@@ -40,6 +44,7 @@ const LearnMoreProducts = ({ learn_more_products, learn_more_products_hidden }) 
                   objectFit: "cover",
                 }}
               />
+
               <Box
                 sx={{
                   position: "absolute",

@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Typography, Grid, ListItem, useTheme, useMediaQuery } from "@mui/material";
+
 import DeleteIcon from "@mui/icons-material/Delete";
 import { setCartDrawer } from "../../../slices/cartSlice";
 import GLSelect from "../GLSelect/GLSelect";
@@ -15,6 +15,12 @@ import { formatDate } from "../../../utils/helpers/universal_helpers";
 import { isSafari } from "react-device-detect";
 import GLPrice from "../GLPrice/GLPrice";
 import GLProductOptions from "../GLProductOptions/GLProductOptions";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import ListItem from "@mui/material/ListItem";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 
 const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
   const { current_user } = useSelector(state => state.users.userPage);
@@ -53,6 +59,7 @@ const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
           getOptionLabel={option => option.name}
           valueKey="name"
         />
+
         <GLIconButton
           onClick={() => dispatch(API.deleteCartItem({ item_index: index, type: "add_to_cart" }))}
           size="large"

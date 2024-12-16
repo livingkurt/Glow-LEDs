@@ -1,11 +1,19 @@
 import { useState } from "react";
-import { Card, CardContent, Typography, Rating, Box, useMediaQuery, useTheme, IconButton } from "@mui/material";
+
 import { Link } from "react-router-dom";
-import { random } from "lodash";
+import random from "lodash/random";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 import GLPrice from "../../../shared/GlowLEDsComponents/GLPrice/GLPrice";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import IconButton from "@mui/material/IconButton";
+import Rating from "@mui/material/Rating";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 
 const ProductCard = ({ product, promo_code, goHorizontal = true }) => {
   const theme = useTheme();
@@ -105,6 +113,7 @@ const ProductCard = ({ product, promo_code, goHorizontal = true }) => {
               opacity: isHovered ? 1 : 0,
             }}
           />
+
           {isHovered && product.images.length > 1 && !isMobile && (
             <>
               <IconButton

@@ -5,12 +5,15 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_gift_card_modal, open_edit_gift_card_modal } from "../../slices/giftCardSlice2";
 import * as API from "../../api";
-import { Box, Button, Container } from "@mui/material";
+
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import EditGiftCardModal from "./components/EditGiftCardModal2";
 import { formatDate, formatPrice } from "../../utils/helper_functions";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 
 const GiftCardsPage = () => {
   const giftCardPage = useSelector(state => state.giftCards.giftCardPage);
@@ -44,6 +47,7 @@ const GiftCardsPage = () => {
         ),
       },
     ],
+
     [dispatch]
   );
 
@@ -70,6 +74,7 @@ const GiftCardsPage = () => {
           </Button>
         }
       />
+
       <EditGiftCardModal />
     </Container>
   );

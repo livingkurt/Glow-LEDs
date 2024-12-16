@@ -6,12 +6,15 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_ticket_modal, open_edit_ticket_modal } from "../../slices/ticketSlice";
 import { EditTicketModal } from "./components";
 import * as API from "../../api";
-import { Box, Button, Container } from "@mui/material";
+
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
-import { FileCopy } from "@mui/icons-material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import FileCopy from "@mui/icons-material/FileCopy";
 
 const TicketsPage = () => {
   const ticketPage = useSelector(state => state.tickets.ticketPage);
@@ -77,6 +80,7 @@ const TicketsPage = () => {
         ),
       },
     ],
+
     [dispatch]
   );
 
@@ -107,6 +111,7 @@ const TicketsPage = () => {
           </Button>
         }
       />
+
       <EditTicketModal />
     </Container>
   );

@@ -1,5 +1,6 @@
-import { IconButton, Tooltip } from "@mui/material";
 import PropTypes from "prop-types";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 
 const GLIconButton = ({ tooltip, onClick, ariaLabel, children, ...otherProps }) => {
   return (

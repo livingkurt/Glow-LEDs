@@ -1,12 +1,17 @@
 import { Draggable } from "@hello-pangea/dnd";
-import { Box, Typography, Fade, Tooltip } from "@mui/material";
+
 import ClearIcon from "@mui/icons-material/Clear";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import ColorControls from "./ColorControls";
-import { ContentCopy } from "@mui/icons-material";
+
 import GLIconButton from "../../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import { isMobile } from "react-device-detect";
+import Box from "@mui/material/Box";
+import ContentCopy from "@mui/icons-material/ContentCopy";
+import Fade from "@mui/material/Fade";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 
 const EmptySlot = () => (
   <Box sx={{ textAlign: "center", display: !isMobile ? "flex" : "", justifyContent: "center", alignItems: "center" }}>

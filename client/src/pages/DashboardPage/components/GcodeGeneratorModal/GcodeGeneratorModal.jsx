@@ -20,7 +20,15 @@ import {
   setHoldDuration,
   setNumberOfCycles,
 } from "../../dashboardSlice";
-import { Box, Button, Checkbox, FormControlLabel, Grid, List, Paper, TextField, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Grid from "@mui/material/Grid";
+import List from "@mui/material/List";
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 const GcodeGeneratorModal = () => {
   const dispatch = useDispatch();

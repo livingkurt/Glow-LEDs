@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-import { Box, Typography, Divider, ListItem } from "@mui/material";
+
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../../api";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
-import { Add } from "@mui/icons-material";
+
 import { setPromoCode } from "../../../utils/helpers/universal_helpers";
 import BundleOptionsModal from "./BundleOptionsModal";
 import GLPrice from "../../../shared/GlowLEDsComponents/GLPrice/GLPrice";
+import Add from "@mui/icons-material/Add";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import Typography from "@mui/material/Typography";
 
 const BundleItemsList = ({ item, idx, bundle }) => {
   const dispatch = useDispatch();

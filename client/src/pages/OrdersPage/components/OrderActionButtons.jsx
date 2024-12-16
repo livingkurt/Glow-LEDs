@@ -6,7 +6,8 @@ import { printInvoice, printLabel } from "../ordersPageHelpers";
 import { openLinkLabelModal } from "../../../slices/shippingSlice";
 import { openShippingModal, set_order } from "../../../slices/orderSlice";
 import { showConfirm, showSuccess } from "../../../slices/snackbarSlice";
-import { Button, Grid } from "@mui/material";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 
 const OrderActionButtons = ({ order }) => {
   const dispatch = useDispatch();

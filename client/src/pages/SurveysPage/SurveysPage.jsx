@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { EditSurveyModal } from "./components";
 import * as API from "../../api";
-import { Box, Button, Container, Rating } from "@mui/material";
+
 import { format_date } from "../../utils/helper_functions";
 import { open_create_survey_modal, open_edit_survey_modal } from "../../slices/surveySlice";
 import { determineSurveyColors } from "./surveysPageHelpers";
@@ -15,6 +15,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Rating from "@mui/material/Rating";
 
 const SurveysPage = () => {
   const surveyPage = useSelector(state => state.surveys.surveyPage);
@@ -75,6 +79,7 @@ const SurveysPage = () => {
         ),
       },
     ],
+
     []
   );
 
@@ -102,6 +107,7 @@ const SurveysPage = () => {
           </Button>
         }
       />
+
       <EditSurveyModal />
     </Container>
   );

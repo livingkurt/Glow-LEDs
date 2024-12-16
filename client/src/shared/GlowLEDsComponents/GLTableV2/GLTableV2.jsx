@@ -1,17 +1,7 @@
 /* eslint-disable max-lines-per-function */
 import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import {
-  Table,
-  TablePagination,
-  Divider,
-  Paper,
-  TableBody,
-  TableRow,
-  TableCell,
-  Typography,
-  Skeleton,
-} from "@mui/material";
+
 import mapValues from "lodash/mapValues";
 import at from "lodash/at";
 import times from "lodash/times";
@@ -49,6 +39,15 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { useNavigate, useLocation } from "react-router-dom";
 import GLLegend from "./components/GLLegend";
 import GLTablePagination from "./components/GLTablePagination";
+import Divider from "@mui/material/Divider";
+import Paper from "@mui/material/Paper";
+import Skeleton from "@mui/material/Skeleton";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
 
 const GLTableV2 = ({
   remoteApi,
@@ -293,6 +292,7 @@ const GLTableV2 = ({
                     isLoading={isLoadingFilters}
                     booleanFilters={booleanFilters}
                   />
+
                   <GLTableFilterChips
                     namespace={namespace}
                     filters={filters}
@@ -353,6 +353,7 @@ const GLTableV2 = ({
             order={sorting[1]}
             orderBy={sorting[0]}
           />
+
           {enableDragDrop ? (
             <DragDropContext
               onDragEnd={result => {

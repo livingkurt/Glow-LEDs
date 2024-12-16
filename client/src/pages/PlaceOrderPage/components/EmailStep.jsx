@@ -10,7 +10,7 @@ import { isMobile } from "react-device-detect";
 import { save_shipping } from "../../../slices/cartSlice";
 import { openLoginModal } from "../../../slices/userSlice";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 const EmailStep = () => {
   const dispatch = useDispatch();

@@ -1,9 +1,11 @@
-import { Box, Stack, Typography } from "@mui/material";
-import { Delete } from "@mui/icons-material";
-import { FileCopy } from "@mui/icons-material";
 import PropTypes from "prop-types";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import GLIconButton from "../GlowLEDsComponents/GLIconButton/GLIconButton";
+import Box from "@mui/material/Box";
+import Delete from "@mui/icons-material/Delete";
+import FileCopy from "@mui/icons-material/FileCopy";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 
 const ImageDisplay = ({ images, onChange }) => {
   const remove_image = image_index => {
@@ -69,6 +71,7 @@ const ImageDisplay = ({ images, onChange }) => {
                             className="mv-10px ml-10px"
                             src={picture.link}
                           />
+
                           <Typography style={{ color: "white" }}>{picture.link}</Typography>
                           <Stack direction="row" justifyContent="flex-end">
                             <GLIconButton onClick={() => copyToClipboard(picture.link)} tooltip="Copy">

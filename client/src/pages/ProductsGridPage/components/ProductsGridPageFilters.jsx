@@ -1,27 +1,29 @@
 import React, { useState, useMemo } from "react";
-import {
-  Grid,
-  Container,
-  ToggleButtonGroup,
-  ToggleButton,
-  Autocomplete,
-  TextField,
-  Chip,
-  Button,
-  Collapse,
-  Box,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Typography,
-  Badge,
-} from "@mui/material";
-import { useMediaQuery, useTheme } from "@mui/material";
+
 import { toTitleCase } from "../../../utils/helper_functions";
-import { Clear, FilterList } from "@mui/icons-material";
+
 import { autocompleteStyle, selectStyle, toggleButtonStyle, toSnakeCase } from "../productGridPageHelpers";
 import { isSafari } from "react-device-detect";
+import Autocomplete from "@mui/material/Autocomplete";
+import Badge from "@mui/material/Badge";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
+import Clear from "@mui/icons-material/Clear";
+import Collapse from "@mui/material/Collapse";
+import Container from "@mui/material/Container";
+import FilterList from "@mui/icons-material/FilterList";
+import FormControl from "@mui/material/FormControl";
+import Grid from "@mui/material/Grid";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 
 const ProductsGridPageFilters = ({
   category,

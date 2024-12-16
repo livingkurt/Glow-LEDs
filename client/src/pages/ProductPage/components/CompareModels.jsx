@@ -1,7 +1,10 @@
 import React from "react";
-import { Box, Typography, Button, useTheme } from "@mui/material";
-import { Link } from "react-router-dom";
 
+import { Link } from "react-router-dom";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
 const CompareModels = ({ notSure }) => {
   const theme = useTheme();
   if (notSure?.hidden || !notSure) {

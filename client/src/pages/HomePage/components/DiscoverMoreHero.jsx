@@ -1,8 +1,11 @@
-import { Box, Typography, Button, useMediaQuery, useTheme } from "@mui/material";
 import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
-
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 const DiscoverMoreHero = discover_more => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));

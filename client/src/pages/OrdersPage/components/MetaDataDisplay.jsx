@@ -5,9 +5,12 @@ import { toCapitalize } from "../../../utils/helper_functions";
 import { set_loading_label } from "../../../slices/orderSlice";
 import config from "../../../config";
 import * as API from "../../../api";
-import { Button, Grid, Typography } from "@mui/material";
+
 import { applySearch } from "../../../shared/GlowLEDsComponents/GLTableV2/actions/actions";
 import { formatDate } from "../../../utils/helpers/universal_helpers";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const MetaDataDisplay = ({ row }) => {
   const dispatch = useDispatch();

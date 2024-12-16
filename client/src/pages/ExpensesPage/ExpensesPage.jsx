@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { EditExpenseModal } from "./components";
 import * as API from "../../api";
-import { Box, Button, Container } from "@mui/material";
+
 import { getExpenses } from "../../api";
 import { open_create_expense_modal, open_edit_expense_modal } from "../../slices/expenseSlice";
 import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageModal";
@@ -15,9 +15,13 @@ import { determineExpenseColors } from "./expensesPageHelpers";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BackupTableIcon from "@mui/icons-material/BackupTable";
-import { ContentCopy } from "@mui/icons-material";
+
 import Papa from "papaparse";
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import ContentCopy from "@mui/icons-material/ContentCopy";
 
 const ExpensesPage = () => {
   const expensePage = useSelector(state => state.expenses.expensePage);
@@ -105,6 +109,7 @@ const ExpensesPage = () => {
         ),
       },
     ],
+
     []
   );
 
@@ -186,11 +191,13 @@ const ExpensesPage = () => {
           </div>
         }
       />
+
       <GLImageModal
         open={image_display_modal}
         onClose={() => dispatch(close_image_display_modal(false))}
         selected_image={selected_image}
       />
+
       <EditExpenseModal />
     </Container>
   );

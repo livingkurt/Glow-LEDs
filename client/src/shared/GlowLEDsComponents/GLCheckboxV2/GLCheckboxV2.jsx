@@ -1,5 +1,6 @@
-import { Checkbox, FormControlLabel } from "@mui/material";
 import React from "react";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 const GLCheckboxV2 = ({ children, onChecked, value, label, ...otherProps }) => {
   return (

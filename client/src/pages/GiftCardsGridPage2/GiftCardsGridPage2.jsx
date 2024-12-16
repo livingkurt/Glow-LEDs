@@ -1,7 +1,9 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
 import { Helmet } from "react-helmet";
 import GiftCardCard from "./components/GiftCardCard3";
-
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 const fixedAmounts = [
   {
     amount: 20,

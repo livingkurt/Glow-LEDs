@@ -9,7 +9,8 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/zoom";
 import { isBrowser } from "react-device-detect";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
+
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButtonV2";
 import { restoreOriginalImages } from "../productPageSlice";
