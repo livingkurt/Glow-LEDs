@@ -144,7 +144,11 @@ const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit, defaultSorti
                             inputProps={{ style: { height: 12, fontSize: 14, padding: 5 } }}
                             value={editValue}
                             onClick={e => e.stopPropagation()}
-                            onChange={e => setEditValue(e.target.value)}
+                            onChange={e => {
+                              if (columnDef.editable) {
+                                setEditValue(e.target.value);
+                              }
+                            }}
                           />
                           <Button
                             variant="contained"
@@ -156,7 +160,11 @@ const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit, defaultSorti
                         </Box>
                       ) : (
                         <div
-                          onClick={e => handleClick(columnDef.attribute, row, rowIndex, e)}
+                          onClick={e => {
+                            if (columnDef.editable) {
+                              handleClick(columnDef.attribute, row, rowIndex, e);
+                            }
+                          }}
                           style={{
                             color: columnDef.conditionalColor && columnDef.conditionalColor(row),
                           }}
