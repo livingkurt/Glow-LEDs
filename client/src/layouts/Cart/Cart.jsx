@@ -1,16 +1,23 @@
 import { useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Drawer, Box, Typography, Button, Divider, List, useTheme } from "@mui/material";
+import Drawer from "@mui/material/Drawer";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import List from "@mui/material/List";
+import { useTheme } from "@mui/material/styles";
 
 import CloseIcon from "@mui/icons-material/Close";
+import Add from "@mui/icons-material/Add";
+import Sell from "@mui/icons-material/Sell";
 import { determineCartTotal } from "../../utils/helper_functions";
 import { setCartDrawer } from "../../slices/cartSlice";
 import { checkoutHandler, determine_wholesale_proceed } from "./cartHelpers";
 import { RecentlyViewed, TopCategories } from "./components";
 import { getCartQuantity } from "../../helpers/sharedHelpers";
 import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
-import { Add, Sell } from "@mui/icons-material";
 import * as API from "../../api";
 import GLActionModal from "../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { GLForm } from "../../shared/GlowLEDsComponents/GLForm";
