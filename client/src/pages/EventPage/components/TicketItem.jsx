@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Edit from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
-import { lighten } from "@mui/material";
+import { lighten } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import useTheme from "@mui/material/styles/useTheme";

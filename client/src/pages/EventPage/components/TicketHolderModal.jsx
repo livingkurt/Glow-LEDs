@@ -6,7 +6,7 @@ import GLTableV2 from "../../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
-import { darken } from "@mui/material";
+import { darken } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";

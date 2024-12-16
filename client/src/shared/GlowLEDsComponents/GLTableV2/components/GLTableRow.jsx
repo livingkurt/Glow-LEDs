@@ -6,7 +6,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { useDispatch } from "react-redux";
 import { determineHover, determineRowStyles, rowCheckboxClicked, tableColors } from "../glTableHelpers";
 import { onExpandRow, selectRow } from "../actions/actions";
-import { darken } from "@mui/material";
+import { darken } from "@mui/material/styles";
 
 const GLTableRow = ({
   row,

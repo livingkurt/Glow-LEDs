@@ -6,7 +6,7 @@ import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
-import { lighten } from "@mui/material";
+import { lighten } from "@mui/material/styles";
 import LocationOn from "@mui/icons-material/LocationOn";
 import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";

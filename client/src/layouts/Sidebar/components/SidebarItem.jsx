@@ -9,7 +9,7 @@ import useFeatureFlags from "../../../shared/Hooks/useFeatureFlags";
 import Button from "@mui/material/Button";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import { lighten } from "@mui/material";
+import { lighten } from "@mui/material/styles";
 import ListItem from "@mui/material/ListItem";
 import Typography from "@mui/material/Typography";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import { lighten } from "@mui/material";
+import { lighten } from "@mui/material/styles";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import useMediaQuery from "@mui/material/useMediaQuery";

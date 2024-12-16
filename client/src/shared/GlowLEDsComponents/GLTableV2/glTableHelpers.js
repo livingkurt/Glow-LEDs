@@ -1,4 +1,4 @@
-import { darken } from "@mui/material";
+import { darken } from "@mui/material/styles";
 import isEmpty from "lodash/isEmpty";
 
 const applyFilters = (currentRows, filters, nonTagFilters) => {

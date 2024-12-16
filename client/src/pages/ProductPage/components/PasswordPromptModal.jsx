@@ -5,7 +5,7 @@ import * as API from "../../../api";
 import { Link, useLocation } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { darken } from "@mui/material";
+import { darken } from "@mui/material/styles";
 import Key from "@mui/icons-material/Key";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
