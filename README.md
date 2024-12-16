@@ -96,7 +96,6 @@ npm start
 - Paypal API
 - axios
 - http-proxy-middleware
-- is-empty
 - js-cookie
 - react-redux
 - react-router-dom
