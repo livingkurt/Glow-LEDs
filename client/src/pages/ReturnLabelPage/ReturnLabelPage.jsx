@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { format_date } from "../../utils/helper_functions";
 import {
@@ -51,7 +51,7 @@ const ReturnLabelPage = () => {
 
   const handlePrintLabel = () => {
     if (labelUrl) {
-      printLabel(labelUrl);
+      printLabel(labelUrl, order, returnDeadline);
     }
   };
 
