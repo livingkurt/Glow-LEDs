@@ -19,6 +19,7 @@ export default {
             { path: "cartItems", populate: [{ path: "tags" }, { path: "display_image_object" }] },
           ],
         })
+        .populate("sponsorTasks.verifiedBy")
         .limit(parseInt(limit, 10))
         .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit, 10))
         .exec();
@@ -42,7 +43,8 @@ export default {
             { path: "images" },
             { path: "cartItems", populate: [{ path: "tags" }, { path: "display_image_object" }] },
           ],
-        });
+        })
+        .populate("sponsorTasks.verifiedBy");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -65,7 +67,8 @@ export default {
             { path: "images" },
             { path: "cartItems", populate: [{ path: "tags" }, { path: "display_image_object" }] },
           ],
-        });
+        })
+        .populate("sponsorTasks.verifiedBy");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

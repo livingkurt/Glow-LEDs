@@ -67,9 +67,21 @@ const affiliatePage = createSlice({
     questionsConcerns: "",
     numberOfContent: 0,
     createAffiliateStep: 0,
+    task: {
+      taskName: "",
+      points: 0,
+      jiraLink: "",
+      driveLink: "",
+    },
     sponsorTaskModal: {
-      open: false,
+      isOpen: false,
       affiliate: null,
+      task: {
+        taskName: "",
+        points: 0,
+        jiraLink: "",
+        driveLink: "",
+      },
     },
     productBundle: {
       title: "",
@@ -83,6 +95,13 @@ const affiliatePage = createSlice({
       return {
         ...state,
         affiliate: { ...state.affiliate, ...updated_affiliate },
+      };
+    },
+    set_sponsor_task: (state, { payload }) => {
+      const updated_sponsor_task = payload;
+      return {
+        ...state,
+        task: { ...state.task, ...updated_sponsor_task },
       };
     },
     set_loading: (state, { payload }) => {
@@ -161,13 +180,13 @@ const affiliatePage = createSlice({
     },
     open_sponsor_task_modal: (state, action) => {
       state.sponsorTaskModal = {
-        open: true,
+        isOpen: true,
         affiliate: action.payload,
       };
     },
     close_sponsor_task_modal: state => {
       state.sponsorTaskModal = {
-        open: false,
+        isOpen: false,
         affiliate: null,
       };
     },
@@ -305,5 +324,6 @@ export const {
   setProductBundle,
   open_sponsor_task_modal,
   close_sponsor_task_modal,
+  set_sponsor_task,
 } = affiliatePage.actions;
 export default affiliatePage.reducer;

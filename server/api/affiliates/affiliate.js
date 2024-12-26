@@ -14,16 +14,15 @@ const sponsorCheckinSchema = new mongoose.Schema(
 
 const sponsorTaskSchema = new mongoose.Schema(
   {
-    taskType: { type: String },
-    taskNumber: { type: Number }, // 1, 2, 3, 4 etc.
+    taskName: { type: String },
     points: { type: Number },
     completedAt: { type: Date },
     month: { type: String },
     year: { type: Number },
-    description: { type: String },
+    jiraLink: { type: String },
+    driveLink: { type: String },
     verified: { type: Boolean, default: false },
     verifiedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    driveLink: { type: String }, // Link to the Google Drive upload
   },
   {
     timestamps: true,

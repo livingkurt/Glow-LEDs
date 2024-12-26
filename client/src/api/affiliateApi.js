@@ -158,15 +158,19 @@ export const sponsorMonthlyCheckin = createAsyncThunk(
   }
 );
 
-export const addSponsorTask = async (affiliateId, task) => {
-  try {
-    const { data } = await axios.post(`/api/affiliates/${affiliateId}/tasks`, task);
-    return data;
-  } catch (error) {
-    console.error("Error adding sponsor task:", error);
-    throw error;
+export const addSponsorTask = createAsyncThunk(
+  "affiliate/addSponsorTask",
+  async ({ affiliateId, task }, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`/api/affiliates/${affiliateId}/tasks`, task);
+      dispatch(showSuccess({ message: `Task Added` }));
+      return data;
+    } catch (error) {
+      dispatch(showError({ message: errorMessage(error) }));
+      return rejectWithValue(error.response?.data);
+    }
   }
-};
+);
 
 export const affiliateApi = createApi({
   reducerPath: "affiliateApi",

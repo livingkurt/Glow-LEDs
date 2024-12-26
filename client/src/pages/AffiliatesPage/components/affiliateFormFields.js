@@ -183,6 +183,59 @@ export const affiliateFormFields = ({ products, users, microlights, promos, cart
       label: "Active",
       permissions: ["admin"],
     },
+    sponsorTasks: {
+      title: "Sponsor Tasks",
+      labelProp: "sponsorTasks",
+      label: item => `${item.taskName} - ${item.month} ${item.year}`,
+      type: "array",
+      permissions: ["admin"],
+      itemSchema: {
+        type: "object",
+        fields: {
+          taskName: {
+            type: "text",
+            label: "Task Name",
+            required: true,
+          },
+          points: {
+            type: "number",
+            label: "Points",
+            required: true,
+          },
+          completedAt: {
+            type: "date",
+            label: "Completed At",
+          },
+          month: {
+            type: "autocomplete_single",
+            label: "Month",
+            getOptionLabel: option => {
+              if (typeof option === "string") {
+                return option;
+              }
+            },
+            options: months,
+          },
+          year: {
+            type: "number",
+            label: "Year",
+          },
+          jiraLink: {
+            type: "text",
+            label: "Jira Link",
+          },
+          driveLink: {
+            type: "text",
+            label: "Drive Link",
+          },
+          verified: {
+            type: "checkbox",
+            label: "Verified",
+          },
+          verifiedBy: userField({ users, permissions: ["admin"] }),
+        },
+      },
+    },
     sponsorMonthlyCheckins: {
       title: "Sponsor Monthly Checkins",
       labelProp: "sponsorMonthlyCheckins",
