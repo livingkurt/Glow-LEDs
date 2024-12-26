@@ -126,11 +126,15 @@ const ReturnLabelPage = () => {
           <Typography variant="body1" gutterBottom sx={{ color: "black" }}>
             {"Cut out this label and attach it to the outside of the package you are going to return"}
           </Typography>
-          <Paper
+          <Box
             sx={{
-              border: theme => `1px dashed ${theme.palette.grey[400]}`,
-              padding: 2,
-              pageBreakInside: "avoid",
+              transform: "rotate(90deg)",
+              width: "6in",
+              margin: "2rem auto",
+              height: "6in",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
             <Box
@@ -138,11 +142,12 @@ const ReturnLabelPage = () => {
               src={labelUrl}
               alt="Return Shipping Label"
               sx={{
+                width: "100%",
                 height: "auto",
                 display: "block",
               }}
             />
-          </Paper>
+          </Box>
         </Box>
 
         {order?.orderItems && (
