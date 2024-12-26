@@ -49,6 +49,7 @@ import Affiliate from "../affiliates/affiliate.js";
 import User from "../users/user.js";
 import order_services from "../orders/order_services.js";
 import CodeUsedTemplate from "../../email_templates/pages/CodeUsedTemplate.js";
+import ReturnLabelTemplate from "../../email_templates/pages/ReturnLabelTemplate.js";
 
 export default {
   get_table_emails_s: async query => {
@@ -747,5 +748,21 @@ export default {
       await sendEmail(mailOptions);
       return mailRecipients.join(", ");
     }
+  },
+  send_return_label_emails_s: async ({ order }) => {
+    const mailOptions = {
+      from: config.DISPLAY_INFO_EMAIL,
+      to: order.shipping.email,
+      subject: "Your Return Shipping Label",
+      html: App({
+        body: ReturnLabelTemplate({
+          order,
+          title: "Return Shipping Label",
+        }),
+        unsubscribe: false,
+      }),
+    };
+    await sendEmail(mailOptions);
+    return order.shipping.email;
   },
 };

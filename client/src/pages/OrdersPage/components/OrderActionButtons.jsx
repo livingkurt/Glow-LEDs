@@ -181,19 +181,7 @@ const OrderActionButtons = ({ order }) => {
                 )
               }
             >
-              {"Buy Return Label Production"}
-            </Button>
-          </Grid>
-        )}
-        {!order.shipping.return_shipping_label && (
-          <Grid item xs={12}>
-            <Button
-              color="secondary"
-              variant="contained"
-              className="w-100per mv-5px"
-              onClick={() => dispatch(API.createReturnLabel({ orderId: order._id, returnToHeadquarters: true }))}
-            >
-              {"Buy Return Label To HQ"}
+              {"Buy Return Label"}
             </Button>
           </Grid>
         )}

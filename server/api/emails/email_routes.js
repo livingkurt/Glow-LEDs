@@ -1,9 +1,9 @@
 import express from "express";
 import email_controller from "./email_controller.js";
 import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
+import cors from "cors";
 
 const router = express.Router();
-import cors from "cors";
 
 router.route("/email_subscription").post(email_controller.send_email_subscription_emails_c);
 router.route("/order").post(email_controller.send_order_emails_c);
@@ -40,5 +40,7 @@ router
   .get(email_controller.findById_emails_c)
   .put(isAuth, isAdmin, email_controller.update_emails_c)
   .delete(isAuth, isAdmin, email_controller.remove_emails_c);
+
+router.post("/return_label", email_controller.send_return_label_emails_c);
 
 export default router;
