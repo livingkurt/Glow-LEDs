@@ -9,7 +9,7 @@ const stripe = new Stripe(config.STRIPE_KEY, {
 });
 
 export const normalizeCustomerInfo = ({ shipping, paymentMethod }) => ({
-  name: shipping.first_name + " " + shipping.last_name,
+  name: `${shipping.first_name} ${shipping.last_name}`,
   email: shipping.email,
   address: {
     city: shipping.city,
@@ -135,25 +135,17 @@ const getStripeBalance = async () => {
     return b.currency === "usd" ? acc + b.amount / 100 : acc;
   }, 0);
 
-  // Get existing payouts in transit
-  const existingPayouts = await stripe.payouts.list({
-    status: "in_transit",
-    limit: 10,
-  });
-  const inTransitAmount = existingPayouts.data.reduce((acc, payout) => acc + payout.amount / 100, 0);
-
+  // We don't need to check in-transit amounts as they're already accounted for in Stripe's available balance
   console.log({
     availableBalance: `$${availableBalance}`,
     pendingBalance: `$${pendingBalance}`,
-    inTransitAmount: `$${inTransitAmount}`,
-    actualAvailableBalance: `$${availableBalance - inTransitAmount}`,
+    actualAvailableBalance: `$${availableBalance}`,
   });
 
   return {
     availableBalance,
     pendingBalance,
-    inTransitAmount,
-    actualAvailableBalance: availableBalance - inTransitAmount,
+    actualAvailableBalance: availableBalance,
   };
 };
 
@@ -195,16 +187,6 @@ export const checkBalanceAndPayout = async () => {
     // If available balance is greater than minimum balance + required reserve
     if (actualAvailableBalance > minimumBalance + scaledReserve && potentialPayoutAmount >= MINIMUM_PAYOUT_AMOUNT) {
       console.log("Balance sufficient for payout. Creating payout...");
-      // const payout = {
-      //   amount: Math.round(potentialPayoutAmount * 100), // Convert to cents
-      //   currency: "usd",
-      //   method: "standard", // Use standard 2-3 day payout speed
-      //   metadata: {
-      //     automated_payout: "true",
-      //     reserve_amount: requiredReserve.toString(),
-      //     minimum_balance: minimumBalance.toString(),
-      //   },
-      // };
       // Create payout
       const payout = await stripe.payouts.create({
         amount: Math.round(potentialPayoutAmount * 100), // Convert to cents
@@ -221,7 +203,7 @@ export const checkBalanceAndPayout = async () => {
       return {
         success: true,
         message: "Payout initiated successfully",
-        payout: payout,
+        payout,
         amount: potentialPayoutAmount,
         payrollInfo: {
           nextPayrollAmount: totalBiWeeklyPayroll,
