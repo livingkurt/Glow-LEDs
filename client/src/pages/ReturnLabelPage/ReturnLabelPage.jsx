@@ -12,40 +12,16 @@ import {
   ListItemText,
   Stack,
   Alert,
-  styled,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
 } from "@mui/material";
 import { Print, Email, Info } from "@mui/icons-material";
 import { detailsOrder } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
-
-// Styled components
-const PrintableContainer = styled(Container)(({ theme }) => ({
-  maxWidth: "8.5in !important",
-  margin: "0 auto",
-  padding: theme.spacing(4),
-  background: "white",
-  "@media print": {
-    padding: 0,
-  },
-}));
-
-const LabelFrame = styled(Paper)(({ theme }) => ({
-  border: `1px dashed ${theme.palette.grey[400]}`,
-  padding: theme.spacing(2),
-  marginTop: theme.spacing(2),
-  marginBottom: theme.spacing(2),
-  pageBreakInside: "avoid",
-  "@media print": {
-    border: "none",
-    boxShadow: "none",
-  },
-}));
-
-const PrintHideBox = styled(Box)(({ theme }) => ({
-  "@media print": {
-    display: "none",
-  },
-}));
+import { printLabel } from "../../pages/OrdersPage/ordersPageHelpers";
 
 const ReturnLabelPage = () => {
   const dispatch = useDispatch();
@@ -54,14 +30,16 @@ const ReturnLabelPage = () => {
   const location = useLocation();
   const orderPage = useSelector(state => state.orders.orderPage);
   const { order } = orderPage;
-  console.log({ order });
+
   useEffect(() => {
     // Get label URL from query params
     const params = new URLSearchParams(location.search);
     const url = params.get("label");
     const deadline = params.get("deadline");
     const orderId = params.get("orderId");
-    dispatch(detailsOrder(orderId));
+    if (orderId) {
+      dispatch(detailsOrder(orderId));
+    }
 
     if (url) {
       setLabelUrl(decodeURIComponent(url));
@@ -69,21 +47,34 @@ const ReturnLabelPage = () => {
     if (deadline) {
       setReturnDeadline(deadline);
     }
-  }, [location]);
+  }, [location, dispatch]);
+
+  const handlePrintLabel = () => {
+    if (labelUrl) {
+      printLabel(labelUrl);
+    }
+  };
 
   return (
-    <PrintableContainer>
+    <Container
+      maxWidth="lg"
+      mt={5}
+      sx={{
+        padding: 4,
+        background: "white",
+      }}
+    >
       <Stack spacing={3}>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Typography variant="h4" component="h1">
             {"Your return label"}
           </Typography>
-          <PrintHideBox>
+          <Box sx={{ "@media print": { display: "none" } }}>
             <Stack direction="row" spacing={2}>
               <Button
                 variant="contained"
                 startIcon={<Print />}
-                onClick={() => window.print()}
+                onClick={handlePrintLabel}
                 sx={{ bgcolor: "primary.main" }}
               >
                 {"Print label and instructions"}
@@ -92,7 +83,7 @@ const ReturnLabelPage = () => {
                 {"Send to a friend by email"}
               </Button>
             </Stack>
-          </PrintHideBox>
+          </Box>
         </Box>
 
         {returnDeadline && (
@@ -111,7 +102,7 @@ const ReturnLabelPage = () => {
           </Alert>
         )}
 
-        <Paper elevation={0} sx={{ p: 3 }}>
+        <Paper elevation={0}>
           <Typography variant="h5" gutterBottom>
             {"Additional instructions for shipping the package"}
           </Typography>
@@ -128,38 +119,57 @@ const ReturnLabelPage = () => {
           </List>
         </Paper>
 
-        <Box sx={{ pageBreakBefore: "always" }}>
-          <Typography variant="h5" gutterBottom>
+        <Box>
+          <Typography variant="h5" gutterBottom sx={{ color: "black" }}>
             {"Return label by post"}
           </Typography>
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1" gutterBottom sx={{ color: "black" }}>
             {"Cut out this label and attach it to the outside of the package you are going to return"}
           </Typography>
-          <LabelFrame>
+          <Paper
+            sx={{
+              border: theme => `1px dashed ${theme.palette.grey[400]}`,
+              padding: 2,
+              pageBreakInside: "avoid",
+            }}
+          >
             <Box
               component="img"
               src={labelUrl}
               alt="Return Shipping Label"
               sx={{
-                width: "100%",
                 height: "auto",
                 display: "block",
               }}
             />
-          </LabelFrame>
+          </Paper>
         </Box>
 
-        <Box sx={{ pageBreakBefore: "always" }}>
-          <Typography variant="h5" gutterBottom>
-            {"Proof of return authorization"}
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            {"Cut out this label and put it in the package you are going to return"}
-          </Typography>
-          <LabelFrame>{/* You can add a barcode here if needed */}</LabelFrame>
-        </Box>
+        {order?.orderItems && (
+          <Paper elevation={0}>
+            <Typography variant="h5" gutterBottom>
+              {"Items to return"}
+            </Typography>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>{"Item description"}</TableCell>
+                  <TableCell align="right">{"Quantity"}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {order.orderItems.map((item, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{item.name}</TableCell>
+                    <TableCell align="right">{item.quantity}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Paper>
+        )}
       </Stack>
-    </PrintableContainer>
+    </Container>
   );
 };
 

@@ -206,8 +206,10 @@ const waitForImagesToLoad = htmlString => {
 };
 
 export const printLabel = async label => {
-  const html = `<div style="width: 100%; height: auto;">
-      <img style="margin: auto; text-align: center;" src="${label}" alt="label" />
+  const html = `<div style="width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center;">
+      <div style="transform: rotate(90deg); transform-origin: center center;">
+        <img style="width: 6in; height: auto;" src="${label}" alt="label" />
+      </div>
   </div>`;
   await waitForImagesToLoad(html);
 
@@ -216,11 +218,22 @@ export const printLabel = async label => {
   container.innerHTML = html;
   d.print(container, [
     `
+    @page {
+      size: letter portrait;
+      margin: 0;
+    }
     html {
-    color: black;
-    font-family: helvetica, sans-serif;
-  }
-`,
+      color: black;
+      font-family: helvetica, sans-serif;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    img {
+      max-width: none !important;
+    }
+  `,
   ]);
 };
 
