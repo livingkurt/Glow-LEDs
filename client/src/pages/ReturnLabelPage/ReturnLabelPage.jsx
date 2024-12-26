@@ -113,13 +113,13 @@ const ReturnLabelPage = () => {
             </Typography>
             <List>
               <ListItem>
-                <ListItemText primary="Print the return authorization with the barcode and shipping label. They are designed to be printed in A4 format." />
+                <ListItemText primary="Print the return shipping label. They are designed to be printed in A4 format." />
               </ListItem>
               <ListItem>
                 <ListItemText primary="Carefully pack the products in their original packaging if you still have it." />
               </ListItem>
               <ListItem>
-                <ListItemText primary="Put the return authorization (barcode) in the package. Cut out the return label and attach it to the outside of the package." />
+                <ListItemText primary="Cut out the return label and attach it to the outside of the package." />
               </ListItem>
             </List>
           </Paper>
