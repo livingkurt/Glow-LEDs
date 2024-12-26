@@ -15,10 +15,8 @@ const SponsorTaskModal = () => {
   const { open, affiliate } = sponsorTaskModal;
 
   const [formData, setFormData] = useState({
-    taskType: "",
-    taskNumber: "",
+    taskName: "",
     points: "",
-    description: "",
     driveLink: "",
     jiraLink: "",
   });
@@ -26,10 +24,8 @@ const SponsorTaskModal = () => {
   const handleClose = () => {
     dispatch(close_sponsor_task_modal());
     setFormData({
-      taskType: "",
-      taskNumber: "",
+      taskName: "",
       points: "",
-      description: "",
       driveLink: "",
       jiraLink: "",
     });
@@ -62,23 +58,13 @@ const SponsorTaskModal = () => {
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle>{"Add Sponsor Task"}</DialogTitle>
+      <DialogTitle>{"Add Sponsor Task for " + affiliate?.artist_name}</DialogTitle>
       <DialogContent>
         <TextField
           fullWidth
-          label="Task Type"
-          name="taskType"
-          value={formData.taskType}
-          onChange={handleChange}
-          sx={{ mt: 2 }}
-        />
-
-        <TextField
-          fullWidth
-          label="Task Number"
-          name="taskNumber"
-          type="number"
-          value={formData.taskNumber}
+          label="Task Name"
+          name="taskName"
+          value={formData.taskName}
           onChange={handleChange}
           sx={{ mt: 2 }}
         />
@@ -93,16 +79,6 @@ const SponsorTaskModal = () => {
           sx={{ mt: 2 }}
         />
 
-        <TextField
-          fullWidth
-          label="Description"
-          name="description"
-          multiline
-          rows={4}
-          value={formData.description}
-          onChange={handleChange}
-          sx={{ mt: 2 }}
-        />
         <TextField
           fullWidth
           label="Jira Task Link"
