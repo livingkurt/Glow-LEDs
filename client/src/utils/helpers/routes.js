@@ -7,6 +7,8 @@ export const routes = [
   { path: "/checkout/cart", element: "CartPage" },
   { path: "/checkout/order/:id", element: "OrderPage", exact: true },
 
+  { path: "/account/return_label", element: "ReturnLabelPage", exact: true },
+
   { path: "/products", element: "ProductsGridPage", exact: true },
   { path: "/products/:pathname", element: "ProductPage" },
 

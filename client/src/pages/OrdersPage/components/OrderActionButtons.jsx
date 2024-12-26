@@ -8,15 +8,23 @@ import { openShippingModal, set_order } from "../../../slices/orderSlice";
 import { showConfirm, showSuccess } from "../../../slices/snackbarSlice";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import { useNavigate } from "react-router-dom";
 
 const OrderActionButtons = ({ order }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const shippingSlice = useSelector(state => state.shipping.shippingPage);
   const { loading_label } = shippingSlice;
 
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
+
+  const handlePrintReturnLabel = () => {
+    const labelUrl = order.shipping.return_shipping_label.postage_label.label_url;
+    const deadline = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(); // 30 days from now
+    navigate(`/account/return_label?label=${encodeURIComponent(labelUrl)}&deadline=${encodeURIComponent(deadline)}`);
+  };
 
   return (
     <div>
@@ -181,18 +189,13 @@ const OrderActionButtons = ({ order }) => {
                 )
               }
             >
-              {"Buy Return Label"}
+              {"Send Return Instructions"}
             </Button>
           </Grid>
         )}
         {order.shipping.return_shipping_label && (
           <Grid item xs={12}>
-            <Button
-              color="secondary"
-              variant="contained"
-              className="w-100per mv-5px"
-              onClick={() => printLabel(order.shipping.return_shipping_label.postage_label.label_url)}
-            >
+            <Button color="secondary" variant="contained" className="w-100per mv-5px" onClick={handlePrintReturnLabel}>
               {"Print Return Label"}
             </Button>
           </Grid>

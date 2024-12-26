@@ -1,4 +1,9 @@
+import config from "../../config.js";
+
 export default ({ order, title }) => {
+  const labelUrl = order.shipping.return_shipping_label.postage_label.label_url;
+  const printPageUrl = `${config.DOMAIN}/account/return_label?orderId=${order._id}&label=${encodeURIComponent(labelUrl)}&deadline=${encodeURIComponent(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString())}`;
+
   return `<table style="border-spacing:0;width:100%; padding: 10px; max-width: 600px; width: 100%; margin: auto;">
   <tbody>
     <tr style="font-size:16px">
@@ -28,7 +33,7 @@ export default ({ order, title }) => {
                 </p>
 
                 <ol style="font-family:helvetica;overflow-x:auto;word-wrap:break-word;max-width:600px;width:100%;margin:20px auto;color:white;font-size:16px;line-height:30px;">
-                  <li>Click the button below to open your return shipping label</li>
+                  <li>Click the button below to open your printer-friendly return label page</li>
                   <li>Print the label on standard paper</li>
                   <li>Cut out the label along the dotted lines if present</li>
                   <li>Securely tape the label to your package</li>
@@ -40,7 +45,7 @@ export default ({ order, title }) => {
                     <tr>
                       <td>
                         <div style="display:flex;justify-content:center;margin:10px 0">
-                          <a href="${order.shipping.return_shipping_label.postage_label.label_url}"
+                          <a href="${printPageUrl}"
                             style="background-color:#4c4f60;color:white;border-radius:10px;border:0;padding:15px;text-decoration:none">
                             <h4 style="font-family:helvetica;margin:0;font-size:20px;text-align:center">Print Return Label</h4>
                           </a>
@@ -54,9 +59,9 @@ export default ({ order, title }) => {
                   style="font-family:helvetica;overflow-x:auto;word-wrap:break-word;max-width:600px;width:100%;margin:20px auto 0;color:white;font-size:16px;line-height:30px;">
                   Button not working? Copy and paste this URL into your browser:
                 </p>
-                <a href="${order.shipping.return_shipping_label.postage_label.label_url}"
+                <a href="${printPageUrl}"
                   style="color:#3eb8ff; text-decoration: none; word-break: break-all;">
-                  <p style="margin: 10px 0 20px;">${order.shipping.return_shipping_label.postage_label.label_url}</p>
+                  <p style="margin: 10px 0 20px;">${printPageUrl}</p>
                 </a>
 
                 <p
