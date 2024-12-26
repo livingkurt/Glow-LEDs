@@ -10,6 +10,10 @@ export const sponsorTaskFormFields = () => {
       type: "number",
       required: true,
     },
+    isFullLightshow: {
+      label: "Is Full Lightshow",
+      type: "checkbox",
+    },
     jiraLink: {
       label: "Jira Task Link",
       type: "text",

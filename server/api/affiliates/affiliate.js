@@ -5,6 +5,7 @@ const sponsorTaskSchema = new mongoose.Schema(
     taskName: { type: String },
     points: { type: Number },
     completedAt: { type: Date },
+    isFullLightshow: { type: Boolean, default: false },
     month: { type: String },
     year: { type: Number },
     jiraLink: { type: String },

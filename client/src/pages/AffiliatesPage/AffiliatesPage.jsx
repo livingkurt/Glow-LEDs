@@ -32,7 +32,7 @@ import SponsorTaskModal from "./components/SponsorTaskModal";
 const AffiliatesPage = () => {
   const location = useLocation();
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
-  const { message, loading, remoteVersionRequirement } = affiliatePage;
+  const { loading, remoteVersionRequirement } = affiliatePage;
 
   const dispatch = useDispatch();
 

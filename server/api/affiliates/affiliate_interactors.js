@@ -37,10 +37,10 @@ const getLevelName = giftCardAmount => {
   }
 };
 
-const determineGiftCardAmount = (taskPoints, revenue, hasLightshow) => {
-  if (taskPoints >= 8 && hasLightshow && revenue >= 500) {
+const determineGiftCardAmount = (taskPoints, revenue, isFullLightshow) => {
+  if (taskPoints >= 8 && isFullLightshow && revenue >= 500) {
     return 100; // Gold Level
-  } else if (taskPoints >= 5 && hasLightshow) {
+  } else if (taskPoints >= 5 && isFullLightshow) {
     return 75; // Silver Level
   } else if (taskPoints >= 3) {
     return 50; // Bronze Level
@@ -78,10 +78,10 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
       const totalPoints = monthlyTasks.reduce((sum, task) => sum + task.points, 0);
 
       // Check for lightshow task
-      const hasLightshow = monthlyTasks.some(task => task.description?.toLowerCase().includes("lightshow"));
+      const isFullLightshow = monthlyTasks.some(task => task.isFullLightshow);
 
       // Determine gift card amount
-      const giftCardAmount = determineGiftCardAmount(totalPoints, promo_code_usage.revenue, hasLightshow);
+      const giftCardAmount = determineGiftCardAmount(totalPoints, promo_code_usage.revenue, isFullLightshow);
 
       if (giftCardAmount > 0) {
         const level = getLevelName(giftCardAmount);
@@ -100,7 +100,7 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
           amount: giftCardAmount,
           level,
           taskPoints: totalPoints,
-          completedTasks: monthlyTasks.map(task => `${task.taskType}${task.taskNumber}`).join(", "),
+          completedTasks: monthlyTasks.map(task => task.taskName).join(", "),
         });
 
         description += ` (Including $${giftCardAmount} Gift Card for Task Completion)`;
