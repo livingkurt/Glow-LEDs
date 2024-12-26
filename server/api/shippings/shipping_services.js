@@ -134,7 +134,7 @@ export default {
   },
   create_return_label_shipping_s: async (params, query) => {
     try {
-      const order = await order_db.findById_orders_db(params.order_id);
+      const order = (await order_db.findById_orders_db(params.order_id)).toObject();
 
       const { shipment } = await createShippingRates({
         order,
