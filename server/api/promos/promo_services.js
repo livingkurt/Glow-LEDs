@@ -1,4 +1,4 @@
-import { determine_filter, determineRevenueTier, make_private_code, month_dates } from "../../utils/util.js";
+import { determine_filter, make_private_code, month_dates } from "../../utils/util.js";
 import Affiliate from "../affiliates/affiliate.js";
 import affiliate_db from "../affiliates/affiliate_db.js";
 import { getFilteredData } from "../api_helpers.js";
@@ -13,6 +13,7 @@ import {
   normalizePromoSearch,
 } from "./promo_interactors.js";
 import gift_card_db from "../gift_cards/gift_card_db.js";
+import { determineRevenueTier } from "../affiliates/affiliate_helpers.js";
 
 export default {
   findAll_promos_s: async query => {

@@ -2,9 +2,9 @@ import { domain } from "../../background/worker_helpers.js";
 import config from "../../config.js";
 import Stripe from "stripe";
 import paycheck_services from "../paychecks/paycheck_services.js";
-import { determineRevenueTier } from "../../utils/util.js";
 import promo_services from "../promos/promo_services.js";
 import { getCodeUsage } from "../orders/order_interactors.js";
+import { determineRevenueTier } from "./affiliate_helpers.js";
 
 const stripe = new Stripe(config.STRIPE_KEY, {
   apiVersion: "2023-08-16",

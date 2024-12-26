@@ -1,5 +1,5 @@
 import GiftCardTemplate from "../../email_templates/pages/GiftCardTemplate.js";
-import { generateRandomCode, determineRevenueTier, isEmail } from "../../utils/util.js";
+import { generateRandomCode, isEmail } from "../../utils/util.js";
 import GiftCard from "../gift_cards/gift_card.js";
 import mongoose from "mongoose";
 import order_db from "./order_db.js";
@@ -24,6 +24,7 @@ import { generateTicketQRCodes, sendEmail } from "../emails/email_interactors.js
 import promo_db from "../promos/promo_db.js";
 import bcrypt from "bcryptjs";
 import { useGiftCard } from "../gift_cards/gift_card_interactors.js";
+import { determineRevenueTier } from "../affiliates/affiliate_helpers.js";
 
 export const normalizeOrderFilters = input => {
   const output = {};

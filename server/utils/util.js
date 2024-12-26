@@ -2,7 +2,6 @@ import multer from "multer";
 import path from "path";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { v4 as uuidv4 } from "uuid";
-import Token from "../api/tokens/token.js";
 
 export const onlyUnique = (value, index, self) => {
   return self.indexOf(value) === index;
@@ -115,36 +114,6 @@ export const snake_case = str => {
     }
   }
 };
-export const determineRevenueTier = (affiliate, revenue) => {
-  if (affiliate.promoter) {
-    if (revenue < 100) {
-      return 10;
-    } else if (revenue >= 100 && revenue < 200) {
-      return 20;
-    } else if (revenue >= 200 && revenue < 300) {
-      return 25;
-    } else if (revenue >= 300 && revenue < 400) {
-      return 30;
-    } else if (revenue >= 400 && revenue < 500) {
-      return 35;
-    } else if (revenue >= 500) {
-      return 40;
-    }
-  } else if (affiliate.sponsor) {
-    if (revenue < 150) {
-      return 30;
-    } else if (revenue >= 150 && revenue < 300) {
-      return 35;
-    } else if (revenue >= 300 && revenue < 500) {
-      return 40;
-    } else if (revenue >= 500 && revenue < 750) {
-      return 50;
-    } else if (revenue >= 750) {
-      return 60;
-    }
-  }
-};
-
 export const calculate_performance_bonus = monthlyRevenue => {
   if (monthlyRevenue >= 10000) {
     return 25; // $25 bonus for $10,000+ revenue
