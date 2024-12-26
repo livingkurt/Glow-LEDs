@@ -20,6 +20,6 @@ router
   .put(isAuth, affiliate_controller.update_affiliates_c)
   .delete(isAuth, isAdmin, affiliate_controller.remove_affiliates_c);
 
-router.route("/payout").post(isAuth, isAdmin, affiliate_controller.payout_affiliates_c);
+router.route("/payout").post(affiliate_controller.payout_affiliates_c);
 
 export default router;

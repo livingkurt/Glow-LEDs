@@ -13,15 +13,8 @@ import { createStripeAccountLink, payoutAffiliate } from "./affiliate_interactor
 import { getFilteredData } from "../api_helpers.js";
 import bcrypt from "bcryptjs";
 import Cart from "../carts/cart.js";
-import order_services from "../orders/order_services.js";
-import stripe from "../../services/stripe.js";
-import paycheck_services from "../paychecks/paycheck_services.js";
-import promo_services from "../promos/promo_services.js";
-import { determine_code_tier } from "../../background/worker_helpers.js";
-import Stripe from "stripe";
 import config from "../../config.js";
-
-const stripe = new Stripe(config.STRIPE_KEY);
+import { last_month_date_range } from "../../background/worker_helpers.js";
 
 export default {
   findAll_affiliates_s: async query => {
@@ -122,9 +115,9 @@ export default {
     try {
       // Prepare the check-in object
       const checkin = {
-        month: month,
-        year: year,
-        questionsConcerns: questionsConcerns,
+        month,
+        year,
+        questionsConcerns,
         numberOfContent,
         // add any additional fields here
       };
@@ -381,10 +374,7 @@ export default {
       const { start_date, end_date } = last_month_date_range();
 
       // Get active affiliates
-      const affiliates = await affiliate_db.findAll_affiliates_db(
-        { active: true, rave_mob: false, "user.first_name": { $exists: true } },
-        { _id: -1 }
-      );
+      const affiliates = await affiliate_db.findAll_affiliates_db({ active: true, rave_mob: false }, { _id: -1 });
 
       const results = {
         successful: [],
@@ -393,11 +383,13 @@ export default {
       };
 
       // Process each affiliate
-      for (const affiliate of affiliates) {
+      await affiliates.reduce(async (promise, affiliate) => {
+        await promise;
+
         try {
           // Add delay between iterations to avoid rate limiting
           if (results.successful.length > 0) {
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await Promise.resolve(setTimeout(1000));
           }
 
           const paycheck = await payoutAffiliate(affiliate, start_date, end_date);
@@ -420,7 +412,7 @@ export default {
             error: error.message,
           });
         }
-      }
+      }, Promise.resolve());
 
       return {
         message: "Affiliate payouts processed",
