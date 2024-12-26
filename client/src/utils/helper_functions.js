@@ -215,7 +215,7 @@ export const formatPrice = price => {
 };
 
 export const formatDate = date => {
-  return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+  return dayjs(date).format("MM/DD/YYYY");
 };
 
 export const format_date = isoDateString => {

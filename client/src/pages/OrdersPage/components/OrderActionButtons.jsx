@@ -8,11 +8,9 @@ import { openShippingModal, set_order } from "../../../slices/orderSlice";
 import { showConfirm, showSuccess } from "../../../slices/snackbarSlice";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { useNavigate } from "react-router-dom";
 
 const OrderActionButtons = ({ order }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const shippingSlice = useSelector(state => state.shipping.shippingPage);
   const { loading_label } = shippingSlice;
@@ -21,9 +19,9 @@ const OrderActionButtons = ({ order }) => {
   const { current_user } = userPage;
 
   const handlePrintReturnLabel = () => {
-    const labelUrl = order.shipping.return_shipping_label.postage_label.label_url;
+    const labelUrl = order?.shipping?.return_shipping_label?.postage_label?.label_url;
     const deadline = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(); // 30 days from now
-    navigate(`/account/return_label?label=${encodeURIComponent(labelUrl)}&deadline=${encodeURIComponent(deadline)}`);
+    printLabel(labelUrl, order, deadline);
   };
 
   return (
@@ -53,6 +51,7 @@ const OrderActionButtons = ({ order }) => {
               const { data: invoice } = await API_Orders.get_invoice(order._id);
               printInvoice(invoice);
             }}
+            å
             className="w-100per mv-5px"
           >
             {"Print Invoice"}
@@ -194,43 +193,33 @@ const OrderActionButtons = ({ order }) => {
           </Grid>
         )}
         {order.shipping.return_shipping_label && (
-          <Grid item xs={12}>
-            <Button color="secondary" variant="contained" className="w-100per mv-5px" onClick={handlePrintReturnLabel}>
-              {"Print Return Label"}
-            </Button>
-          </Grid>
-        )}
-        {order.shipping.return_shipping_label && (
-          <Grid item xs={12}>
-            <Button
-              color="secondary"
-              variant="contained"
-              className="w-100per mv-5px"
-              onClick={() => {
-                const confirm = window.confirm("Are you sure you want REFUND the RETURN LABEL for this order?");
-                if (confirm) {
-                  dispatch(API.refundLabel({ orderId: order._id, isReturnTracking: true }));
-                }
-              }}
-            >
-              {"Refund Return Label"}
-            </Button>
-          </Grid>
-        )}
-        {order.shipping.return_shipping_label && (
-          <Grid item xs={12}>
-            <a
-              href={order.shipping.return_shipping_label.postage_label.label_url}
-              style={{ width: "100%" }}
-              target="_blank"
-              rel="noreferrer"
-              download={order.shipping.return_shipping_label.postage_label.label_url}
-            >
-              <Button color="secondary" variant="contained" className="mv-5px w-100per">
-                {"Download Return Label"}
+          <>
+            <Grid item xs={12}>
+              <Button
+                color="secondary"
+                variant="contained"
+                className="w-100per mv-5px"
+                onClick={handlePrintReturnLabel}
+              >
+                {"Print Return Label"}
               </Button>
-            </a>
-          </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                color="secondary"
+                variant="contained"
+                className="w-100per mv-5px"
+                onClick={() => {
+                  const confirm = window.confirm("Are you sure you want REFUND the RETURN LABEL for this order?");
+                  if (confirm) {
+                    dispatch(API.refundLabel({ orderId: order._id, isReturnTracking: true }));
+                  }
+                }}
+              >
+                {"Refund Return Label"}
+              </Button>
+            </Grid>
+          </>
         )}
       </Grid>
     </div>
