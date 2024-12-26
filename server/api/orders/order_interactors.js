@@ -1,8 +1,7 @@
 import GiftCardTemplate from "../../email_templates/pages/GiftCardTemplate.js";
-import { generateRandomCode } from "../../utils/util.js";
+import { generateRandomCode, isEmail } from "../../utils/util.js";
 import GiftCard from "../gift_cards/gift_card.js";
 import mongoose from "mongoose";
-import { determine_code_tier, isEmail } from "../../utils/util.js";
 import order_db from "./order_db.js";
 import Order from "./order.js";
 import User from "../users/user.js";
@@ -25,6 +24,7 @@ import { generateTicketQRCodes, sendEmail } from "../emails/email_interactors.js
 import promo_db from "../promos/promo_db.js";
 import bcrypt from "bcryptjs";
 import { useGiftCard } from "../gift_cards/gift_card_interactors.js";
+import { determineRevenueTier } from "../affiliates/affiliate_helpers.js";
 
 export const normalizeOrderFilters = input => {
   const output = {};
@@ -34,55 +34,55 @@ export const normalizeOrderFilters = input => {
         for (const status of input.order_status) {
           switch (status) {
             case "Unpaid":
-              output["status"] = "unpaid";
+              output.status = "unpaid";
               break;
             case "Paid":
-              output["status"] = "paid";
+              output.status = "paid";
               break;
             case "Label Created":
-              output["status"] = "label_created";
+              output.status = "label_created";
               break;
             case "Crafting":
-              output["status"] = "crafting";
+              output.status = "crafting";
               break;
             case "Crafted":
-              output["status"] = "crafted";
+              output.status = "crafted";
               break;
             case "Packaged":
-              output["status"] = "packaged";
+              output.status = "packaged";
               break;
             case "Shipped":
-              output["status"] = "shipped";
+              output.status = "shipped";
               break;
             case "In Transit":
-              output["status"] = "in_transit";
+              output.status = "in_transit";
               break;
             case "Out For Delivery":
-              output["status"] = "out_for_delivery";
+              output.status = "out_for_delivery";
               break;
             case "Delivered":
-              output["status"] = "delivered";
+              output.status = "delivered";
               break;
             case "isRefunded":
-              output["isRefunded"] = true;
+              output.isRefunded = true;
               break;
             case "isPaused":
-              output["isPaused"] = true;
+              output.isPaused = true;
               break;
             case "Paid Pre Order":
-              output["status"] = "paid_pre_order";
+              output.status = "paid_pre_order";
               break;
             case "Canceled":
-              output["status"] = "canceled";
+              output.status = "canceled";
               break;
             case "isPrioritized":
-              output["isPrioritized"] = true;
+              output.isPrioritized = true;
               break;
             case "isPrintIssue":
-              output["isPrintIssue"] = true;
+              output.isPrintIssue = true;
               break;
             case "Return Label Created":
-              output["status"] = "return_label_created";
+              output.status = "return_label_created";
               break;
           }
         }
@@ -94,7 +94,7 @@ export const normalizeOrderFilters = input => {
         break;
       case "user":
         for (const user of input.user) {
-          output["user"] = user;
+          output.user = user;
         }
         break;
       case "carrier":
@@ -110,7 +110,7 @@ export const normalizeOrderFilters = input => {
         break;
       case "Unpaid":
         if (!input.Paid.includes(1)) {
-          output["status"] = "unpaid";
+          output.status = "unpaid";
         }
         break;
 
@@ -450,8 +450,8 @@ export const sendCodeUsedEmail = async promo_code => {
 
         const mailBodyData = {
           name: affiliate.artist_name,
-          promo_code: promo_code,
-          percentage_off: determine_code_tier(affiliate, stats.number_of_uses),
+          promo_code,
+          percentage_off: determineRevenueTier(affiliate, stats.revenue),
           number_of_uses: stats.number_of_uses,
           earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,
         };

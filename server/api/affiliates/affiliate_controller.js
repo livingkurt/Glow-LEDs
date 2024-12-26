@@ -148,4 +148,15 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  payout_affiliates_c: async (req, res) => {
+    try {
+      const result = await affiliate_services.payout_affiliates_s();
+      if (result) {
+        return res.status(200).send(result);
+      }
+      return res.status(500).send({ message: "Error Processing Affiliate Payouts" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
 };

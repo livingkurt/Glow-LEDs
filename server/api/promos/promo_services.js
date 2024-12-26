@@ -1,10 +1,4 @@
-import {
-  determine_filter,
-  determine_promoter_code_tier,
-  determine_sponsor_code_tier,
-  make_private_code,
-  month_dates,
-} from "../../utils/util.js";
+import { determine_filter, make_private_code, month_dates } from "../../utils/util.js";
 import Affiliate from "../affiliates/affiliate.js";
 import affiliate_db from "../affiliates/affiliate_db.js";
 import { getFilteredData } from "../api_helpers.js";
@@ -19,6 +13,7 @@ import {
   normalizePromoSearch,
 } from "./promo_interactors.js";
 import gift_card_db from "../gift_cards/gift_card_db.js";
+import { determineRevenueTier } from "../affiliates/affiliate_helpers.js";
 
 export default {
   findAll_promos_s: async query => {
@@ -211,7 +206,7 @@ export default {
       const sponsor_codes = await Promise.all(
         affiliates.map(async affiliate => {
           deactivateOldCodes(affiliate);
-          //const previousMonth = date.toLocaleString("default", { month: "long" });
+          // const previousMonth = date.toLocaleString("default", { month: "long" });
           const checkinCompleted = affiliate?.sponsorMonthlyCheckins?.find(
             checkin => checkin.month === currentMonth && checkin.year === currentYear
           );
@@ -251,8 +246,8 @@ export default {
           },
         };
       } else if (params.year && params.year.length > 0) {
-        const start_date = params.year + "-01-01";
-        const end_date = params.year + "-12-31";
+        const start_date = `${params.year}-01-01`;
+        const end_date = `${params.year}-12-31`;
         o_filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },
@@ -281,16 +276,13 @@ export default {
         .filter(affiliate => affiliate.active)
         .filter(affiliate => affiliate.private_code)
         .forEach(async affiliate => {
-          const code_usage = orders.filter(
-            order =>
-              order.promo_code &&
-              order.promo_code.toLowerCase() === affiliate.public_code.promo_code &&
-              affiliate.public_code.promo_code.toLowerCase()
-          ).length;
-          const percentage_off =
-            !affiliate.team && affiliate.promoter
-              ? determine_promoter_code_tier(code_usage)
-              : determine_sponsor_code_tier(code_usage);
+          const revenue = orders
+            .filter(
+              order =>
+                order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+            )
+            .reduce((a, order) => a + order.totalPrice - order.taxPrice, 0);
+          const percentage_off = determineRevenueTier(affiliate, revenue);
 
           await promo_db.update_promos_db(affiliate.private_code._id, { percentage_off });
         });

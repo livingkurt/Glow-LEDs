@@ -1,10 +1,4 @@
-import {
-  determine_filter,
-  format_date,
-  toCapitalize,
-  make_private_code,
-  determine_code_tier,
-} from "../../utils/util.js";
+import { determine_filter, format_date, toCapitalize, make_private_code } from "../../utils/util.js";
 import user_db from "../users/user_db.js";
 import email_db from "./email_db.js";
 import config from "../../config.js";
@@ -50,6 +44,7 @@ import User from "../users/user.js";
 import order_services from "../orders/order_services.js";
 import CodeUsedTemplate from "../../email_templates/pages/CodeUsedTemplate.js";
 import ReturnLabelTemplate from "../../email_templates/pages/ReturnLabelTemplate.js";
+import { determineRevenueTier } from "../affiliates/affiliate_helpers.js";
 
 export default {
   get_table_emails_s: async query => {
@@ -728,7 +723,7 @@ export default {
         mailBodyData = {
           name: affiliate.artist_name,
           promo_code,
-          percentage_off: determine_code_tier(affiliate, stats.number_of_uses),
+          percentage_off: determineRevenueTier(affiliate, stats.revenue),
           number_of_uses: stats.number_of_uses,
           earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,
         };

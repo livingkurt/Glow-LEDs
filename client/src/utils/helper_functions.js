@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import isBetween from "dayjs/plugin/isBetween.js"; // Add this import
+import { determineRevenueTier } from "./helpers/universal_helpers";
 dayjs.extend(isBetween);
 
 dayjs.extend(utc);
@@ -180,36 +181,6 @@ export const toTitleCase = string => {
     .join(" ");
 };
 
-export const determine_promoter_code_tier = code_usage => {
-  if (code_usage === 0 || code_usage === 1) {
-    return 20;
-  } else if (code_usage >= 2 && code_usage <= 5) {
-    return 25;
-  } else if (code_usage >= 6 && code_usage <= 9) {
-    return 30;
-  } else if (code_usage >= 10 && code_usage <= 13) {
-    return 35;
-  } else if (code_usage >= 14 && code_usage <= 17) {
-    return 40;
-  } else if (code_usage >= 18 && code_usage <= 21) {
-    return 45;
-  } else if (code_usage >= 22) {
-    return 60;
-  }
-};
-export const determine_sponsor_code_tier = code_usage => {
-  if (code_usage === 0 || code_usage === 1) {
-    return 30;
-  } else if (code_usage >= 2 && code_usage <= 5) {
-    return 35;
-  } else if (code_usage >= 6 && code_usage <= 9) {
-    return 40;
-  } else if (code_usage >= 10 && code_usage <= 14) {
-    return 50;
-  } else if (code_usage >= 15) {
-    return 75;
-  }
-};
 export const formatPrice = price => {
   return `$${price.toFixed(2)}`;
 };
@@ -485,25 +456,22 @@ export const calculate_affiliate_usage = (affiliates, orders) => {
     const code_usage = orders.filter(order => {
       return order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase();
     }).length;
+    const revenue = orders
+      .filter(
+        order => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+      )
+      .reduce((a, order) => a + order.totalPrice - order.taxPrice, 0);
     return {
       "Promo Code": toCapitalize(affiliate.public_code.promo_code),
       Uses: code_usage,
-      Revenue: ` $${orders
-        .filter(
-          order => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-        )
-        .reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
-        .toFixed(2)}`,
+      Revenue: ` $${revenue.toFixed(2)}`,
       Earned: `$${orders
         .filter(
           order => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
         )
         .reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
         .toFixed(2)}`,
-      "Percentage Off":
-        !affiliate.team && affiliate.promoter
-          ? `${determine_promoter_code_tier(code_usage)}%`
-          : `${determine_sponsor_code_tier(code_usage)}%`,
+      "Percentage Off": !affiliate.team && determineRevenueTier(affiliate, revenue),
     };
   });
 };
@@ -513,25 +481,22 @@ export const calculate_sponsor_usage = (affiliates, orders) => {
     const code_usage = orders.filter(order => {
       return order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase();
     }).length;
+    const revenue = orders
+      .filter(
+        order => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+      )
+      .reduce((a, order) => a + order.totalPrice - order.taxPrice, 0);
     return {
       "Promo Code": toCapitalize(affiliate.public_code.promo_code),
       Uses: code_usage,
-      Revenue: ` $${orders
-        .filter(
-          order => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-        )
-        .reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
-        .toFixed(2)}`,
+      Revenue: ` $${revenue.toFixed(2)}`,
       Earned: `$${orders
         .filter(
           order => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
         )
         .reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
         .toFixed(2)}`,
-      "Percentage Off":
-        !affiliate.team && affiliate.promoter
-          ? `${determine_promoter_code_tier(code_usage)}%`
-          : `${determine_sponsor_code_tier(code_usage)}%`,
+      "Percentage Off": !affiliate.team && !affiliate.team && determineRevenueTier(affiliate, revenue),
     };
   });
 };
