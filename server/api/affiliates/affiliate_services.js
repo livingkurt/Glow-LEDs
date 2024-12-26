@@ -102,77 +102,7 @@ export default {
       }
     }
   },
-  sponsor_monthly_checkin_affiliates_s: async (params, body) => {
-    const { id } = params;
-    const { questionsConcerns, numberOfContent, month, year } = body;
 
-    // Get previous month and year
-    const prevDate = new Date();
-    prevDate.setMonth(prevDate.getMonth() - 1);
-    const prevMonth = prevDate.toLocaleString("default", { month: "long" });
-    const prevYear = prevDate.getFullYear();
-
-    try {
-      // Prepare the check-in object
-      const checkin = {
-        month,
-        year,
-        questionsConcerns,
-        numberOfContent,
-        // add any additional fields here
-      };
-
-      const affiliate = await Affiliate.findOne({ _id: id, deleted: false });
-      if (affiliate) {
-        const existingCheckinIndex = affiliate.sponsorMonthlyCheckins.findIndex(
-          checkin => checkin.month === month && checkin.year === year
-        );
-
-        if (existingCheckinIndex > -1) {
-          // Update the existing checkin
-          affiliate.sponsorMonthlyCheckins[existingCheckinIndex] = checkin;
-        } else {
-          // Find the correct position for the new checkin based on month and year
-          const correctPosition = affiliate.sponsorMonthlyCheckins.findIndex(
-            checkin =>
-              new Date(`${checkin.year}-${monthToNum(checkin.month)}-01`) > new Date(`${year}-${monthToNum(month)}-01`)
-          );
-
-          // If correct position found, insert at that position, else push to the end
-          if (correctPosition !== -1) {
-            affiliate.sponsorMonthlyCheckins.splice(correctPosition, 0, checkin);
-          } else {
-            affiliate.sponsorMonthlyCheckins.push(checkin);
-          }
-          // If the check-in is for the previous month and year, generate sponsor codes
-          if (month === prevMonth && year === prevYear) {
-            console.log("Generating sponsor codes...");
-            await generateSponsorCodes(affiliate);
-          }
-        }
-
-        // Save the updated affiliate
-        await affiliate.save();
-
-        return affiliate;
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
-
-  checkin_status_affiliates_s: async query => {
-    const { start_date, end_date } = query;
-    try {
-      return await affiliate_db.checkin_status_affiliates_db(start_date, end_date);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
   update_affiliates_s: async (params, body) => {
     try {
       return await affiliate_db.update_affiliates_db(params.id, body);

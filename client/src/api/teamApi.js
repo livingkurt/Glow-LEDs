@@ -130,23 +130,3 @@ export const teamEarnings = createAsyncThunk(
     }
   }
 );
-
-export const teamMonthlyCheckin = createAsyncThunk(
-  "team/teamMonthlyCheckin",
-  async ({ teamId, questionsConcerns, numberOfContent, month, year }, { dispatch, rejectWithValue }) => {
-    try {
-      const { data } = await axios.put(`/api/teams/${teamId}/monthly_checkin`, {
-        questionsConcerns,
-        numberOfContent,
-        month,
-        year,
-      });
-      dispatch(showSuccess({ message: `Checkin Success` }));
-      await handleTokenRefresh(true);
-      return data;
-    } catch (error) {
-      dispatch(showError({ message: errorMessage(error) }));
-      return rejectWithValue(error.response?.data);
-    }
-  }
-);

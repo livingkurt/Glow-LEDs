@@ -1,22 +1,9 @@
 import mongoose from "mongoose";
 
-const teamCheckinSchema = new mongoose.Schema(
-  {
-    month: { type: String },
-    year: { type: Number },
-    questionsConcerns: { type: String },
-    numberOfContent: { type: Number },
-  },
-  {
-    timestamps: true,
-  }
-);
-
 const teamSchema = new mongoose.Schema(
   {
     affiliates: [{ type: mongoose.Schema.Types.ObjectId, ref: "Affiliate" }],
     captain: { type: mongoose.Schema.Types.ObjectId, ref: "Affiliate" },
-    teamMonthlyCheckins: [teamCheckinSchema],
     team_name: { type: String },
     instagram_handle: { type: String },
     facebook_name: { type: String },

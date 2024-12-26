@@ -138,26 +138,6 @@ export const createRaveMobAffiliates = createAsyncThunk(
   }
 );
 
-export const sponsorMonthlyCheckin = createAsyncThunk(
-  "affiliate/sponsorMonthlyCheckin",
-  async ({ affiliateId, questionsConcerns, numberOfContent, month, year }, { dispatch, rejectWithValue }) => {
-    try {
-      const { data } = await axios.put(`/api/affiliates/${affiliateId}/monthly_checkin`, {
-        questionsConcerns,
-        numberOfContent,
-        month,
-        year,
-      });
-      dispatch(showSuccess({ message: `Checkin Success` }));
-      await handleTokenRefresh(true);
-      return data;
-    } catch (error) {
-      dispatch(showError({ message: errorMessage(error) }));
-      return rejectWithValue(error.response?.data);
-    }
-  }
-);
-
 export const addSponsorTask = createAsyncThunk(
   "affiliate/addSponsorTask",
   async ({ affiliateId, task }, { dispatch, rejectWithValue }) => {

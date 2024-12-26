@@ -1,17 +1,5 @@
 import mongoose from "mongoose";
 
-const sponsorCheckinSchema = new mongoose.Schema(
-  {
-    month: { type: String },
-    year: { type: Number },
-    questionsConcerns: { type: String },
-    numberOfContent: { type: Number },
-  },
-  {
-    timestamps: true,
-  }
-);
-
 const sponsorTaskSchema = new mongoose.Schema(
   {
     taskName: { type: String },
@@ -23,20 +11,6 @@ const sponsorTaskSchema = new mongoose.Schema(
     driveLink: { type: String },
     verified: { type: Boolean, default: false },
     verifiedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  },
-  {
-    timestamps: true,
-  }
-);
-
-const sponsorBenefitsSchema = new mongoose.Schema(
-  {
-    month: { type: String },
-    year: { type: Number },
-    generalGiftCardBalance: { type: Number, default: 0 }, // Tracks $25 gift card balance
-    suppliesGiftCardBalance: { type: Number, default: 0 }, // Tracks $34.99 supplies gift card balance
-    performanceBonus: { type: Number, default: 0 }, // Tracks additional bonuses for high revenue months
-    lastRolloverMonth: { type: String }, // Tracks when gift cards were last rolled over
   },
   {
     timestamps: true,
@@ -73,8 +47,6 @@ const affiliateSchema = new mongoose.Schema(
       },
     ],
     percentage_off: { type: Number },
-    sponsorMonthlyCheckins: [sponsorCheckinSchema],
-    sponsorBenefits: [sponsorBenefitsSchema],
     sponsorTasks: [sponsorTaskSchema],
     public_code: { type: mongoose.Schema.Types.ObjectId, ref: "Promo" },
     private_code: { type: mongoose.Schema.Types.ObjectId, ref: "Promo" },

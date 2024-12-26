@@ -61,8 +61,6 @@ const teamPage = createSlice({
     month: "",
     year: "",
     files: [],
-    monthlyCheckinModal: false,
-    monthlyCheckinSuccess: false,
     loadingSaveTeam: false,
     questionsConcerns: "",
     numberOfContent: 0,
@@ -106,19 +104,6 @@ const teamPage = createSlice({
     },
     setFiles: (state, { payload }) => {
       state.files = payload;
-    },
-    openMonthlyCheckinModal: (state, { payload }) => {
-      const { month, year } = payload;
-      state.monthlyCheckinModal = true;
-      state.month = month;
-      state.year = year;
-      state.numberOfContent = 0;
-      state.questionsConcerns = "";
-    },
-    closeMonthlyCheckinModal: (state, { payload }) => {
-      state.monthlyCheckinModal = false;
-      state.month = "";
-      state.year = "";
     },
     setNumberOfContent: (state, { payload }) => {
       state.numberOfContent = payload;
@@ -239,8 +224,6 @@ export const {
   close_team_modal,
   open_team_modal,
   set_edit_team_modal,
-  openMonthlyCheckinModal,
-  closeMonthlyCheckinModal,
   setMonth,
   setFiles,
   setQuestion,

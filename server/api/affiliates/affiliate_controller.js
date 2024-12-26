@@ -51,42 +51,7 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  sponsor_monthly_checkin_affiliates_c: async (req, res) => {
-    const { body, params } = req;
-    try {
-      const affiliate = await affiliate_services.sponsor_monthly_checkin_affiliates_s(params, body);
-      if (affiliate) {
-        return res.status(201).send(affiliate);
-      }
-      return res.status(500).send({ message: "Error Creating Affiliate" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
-  checkin_status_affiliates_c: async (req, res) => {
-    const { query } = req;
-    try {
-      const affiliate = await affiliate_services.checkin_status_affiliates_s(query);
-      if (affiliate) {
-        return res.status(201).send(affiliate);
-      }
-      return res.status(500).send({ message: "Error Creating Affiliate" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
-  question_concerns_affiliates_c: async (req, res) => {
-    const { query } = req;
-    try {
-      const affiliate = await affiliate_db.question_concerns_affiliates_db(query.start_date, query.end_date);
-      if (affiliate) {
-        return res.status(201).send(affiliate);
-      }
-      return res.status(500).send({ message: "Error Creating Affiliate" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
+
   update_affiliates_c: async (req, res) => {
     const { params, body } = req;
     try {

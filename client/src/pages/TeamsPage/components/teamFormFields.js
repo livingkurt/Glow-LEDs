@@ -145,44 +145,5 @@ export const teamFormFields = ({ team, promos, affiliates }) => {
       label: "Active",
       permissions: ["admin"],
     },
-    teamMonthlyCheckins: {
-      title: "Team Monthly Checkins",
-      labelProp: "sponsorMonthlyCheckins",
-      label: item => `${item.year} ${item.month}`,
-      type: "array",
-      permissions: ["admin"],
-      itemSchema: {
-        type: "object",
-        fields: {
-          month: {
-            type: "autocomplete_single",
-            label: "Month",
-            getOptionLabel: option => {
-              if (typeof option === "string") {
-                return option;
-              }
-            },
-            options: months,
-          },
-          year: {
-            type: "number",
-            label: "Year",
-            labelProp: "year",
-            required: true,
-          },
-          questionsConcerns: {
-            type: "text",
-            label: "Questions or Concerns",
-            labelProp: "questionsConcerns",
-            required: true,
-          },
-          numberOfContent: {
-            type: "text",
-            label: "Number of Content",
-            labelProp: "numberOfContent",
-          },
-        },
-      },
-    },
   };
 };

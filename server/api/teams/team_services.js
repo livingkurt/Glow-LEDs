@@ -1,9 +1,8 @@
-import Team from "./team.js";
 import team_db from "./team_db.js";
 import { determine_filter } from "../../utils/util.js";
 import { getFilteredData } from "../api_helpers.js";
 import { createStripeAccountLink } from "../affiliates/affiliate_interactors.js";
-import { createPublicPromoCode, createPrivatePromoCode, monthToNum } from "../affiliates/affiliate_helpers.js";
+import { createPublicPromoCode, createPrivatePromoCode } from "../affiliates/affiliate_helpers.js";
 
 export default {
   findAll_teams_s: async query => {
@@ -98,15 +97,6 @@ export default {
     }
   },
   create_teams_s: async body => {
-    try {
-      return await team_db.create_teams_db(body);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
-  create_teams_s: async body => {
     const { user, promo_code_name, team_name, captain } = body;
 
     const public_code = createPublicPromoCode(promo_code_name || team_name);
@@ -135,65 +125,6 @@ export default {
   remove_teams_s: async params => {
     try {
       return await team_db.remove_teams_db(params.id);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
-  team_monthly_checkin_teams_s: async (params, body) => {
-    const { id } = params;
-    const { questionsConcerns, numberOfContent, month, year } = body;
-
-    // Get previous month and year
-    const prevDate = new Date();
-    prevDate.setMonth(prevDate.getMonth() - 1);
-    // const prevMonth = prevDate.toLocaleString("default", { month: "long" });
-    // const prevYear = prevDate.getFullYear();
-
-    try {
-      // Prepare the check-in object
-      const checkin = {
-        month: month,
-        year: year,
-        questionsConcerns: questionsConcerns,
-        numberOfContent,
-        // add any additional fields here
-      };
-
-      const team = await Team.findOne({ _id: id, deleted: false });
-      if (team) {
-        const existingCheckinIndex = team.teamMonthlyCheckins.findIndex(
-          checkin => checkin.month === month && checkin.year === year
-        );
-
-        if (existingCheckinIndex > -1) {
-          // Update the existing checkin
-          team.teamMonthlyCheckins[existingCheckinIndex] = checkin;
-        } else {
-          // Find the correct position for the new checkin based on month and year
-          const correctPosition = team.teamMonthlyCheckins.findIndex(
-            checkin =>
-              new Date(`${checkin.year}-${monthToNum(checkin.month)}-01`) > new Date(`${year}-${monthToNum(month)}-01`)
-          );
-
-          // If correct position found, insert at that position, else push to the end
-          if (correctPosition !== -1) {
-            team.teamMonthlyCheckins.splice(correctPosition, 0, checkin);
-          } else {
-            team.teamMonthlyCheckins.push(checkin);
-          }
-          // // If the check-in is for the previous month and year, generate sponsor codes
-          // if (month === prevMonth && year === prevYear) {
-          //   await generateSponsorCodes(team);
-          // }
-        }
-
-        // Save the updated affiliate
-        await team.save();
-
-        return team;
-      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

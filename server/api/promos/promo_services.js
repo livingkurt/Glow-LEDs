@@ -188,40 +188,7 @@ export default {
       }
     }
   },
-  refresh_sponsor_codes_promos_s: async () => {
-    const affiliates = await affiliate_db.findAll_affiliates_db(
-      { deleted: false, active: true, sponsor: true },
-      {},
-      "0",
-      "1"
-    );
-    const currentMonth = new Date().toLocaleString("default", { month: "long" });
-    const currentYear = new Date().getFullYear();
 
-    // const previousCheckin = affiliate?.sponsorMonthlyCheckins?.find(
-    //   (checkin) => checkin.month === previousMonth && checkin.year === currentYear
-    // );
-
-    try {
-      const sponsor_codes = await Promise.all(
-        affiliates.map(async affiliate => {
-          deactivateOldCodes(affiliate);
-          // const previousMonth = date.toLocaleString("default", { month: "long" });
-          const checkinCompleted = affiliate?.sponsorMonthlyCheckins?.find(
-            checkin => checkin.month === currentMonth && checkin.year === currentYear
-          );
-          if (checkinCompleted) {
-            return generateSponsorCodes(affiliate);
-          }
-        })
-      );
-      return sponsor_codes;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
   update_promos_s: async (params, body) => {
     try {
       return await promo_db.update_promos_db(params.id, body);

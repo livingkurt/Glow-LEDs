@@ -61,8 +61,6 @@ const affiliatePage = createSlice({
     month: "",
     year: "",
     files: [],
-    monthlyCheckinModal: false,
-    monthlyCheckinSuccess: false,
     loadingSaveAffiliate: false,
     questionsConcerns: "",
     numberOfContent: 0,
@@ -135,19 +133,7 @@ const affiliatePage = createSlice({
     setFiles: (state, { payload }) => {
       state.files = payload;
     },
-    openMonthlyCheckinModal: (state, { payload }) => {
-      const { month, year } = payload;
-      state.monthlyCheckinModal = true;
-      state.month = month;
-      state.year = year;
-      state.numberOfContent = 0;
-      state.questionsConcerns = "";
-    },
-    closeMonthlyCheckinModal: (state, { payload }) => {
-      state.monthlyCheckinModal = false;
-      state.month = "";
-      state.year = "";
-    },
+
     setNumberOfContent: (state, { payload }) => {
       state.numberOfContent = payload;
     },
@@ -250,38 +236,6 @@ const affiliatePage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.sponsorMonthlyCheckin.pending]: (state, { payload }) => {
-      state.loading = true;
-      state.monthlyCheckinSuccess = false;
-    },
-    [API.sponsorMonthlyCheckin.fulfilled]: (state, { payload }) => {
-      state.monthlyCheckinModal = false;
-      state.numberOfContent = 0;
-      state.questionsConcerns = "";
-      state.monthlyCheckinSuccess = true;
-    },
-    [API.sponsorMonthlyCheckin.rejected]: (state, { payload, error }) => {
-      state.loading = false;
-      state.monthlyCheckinSuccess = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
-    [API.teamMonthlyCheckin.pending]: (state, { payload }) => {
-      state.loading = true;
-      state.monthlyCheckinSuccess = false;
-    },
-    [API.teamMonthlyCheckin.fulfilled]: (state, { payload }) => {
-      state.monthlyCheckinModal = false;
-      state.numberOfContent = 0;
-      state.questionsConcerns = "";
-      state.monthlyCheckinSuccess = true;
-    },
-    [API.teamMonthlyCheckin.rejected]: (state, { payload, error }) => {
-      state.loading = false;
-      state.monthlyCheckinSuccess = false;
-      state.error = payload ? payload.error : error.message;
-      state.message = payload ? payload.message : "An error occurred";
-    },
     [API.savePromo.fulfilled]: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
     },
@@ -310,8 +264,6 @@ export const {
   close_affiliate_modal,
   open_affiliate_modal,
   set_edit_affiliate_modal,
-  openMonthlyCheckinModal,
-  closeMonthlyCheckinModal,
   setMonth,
   setFiles,
   setQuestion,
