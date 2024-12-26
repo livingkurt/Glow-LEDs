@@ -133,7 +133,7 @@ const ReturnLabelPage = () => {
             </Typography>
             <Box
               sx={{
-                transform: "rotate(90deg)",
+                transform: "rotate(-90deg)",
                 width: "6in",
                 margin: "2rem auto",
                 height: "6in",

@@ -269,7 +269,7 @@ export const printLabel = async (label, order, deadline) => {
         <h2 style="color: black; font-size: 1rem; margin-bottom: 0.25rem;">Return label by post</h2>
         <p style="color: black; margin-bottom: 0.25rem; font-size: 0.9rem;">Cut out this label and attach it to the outside of the package you are going to return</p>
         <div style="width: 100%; display: flex; align-items: center; justify-content: center; margin: 0.5rem 0;">
-          <div style="transform: rotate(90deg); transform-origin: center center; margin: 0.5rem auto;">
+          <div style="transform: rotate(-90deg); transform-origin: center center; margin: 0.5rem auto;">
             <img style="width: 4in; height: 6in;" src="${label}" alt="label" />
           </div>
         </div>
