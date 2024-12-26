@@ -15,6 +15,8 @@ import {
 } from "./shipping_interactors.js";
 
 import easy_post_api from "@easypost/api";
+import email_services from "../emails/email_services.js";
+
 const EasyPost = new easy_post_api(config.EASY_POST);
 
 export default {
@@ -130,9 +132,15 @@ export default {
       }
     }
   },
-  create_return_label_shipping_s: async (params, query) => {
+  create_return_label_shipping_s: async (params, query, body) => {
     try {
-      const order = await order_db.findById_orders_db(params.order_id);
+      const order = (await order_db.findById_orders_db(params.order_id)).toObject();
+
+      // Update order with return items if provided
+      if (body.returnItems) {
+        order.returnItems = body.returnItems;
+        await order_db.update_orders_db(params.order_id, order);
+      }
 
       const { shipment } = await createShippingRates({
         order,
@@ -142,6 +150,11 @@ export default {
 
       const label = await EasyPost.Shipment.buy(shipment.id, shipment.lowestRate());
       await addTracking({ order, label, shipping_rate: label.selected_rate, isReturnTracking: true });
+
+      // Send return label email
+      await email_services.send_return_label_emails_s({
+        order: { ...order, shipping: { ...order.shipping, return_shipping_label: label } },
+      });
 
       return { label: label.postage_label.label_url };
     } catch (error) {
@@ -186,7 +199,7 @@ export default {
       if (shipments) {
         // Create a batch with the shipments
         const batch = await EasyPost.Batch.create({
-          shipments: shipments,
+          shipments,
         });
 
         const pickup = await EasyPost.Pickup.create({
@@ -198,7 +211,7 @@ export default {
             .join(", ")} Orders`,
           is_account_address: false,
           instructions: "Pick up on front porch please.",
-          batch: batch,
+          batch,
         });
         return { pickup, orders };
       }

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../../api";
 import { API_Orders } from "../../../utils";
@@ -6,17 +7,58 @@ import { printInvoice, printLabel } from "../ordersPageHelpers";
 import { openLinkLabelModal } from "../../../slices/shippingSlice";
 import { openShippingModal, set_order } from "../../../slices/orderSlice";
 import { showConfirm, showSuccess } from "../../../slices/snackbarSlice";
+import ReturnItemsModal from "./ReturnItemsModal";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 
 const OrderActionButtons = ({ order }) => {
   const dispatch = useDispatch();
+  const [returnModalOpen, setReturnModalOpen] = useState(false);
 
   const shippingSlice = useSelector(state => state.shipping.shippingPage);
   const { loading_label } = shippingSlice;
 
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
+
+  const handlePrintReturnLabel = () => {
+    const labelUrl = order?.shipping?.return_shipping_label?.postage_label?.label_url;
+    const deadline = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(); // 30 days from now
+    printLabel(labelUrl, order, deadline);
+  };
+
+  const handleReturnItemsConfirm = returnItems => {
+    setReturnModalOpen(false);
+    dispatch(
+      showConfirm({
+        title: "Are you sure you want to Buy a RETURN Label for this Order?",
+        inputLabel: "Describe why you made this change to the order",
+        onConfirm: inputText => {
+          dispatch(
+            API.createReturnLabel({
+              orderId: order._id,
+              returnItems: returnItems,
+            })
+          );
+          dispatch(
+            API.saveOrder({
+              ...order,
+              isUpdated: true,
+              returnItems: returnItems,
+              change_log: [
+                ...order.change_log,
+                {
+                  change: inputText,
+                  changedAt: new Date(),
+                  changedBy: current_user,
+                },
+              ],
+            })
+          );
+        },
+      })
+    );
+  };
 
   return (
     <div>
@@ -45,6 +87,7 @@ const OrderActionButtons = ({ order }) => {
               const { data: invoice } = await API_Orders.get_invoice(order._id);
               printInvoice(invoice);
             }}
+            å
             className="w-100per mv-5px"
           >
             {"Print Invoice"}
@@ -155,93 +198,48 @@ const OrderActionButtons = ({ order }) => {
               color="secondary"
               variant="contained"
               className="w-100per mv-5px"
-              onClick={() =>
-                dispatch(
-                  showConfirm({
-                    title: "Are you sure you want to Buy a RETURN Label for this Order?",
-                    inputLabel: "Describe the why you made this change to the order",
-                    onConfirm: inputText => {
-                      dispatch(API.createReturnLabel({ orderId: order._id }));
-                      dispatch(
-                        API.saveOrder({
-                          ...order,
-                          isUpdated: true,
-                          change_log: [
-                            ...order.change_log,
-                            {
-                              change: inputText,
-                              changedAt: new Date(),
-                              changedBy: current_user,
-                            },
-                          ],
-                        })
-                      );
-                    },
-                  })
-                )
-              }
+              onClick={() => setReturnModalOpen(true)}
             >
-              {"Buy Return Label Production"}
-            </Button>
-          </Grid>
-        )}
-        {!order.shipping.return_shipping_label && (
-          <Grid item xs={12}>
-            <Button
-              color="secondary"
-              variant="contained"
-              className="w-100per mv-5px"
-              onClick={() => dispatch(API.createReturnLabel({ orderId: order._id, returnToHeadquarters: true }))}
-            >
-              {"Buy Return Label To HQ"}
+              {"Send Return Instructions"}
             </Button>
           </Grid>
         )}
         {order.shipping.return_shipping_label && (
-          <Grid item xs={12}>
-            <Button
-              color="secondary"
-              variant="contained"
-              className="w-100per mv-5px"
-              onClick={() => printLabel(order.shipping.return_shipping_label.postage_label.label_url)}
-            >
-              {"Print Return Label"}
-            </Button>
-          </Grid>
-        )}
-        {order.shipping.return_shipping_label && (
-          <Grid item xs={12}>
-            <Button
-              color="secondary"
-              variant="contained"
-              className="w-100per mv-5px"
-              onClick={() => {
-                const confirm = window.confirm("Are you sure you want REFUND the RETURN LABEL for this order?");
-                if (confirm) {
-                  dispatch(API.refundLabel({ orderId: order._id, isReturnTracking: true }));
-                }
-              }}
-            >
-              {"Refund Return Label"}
-            </Button>
-          </Grid>
-        )}
-        {order.shipping.return_shipping_label && (
-          <Grid item xs={12}>
-            <a
-              href={order.shipping.return_shipping_label.postage_label.label_url}
-              style={{ width: "100%" }}
-              target="_blank"
-              rel="noreferrer"
-              download={order.shipping.return_shipping_label.postage_label.label_url}
-            >
-              <Button color="secondary" variant="contained" className="mv-5px w-100per">
-                {"Download Return Label"}
+          <>
+            <Grid item xs={12}>
+              <Button
+                color="secondary"
+                variant="contained"
+                className="w-100per mv-5px"
+                onClick={handlePrintReturnLabel}
+              >
+                {"Print Return Label"}
               </Button>
-            </a>
-          </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                color="secondary"
+                variant="contained"
+                className="w-100per mv-5px"
+                onClick={() => {
+                  const confirm = window.confirm("Are you sure you want REFUND the RETURN LABEL for this order?");
+                  if (confirm) {
+                    dispatch(API.refundLabel({ orderId: order._id, isReturnTracking: true }));
+                  }
+                }}
+              >
+                {"Refund Return Label"}
+              </Button>
+            </Grid>
+          </>
         )}
       </Grid>
+      <ReturnItemsModal
+        open={returnModalOpen}
+        onClose={() => setReturnModalOpen(false)}
+        order={order}
+        onConfirm={handleReturnItemsConfirm}
+      />
     </div>
   );
 };

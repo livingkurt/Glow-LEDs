@@ -32,6 +32,7 @@ export const templates = [
   "current_stock",
   "paycheck",
   "ticket",
+  "return_label",
 ];
 
 export const convertDatesToUTC = email => {

@@ -1,7 +1,6 @@
 import { OrderPage } from "../../pages/OrderPage";
 import { PlaceOrderPage } from "../../pages/PlaceOrderPage";
 import { AdminChangePasswordPage } from "../../pages/ProfilePage/components";
-
 import { ProductsPage } from "../../pages/ProductsPage";
 import { OrdersPage } from "../../pages/OrdersPage";
 import { PaychecksPage } from "../../pages/PaychecksPage";
@@ -61,6 +60,7 @@ import GiftCardsGridPage from "../../pages/GiftCardsGridPage2/GiftCardsGridPage2
 import ModeCreatorPage from "../../pages/ModeCreatorPage/ModeCreatorPage";
 import ModePage from "../../pages/ModePage/ModePage";
 import ModesGridPage from "../../pages/ModesGridPage/ModesGridPage";
+import ReturnLabelPage from "../../pages/ReturnLabelPage/ReturnLabelPage";
 
 export const Components = {
   PlaceOrderPage,
@@ -97,6 +97,7 @@ export const Components = {
   ModeCreatorPage,
   ModePage,
   ModesGridPage,
+  ReturnLabelPage,
 };
 export const AdminComponents = {
   ProductsPage,

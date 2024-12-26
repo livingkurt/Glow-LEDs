@@ -59,9 +59,9 @@ export default {
   },
 
   create_return_label_shipping_c: async (req, res) => {
-    const { params, query } = req;
+    const { params, query, body } = req;
     try {
-      const shipping = await shipping_services.create_return_label_shipping_s(params, query);
+      const shipping = await shipping_services.create_return_label_shipping_s(params, query, body);
       if (shipping) {
         console.log("ordersChanged socket triggered");
         req.io.emit("ordersChanged");

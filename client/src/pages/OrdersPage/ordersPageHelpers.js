@@ -4,7 +4,7 @@ import { Printd } from "printd";
 import { set_order } from "../../slices/orderSlice";
 import config from "../../config";
 import { io } from "socket.io-client";
-import { formatDate } from "../../utils/helpers/universal_helpers";
+import { format_date, formatDate } from "../../utils/helper_functions";
 import { getActiveOptions, getSelectedOptions } from "../ProductPage/productHelpers";
 
 export const orderStatusColors = {
@@ -175,40 +175,110 @@ export const sendEmail = shipping => {
   document.location = "mailto:" + email + "?subject=" + subject + "&body=" + emailBody;
 };
 
-const waitForImagesToLoad = htmlString => {
-  return new Promise(resolve => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlString, "text/html");
-    const images = doc.querySelectorAll("img");
-    let imagesLoaded = 0;
+const waitForImagesToLoad = async html => {
+  return new Promise((resolve, reject) => {
+    try {
+      const container = document.createElement("div");
+      container.innerHTML = html;
+      const images = container.getElementsByTagName("img");
+      let loadedImages = 0;
 
-    if (images.length === 0) {
-      resolve();
-    } else {
-      images.forEach(img => {
-        const tmpImage = new Image();
-        tmpImage.src = img.src;
-        tmpImage.onload = () => {
-          imagesLoaded++;
-          if (imagesLoaded === images.length) {
+      if (images.length === 0) {
+        resolve();
+        return;
+      }
+
+      Array.from(images).forEach(img => {
+        if (img.complete) {
+          loadedImages++;
+          if (loadedImages === images.length) {
             resolve();
           }
-        };
-        tmpImage.onerror = () => {
-          imagesLoaded++;
-          if (imagesLoaded === images.length) {
-            resolve();
-          }
-        };
+        } else {
+          img.onload = () => {
+            loadedImages++;
+            if (loadedImages === images.length) {
+              resolve();
+            }
+          };
+          img.onerror = () => {
+            loadedImages++;
+            if (loadedImages === images.length) {
+              resolve();
+            }
+          };
+        }
       });
+    } catch (error) {
+      reject(error);
     }
   });
 };
 
-export const printLabel = async label => {
-  const html = `<div style="width: 100%; height: auto;">
-      <img style="margin: auto; text-align: center;" src="${label}" alt="label" />
-  </div>`;
+export const printLabel = async (label, order, deadline) => {
+  const itemsTable = order?.orderItems
+    ? `
+    <div style="margin-top: 1rem;">
+      <h2 style="color: black; font-size: 1rem; margin-bottom: 0.5rem;">Items to return</h2>
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr>
+            <th style="text-align: left; padding: 0.25rem; border-bottom: 1px solid #ddd;">Item description</th>
+            <th style="text-align: right; padding: 0.25rem; border-bottom: 1px solid #ddd;">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${order.orderItems
+            .map(
+              item => `
+            <tr>
+              <td style="text-align: left; padding: 0.25rem; border-bottom: 1px solid #ddd;">${item.name}</td>
+              <td style="text-align: right; padding: 0.25rem; border-bottom: 1px solid #ddd;">${item.quantity}</td>
+            </tr>
+          `
+            )
+            .join("")}
+        </tbody>
+      </table>
+    </div>
+  `
+    : "";
+
+  const html = `
+    <div style="font-family: Arial, sans-serif;">
+      ${
+        deadline
+          ? `
+        <div style="border: 1px solid #ddd; padding: 0.5rem; border-radius: 4px; margin-bottom: 0.5rem;">
+          <span style="color: black; font-size: 0.9rem;">All the products must be returned before ${format_date(deadline)}.</span>
+        </div>
+      `
+          : ""
+      }
+
+      <div >
+        <h2 style="color: black; font-size: 1rem; margin-bottom: 0.5rem;">Additional instructions for shipping the package</h2>
+        <ul style="color: black; margin: 0 0 0 1.5rem; padding: 0;">
+          <li style="margin-bottom: 0.25rem; font-size: 0.9rem;">Print the return shipping label. They are designed to be printed in A4 format.</li>
+          <li style="margin-bottom: 0.25rem; font-size: 0.9rem;">Carefully pack the products in their original packaging if you still have it.</li>
+          <li style="margin-bottom: 0.25rem; font-size: 0.9rem;">Cut out the return label and attach it to the outside of the package.</li>
+        </ul>
+      </div>
+
+      <div >
+        <h2 style="color: black; font-size: 1rem; margin-bottom: 0.25rem;">Return label by post</h2>
+        <p style="color: black; margin-bottom: 0.25rem; font-size: 0.9rem;">Cut out this label and attach it to the outside of the package you are going to return</p>
+        <div style="width: 100%; display: flex; align-items: center; justify-content: center; margin: 0.5rem 0;">
+          <div style="transform: rotate(-90deg); transform-origin: center center; margin: 0.5rem auto;">
+            <img style="width: 4in; height: 6in;" src="${label}" alt="label" />
+          </div>
+        </div>
+      </div>
+
+      ${itemsTable}
+    </div>
+  `;
+
   await waitForImagesToLoad(html);
 
   const d = new Printd();
@@ -216,11 +286,22 @@ export const printLabel = async label => {
   container.innerHTML = html;
   d.print(container, [
     `
+    @page {
+      size: letter portrait;
+      margin: 0.5in;
+    }
     html {
-    color: black;
-    font-family: helvetica, sans-serif;
-  }
-`,
+      color: black;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    img {
+      max-width: none !important;
+    }
+  `,
   ]);
 };
 

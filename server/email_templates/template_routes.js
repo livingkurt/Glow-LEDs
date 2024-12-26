@@ -38,6 +38,9 @@ import verify from "./pages/VerifyTemplate.js";
 import { domain } from "./email_template_helpers.js";
 import PaycheckTemplate from "./pages/PaycheckTemplate.js";
 import TicketTemplate from "./pages/TicketTemplate.js";
+import ReturnLabelTemplate from "./pages/ReturnLabelTemplate.js";
+import Order from "../api/orders/order.js";
+
 const router = express.Router();
 
 router.get("/email_subscription", async (req, res) => {
@@ -66,7 +69,7 @@ router.get("/verify", async (req, res) => {
       body: verify({
         title: "Verify your Email",
         url: `${domain()}/verify/123456`,
-        user: user,
+        user,
       }),
 
       unsubscribe: false,
@@ -119,7 +122,7 @@ router.get("/code_used", async (req, res) => {
     { promo_code },
     {
       month: months[monthNumber].toLowerCase(),
-      year: year,
+      year,
     }
   );
 
@@ -491,6 +494,12 @@ router.get("/account_created", async (req, res) => {
   };
 
   res.send(App({ body: AccountCreatedTemplate(body), title: "Glow LEDs Account Created" }));
+});
+
+router.get("/return_label", async (req, res) => {
+  const order = await Order.findOne({ "shipping.return_shipping_label": { $exists: true } });
+  console.log({ order });
+  res.send(App({ body: ReturnLabelTemplate({ order, title: "Return Label" }) }));
 });
 
 export default router;

@@ -18,6 +18,11 @@ const decideEnvironment = ({ production, staging, development }) => {
 
 // Glow LEDs Backend Environment Variables
 const config = {
+  DOMAIN: decideEnvironment({
+    production: process.env.DOMAIN_PROD,
+    staging: process.env.DOMAIN_STAGING,
+    development: process.env.DOMAIN_DEV,
+  }),
   // Database
   MONGODB_URI: decideEnvironment({
     production: process.env.MONGODB_URI_PROD,
