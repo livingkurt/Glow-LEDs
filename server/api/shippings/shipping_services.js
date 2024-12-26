@@ -132,9 +132,15 @@ export default {
       }
     }
   },
-  create_return_label_shipping_s: async (params, query) => {
+  create_return_label_shipping_s: async (params, query, body) => {
     try {
       const order = (await order_db.findById_orders_db(params.order_id)).toObject();
+
+      // Update order with return items if provided
+      if (body.returnItems) {
+        order.returnItems = body.returnItems;
+        await order_db.update_orders_db(params.order_id, order);
+      }
 
       const { shipment } = await createShippingRates({
         order,

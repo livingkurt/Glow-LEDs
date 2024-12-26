@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../../api";
 import { API_Orders } from "../../../utils";
@@ -6,11 +7,13 @@ import { printInvoice, printLabel } from "../ordersPageHelpers";
 import { openLinkLabelModal } from "../../../slices/shippingSlice";
 import { openShippingModal, set_order } from "../../../slices/orderSlice";
 import { showConfirm, showSuccess } from "../../../slices/snackbarSlice";
+import ReturnItemsModal from "./ReturnItemsModal";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 
 const OrderActionButtons = ({ order }) => {
   const dispatch = useDispatch();
+  const [returnModalOpen, setReturnModalOpen] = useState(false);
 
   const shippingSlice = useSelector(state => state.shipping.shippingPage);
   const { loading_label } = shippingSlice;
@@ -22,6 +25,39 @@ const OrderActionButtons = ({ order }) => {
     const labelUrl = order?.shipping?.return_shipping_label?.postage_label?.label_url;
     const deadline = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(); // 30 days from now
     printLabel(labelUrl, order, deadline);
+  };
+
+  const handleReturnItemsConfirm = returnItems => {
+    setReturnModalOpen(false);
+    dispatch(
+      showConfirm({
+        title: "Are you sure you want to Buy a RETURN Label for this Order?",
+        inputLabel: "Describe why you made this change to the order",
+        onConfirm: inputText => {
+          dispatch(
+            API.createReturnLabel({
+              orderId: order._id,
+              returnItems: returnItems,
+            })
+          );
+          dispatch(
+            API.saveOrder({
+              ...order,
+              isUpdated: true,
+              returnItems: returnItems,
+              change_log: [
+                ...order.change_log,
+                {
+                  change: inputText,
+                  changedAt: new Date(),
+                  changedBy: current_user,
+                },
+              ],
+            })
+          );
+        },
+      })
+    );
   };
 
   return (
@@ -162,31 +198,7 @@ const OrderActionButtons = ({ order }) => {
               color="secondary"
               variant="contained"
               className="w-100per mv-5px"
-              onClick={() =>
-                dispatch(
-                  showConfirm({
-                    title: "Are you sure you want to Buy a RETURN Label for this Order?",
-                    inputLabel: "Describe the why you made this change to the order",
-                    onConfirm: inputText => {
-                      dispatch(API.createReturnLabel({ orderId: order._id }));
-                      dispatch(
-                        API.saveOrder({
-                          ...order,
-                          isUpdated: true,
-                          change_log: [
-                            ...order.change_log,
-                            {
-                              change: inputText,
-                              changedAt: new Date(),
-                              changedBy: current_user,
-                            },
-                          ],
-                        })
-                      );
-                    },
-                  })
-                )
-              }
+              onClick={() => setReturnModalOpen(true)}
             >
               {"Send Return Instructions"}
             </Button>
@@ -222,6 +234,12 @@ const OrderActionButtons = ({ order }) => {
           </>
         )}
       </Grid>
+      <ReturnItemsModal
+        open={returnModalOpen}
+        onClose={() => setReturnModalOpen(false)}
+        order={order}
+        onConfirm={handleReturnItemsConfirm}
+      />
     </div>
   );
 };

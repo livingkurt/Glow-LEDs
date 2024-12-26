@@ -155,7 +155,7 @@ const ReturnLabelPage = () => {
             </Box>
           </Box>
 
-          {order?.orderItems && (
+          {order?.returnItems && (
             <Paper elevation={0}>
               <Typography variant="h5" gutterBottom>
                 {"Items to return"}
@@ -168,10 +168,10 @@ const ReturnLabelPage = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {order.orderItems.map((item, index) => (
+                  {order.returnItems.map((item, index) => (
                     <TableRow key={index}>
                       <TableCell>{item.name}</TableCell>
-                      <TableCell align="right">{item.quantity}</TableCell>
+                      <TableCell align="right">{item.returnQuantity}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
