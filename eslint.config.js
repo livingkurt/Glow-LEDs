@@ -107,7 +107,7 @@ export default [
       "max-depth": ["warn", 4],
       "max-classes-per-file": ["warn", 1],
       "no-param-reassign": ["error", { props: true, ignorePropertyModificationsFor: ["state"] }],
-      // "import/prefer-default-export": "warn",
+      "import/prefer-default-export": "off",
       "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
       "no-mixed-operators": "off",
       "function-paren-newline": "off",

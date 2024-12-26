@@ -9,10 +9,19 @@ import {
   monthToNum,
   normalizeAffiliateSearch,
 } from "./affiliate_helpers.js";
-import { createStripeAccountLink } from "./affiliate_interactors.js";
+import { createStripeAccountLink, payoutAffiliate } from "./affiliate_interactors.js";
 import { getFilteredData } from "../api_helpers.js";
 import bcrypt from "bcryptjs";
 import Cart from "../carts/cart.js";
+import order_services from "../orders/order_services.js";
+import stripe from "../../services/stripe.js";
+import paycheck_services from "../paychecks/paycheck_services.js";
+import promo_services from "../promos/promo_services.js";
+import { determine_code_tier } from "../../background/worker_helpers.js";
+import Stripe from "stripe";
+import config from "../../config.js";
+
+const stripe = new Stripe(config.STRIPE_KEY);
 
 export default {
   findAll_affiliates_s: async query => {
@@ -364,6 +373,68 @@ export default {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
+    }
+  },
+
+  payout_affiliates_s: async () => {
+    try {
+      const { start_date, end_date } = last_month_date_range();
+
+      // Get active affiliates
+      const affiliates = await affiliate_db.findAll_affiliates_db(
+        { active: true, rave_mob: false, "user.first_name": { $exists: true } },
+        { _id: -1 }
+      );
+
+      const results = {
+        successful: [],
+        failed: [],
+        skipped: [],
+      };
+
+      // Process each affiliate
+      for (const affiliate of affiliates) {
+        try {
+          // Add delay between iterations to avoid rate limiting
+          if (results.successful.length > 0) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          }
+
+          const paycheck = await payoutAffiliate(affiliate, start_date, end_date);
+
+          if (paycheck) {
+            results.successful.push({
+              affiliate: affiliate.artist_name,
+              amount: paycheck.amount,
+            });
+          } else {
+            results.skipped.push({
+              affiliate: affiliate.artist_name,
+              reason: "No earnings or no Stripe account",
+            });
+          }
+        } catch (error) {
+          console.error(`Error processing payout for affiliate ${affiliate.artist_name}:`, error);
+          results.failed.push({
+            affiliate: affiliate.artist_name,
+            error: error.message,
+          });
+        }
+      }
+
+      return {
+        message: "Affiliate payouts processed",
+        summary: {
+          total: affiliates.length,
+          successful: results.successful.length,
+          failed: results.failed.length,
+          skipped: results.skipped.length,
+        },
+        results,
+      };
+    } catch (error) {
+      console.error("Error in payout_affiliates:", error);
+      throw error;
     }
   },
 };
