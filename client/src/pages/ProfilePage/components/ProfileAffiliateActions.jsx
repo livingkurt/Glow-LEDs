@@ -2,13 +2,13 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { determine_terms_link } from "../profileHelpers";
 
-import { determine_promoter_code_tier, determine_sponsor_code_tier } from "../../../utils/helper_functions";
 import { Loading } from "../../../shared/SharedComponents";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { determineRevenueTier } from "../../../utils/helpers/universal_helpers";
 
 const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEarnings }) => {
   const userPage = useSelector(state => state.users.userPage);
@@ -65,9 +65,7 @@ const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEar
             <div className="mb-20px">
               <h3>{"Projected Private Code Discount"}</h3>
               <div>
-                {user?.affiliate?.sponsor
-                  ? determine_sponsor_code_tier(currentMonthEarnings?.data?.number_of_uses)
-                  : determine_promoter_code_tier(currentMonthEarnings?.data?.number_of_uses)}
+                {determineRevenueTier(user?.affiliate, currentMonthEarnings?.data?.revenue)}
                 {"% Off"}
               </div>
             </div>

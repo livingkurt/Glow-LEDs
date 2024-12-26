@@ -127,7 +127,8 @@ export default {
   },
   create_paychecks_s: async body => {
     try {
-      return await paycheck_db.create_paychecks_db(body);
+      const paycheck = await paycheck_db.create_paychecks_db(body);
+      return await paycheck_db.findById_paychecks_db(paycheck._id);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -163,8 +164,8 @@ export default {
           },
         };
       } else if (params.year && params.year.length > 0) {
-        const start_date = params.year + "-01-01";
-        const end_date = params.year + "-12-31";
+        const start_date = `${params.year}-01-01`;
+        const end_date = `${params.year}-12-31`;
         o_filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },

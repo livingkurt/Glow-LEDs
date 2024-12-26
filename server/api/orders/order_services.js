@@ -1,25 +1,5 @@
-import { sendGiftCardEmail } from "./order_interactors.js";
-
-import Order from "../orders/order.js";
-import order_db from "../orders/order_db.js";
-import promo_db from "../promos/promo_db.js";
-import User from "../users/user.js";
-import user_db from "../users/user_db.js";
-import cart_services from "../carts/cart_services.js";
-import product_services from "../products/product_services.js";
-import promo_services from "../promos/promo_services.js";
 import {
-  dates_in_year,
-  determine_filter,
-  determine_promoter_code_tier,
-  determine_sponsor_code_tier,
-  isEmail,
-  month_dates,
-  removeDuplicates,
-  toCapitalize,
-} from "../../utils/util.js";
-import { getFilteredData } from "../api_helpers.js";
-import {
+  sendGiftCardEmail,
   getCodeUsage,
   getMonthlyCodeUsage,
   handleUserCreation,
@@ -32,9 +12,27 @@ import {
   splitOrderItems,
   createSplitOrder,
 } from "./order_interactors.js";
+import Order from "./order.js";
+import order_db from "./order_db.js";
+import promo_db from "../promos/promo_db.js";
+import User from "../users/user.js";
+import user_db from "../users/user_db.js";
+import cart_services from "../carts/cart_services.js";
+import product_services from "../products/product_services.js";
+import promo_services from "../promos/promo_services.js";
+import {
+  dates_in_year,
+  determine_filter,
+  isEmail,
+  month_dates,
+  removeDuplicates,
+  toCapitalize,
+} from "../../utils/util.js";
+import { getFilteredData } from "../api_helpers.js";
 import SalesTax from "sales-tax";
 import affiliate_db from "../affiliates/affiliate_db.js";
 import { useGiftCard } from "../gift_cards/gift_card_interactors.js";
+
 SalesTax.setTaxOriginCountry("US"); // Set this to your business's country code
 
 export default {
@@ -181,8 +179,8 @@ export default {
           : {};
       }
       const sort_query = query.sort && query.sort.toLowerCase();
-      let sort = { createdAt: -1 };
-      let filter = { deleted: false, status: sort_query };
+      const sort = { createdAt: -1 };
+      const filter = { deleted: false, status: sort_query };
       const orders = await order_db.findAll_orders_db({ ...filter, ...search }, sort, limit, page);
       const count = await order_db.count_orders_db({ ...filter, ...search });
       if (count !== undefined) {
@@ -250,8 +248,9 @@ export default {
         userId = await handleUserCreation(order.shipping, create_account, new_password);
       }
 
-      let orders = [];
-      let nonPreOrderOrder, preOrderOrder;
+      const orders = [];
+      let nonPreOrderOrder;
+      let preOrderOrder;
 
       if (splitOrder) {
         const { preOrderItems, nonPreOrderItems } = splitOrderItems(order.orderItems);
@@ -403,9 +402,9 @@ export default {
           const orders = await order_db.findAll_orders_db({ deleted: false, user: user._id }, { _id: -1 }, "0", "1");
           const amount = orders.reduce((total, c) => parseFloat(total) + parseFloat(c.totalPrice), 0);
           return {
-            user: user,
+            user,
             number_of_orders: orders.length,
-            amount: amount,
+            amount,
           };
         })
       );
@@ -498,8 +497,8 @@ export default {
           },
         };
       } else if (query.year && query.year.length > 0) {
-        const start_date = query.year + "-01-01";
-        const end_date = query.year + "-12-31";
+        const start_date = `${query.year}-01-01`;
+        const end_date = `${query.year}-12-31`;
         filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },
@@ -552,8 +551,8 @@ export default {
       if (taxInfo && taxInfo.rate !== undefined) {
         // Constructing an object with relevant tax information
         const result = {
-          state: state,
-          country: country,
+          state,
+          country,
           taxRate: `${taxInfo.rate * 100}%`,
           type: taxInfo.type, // Assuming you might be interested in the type of tax (VAT, GST, etc.)
           area: taxInfo.area, // Useful if you want to know the tax jurisdiction area (national, regional, worldwide)
@@ -585,8 +584,8 @@ export default {
           },
         };
       } else if (params.year && params.year.length > 0) {
-        const start_date = params.year + "-01-01";
-        const end_date = params.year + "-12-31";
+        const start_date = `${params.year}-01-01`;
+        const end_date = `${params.year}-12-31`;
         o_filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },
@@ -620,26 +619,17 @@ export default {
         const code_usage = orders.filter(order => {
           return order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase();
         }).length;
+        const revenue = orders
+          .filter(
+            order =>
+              order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+          )
+          .reduce((a, order) => a + order.totalPrice - order.taxPrice, 0);
         return {
           "Promo Code": toCapitalize(affiliate.public_code.promo_code),
           Uses: code_usage,
-          Revenue: `${
-            orders &&
-            orders
-              .filter(
-                order =>
-                  order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-              )
-              .reduce(
-                (a, order) =>
-                  a +
-                  order.totalPrice -
-                  order.taxPrice -
-                  (order.payment.refund ? order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100 : 0),
-                0
-              )
-              .toFixed(2)
-          }`,
+          Revenue: `${revenue.toFixed(2)}`,
+
           Earned: affiliate.promoter
             ? orders &&
               orders
@@ -675,10 +665,7 @@ export default {
                   0
                 )
                 .toFixed(2),
-          "Percentage Off":
-            !affiliate.team && affiliate.promoter
-              ? `${determine_promoter_code_tier(code_usage)}%`
-              : `${determine_sponsor_code_tier(code_usage)}%`,
+          "Percentage Off": determineRevenueTier(affiliate, revenue),
         };
       });
       //
@@ -750,8 +737,8 @@ export default {
           },
         };
       } else if (params.year && params.year.length > 0) {
-        const start_date = params.year + "-01-01";
-        const end_date = params.year + "-12-31";
+        const start_date = `${params.year}-01-01`;
+        const end_date = `${params.year}-12-31`;
         o_filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },

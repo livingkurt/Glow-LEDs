@@ -1,9 +1,8 @@
 import { domain } from "../../background/worker_helpers.js";
 import config from "../../config.js";
 import Stripe from "stripe";
-import order_services from "../orders/order_services.js";
 import paycheck_services from "../paychecks/paycheck_services.js";
-import { determine_code_tier } from "../../utils/util.js";
+import { determineRevenueTier } from "../../utils/util.js";
 import promo_services from "../promos/promo_services.js";
 import { getCodeUsage } from "../orders/order_interactors.js";
 
@@ -26,7 +25,6 @@ export const createStripeAccountLink = async () => {
 
 export const payoutAffiliate = async (affiliate, start_date, end_date) => {
   try {
-    const test = 0;
     // Get promo code usage for the date range
     const promo_code_usage = await getCodeUsage({
       promo_code: affiliate?.public_code?.promo_code,
@@ -35,22 +33,20 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
       sponsor: affiliate?.sponsor,
       sponsorTeamCaptain: affiliate?.sponsorTeamCaptain,
     });
+
     console.log({
       affiliate: affiliate?.artist_name,
       if: affiliate?.user?.stripe_connect_id && promo_code_usage.earnings >= 1,
     });
 
-    // Skip if no earnings or no Stripe account
-    if (!affiliate?.user?.stripe_connect_id || promo_code_usage.earnings < 1) {
-      return;
-    }
     console.log({
       amount: promo_code_usage.earnings,
       stripe_connect_id: affiliate?.user?.stripe_connect_id,
       description: `Monthly Payout for ${affiliate?.user?.first_name} ${affiliate?.user?.last_name}`,
     });
-    if (test === 1) {
-      // Process Stripe payout
+
+    // Only process Stripe payment if not in test mode
+    if (!affiliate?.user?.stripe_connect_id || promo_code_usage.earnings > 0) {
       await stripe.transfers.create({
         amount: promo_code_usage.earnings,
         currency: "usd",
@@ -58,51 +54,40 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
         description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`,
       });
     }
-    console.log({
-      affiliate: affiliate?._id,
-      user: affiliate?.user?._id,
+
+    // Create paycheck record
+    const paycheck = await paycheck_services.create_paychecks_s({
+      affiliate: affiliate._id,
+      user: affiliate.user._id,
       amount: promo_code_usage.earnings,
       revenue: promo_code_usage.revenue,
-      promo_code: affiliate?.public_code?._id,
+      promo_code: affiliate.public_code._id,
       uses: promo_code_usage.number_of_uses,
-      stripe_connect_id: affiliate?.user?.stripe_connect_id || null,
+      stripe_connect_id: affiliate.user.stripe_connect_id,
       paid: !!affiliate?.user?.stripe_connect_id,
-      description: `Monthly Payout for ${affiliate?.user?.first_name} ${affiliate?.user?.last_name}`,
+      description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`,
       paid_at: new Date(),
-      email: affiliate?.user?.email,
+      email: affiliate.user.email,
+      subject: "Your Glow LEDs Affiliate Earnings",
     });
-    let paycheck;
-    if (test === 1) {
-      // Create paycheck record
-      paycheck = await paycheck_services.create_paychecks_s({
-        affiliate: affiliate._id,
-        user: affiliate.user._id,
-        amount: promo_code_usage.earnings,
-        revenue: promo_code_usage.revenue,
-        promo_code: affiliate.public_code._id,
-        uses: promo_code_usage.number_of_uses,
-        stripe_connect_id: affiliate.user.stripe_connect_id,
-        paid: true,
-        description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`,
-        paid_at: new Date(),
-        email: affiliate.user.email,
-        subject: "Your Glow LEDs Affiliate Earnings",
-      });
+
+    if (!paycheck) {
+      console.error("Failed to create paycheck");
+      return null;
     }
 
+    console.log({ paycheck });
+
     // Update promo code tier
-    const percentage_off = determine_code_tier(affiliate, promo_code_usage.number_of_uses);
-    if (test === 1) {
-      await promo_services.update_promos_s(
-        { id: affiliate.private_code._id },
-        { ...affiliate.private_code, percentage_off }
-      );
-    }
+    const percentage_off = determineRevenueTier(affiliate, promo_code_usage.revenue);
+
+    await promo_services.update_promos_s({ id: affiliate.private_code._id }, { percentage_off });
 
     console.log({ percentage_off });
 
     return paycheck;
   } catch (error) {
     console.error("Error processing affiliate payout:", error);
+    throw error;
   }
 };

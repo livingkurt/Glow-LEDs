@@ -389,7 +389,7 @@ export default {
         try {
           // Add delay between iterations to avoid rate limiting
           if (results.successful.length > 0) {
-            await Promise.resolve(setTimeout(1000));
+            await new Promise(resolve => setTimeout(resolve, 1000));
           }
 
           const paycheck = await payoutAffiliate(affiliate, start_date, end_date);

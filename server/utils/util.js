@@ -53,10 +53,10 @@ export const make_private_code = length => {
 // };
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination(req, file, cb) {
     cb(null, "tmp/");
   },
-  filename: function (req, file, cb) {
+  filename(req, file, cb) {
     const fileExtension = path.extname(file.originalname);
     const fileName = uuidv4() + fileExtension;
     cb(null, fileName);
@@ -65,9 +65,9 @@ const storage = multer.diskStorage({
 
 // Set up multer middleware for handling file uploads
 export const upload = multer({
-  storage: storage,
+  storage,
   limits: { fileSize: 1024 * 1024 * 10 }, // 10 MB file size limit
-  fileFilter: function (req, file, cb) {
+  fileFilter(req, file, cb) {
     const fileTypes = /jpeg|jpg|png|gif/;
     const mimeType = fileTypes.test(file.mimetype);
     const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
@@ -115,36 +115,33 @@ export const snake_case = str => {
     }
   }
 };
-
-export const determine_promoter_code_tier = code_usage => {
-  if (code_usage === 0 || code_usage === 1) {
-    return 10;
-  } else if (code_usage >= 2 && code_usage <= 5) {
-    return 20;
-  } else if (code_usage >= 6 && code_usage <= 9) {
-    return 25;
-  } else if (code_usage >= 10 && code_usage <= 13) {
-    return 30;
-  } else if (code_usage >= 14 && code_usage <= 17) {
-    return 35;
-  } else if (code_usage >= 18 && code_usage <= 21) {
-    return 40;
-  } else if (code_usage >= 22) {
-    return 50;
-  }
-};
-
-export const determine_sponsor_code_tier = code_usage => {
-  if (code_usage === 0 || code_usage === 1) {
-    return 30;
-  } else if (code_usage >= 2 && code_usage <= 5) {
-    return 35;
-  } else if (code_usage >= 6 && code_usage <= 9) {
-    return 40;
-  } else if (code_usage >= 10 && code_usage <= 14) {
-    return 50;
-  } else if (code_usage >= 15) {
-    return 60;
+export const determineRevenueTier = (affiliate, revenue) => {
+  if (affiliate.promoter) {
+    if (revenue < 100) {
+      return 10;
+    } else if (revenue >= 100 && revenue < 200) {
+      return 20;
+    } else if (revenue >= 200 && revenue < 300) {
+      return 25;
+    } else if (revenue >= 300 && revenue < 400) {
+      return 30;
+    } else if (revenue >= 400 && revenue < 500) {
+      return 35;
+    } else if (revenue >= 500) {
+      return 40;
+    }
+  } else if (affiliate.sponsor) {
+    if (revenue < 150) {
+      return 30;
+    } else if (revenue >= 150 && revenue < 300) {
+      return 35;
+    } else if (revenue >= 300 && revenue < 500) {
+      return 40;
+    } else if (revenue >= 500 && revenue < 750) {
+      return 50;
+    } else if (revenue >= 750) {
+      return 60;
+    }
   }
 };
 
@@ -251,31 +248,29 @@ export const determine_filter = (query, search) => {
   Object.entries(query).forEach(item => {
     if (item[0] === "search" || item[0] === "limit" || item[0] === "page" || item[0] === "sort") {
       return {};
-    } else {
-      if (item[0] === "sale" && item[1] === "true") {
-        filter.$or = [
-          {
-            sale: {
-              price: {
-                $gt: 0,
-              },
-            },
-          },
-          {
-            previous_price: {
+    } else if (item[0] === "sale" && item[1] === "true") {
+      filter.$or = [
+        {
+          sale: {
+            price: {
               $gt: 0,
             },
           },
-        ];
-      } else if (item[1]) {
-        if (item[0] === "microlight") {
-          filter["microlights"] = { $in: [item[1]] };
-        } else {
-          filter[item[0]] = item[1];
-        }
+        },
+        {
+          previous_price: {
+            $gt: 0,
+          },
+        },
+      ];
+    } else if (item[1]) {
+      if (item[0] === "microlight") {
+        filter.microlights = { $in: [item[1]] };
       } else {
-        return {};
+        filter[item[0]] = item[1];
       }
+    } else {
+      return {};
     }
   });
 
@@ -329,74 +324,74 @@ export const month_dates = (month, year) => {
     january: {
       month: "january",
       number_of_days: 31,
-      start_date: year + "-01-01",
-      end_date: year + "-02-01",
+      start_date: `${year}-01-01`,
+      end_date: `${year}-02-01`,
     },
     february: {
       month: "february",
       number_of_days: 28,
-      start_date: year + "-02-01",
-      end_date: year + "-03-01",
+      start_date: `${year}-02-01`,
+      end_date: `${year}-03-01`,
     },
     march: {
       month: "march",
       number_of_days: 31,
-      start_date: year + "-03-01",
-      end_date: year + "-04-01",
+      start_date: `${year}-03-01`,
+      end_date: `${year}-04-01`,
     },
     april: {
       month: "april",
       number_of_days: 30,
-      start_date: year + "-04-01",
-      end_date: year + "-05-01",
+      start_date: `${year}-04-01`,
+      end_date: `${year}-05-01`,
     },
     may: {
       month: "may",
       number_of_days: 31,
-      start_date: year + "-05-01",
-      end_date: year + "-06-01",
+      start_date: `${year}-05-01`,
+      end_date: `${year}-06-01`,
     },
     june: {
       month: "june",
       number_of_days: 30,
-      start_date: year + "-06-01",
-      end_date: year + "-07-01",
+      start_date: `${year}-06-01`,
+      end_date: `${year}-07-01`,
     },
     july: {
       month: "july",
       number_of_days: 31,
-      start_date: year + "-07-01",
-      end_date: year + "-08-01",
+      start_date: `${year}-07-01`,
+      end_date: `${year}-08-01`,
     },
     august: {
       month: "august",
       number_of_days: 31,
-      start_date: year + "-08-01",
-      end_date: year + "-09-01",
+      start_date: `${year}-08-01`,
+      end_date: `${year}-09-01`,
     },
     september: {
       month: "september",
       number_of_days: 30,
-      start_date: year + "-09-01",
-      end_date: year + "-10-01",
+      start_date: `${year}-09-01`,
+      end_date: `${year}-10-01`,
     },
     october: {
       month: "october",
       number_of_days: 31,
-      start_date: year + "-10-01",
-      end_date: year + "-11-01",
+      start_date: `${year}-10-01`,
+      end_date: `${year}-11-01`,
     },
     november: {
       month: "november",
       number_of_days: 30,
-      start_date: year + "-11-01",
-      end_date: year + "-12-01",
+      start_date: `${year}-11-01`,
+      end_date: `${year}-12-01`,
     },
     december: {
       month: "december",
       number_of_days: 31,
-      start_date: year + "-12-01",
-      end_date: parseInt(year) + 1 + "-01-01",
+      start_date: `${year}-12-01`,
+      end_date: `${parseInt(year) + 1}-01-01`,
     },
   };
   return month_date[month];
@@ -426,8 +421,8 @@ export const removeDuplicates = (originalArray, prop) => {
 
 export const format_date = isoDateString => {
   const date = new Date(isoDateString);
-  const month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are zero indexed, so +1
-  const day = ("0" + date.getDate()).slice(-2);
+  const month = `0${date.getMonth() + 1}`.slice(-2); // Months are zero indexed, so +1
+  const day = `0${date.getDate()}`.slice(-2);
   const year = date.getFullYear();
   return `${month}/${day}/${year}`;
 };
@@ -473,7 +468,6 @@ export const determine_card_logo_images = card_type => {
     case "discover":
       return "https://images2.imgbox.com/96/cd/hXyv0MRB_o.png";
     default:
-      return;
   }
 };
 export const determine_card_logo_images_white = card_type => {
@@ -487,7 +481,6 @@ export const determine_card_logo_images_white = card_type => {
     case "discover":
       return "https://images2.imgbox.com/f3/4b/R1EL09Rw_o.png";
     default:
-      return;
   }
 };
 const included_for_option_name = ["diffusers"];
@@ -496,10 +489,10 @@ const determine_option_show_modifier = item => {
 };
 
 const quantity = (item, show_quantity) => {
-  return show_quantity && item.quantity > 1 ? item.quantity + "x" : "";
+  return show_quantity && item.quantity > 1 ? `${item.quantity}x` : "";
 };
 const color = item => {
-  return item.color ? item.color + " " : "";
+  return item.color ? `${item.color} ` : "";
 };
 
 const size = item => {
@@ -515,7 +508,7 @@ const secondary_color = item => {
 };
 const secondary_color_name = item => {
   const secondary_color_name = item.secondary_color_group_name
-    ? item.secondary_color_group_name.split(" ")[0] + "s"
+    ? `${item.secondary_color_group_name.split(" ")[0]}s`
     : "";
   if (item.category === "gloves") {
     return secondary_color_name;
@@ -798,37 +791,3 @@ export const months = [
   "November",
   "December",
 ];
-
-export const determine_code_tier = (affiliate, code_usage) => {
-  if (affiliate.promoter) {
-    if (code_usage === 0 || code_usage === 1) {
-      return 10;
-    } else if (code_usage >= 2 && code_usage <= 5) {
-      return 20;
-    } else if (code_usage >= 6 && code_usage <= 9) {
-      return 25;
-    } else if (code_usage >= 10 && code_usage <= 13) {
-      return 30;
-    } else if (code_usage >= 14 && code_usage <= 17) {
-      return 35;
-    } else if (code_usage >= 18 && code_usage <= 21) {
-      return 40;
-    } else if (code_usage >= 22) {
-      return 50;
-    }
-  } else if (affiliate.sponsor) {
-    if (code_usage === 0 || code_usage === 1) {
-      return 30;
-    } else if (code_usage >= 2 && code_usage <= 5) {
-      return 35;
-    } else if (code_usage >= 6 && code_usage <= 9) {
-      return 40;
-    } else if (code_usage >= 10 && code_usage <= 14) {
-      return 50;
-    } else if (code_usage >= 15) {
-      return 60;
-    } else if (code_usage >= 20) {
-      return 75;
-    }
-  }
-};

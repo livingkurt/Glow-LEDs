@@ -3,7 +3,7 @@ import {
   format_date,
   toCapitalize,
   make_private_code,
-  determine_code_tier,
+  determineRevenueTier,
 } from "../../utils/util.js";
 import user_db from "../users/user_db.js";
 import email_db from "./email_db.js";
@@ -728,7 +728,7 @@ export default {
         mailBodyData = {
           name: affiliate.artist_name,
           promo_code,
-          percentage_off: determine_code_tier(affiliate, stats.number_of_uses),
+          percentage_off: determineRevenueTier(affiliate, stats.revenue),
           number_of_uses: stats.number_of_uses,
           earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,
         };

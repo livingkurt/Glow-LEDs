@@ -275,3 +275,33 @@ export const generateGradientFromIndex = index => {
       hsl(${hue1}deg 100% 40%) 0%,
     hsl(${hue2}deg 100% 40%) 100%)`;
 };
+
+export const determineRevenueTier = (affiliate, revenue) => {
+  if (affiliate.promoter) {
+    if (revenue < 100) {
+      return 10;
+    } else if (revenue >= 100 && revenue < 200) {
+      return 20;
+    } else if (revenue >= 200 && revenue < 300) {
+      return 25;
+    } else if (revenue >= 300 && revenue < 400) {
+      return 30;
+    } else if (revenue >= 400 && revenue < 500) {
+      return 35;
+    } else if (revenue >= 500) {
+      return 40;
+    }
+  } else if (affiliate.sponsor) {
+    if (revenue < 150) {
+      return 30;
+    } else if (revenue >= 150 && revenue < 300) {
+      return 35;
+    } else if (revenue >= 300 && revenue < 500) {
+      return 40;
+    } else if (revenue >= 500 && revenue < 750) {
+      return 50;
+    } else if (revenue >= 750) {
+      return 60;
+    }
+  }
+};
