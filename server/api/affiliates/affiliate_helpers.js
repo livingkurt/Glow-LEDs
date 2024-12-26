@@ -99,3 +99,20 @@ export const determineRevenueTier = (affiliate, revenue) => {
     }
   }
 };
+
+export const determineSponsorGiftCard = (affiliate, revenue) => {
+  if (affiliate.sponsor) {
+    // Check task points and lightshow requirements
+    const taskPoints = affiliate.taskPoints || 0;
+    const hasLightshow = affiliate.hasLightshow || false;
+
+    if (taskPoints >= 8 && hasLightshow && revenue >= 500) {
+      return 100; // Gold level - $100 gift card
+    } else if (taskPoints >= 5 && hasLightshow) {
+      return 75; // Silver level - $75 gift card
+    } else if (taskPoints >= 3) {
+      return 50; // Bronze level - $50 gift card
+    }
+    return 0; // No reward tier met
+  }
+};
