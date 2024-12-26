@@ -12,6 +12,24 @@ const sponsorCheckinSchema = new mongoose.Schema(
   }
 );
 
+const sponsorTaskSchema = new mongoose.Schema(
+  {
+    taskType: { type: String },
+    taskNumber: { type: Number }, // 1, 2, 3, 4 etc.
+    points: { type: Number },
+    completedAt: { type: Date },
+    month: { type: String },
+    year: { type: Number },
+    description: { type: String },
+    verified: { type: Boolean, default: false },
+    verifiedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    driveLink: { type: String }, // Link to the Google Drive upload
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const sponsorBenefitsSchema = new mongoose.Schema(
   {
     month: { type: String },
@@ -57,7 +75,8 @@ const affiliateSchema = new mongoose.Schema(
     ],
     percentage_off: { type: Number },
     sponsorMonthlyCheckins: [sponsorCheckinSchema],
-    sponsorBenefits: [sponsorBenefitsSchema], // Track monthly benefits including rollovers
+    sponsorBenefits: [sponsorBenefitsSchema],
+    sponsorTasks: [sponsorTaskSchema],
     public_code: { type: mongoose.Schema.Types.ObjectId, ref: "Promo" },
     private_code: { type: mongoose.Schema.Types.ObjectId, ref: "Promo" },
     location: { type: String },

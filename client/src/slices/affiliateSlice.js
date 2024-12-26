@@ -67,6 +67,10 @@ const affiliatePage = createSlice({
     questionsConcerns: "",
     numberOfContent: 0,
     createAffiliateStep: 0,
+    sponsorTaskModal: {
+      open: false,
+      affiliate: null,
+    },
     productBundle: {
       title: "",
       subtitle: "",
@@ -154,6 +158,18 @@ const affiliatePage = createSlice({
     },
     setProductBundle: (state, { payload }) => {
       state.productBundle = { ...state.productBundle, ...payload };
+    },
+    open_sponsor_task_modal: (state, action) => {
+      state.sponsorTaskModal = {
+        open: true,
+        affiliate: action.payload,
+      };
+    },
+    close_sponsor_task_modal: state => {
+      state.sponsorTaskModal = {
+        open: false,
+        affiliate: null,
+      };
     },
   },
   extraReducers: {
@@ -287,5 +303,7 @@ export const {
   openCreateProductBundleModal,
   closeCreateProductBundleModal,
   setProductBundle,
+  open_sponsor_task_modal,
+  close_sponsor_task_modal,
 } = affiliatePage.actions;
 export default affiliatePage.reducer;

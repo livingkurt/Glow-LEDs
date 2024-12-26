@@ -158,6 +158,16 @@ export const sponsorMonthlyCheckin = createAsyncThunk(
   }
 );
 
+export const addSponsorTask = async (affiliateId, task) => {
+  try {
+    const { data } = await axios.post(`/api/affiliates/${affiliateId}/tasks`, task);
+    return data;
+  } catch (error) {
+    console.error("Error adding sponsor task:", error);
+    throw error;
+  }
+};
+
 export const affiliateApi = createApi({
   reducerPath: "affiliateApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/api" }),

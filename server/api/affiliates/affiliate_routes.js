@@ -22,4 +22,6 @@ router
 
 router.route("/payout").post(affiliate_controller.payout_affiliates_c);
 
+router.post("/:id/tasks", isAuth, isAdmin, affiliate_controller.addSponsorTask);
+
 export default router;

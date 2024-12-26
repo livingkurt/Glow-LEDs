@@ -3,8 +3,9 @@ import config from "../../config.js";
 import Stripe from "stripe";
 import paycheck_services from "../paychecks/paycheck_services.js";
 import promo_services from "../promos/promo_services.js";
-import { getCodeUsage } from "../orders/order_interactors.js";
+import { generateGiftCards, getCodeUsage } from "../orders/order_interactors.js";
 import { determineRevenueTier } from "./affiliate_helpers.js";
+import { sendGiftCardEmail } from "../emails/email_services.js";
 
 const stripe = new Stripe(config.STRIPE_KEY, {
   apiVersion: "2023-08-16",
@@ -23,6 +24,30 @@ export const createStripeAccountLink = async () => {
   });
 };
 
+const getLevelName = giftCardAmount => {
+  switch (giftCardAmount) {
+    case 100:
+      return "Gold";
+    case 75:
+      return "Silver";
+    case 50:
+      return "Bronze";
+    default:
+      return "";
+  }
+};
+
+const determineGiftCardAmount = (taskPoints, revenue, hasLightshow) => {
+  if (taskPoints >= 8 && hasLightshow && revenue >= 500) {
+    return 100; // Gold Level
+  } else if (taskPoints >= 5 && hasLightshow) {
+    return 75; // Silver Level
+  } else if (taskPoints >= 3) {
+    return 50; // Bronze Level
+  }
+  return 0;
+};
+
 export const payoutAffiliate = async (affiliate, start_date, end_date) => {
   try {
     // Get promo code usage for the date range
@@ -34,24 +59,61 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
       sponsorTeamCaptain: affiliate?.sponsorTeamCaptain,
     });
 
-    console.log({
-      affiliate: affiliate?.artist_name,
-      if: affiliate?.user?.stripe_connect_id && promo_code_usage.earnings >= 1,
-    });
+    const earnings = promo_code_usage.earnings;
+    let description = `Monthly Payout for ${affiliate?.user?.first_name} ${affiliate?.user?.last_name}`;
 
-    console.log({
-      amount: promo_code_usage.earnings,
-      stripe_connect_id: affiliate?.user?.stripe_connect_id,
-      description: `Monthly Payout for ${affiliate?.user?.first_name} ${affiliate?.user?.last_name}`,
-    });
+    // Handle task-based gift cards for sponsored affiliates
+    if (affiliate?.sponsor) {
+      // Get tasks completed in the current month
+      const currentDate = new Date();
+      const currentMonth = currentDate.toLocaleString("default", { month: "long" });
+      const currentYear = currentDate.getFullYear();
 
-    // Only process Stripe payment if not in test mode
-    if (!affiliate?.user?.stripe_connect_id || promo_code_usage.earnings > 0) {
+      const monthlyTasks =
+        affiliate.sponsorTasks?.filter(
+          task => task.month === currentMonth && task.year === currentYear && task.verified
+        ) || [];
+
+      // Calculate total points
+      const totalPoints = monthlyTasks.reduce((sum, task) => sum + task.points, 0);
+
+      // Check for lightshow task
+      const hasLightshow = monthlyTasks.some(task => task.description?.toLowerCase().includes("lightshow"));
+
+      // Determine gift card amount
+      const giftCardAmount = determineGiftCardAmount(totalPoints, promo_code_usage.revenue, hasLightshow);
+
+      if (giftCardAmount > 0) {
+        const level = getLevelName(giftCardAmount);
+        // Generate gift card
+        const giftCard = await generateGiftCards({
+          amount: giftCardAmount,
+          user: affiliate.user._id,
+          description: `${currentMonth} ${currentYear} Sponsorship Reward - ${level} Level`,
+        });
+
+        // Send email notification
+        await sendGiftCardEmail({
+          email: affiliate.user.email,
+          name: `${affiliate.user.first_name} ${affiliate.user.last_name}`,
+          giftCardCode: giftCard.code,
+          amount: giftCardAmount,
+          level,
+          taskPoints: totalPoints,
+          completedTasks: monthlyTasks.map(task => `${task.taskType}${task.taskNumber}`).join(", "),
+        });
+
+        description += ` (Including $${giftCardAmount} Gift Card for Task Completion)`;
+      }
+    }
+
+    // Process Stripe payment for non-gift card earnings
+    if (affiliate?.user?.stripe_connect_id && earnings > 0) {
       await stripe.transfers.create({
-        amount: promo_code_usage.earnings,
+        amount: earnings,
         currency: "usd",
         destination: affiliate.user.stripe_connect_id,
-        description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`,
+        description,
       });
     }
 
@@ -59,13 +121,13 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
     const paycheck = await paycheck_services.create_paychecks_s({
       affiliate: affiliate._id,
       user: affiliate.user._id,
-      amount: promo_code_usage.earnings,
+      amount: earnings,
       revenue: promo_code_usage.revenue,
       promo_code: affiliate.public_code._id,
       uses: promo_code_usage.number_of_uses,
       stripe_connect_id: affiliate.user.stripe_connect_id,
       paid: !!affiliate?.user?.stripe_connect_id,
-      description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`,
+      description,
       paid_at: new Date(),
       email: affiliate.user.email,
       subject: "Your Glow LEDs Affiliate Earnings",
@@ -76,14 +138,9 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
       return null;
     }
 
-    console.log({ paycheck });
-
     // Update promo code tier
     const percentage_off = determineRevenueTier(affiliate, promo_code_usage.revenue);
-
     await promo_services.update_promos_s({ id: affiliate.private_code._id }, { percentage_off });
-
-    console.log({ percentage_off });
 
     return paycheck;
   } catch (error) {

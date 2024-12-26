@@ -1,4 +1,4 @@
-import affiliate_db from "./affiliate_db.js";
+import Affiliate from "./affiliate.js";
 import affiliate_services from "./affiliate_services.js";
 
 export default {
@@ -157,6 +157,30 @@ export default {
       return res.status(500).send({ message: "Error Processing Affiliate Payouts" });
     } catch (error) {
       res.status(500).send({ error, message: error.message });
+    }
+  },
+  addSponsorTask: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const task = req.body;
+
+      const affiliate = await Affiliate.findById(id);
+      if (!affiliate) {
+        return res.status(404).json({ message: "Affiliate not found" });
+      }
+
+      affiliate.sponsorTasks = affiliate.sponsorTasks || [];
+      affiliate.sponsorTasks.push({
+        ...task,
+        verifiedBy: req.user._id,
+      });
+
+      await affiliate.save();
+
+      return res.json(affiliate);
+    } catch (error) {
+      console.error("Error adding sponsor task:", error);
+      return res.status(500).json({ message: "Error adding sponsor task" });
     }
   },
 };
