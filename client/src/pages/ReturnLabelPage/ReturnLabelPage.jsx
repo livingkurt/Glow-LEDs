@@ -25,7 +25,6 @@ import { printLabel } from "../../pages/OrdersPage/ordersPageHelpers";
 
 const ReturnLabelPage = () => {
   const dispatch = useDispatch();
-  const [labelUrl, setLabelUrl] = useState("");
   const [returnDeadline, setReturnDeadline] = useState("");
   const location = useLocation();
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -34,24 +33,20 @@ const ReturnLabelPage = () => {
   useEffect(() => {
     // Get label URL from query params
     const params = new URLSearchParams(location.search);
-    const url = params.get("label");
     const deadline = params.get("deadline");
     const orderId = params.get("orderId");
     if (orderId) {
       dispatch(detailsOrder(orderId));
     }
 
-    if (url) {
-      setLabelUrl(decodeURIComponent(url));
-    }
     if (deadline) {
       setReturnDeadline(deadline);
     }
   }, [location, dispatch]);
 
   const handlePrintLabel = () => {
-    if (labelUrl) {
-      printLabel(labelUrl, order, returnDeadline);
+    if (order?.shipping?.return_shipping_label?.postage_label?.label_url) {
+      printLabel(order?.shipping?.return_shipping_label?.postage_label?.label_url, order, returnDeadline);
     }
   };
 
@@ -61,119 +56,130 @@ const ReturnLabelPage = () => {
       mt={5}
       sx={{
         padding: 4,
-        background: "white",
       }}
     >
-      <Stack spacing={3}>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant="h4" component="h1">
-            {"Your return label"}
-          </Typography>
-          <Box sx={{ "@media print": { display: "none" } }}>
-            <Stack direction="row" spacing={2}>
-              <Button
-                variant="contained"
-                startIcon={<Print />}
-                onClick={handlePrintLabel}
-                sx={{ bgcolor: "primary.main" }}
-              >
-                {"Print label and instructions"}
-              </Button>
-              <Button variant="outlined" startIcon={<Email />} onClick={() => (window.location.href = labelUrl)}>
-                {"Send to a friend by email"}
-              </Button>
-            </Stack>
+      <Paper
+        sx={{
+          padding: 4,
+        }}
+      >
+        <Stack spacing={3}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <Typography variant="h4" component="h1">
+              {"Your return label"}
+            </Typography>
+            <Box sx={{ "@media print": { display: "none" } }}>
+              <Stack direction="row" spacing={2}>
+                <Button
+                  variant="contained"
+                  startIcon={<Print />}
+                  onClick={handlePrintLabel}
+                  sx={{ bgcolor: "primary.main" }}
+                >
+                  {"Print label and instructions"}
+                </Button>
+                <Button
+                  variant="outlined"
+                  startIcon={<Email />}
+                  onClick={() =>
+                    (window.location.href = order?.shipping?.return_shipping_label?.postage_label?.label_url)
+                  }
+                >
+                  {"Send to a friend by email"}
+                </Button>
+              </Stack>
+            </Box>
           </Box>
-        </Box>
 
-        {returnDeadline && (
-          <Alert
-            icon={<Info />}
-            severity="info"
-            sx={{
-              "& .MuiAlert-message": {
-                width: "100%",
-              },
-            }}
-          >
-            {"All the products must be returned before "}
-            {format_date(returnDeadline)}
-            {"."}
-          </Alert>
-        )}
-
-        <Paper elevation={0}>
-          <Typography variant="h5" gutterBottom>
-            {"Additional instructions for shipping the package"}
-          </Typography>
-          <List>
-            <ListItem>
-              <ListItemText primary="Print the return authorization with the barcode and shipping label. They are designed to be printed in A4 format." />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Carefully pack the products in their original packaging if you still have it." />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Put the return authorization (barcode) in the package. Cut out the return label and attach it to the outside of the package." />
-            </ListItem>
-          </List>
-        </Paper>
-
-        <Box>
-          <Typography variant="h5" gutterBottom sx={{ color: "black" }}>
-            {"Return label by post"}
-          </Typography>
-          <Typography variant="body1" gutterBottom sx={{ color: "black" }}>
-            {"Cut out this label and attach it to the outside of the package you are going to return"}
-          </Typography>
-          <Box
-            sx={{
-              transform: "rotate(90deg)",
-              width: "6in",
-              margin: "2rem auto",
-              height: "6in",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Box
-              component="img"
-              src={labelUrl}
-              alt="Return Shipping Label"
+          {returnDeadline && (
+            <Alert
+              icon={<Info sx={{ color: "black" }} />}
+              severity="info"
               sx={{
-                width: "100%",
-                height: "auto",
-                display: "block",
+                "& .MuiAlert-message": {
+                  width: "100%",
+                },
               }}
-            />
-          </Box>
-        </Box>
+            >
+              {"All the products must be returned before "}
+              {format_date(returnDeadline)}
+              {"."}
+            </Alert>
+          )}
 
-        {order?.orderItems && (
           <Paper elevation={0}>
             <Typography variant="h5" gutterBottom>
-              {"Items to return"}
+              {"Additional instructions for shipping the package"}
             </Typography>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>{"Item description"}</TableCell>
-                  <TableCell align="right">{"Quantity"}</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {order.orderItems.map((item, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{item.name}</TableCell>
-                    <TableCell align="right">{item.quantity}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <List>
+              <ListItem>
+                <ListItemText primary="Print the return authorization with the barcode and shipping label. They are designed to be printed in A4 format." />
+              </ListItem>
+              <ListItem>
+                <ListItemText primary="Carefully pack the products in their original packaging if you still have it." />
+              </ListItem>
+              <ListItem>
+                <ListItemText primary="Put the return authorization (barcode) in the package. Cut out the return label and attach it to the outside of the package." />
+              </ListItem>
+            </List>
           </Paper>
-        )}
-      </Stack>
+
+          <Box>
+            <Typography variant="h5" gutterBottom sx={{ color: "black" }}>
+              {"Return label by post"}
+            </Typography>
+            <Typography variant="body1" gutterBottom sx={{ color: "black" }}>
+              {"Cut out this label and attach it to the outside of the package you are going to return"}
+            </Typography>
+            <Box
+              sx={{
+                transform: "rotate(90deg)",
+                width: "6in",
+                margin: "2rem auto",
+                height: "6in",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Box
+                component="img"
+                src={order?.shipping?.return_shipping_label?.postage_label?.label_url}
+                alt="Return Shipping Label"
+                sx={{
+                  width: "100%",
+                  height: "auto",
+                  display: "block",
+                }}
+              />
+            </Box>
+          </Box>
+
+          {order?.orderItems && (
+            <Paper elevation={0}>
+              <Typography variant="h5" gutterBottom>
+                {"Items to return"}
+              </Typography>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>{"Item description"}</TableCell>
+                    <TableCell align="right">{"Quantity"}</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {order.orderItems.map((item, index) => (
+                    <TableRow key={index}>
+                      <TableCell>{item.name}</TableCell>
+                      <TableCell align="right">{item.quantity}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Paper>
+          )}
+        </Stack>
+      </Paper>
     </Container>
   );
 };

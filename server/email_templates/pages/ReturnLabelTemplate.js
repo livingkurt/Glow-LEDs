@@ -1,8 +1,7 @@
 import config from "../../config.js";
 
 export default ({ order, title }) => {
-  const labelUrl = order.shipping.return_shipping_label.postage_label.label_url;
-  const printPageUrl = `${config.DOMAIN}/account/return_label?orderId=${order._id}&label=${encodeURIComponent(labelUrl)}&deadline=${encodeURIComponent(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString())}`;
+  const printPageUrl = `${config.DOMAIN}/account/return_label?orderId=${order._id}&deadline=${encodeURIComponent(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString())}`;
 
   return `<table style="border-spacing:0;width:100%; padding: 10px; max-width: 600px; width: 100%; margin: auto;">
   <tbody>
