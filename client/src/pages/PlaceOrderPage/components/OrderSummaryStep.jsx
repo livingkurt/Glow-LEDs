@@ -130,15 +130,21 @@ const OrderSummaryStep = () => {
               </li>
             )}
             {active_promo_codes.map((promoCode, index) => (
-              <li key={index}>
-                <div>{`${promoCode.code.toUpperCase()} Discount`}</div>
+              <div key={index} className="row">
+                <div>
+                  {promoCode.percentage_off
+                    ? `${promoCode.code?.toUpperCase() || ""} ${promoCode.percentage_off}% Off`
+                    : promoCode.amount_off
+                      ? `${promoCode.code?.toUpperCase() || ""} $${promoCode.amount_off} Off`
+                      : promoCode.free_shipping
+                        ? `${promoCode.code?.toUpperCase() || ""} Free Shipping`
+                        : promoCode.code?.toUpperCase() || ""}
+                </div>
                 <div>
                   {"-$"}
-                  {promoCode.amount_off
-                    ? promoCode.amount_off.toFixed(2)
-                    : ((promoCode.percentage_off / 100) * saleTotal).toFixed(2)}
+                  {promoCode.amount_off || ((promoCode.percentage_off * itemsPrice) / 100).toFixed(2)}
                 </div>
-              </li>
+              </div>
             ))}
             {active_gift_cards.map((giftCard, index) => (
               <li key={index}>

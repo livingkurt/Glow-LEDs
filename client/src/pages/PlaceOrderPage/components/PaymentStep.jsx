@@ -348,7 +348,7 @@ const PaymentStep = () => {
                                 previousShippingPrice,
                                 shipping,
                                 splitOrder,
-                                code: promoCode.code,
+                                code: promoCode.promo_code,
                                 cartItems,
                                 current_user,
                               })
@@ -360,12 +360,12 @@ const PaymentStep = () => {
                         </GLButton>
                         <Sell sx={{ mr: 1 }} />
                         {promoCode.percentage_off
-                          ? `${promoCode.code.toUpperCase()} ${promoCode.percentage_off}% Off`
+                          ? `${promoCode.promo_code?.toUpperCase() || ""} ${promoCode.percentage_off}% Off`
                           : promoCode.amount_off
-                            ? `${promoCode.code.toUpperCase()} $${promoCode.amount_off} Off`
+                            ? `${promoCode.promo_code?.toUpperCase() || ""} $${promoCode.amount_off} Off`
                             : promoCode.free_shipping
-                              ? `${promoCode.code.toUpperCase()} Free Shipping`
-                              : promoCode.code.toUpperCase()}
+                              ? `${promoCode.promo_code?.toUpperCase() || ""} Free Shipping`
+                              : promoCode.promo_code?.toUpperCase() || ""}
                       </Box>
                     ))}
                     {active_gift_cards.map((giftCard, index) => (
@@ -393,7 +393,6 @@ const PaymentStep = () => {
                         >
                           <i className="fas fa-times mr-5px" />
                         </GLButton>
-                        {console.log({ giftCard })}
                         <Sell sx={{ mr: 1 }} />
                         {`Gift Card: $${giftCard.amount_used.toFixed(2)} Applied ($${giftCard.amount_remaining.toFixed(2)} Remaining)`}
                       </Box>
