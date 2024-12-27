@@ -167,10 +167,15 @@ export const orderFormFields = ({ users, products, promos, allShipping, parcels,
         return "";
       },
     },
-    // promo_code: {
-    //   type: "text",
-    //   label: "Promo Code",
-    // },
+    promo: {
+      type: "autocomplete_single",
+      label: "Promo",
+      options: promos,
+      getOptionLabel: option => option.promo.promo_code,
+      isOptionEqualToValue: option => option,
+      labelProp: "promo",
+      valueAttribute: "promo",
+    },
     promo_code: {
       type: "autocomplete_single",
       label: "Promp Code",

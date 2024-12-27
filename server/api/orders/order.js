@@ -125,6 +125,10 @@ const orderSchema = new mongoose.Schema(
     pausedAt: { type: Date },
     errorAt: { type: Date },
     updatedAt: { type: Date },
+    promo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Promo",
+    },
     giftCards: [
       {
         code: { type: String },
