@@ -52,7 +52,6 @@ const PaymentStep = () => {
   const {
     payment_completed,
     show_promo_code,
-    show_promo_code_input_box,
     promo_code_validations,
     create_account,
     password_validations,
@@ -303,6 +302,7 @@ const PaymentStep = () => {
                       type="text"
                       name="promo_code"
                       id="promo_code"
+                      value={promo_code}
                       className="w-100per"
                       style={{
                         textTransform: "uppercase",
@@ -323,14 +323,14 @@ const PaymentStep = () => {
                     </GLButton>
                   </form>
                 </div>
-                <label
+                <div
                   className="validation_text"
                   style={{
                     textAlign: "center",
                   }}
                 >
                   {promo_code_validations}
-                </label>
+                </div>
                 {(active_promo_codes.length > 0 || active_gift_cards.length > 0) && (
                   <div className="promo_codes mv-1rem">
                     {active_promo_codes.map((promoCode, index) => (
