@@ -283,14 +283,14 @@ export default ({ email, order }) => {
                                         <tr>
                                           <td style="font-family:helvetica;padding:5px 0">
                                             <del style="color:red">
-                                              <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                              <p style="color:#c5c5c5;line-height:1.2em;font-size:16px;margin:0">
                                                 <span style="font-size:16px">Original Subtotal</span>
                                               </p>
                                             </del>
                                           </td>
                                           <td style="font-family:helvetica;padding:5px 0;text-align:right">
                                             <del style="color:red">
-                                              <strong style="font-size:16px;color:white">$${getItemsTotal(
+                                              <strong style="font-size:16px;color:#c5c5c5">$${getItemsTotal(
                                                 order.orderItems
                                               ).toFixed(2)}</strong>
                                             </del>
@@ -399,7 +399,7 @@ export default ({ email, order }) => {
                                   order.shippingPrice === 0 && order.previousShippingPrice > 0
                                     ? `
                                     <del style="color:red">
-                                      <strong style="font-size:16px;color:white">$${order.previousShippingPrice.toFixed(2)}</strong>
+                                      <strong style="font-size:16px;color:#c5c5c5">$${order.previousShippingPrice.toFixed(2)}</strong>
                                     </del>
                                     `
                                     : `<strong style="font-size:16px;color:white">$${order.shippingPrice.toFixed(2)}</strong>`
@@ -474,14 +474,14 @@ export default ({ email, order }) => {
                                    <tr>
                                       <td style="font-family:helvetica;padding:20px 0 0">
                                         <del style="color:red">
-                                          <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                          <p style="color:#c5c5c5;line-height:1.2em;font-size:16px;margin:0">
                                             <span style="font-size:16px">Original Order Total</span>
                                           </p>
                                         </del>
                                       </td>
                                       <td style="font-family:helvetica;padding:20px 0 0" align="right">
                                         <del style="color:red">
-                                          <strong style="font-size:16px;color:white">$${(
+                                          <strong style="font-size:16px;color:#c5c5c5">$${(
                                             getItemsTotal(order.orderItems) +
                                             order.taxPrice +
                                             order.shippingPrice +

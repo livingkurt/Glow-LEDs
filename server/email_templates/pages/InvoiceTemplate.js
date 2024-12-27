@@ -1,5 +1,6 @@
 import config from "../../config.js";
 import { determine_card_logo_images, format_date } from "../../utils/util.js";
+import { getItemsTotal, getSaleTotal, hasActiveSale } from "../email_template_helpers.js";
 import Price from "../components/Price.js";
 
 export default ({ order, isSponsor }) => {
@@ -145,17 +146,17 @@ export default ({ order, isSponsor }) => {
             <table style="width:100%;line-height:inherit;text-align:left;font-size:25px" width="100%" align="left">
               <tr>
                 <td valign="top" style="width:50%;">
-                  <div style="padding:5px;vertical-align:top;text-align:left;display:flex" valign="top" align="right">
-                    <strong style="margin-right:3px">Promo Code: ${
-                      order.promo ? order.promo.promo_code.toUpperCase() : ""
-                    }</strong>
-                  </div>
-                  <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right"><strong
-                      style="margin-right:3px">Order Note: </strong> ${order.order_note ? order.order_note : ""}</div>
                   ${
-                    order.production_note
+                    order.promo
+                      ? `<div style="padding:5px;vertical-align:top;text-align:left;display:flex" valign="top" align="right">
+                    <strong style="margin-right:3px">Promo Code: ${order.promo.promo_code.toUpperCase()}</strong>
+                  </div>`
+                      : ""
+                  }
+                  ${
+                    order.order_note
                       ? `<div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right"><strong
-                      style="margin-right:3px">&#x274F; </strong> </div>`
+                      style="margin-right:3px">Order Note: </strong> ${order.order_note}</div>`
                       : ""
                   }
                   ${
@@ -180,131 +181,182 @@ export default ({ order, isSponsor }) => {
                           <table style="width:100%;line-height:inherit;text-align:left;font-size:25px" width="100%"
                             align="left">
                             ${
-                              !order.promo
+                              !order.promo && !hasActiveSale(order.orderItems) && !order.giftCards?.length
                                 ? `<tr>
-                              <td valign="top">
-                                <div style="padding:5px;vertical-align:top;text-align:left;display:flex;color:black"
-                                  valign="top" align="right">Subtotal:</div>
-
-                              </td>
-                              <td style="text-align:right; margin-right:3px;" valign="top" align="right">
-                                <div style="padding:5px;vertical-align:top;text-align:right;color:black" valign="top"
-                                  align="right">$${
-                                    order.orderItems.reduce((a, c) => a + c.sale?.price * c.quantity, 0) === 0
-                                      ? order.orderItems.reduce((a, c) => a + c.price * c.quantity, 0).toFixed(2)
-                                      : order.orderItems.reduce((a, c) => a + c.sale?.price * c.quantity, 0).toFixed(2)
-                                  }
-                                </div>
-                              </td>
-                            </tr>`
-                                : ""
-                            }
-                            ${
-                              order.promo
-                                ? `<tr>
-                              <td valign="top">
-                                <del style="color:red">
-                                  <div style="padding:5px;vertical-align:top;text-align:left;display:flex;color:black"
-                                    valign="top" align="right">Subtotal:</div>
-                                </del>
-
-                              </td>
-                              <td style="text-align:right; margin-right:3px;" valign="top" align="right">
-                                <del style="color:red">
-                                  <div style="padding:5px;vertical-align:top;text-align:right;color:black" valign="top"
-                                    align="right">$${
-                                      order.orderItems.reduce((a, c) => a + c.sale?.price * c.quantity, 0) === 0
-                                        ? order.orderItems.reduce((a, c) => a + c.price * c.quantity, 0).toFixed(2)
-                                        : order.orderItems
-                                            .reduce((a, c) => a + c.sale?.price * c.quantity, 0)
-                                            .toFixed(2)
-                                    }
-                                  </div>
-                                </del>
-                              </td>
-                            </tr>`
-                                : ""
-                            }
-                            ${
-                              order.promo
-                                ? `<tr>
-                              <td valign="top">
-                                <div
-                                  style="padding:5px;vertical-align:top;text-align:left;display:flex; margin-right:3px;"
-                                  valign="top" align="right">Discount:</div>
-
-                              </td>
-                              <td style="text-align:right; margin-right:3px;" valign="top" align="right">
-                                <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
-                                  <div>-$${(
-                                    order.orderItems.reduce((a, c) => a + c.price * c.quantity, 0) - order.itemsPrice
-                                  ).toFixed(2)}</div>
-                                </div>
-                              </td>
-                            </tr>`
-                                : ""
-                            }
-                            ${
-                              order.promo
-                                ? `<tr>
-                              <td valign="top">
-                                <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
-                                  New Subtotal: </div>
-
-                              </td>
-                              <td style="text-align:right; margin-right:3px;" valign="top" align="right">
-                                <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
-                                  <div>$${
-                                    order.promo
-                                      ? order.itemsPrice.toFixed(2)
-                                      : (order.orderItems &&
-                                        order.orderItems.reduce((a, c) => a + c.sale?.price * c.quantity, 0) === 0
-                                          ? order.orderItems.reduce((a, c) => a + c.price * c.quantity, 0)
-                                          : order.orderItems.reduce((a, c) => a + c.sale?.price * c.quantity, 0)
-                                        ).toFixed(2)
-                                  }</div>
-                                </div>
-                              </td>
-                            </tr>`
-                                : ""
+                                  <td valign="top">
+                                    <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
+                                      Subtotal:</div>
+                                  </td>
+                                  <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                    <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
+                                      $${getItemsTotal(order.orderItems).toFixed(2)}
+                                    </div>
+                                  </td>
+                                </tr>`
+                                : `<tr>
+                                  <td valign="top">
+                                    <del style="color:red">
+                                      <div style="color:#c5c5c5;padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
+                                        Original Subtotal:</div>
+                                    </del>
+                                  </td>
+                                  <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                    <del style="color:red">
+                                      <div style="color:#c5c5c5;padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
+                                        $${getItemsTotal(order.orderItems).toFixed(2)}
+                                      </div>
+                                    </del>
+                                  </td>
+                                </tr>
+                                ${
+                                  hasActiveSale(order.orderItems)
+                                    ? `<tr>
+                                      <td valign="top">
+                                        <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
+                                          Sale Discount:</div>
+                                      </td>
+                                      <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                        <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
+                                          -$${(getItemsTotal(order.orderItems) - getSaleTotal(order.orderItems)).toFixed(2)}
+                                        </div>
+                                      </td>
+                                    </tr>`
+                                    : ""
+                                }
+                                ${
+                                  order.promo
+                                    ? `<tr>
+                                      <td valign="top">
+                                        <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
+                                          Promo Discount:</div>
+                                      </td>
+                                      <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                        <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
+                                          -$${((order.promo.percentage_off * order.itemsPrice) / 100).toFixed(2)}
+                                        </div>
+                                      </td>
+                                    </tr>`
+                                    : ""
+                                }
+                                ${
+                                  order.giftCards && order.giftCards.length > 0
+                                    ? order.giftCards
+                                        .map(
+                                          giftCard => `<tr>
+                                          <td valign="top">
+                                            <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
+                                              Gift Card (${giftCard.code.toUpperCase()}):</div>
+                                          </td>
+                                          <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                            <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
+                                              -$${giftCard.amountUsed.toFixed(2)}
+                                            </div>
+                                          </td>
+                                        </tr>`
+                                        )
+                                        .join("")
+                                    : ""
+                                }
+                                <tr>
+                                  <td valign="top">
+                                    <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
+                                      Final Subtotal:</div>
+                                  </td>
+                                  <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                    <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
+                                      $${order.itemsPrice.toFixed(2)}
+                                    </div>
+                                  </td>
+                                </tr>`
                             }
                             <tr>
                               <td valign="top">
                                 <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
-                                  Tax: </div>
-
+                                  Tax:</div>
                               </td>
                               <td style="text-align:right; margin-right:3px;" valign="top" align="right">
                                 <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
-                                  $${order.taxPrice ? order.taxPrice.toFixed(2) : "0.00"}</div>
+                                  $${order.taxPrice ? order.taxPrice.toFixed(2) : "0.00"}
+                                </div>
                               </td>
                             </tr>
                             <tr>
                               <td valign="top">
                                 <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
-                                  Shipping: </div>
-
+                                  Shipping:</div>
                               </td>
                               <td style="text-align:right; margin-right:3px;" valign="top" align="right">
-                                <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
-                                  $${order.shippingPrice ? order.shippingPrice.toFixed(2) : "0.00"}</div>
+                                ${
+                                  order.shippingPrice === 0 && order.previousShippingPrice > 0
+                                    ? `<del style="color:red">
+                                        <div style="color:#c5c5c5;padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
+                                          $${order.previousShippingPrice.toFixed(2)}
+                                        </div>
+                                      </del>`
+                                    : `<div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
+                                        $${order.shippingPrice.toFixed(2)}
+                                      </div>`
+                                }
                               </td>
                             </tr>
+                            ${
+                              order.shippingPrice === 0 && order.previousShippingPrice > 0
+                                ? `<tr>
+                                  <td valign="top">
+                                    <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
+                                      Shipping Discount:</div>
+                                  </td>
+                                  <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                    <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
+                                      -$${order.previousShippingPrice.toFixed(2)}
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td valign="top">
+                                    <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
+                                      New Shipping:</div>
+                                  </td>
+                                  <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                    <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
+                                      $0.00
+                                    </div>
+                                  </td>
+                                </tr>`
+                                : ""
+                            }
+                            ${
+                              order.serviceFee > 0
+                                ? `<tr>
+                                  <td valign="top">
+                                    <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
+                                      Service Fee (10% for tickets):</div>
+                                  </td>
+                                  <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                    <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
+                                      $${order.serviceFee.toFixed(2)}
+                                    </div>
+                                  </td>
+                                </tr>`
+                                : ""
+                            }
                             ${
                               order.tip > 0
-                                ? ` <tr>
-                              <td valign="top">
-                                <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
-                                  Tip: </div>
-
-                              </td>
-                              <td style="text-align:right; margin-right:3px;" valign="top" align="right">
-                                <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
-                                  $${order.tip ? order.tip.toFixed(2) : "0.00"}</div>
-                              </td>
-                            </tr>`
+                                ? `<tr>
+                                  <td valign="top">
+                                    <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
+                                      Tip:</div>
+                                  </td>
+                                  <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                    <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
+                                      $${order.tip.toFixed(2)}
+                                    </div>
+                                  </td>
+                                </tr>`
                                 : ""
                             }
+                          </table>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -316,7 +368,6 @@ export default ({ order, isSponsor }) => {
                           <table style="width:100%;line-height:inherit;text-align:left;font-size:25px" width="100%"
                             align="left">
                             <tr>
-
                               <td>
                                 <div style="vertical-align:top;width:100%;margin-left:auto;border-top:1px solid black"
                                   valign="top"></div>
@@ -334,19 +385,51 @@ export default ({ order, isSponsor }) => {
                         <td colspan="2" valign="top">
                           <table style="width:100%;line-height:inherit;text-align:left;font-size:25px" width="100%"
                             align="left">
-                            <tr>
-                              <td valign="top">
-                                <div style="padding:5px;vertical-align:top;text-align:left; font-weight:bold"
-                                  valign="top" align="right">
-                                  Total: </div>
-
-                              </td>
-                              <td style="text-align:right; margin-right:3px;" valign="top" align="right">
-                                <div style="padding:5px;vertical-align:top;text-align:right; font-weight:bold;"
-                                  valign="top" align="right">
-                                  $${order.totalPrice ? order.totalPrice.toFixed(2) : "0.00"}</div>
-                              </td>
-                            </tr>
+                            ${
+                              hasActiveSale(order.orderItems) || order.promo
+                                ? `<tr>
+                                  <td valign="top">
+                                    <del style="color:red">
+                                      <div style="color:#c5c5c5;padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
+                                        Original Order Total:</div>
+                                    </del>
+                                  </td>
+                                  <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                    <del style="color:red">
+                                      <div style="color:#c5c5c5;padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
+                                        $${(
+                                          getItemsTotal(order.orderItems) +
+                                          order.taxPrice +
+                                          order.shippingPrice +
+                                          (order.serviceFee || 0)
+                                        ).toFixed(2)}
+                                      </div>
+                                    </del>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td valign="top">
+                                    <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
+                                      Final Order Total:</div>
+                                  </td>
+                                  <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                    <div style="padding:5px;vertical-align:top;text-align:right;font-weight:bold;font-size:30px" valign="top" align="right">
+                                      $${order.totalPrice.toFixed(2)}
+                                    </div>
+                                  </td>
+                                </tr>`
+                                : `<tr>
+                                  <td valign="top">
+                                    <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
+                                      Order Total:</div>
+                                  </td>
+                                  <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                    <div style="padding:5px;vertical-align:top;text-align:right;font-weight:bold;font-size:30px" valign="top" align="right">
+                                      $${order.totalPrice.toFixed(2)}
+                                    </div>
+                                  </td>
+                                </tr>`
+                            }
                           </table>
                         </td>
                       </tr>
@@ -354,7 +437,6 @@ export default ({ order, isSponsor }) => {
                   </table>
                 </td>
               </tr>
-
             </table>
           </td>
         </tr>
