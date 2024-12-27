@@ -360,7 +360,6 @@ const placeOrder = createSlice({
       if (validGiftCard) {
         const eligibleTotal = state.itemsPrice;
         const giftCardResult = applyGiftCard(state, eligibleTotal, validGiftCard);
-        console.log({ giftCardResult });
         const giftCardWithAmount = {
           ...validGiftCard,
           amount_used: giftCardResult.amount_used,

@@ -182,7 +182,6 @@ export const applyFreeShipping = (state, validPromo) => {
   state.activePromoCodeIndicator = `${validPromo.promo_code.toUpperCase()} Free Shipping`;
 };
 export const applyGiftCard = (state, eligibleTotal, validGiftCard) => {
-  console.log({ eligibleTotal, validGiftCard });
   // Calculate total order cost including shipping
   const totalOrderCost = eligibleTotal + state.shippingPrice;
   const amountRemaining = validGiftCard.amount_remaining || validGiftCard.currentBalance;
@@ -218,10 +217,6 @@ export const applyGiftCard = (state, eligibleTotal, validGiftCard) => {
 
   // Return the amount used and new remaining balance
 
-  console.log({
-    amount_used: discount,
-    amount_remaining: Math.max(0, amountRemaining - discount),
-  });
   return {
     amount_used: discount,
     amount_remaining: Math.max(0, amountRemaining - discount),
