@@ -1,11 +1,9 @@
-import React from "react";
 import GLCartItem from "../../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 import { useSelector } from "react-redux";
 import { determineCartTotal, formatPrice } from "../../../utils/helper_functions";
 
 import { getHasPreOrderItems, hasActiveSaleItems } from "../placeOrderHelpers";
 import ShippingPrice from "./ShippingPrice";
-import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import useTheme from "@mui/material/styles/useTheme";
@@ -19,7 +17,6 @@ const OrderSummaryStep = () => {
 
   const placeOrder = useSelector(state => state.placeOrder);
   const {
-    activePromoCodeIndicator,
     loading,
     shippingPrice,
     previousShippingPrice,
@@ -34,6 +31,8 @@ const OrderSummaryStep = () => {
     splitOrder,
     show_payment,
     payment_completed,
+    active_promo_codes,
+    active_gift_cards,
   } = placeOrder;
 
   const hasPreOrderItems = getHasPreOrderItems(cartItems);
@@ -52,6 +51,7 @@ const OrderSummaryStep = () => {
   const saleTotal = determineCartTotal(cartItems, current_user.isWholesaler);
 
   const hasSaleItems = hasActiveSaleItems(cartItems);
+  const hasActiveDiscounts = hasSaleItems || active_promo_codes.length > 0 || active_gift_cards.length > 0;
 
   return (
     <div className="place_order-action">
@@ -95,7 +95,7 @@ const OrderSummaryStep = () => {
           </ul>
         </li>
 
-        {!activePromoCodeIndicator && !hasSaleItems && (
+        {!hasActiveDiscounts && (
           <li>
             <div>{"Subtotal"}</div>
             <div>
@@ -105,7 +105,7 @@ const OrderSummaryStep = () => {
           </li>
         )}
 
-        {(hasSaleItems || activePromoCodeIndicator) && (
+        {hasActiveDiscounts && (
           <>
             <li>
               <del style={{ color: "red" }}>
@@ -129,15 +129,26 @@ const OrderSummaryStep = () => {
                 </div>
               </li>
             )}
-            {activePromoCodeIndicator && (
-              <li>
-                <div>{"Promo Discount"}</div>
+            {active_promo_codes.map((promoCode, index) => (
+              <li key={index}>
+                <div>{`${promoCode.code.toUpperCase()} Discount`}</div>
                 <div>
                   {"-$"}
-                  {(saleTotal - itemsPrice).toFixed(2)}
+                  {promoCode.amount_off
+                    ? promoCode.amount_off.toFixed(2)
+                    : ((promoCode.percentage_off / 100) * saleTotal).toFixed(2)}
                 </div>
               </li>
-            )}
+            ))}
+            {active_gift_cards.map((giftCard, index) => (
+              <li key={index}>
+                <div>{`Gift Card (${giftCard.code})`}</div>
+                <div>
+                  {"-$"}
+                  {giftCard.amount_used.toFixed(2)}
+                </div>
+              </li>
+            ))}
             <li>
               <div>{"Final Subtotal"}</div>
               <div>
@@ -151,7 +162,9 @@ const OrderSummaryStep = () => {
         <li>
           <div>{"Tax"}</div>
           <div>
-            {!loading && shipping && shipping.hasOwnProperty("first_name") ? `$${taxPrice.toFixed(2)}` : "------"}
+            {!loading && shipping && Object.prototype.hasOwnProperty.call(shipping, "first_name")
+              ? `$${taxPrice.toFixed(2)}`
+              : "------"}
           </div>
         </li>
         {splitOrder ? (
@@ -189,9 +202,12 @@ const OrderSummaryStep = () => {
             </div>
           </li>
         )}
-        {!loading && shipping && shipping.hasOwnProperty("first_name") && (show_payment || payment_completed) ? (
+        {!loading &&
+        shipping &&
+        Object.prototype.hasOwnProperty.call(shipping, "first_name") &&
+        (show_payment || payment_completed) ? (
           <>
-            {hasSaleItems || activePromoCodeIndicator ? (
+            {hasActiveDiscounts ? (
               <>
                 <li>
                   <del style={{ color: "red" }}>
