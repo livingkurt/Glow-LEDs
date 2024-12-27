@@ -168,4 +168,31 @@ export default {
       });
     }
   },
+  affiliate_payout_payments_c: async (req, res) => {
+    const { earnings, stripeConnectId, description } = req.body;
+
+    try {
+      await stripe.transfers.create({
+        amount: earnings,
+        currency: "usd",
+        destination: stripeConnectId,
+        description,
+      });
+
+      res.status(200).send({
+        message: "Manual payout completed successfully",
+        details: {
+          amount: earnings,
+          destination: stripeConnectId,
+          description,
+        },
+      });
+    } catch (error) {
+      res.status(500).send({
+        error,
+        message: error.message,
+        solution: "Please check Stripe dashboard and ensure account is properly configured",
+      });
+    }
+  },
 };

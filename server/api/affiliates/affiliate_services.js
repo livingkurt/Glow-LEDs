@@ -313,7 +313,7 @@ export default {
       };
 
       // Process each affiliate
-      await affiliates.reduce(async (promise, affiliate) => {
+      await [affiliates.find(affiliate => affiliate.artist_name === "Sponsor")].reduce(async (promise, affiliate) => {
         await promise;
 
         try {

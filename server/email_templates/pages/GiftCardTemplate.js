@@ -1,4 +1,4 @@
-export default (gift_cards, order_id) => {
+export default (gift_cards, order_id, affiliate, level, monthlyTasks, isSponsorReward = false) => {
   return `
   <table style="width:100%;border-spacing:0; padding: 10px;">
     <tr>
@@ -8,13 +8,16 @@ export default (gift_cards, order_id) => {
             <tr>
               <td style="font-family:helvetica;color:white">
                 <h1 style="text-align:center;font-family:helvetica;width:100%;margin:10px auto;line-height:50px;color:#333333;font-size:30px; padding-bottom: 7px;">
-                  Your Glow LEDs Gift Card Purchase
+                  ${isSponsorReward ? "Your Glow LEDs Gift Card Reward" : "Your Glow LEDs Gift Card Purchase"}
                 </h1>
               </td>
             </tr>
           </table>
 
-          <table style="max-width:560px;width:100%;text-align:left;border-spacing:0; padding: 10px;">
+          ${
+            isSponsorReward
+              ? ""
+              : `<table style="max-width:560px;width:100%;text-align:left;border-spacing:0; padding: 10px;">
             <tbody>
               <tr>
                 <td style="font-family:helvetica">
@@ -32,6 +35,31 @@ export default (gift_cards, order_id) => {
               </tr>
             </tbody>
           </table>
+          `
+          }
+${
+  isSponsorReward
+    ? `<table style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: #585858; border-radius: 20px; padding:15px; margin-bottom: 20px;">
+            <tbody>
+              <tr>
+                <td style="font-family:helvetica">
+                  <h3 style="color:white;font-size:25px;margin:0 0 15px 0;">Congratulations ${affiliate.artist_name}</h3>
+                  <p style="color:white;line-height:1.6;font-size:14px;margin:0;">
+                    You've earned a $${gift_cards[0].initialBalance.toFixed(2)} gift card for achieving ${level} Level status this month!
+                  </p>
+                  <p style="color:white;line-height:1.6;font-size:14px;margin:0;">
+                    Your completed ${monthlyTasks.length} tasks (${monthlyTasks.reduce((sum, task) => sum + task.points, 0)} points total):
+                  </p>
+                  <ul style="color:white;line-height:1.6;font-size:16px;margin:0;padding-left:20px;">
+                    ${monthlyTasks.map(task => `<li>${task.taskName} (${task.points} points)</li>`).join("")}
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          `
+    : ""
+}
 
           ${gift_cards
             .map(
@@ -41,17 +69,17 @@ export default (gift_cards, order_id) => {
                 <tr>
                   <td style="font-family:helvetica">
                     <h2 style="color:white;text-align:center;font-size:25px;margin:10px 0;">
-                      $${gift_card.initialBalance.toFixed(2)} Gift Card${gift_card.quantity > 1 ? "s" : ""}
+                      $${gift_card?.initialBalance.toFixed(2)} Gift Card${gift_card?.quantity > 1 ? "s" : ""}
                     </h2>
 
-                    ${Array(gift_card.quantity)
+                    ${Array(gift_card?.quantity)
                       .fill()
                       .map(
                         (_, index) => `
                       <div style="background: #4c4f60; padding: 15px; border-radius: 10px; margin: 15px 0; text-align: center;">
                         ${
                           gift_card?.display_image_object?.link
-                            ? `<img src="${gift_card.display_image_object.link}" alt="Gift Card" style="max-width: 200px; margin-bottom: 15px; border-radius: 8px;">`
+                            ? `<img src="${gift_card?.display_image_object?.link}" alt="Gift Card" style="max-width: 200px; margin-bottom: 15px; border-radius: 8px;">`
                             : ""
                         }
                         <div style="font-size: 16px; color: white; margin-bottom: 10px; font-weight: bold;">

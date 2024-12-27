@@ -761,23 +761,3 @@ export default {
     return order.shipping.email;
   },
 };
-
-export const sendGiftCardEmail = async ({ email, name, giftCardCode, amount, level, taskPoints, completedTasks }) => {
-  const subject = `Your Glow LEDs ${level} Level Gift Card Reward`;
-  const html = `
-    <h1>Congratulations ${name}!</h1>
-    <p>You've earned a $${amount} gift card for achieving ${level} Level status this month!</p>
-    <p>Your completed tasks (${taskPoints} points total):</p>
-    <p>${completedTasks}</p>
-    <p>Your gift card code: <strong>${giftCardCode}</strong></p>
-    <p>You can use this code at checkout on our website.</p>
-    <p>Thank you for being an amazing sponsor!</p>
-  `;
-
-  await sendEmail({
-    to: email,
-    subject,
-    html,
-  });
-  return email;
-};
