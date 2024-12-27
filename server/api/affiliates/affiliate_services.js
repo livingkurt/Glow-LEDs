@@ -86,8 +86,22 @@ export default {
         sponsor: ["only_sponsor"],
         rave_mob: ["only_rave_mob"],
       };
-
-      return { availableFilters };
+      console.log({ availableFilters });
+      const booleanFilters = {
+        promoter: {
+          label: "Promoter",
+        },
+        sponsor: {
+          label: "Sponsor",
+        },
+        sponsor_caption: {
+          label: "Sponsor Caption",
+        },
+        rave_mob: {
+          label: "Rave Mob",
+        },
+      };
+      return { availableFilters, booleanFilters };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

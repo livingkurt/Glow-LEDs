@@ -85,6 +85,7 @@ export const normalizeAffiliateFilters = input => {
           output.sponsor = sponsor;
         }
         break;
+
       case "rave_mob":
         for (const rave_mob of input.rave_mob) {
           output.rave_mob = rave_mob;
@@ -95,6 +96,18 @@ export const normalizeAffiliateFilters = input => {
     }
   });
 
+  if (input.promoter && input.promoter.includes("only_promoter")) {
+    output.promoter = true;
+  }
+  if (input.sponsor && input.sponsor.includes("only_sponsor")) {
+    output.sponsor = true;
+  }
+  if (input.sponsor_caption && input.sponsor_caption.includes("only_sponsor_caption")) {
+    output.sponsor_caption = true;
+  }
+  if (input.rave_mob && input.rave_mob.includes("only_rave_mob")) {
+    output.rave_mob = true;
+  }
   return output;
 };
 
