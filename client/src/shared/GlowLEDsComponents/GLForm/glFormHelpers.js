@@ -150,6 +150,16 @@ export const affiliateField = ({ affiliates, ...otherProps }) => {
     ...otherProps,
   };
 };
+export const promoField = ({ promos, ...otherProps }) => {
+  return {
+    type: "autocomplete_single",
+    label: "Promo",
+    options: promos,
+    labelProp: "promo_code",
+    getOptionLabel: option => `${option?.promo_code?.toUpperCase()}`,
+    ...otherProps,
+  };
+};
 
 export const tagField = ({ tags, ...otherProps }) => {
   return {

@@ -12,14 +12,14 @@ export async function up() {
     if (!order.promo_code) continue;
 
     // Find corresponding promo document
-    const promo = await Promo.findOne({ promo_code: order.promo_code });
+    const promo = await Promo.findOne({ promo_code: order.promo_code.toLowerCase() });
 
     if (promo) {
       // Update order to reference promo document
       order.promo = promo._id;
       await order.save();
     } else {
-      console.log(`Warning: Could not find promo with code ${order.promo_code} for order ${order._id}`);
+      console.log(`Warning: Could not find promo with code ${order.promo_code.toLowerCase()} for order ${order._id}`);
     }
   }
 }

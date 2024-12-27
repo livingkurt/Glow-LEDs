@@ -1,4 +1,4 @@
-import { userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
+import { promoField, userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 import { humanize, toTitleCase } from "../../../utils/helper_functions";
 import { sharedItemSchema } from "../../../utils/helpers/universal_helpers";
 
@@ -167,15 +167,7 @@ export const orderFormFields = ({ users, products, promos, allShipping, parcels,
         return "";
       },
     },
-    promo: {
-      type: "autocomplete_single",
-      label: "Promo",
-      options: promos,
-      getOptionLabel: option => option.promo.promo_code,
-      isOptionEqualToValue: option => option,
-      labelProp: "promo",
-      valueAttribute: "promo",
-    },
+    promo: promoField({ promos }),
     promo_code: {
       type: "autocomplete_single",
       label: "Promp Code",

@@ -44,6 +44,8 @@ const EditOrderModal = () => {
   const { data: users, isLoading: usersLoading } = useUsersQuery();
   const { data: promos, isLoading: promosLoading } = usePromosQuery();
 
+  console.log({ promos, order });
+
   const formFields = orderFormFields({
     users: usersLoading ? [] : users,
     products: productsLoading ? [] : products,
