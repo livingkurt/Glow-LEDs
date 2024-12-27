@@ -84,6 +84,7 @@ const StripeCheckout = () => {
               order_note,
               production_note,
               tip,
+              promo: active_promo_codes.length > 0 ? active_promo_codes[0] : null,
               promo_code: active_promo_codes.length > 0 ? active_promo_codes[0].promo_code : null,
               giftCards: active_gift_cards.map(card => ({
                 code: card.code,

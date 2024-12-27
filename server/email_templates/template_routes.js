@@ -112,30 +112,29 @@ router.get("/affiliate_onboard", async (req, res) => {
   res.send(App({ body: AffiliateOnboardingTemplate(data) }));
 });
 router.get("/code_used", async (req, res) => {
-  const promo_code = "cosmo";
-  const date = new Date();
-  const monthNumber = date.getMonth();
-  const year = date.getFullYear();
-  const promo = await promo_db.findBy_promos_db({ promo_code, deleted: false });
-  const affiliate = await affiliate_db.findBy_affiliates_db({ public_code: promo?._id, deleted: false });
-  const stats = await order_services.affiliate_code_usage_orders_s(
-    { promo_code },
-    {
-      month: months[monthNumber].toLowerCase(),
-      year,
-    }
-  );
-
-  res.send(
-    App({
-      body: CodeUsedTemplate({
-        affiliate,
-        number_of_uses: stats.number_of_uses,
-        earnings: affiliate?.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,
-      }),
-      title: "Welcome to the Team!",
-    })
-  );
+  // const promo_code = "cosmo";
+  // const date = new Date();
+  // const monthNumber = date.getMonth();
+  // const year = date.getFullYear();
+  // const promo = await promo_db.findBy_promos_db({ promo_code, deleted: false });
+  // const affiliate = await affiliate_db.findBy_affiliates_db({ public_code: promo?._id, deleted: false });
+  // const stats = await order_services.affiliate_code_usage_orders_s(
+  //   { promo_code },
+  //   {
+  //     month: months[monthNumber].toLowerCase(),
+  //     year,
+  //   }
+  // );
+  // res.send(
+  //   App({
+  //     body: CodeUsedTemplate({
+  //       affiliate,
+  //       number_of_uses: stats.number_of_uses,
+  //       earnings: affiliate?.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1,
+  //     }),
+  //     title: "Welcome to the Team!",
+  //   })
+  // );
 });
 router.get("/paycheck", async (req, res) => {
   const paycheckDocument = await paycheck_db.findById_paychecks_db("656bc32d9701b7f4b9b9bd43");

@@ -260,7 +260,7 @@ export default ({ email, order }) => {
                                 <table style="width:100%;border-spacing:0;margin-top:20px">
                                   <tbody>
                                     ${
-                                      !order.promo_code && !hasActiveSale(order.orderItems) && !order.giftCards?.length
+                                      !order.promoorde && !hasActiveSale(order.orderItems) && !order.giftCards?.length
                                         ? `
                                         <tr>
                                           <td style="font-family:helvetica;padding:5px 0">
@@ -315,7 +315,7 @@ export default ({ email, order }) => {
                                             : ""
                                         }
                                         ${
-                                          order.promo_code
+                                          order.promo
                                             ? `
                                           <tr>
                                             <td style="font-family:helvetica;padding:5px 0">
@@ -325,14 +325,14 @@ export default ({ email, order }) => {
                                                   <img src="https://images2.imgbox.com/a1/63/ptqm33q2_o.png"
                                                     style="height:16px;margin-right:10px" alt="tag_logo" />
                                                   <span style="font-size:14px;line-height:1.1;margin-left:-4px">
-                                                    ${order.promo_code.toUpperCase()}
+                                                    ${order.promo.promo_code.toUpperCase()}
                                                   </span>
                                                 </span>
                                               </p>
                                             </td>
                                             <td style="font-family:helvetica;padding:5px 0;text-align:right">
                                               <strong style="font-size:16px;color:white">-$${(
-                                                (10 * order.itemsPrice) /
+                                                (order.promo.percentage_off * order.itemsPrice) /
                                                 100
                                               ).toFixed(2)}</strong>
                                             </td>
@@ -469,7 +469,7 @@ export default ({ email, order }) => {
                             ? `<table style="width:100%;border-spacing:0;margin-top:20px;border-top-width:2px;border-top-color:white;border-top-style:solid">
                                 <tbody>
                                   ${
-                                    hasActiveSale(order.orderItems) || order.promo_code
+                                    hasActiveSale(order.orderItems) || order.promo
                                       ? `
                                    <tr>
                                       <td style="font-family:helvetica;padding:20px 0 0">

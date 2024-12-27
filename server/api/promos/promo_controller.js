@@ -132,18 +132,6 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  update_affiliate_codes_promos_c: async (req, res) => {
-    const { params, query } = req;
-    try {
-      const promo = await promo_services.update_affiliate_codes_promos_s(params, query);
-      if (promo) {
-        return res.status(200).send(promo);
-      }
-      return res.status(500).send({ message: "Error Updating Promo" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
 
   remove_promos_c: async (req, res) => {
     const { params } = req;

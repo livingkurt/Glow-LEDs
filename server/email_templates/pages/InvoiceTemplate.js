@@ -90,7 +90,7 @@ export default ({ order, isSponsor }) => {
                         <tr>
                           <td style="font-family:helvetica;width:100%">
                              <div style="font-size:25px;font-weight:600;color:black">
-                              ${item.quantity > 1 ? item.quantity + "x" : ""} ${item.name}
+                              ${item.quantity > 1 ? `${item.quantity}x` : ""} ${item.name}
                               ${item.selectedOptions
                                 .map((option, optionIndex) => {
                                   if (option.name && item.currentOptions[optionIndex]) {
@@ -147,7 +147,7 @@ export default ({ order, isSponsor }) => {
                 <td valign="top" style="width:50%;">
                   <div style="padding:5px;vertical-align:top;text-align:left;display:flex" valign="top" align="right">
                     <strong style="margin-right:3px">Promo Code: ${
-                      order.promo_code ? order.promo_code.toUpperCase() : ""
+                      order.promo ? order.promo.promo_code.toUpperCase() : ""
                     }</strong>
                   </div>
                   <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right"><strong
@@ -180,7 +180,7 @@ export default ({ order, isSponsor }) => {
                           <table style="width:100%;line-height:inherit;text-align:left;font-size:25px" width="100%"
                             align="left">
                             ${
-                              !order.promo_code
+                              !order.promo
                                 ? `<tr>
                               <td valign="top">
                                 <div style="padding:5px;vertical-align:top;text-align:left;display:flex;color:black"
@@ -200,7 +200,7 @@ export default ({ order, isSponsor }) => {
                                 : ""
                             }
                             ${
-                              order.promo_code
+                              order.promo
                                 ? `<tr>
                               <td valign="top">
                                 <del style="color:red">
@@ -226,7 +226,7 @@ export default ({ order, isSponsor }) => {
                                 : ""
                             }
                             ${
-                              order.promo_code
+                              order.promo
                                 ? `<tr>
                               <td valign="top">
                                 <div
@@ -245,7 +245,7 @@ export default ({ order, isSponsor }) => {
                                 : ""
                             }
                             ${
-                              order.promo_code
+                              order.promo
                                 ? `<tr>
                               <td valign="top">
                                 <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
@@ -255,7 +255,7 @@ export default ({ order, isSponsor }) => {
                               <td style="text-align:right; margin-right:3px;" valign="top" align="right">
                                 <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
                                   <div>$${
-                                    order.promo_code
+                                    order.promo
                                       ? order.itemsPrice.toFixed(2)
                                       : (order.orderItems &&
                                         order.orderItems.reduce((a, c) => a + c.sale?.price * c.quantity, 0) === 0

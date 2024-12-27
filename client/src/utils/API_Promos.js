@@ -1,12 +1,6 @@
 import axios from "axios";
 
 const promo_routes = {
-  update_discount: (year, month) => {
-    return axios.put(`/api/promos/update_discount/${year}${month ? "/" + month : ""}`);
-  },
-  // update_promo_code: (private_code_id, percentage_off) => {
-  // 	return axios.put('/api/promos/update_discount', { private_code_id, percentage_off });
-  // },
   get_promo: promo_code => {
     return axios.get("/api/promos/code/" + promo_code);
   },

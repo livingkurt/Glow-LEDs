@@ -17,20 +17,6 @@ const order_routes = {
   monthly_expenses: (date_1, date_2) => {
     return axios.put("/api/expenses/monthly_expenses", { date_1, date_2 });
   },
-  all_affiliate_code_usage_orders_a: arg => {
-    return axios.get(
-      `/api/orders/all_affiliate_code_usage/${arg.year}${arg.month ? "/" + arg.month : ""}${
-        arg.position ? `?position=${arg.position}` : ""
-      }`
-    );
-  },
-  affiliate_code_usage_orders_a: (promo_code, query) => {
-    return axios.get(`/api/orders/affiliate_code_usage/${promo_code}?${create_query(query)}`);
-  },
-  promo_code_usage_orders_a: (year, month, query) => {
-    //
-    return axios.get(`/api/orders/promo_code_usage/${year}${month ? "/" + month : ""}?${create_query(query)}`);
-  },
 };
 
 export default order_routes;
