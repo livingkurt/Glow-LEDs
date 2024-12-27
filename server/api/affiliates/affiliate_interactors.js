@@ -3,11 +3,11 @@ import config from "../../config.js";
 import Stripe from "stripe";
 import paycheck_services from "../paychecks/paycheck_services.js";
 import promo_services from "../promos/promo_services.js";
-import { generateGiftCard, generateGiftCards, getCodeUsage } from "../orders/order_interactors.js";
+import { generateGiftCard, getCodeUsage } from "../orders/order_interactors.js";
 import { determineRevenueTier } from "./affiliate_helpers.js";
 import payment_controller from "../payments/payment_controller.js";
 import { sendEmail } from "../emails/email_interactors.js";
-import GiftCardTemplate from "../../email_templates/pages/GiftCardTemplate.js";
+import AffiliateEarningsTemplate from "../../email_templates/pages/AffiliateEarningsTemplate.js";
 import App from "../../email_templates/App.js";
 
 const stripe = new Stripe(config.STRIPE_KEY, {
@@ -72,7 +72,7 @@ export const sendGiftCardEmail = async ({ email, affiliate, giftCard, level, mon
     to: email,
     subject,
     html: App({
-      body: GiftCardTemplate(giftCardArray, "N/A", affiliate, level, monthlyTasks, true),
+      body: AffiliateEarningsTemplate(giftCardArray, "N/A", affiliate, level, monthlyTasks, true),
       unsubscribe: false,
     }),
     headers: {
