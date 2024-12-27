@@ -346,36 +346,39 @@ export default {
       };
 
       // Process each affiliate
-      await [affiliates.find(affiliate => affiliate.artist_name === "Sponsor")].reduce(async (promise, affiliate) => {
-        await promise;
+      await [affiliates.find(affiliate => affiliate.artist_name === "preaffiliate")].reduce(
+        async (promise, affiliate) => {
+          await promise;
 
-        try {
-          // Add delay between iterations to avoid rate limiting
-          if (results.successful.length > 0) {
-            await new Promise(resolve => setTimeout(resolve, 1000));
-          }
+          try {
+            // Add delay between iterations to avoid rate limiting
+            if (results.successful.length > 0) {
+              await new Promise(resolve => setTimeout(resolve, 1000));
+            }
 
-          const paycheck = await payoutAffiliate(affiliate, start_date, end_date);
+            const paycheck = await payoutAffiliate(affiliate, start_date, end_date);
 
-          if (paycheck) {
-            results.successful.push({
+            if (paycheck) {
+              results.successful.push({
+                affiliate: affiliate.artist_name,
+                amount: paycheck.amount,
+              });
+            } else {
+              results.skipped.push({
+                affiliate: affiliate.artist_name,
+                reason: "No earnings or no Stripe account",
+              });
+            }
+          } catch (error) {
+            console.error(`Error processing payout for affiliate ${affiliate.artist_name}:`, error);
+            results.failed.push({
               affiliate: affiliate.artist_name,
-              amount: paycheck.amount,
-            });
-          } else {
-            results.skipped.push({
-              affiliate: affiliate.artist_name,
-              reason: "No earnings or no Stripe account",
+              error: error.message,
             });
           }
-        } catch (error) {
-          console.error(`Error processing payout for affiliate ${affiliate.artist_name}:`, error);
-          results.failed.push({
-            affiliate: affiliate.artist_name,
-            error: error.message,
-          });
-        }
-      }, Promise.resolve());
+        },
+        Promise.resolve()
+      );
 
       return {
         message: "Affiliate payouts processed",

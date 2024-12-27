@@ -53,7 +53,14 @@ const determineGiftCardAmount = (taskPoints, revenue, isFullLightshow) => {
   return 0;
 };
 
-export const sendGiftCardEmail = async ({ email, affiliate, giftCard, level, monthlyTasks, promoCodeUsage }) => {
+export const sendAffiliateEarningsEmail = async ({
+  email,
+  affiliate,
+  giftCard,
+  level,
+  monthlyTasks,
+  promoCodeUsage,
+}) => {
   const subject = `Your Glow LEDs Affiliate Earnings`;
 
   // Convert single gift card to array format expected by template
@@ -112,7 +119,7 @@ const processGiftCardRewards = async (affiliate, promoCodeUsage) => {
 
   if (giftCardAmount === 0) {
     // Even if no gift card, still send monthly stats email
-    await sendGiftCardEmail({
+    await sendAffiliateEarningsEmail({
       email: affiliate.user.email,
       affiliate,
       giftCard: null,
@@ -129,7 +136,7 @@ const processGiftCardRewards = async (affiliate, promoCodeUsage) => {
     amount: giftCardAmount,
   });
 
-  await sendGiftCardEmail({
+  await sendAffiliateEarningsEmail({
     email: affiliate.user.email,
     affiliate,
     giftCard,
