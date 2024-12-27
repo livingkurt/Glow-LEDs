@@ -260,7 +260,7 @@ export default ({ email, order }) => {
                                 <table style="width:100%;border-spacing:0;margin-top:20px">
                                   <tbody>
                                     ${
-                                      !order.promoorde && !hasActiveSale(order.orderItems) && !order.giftCards?.length
+                                      !order.promo && !hasActiveSale(order.orderItems) && !order.giftCards?.length
                                         ? `
                                         <tr>
                                           <td style="font-family:helvetica;padding:5px 0">
