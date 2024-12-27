@@ -189,7 +189,7 @@ export const getCodeUsage = async ({ promo_code, start_date, end_date, sponsor, 
       deleted: false,
       status: { $nin: ["unpaid", "canceled"] },
       createdAt: { $gte: new Date(start_date), $lte: new Date(end_date) },
-      promo_code: new RegExp(`^${promo_code}$`, "i"), // Adjusted to match the entire string
+      promo_code: new RegExp(`^${promo_code}$`, "i"), // Match exact promo code
     };
 
     let earningsMultiplier = 0.1;

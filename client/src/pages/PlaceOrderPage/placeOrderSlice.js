@@ -298,7 +298,7 @@ const placeOrder = createSlice({
       const { items_price, tax_rate, previousShippingPrice, shipping, code } = payload;
 
       // Remove specific code from active lists
-      state.active_promo_codes = state.active_promo_codes.filter(pc => pc.code !== code);
+      state.active_promo_codes = state.active_promo_codes.filter(pc => pc.promo_code !== code);
       state.active_gift_cards = state.active_gift_cards.filter(gc => gc.code !== code);
 
       // Recalculate totals by reapplying all remaining codes

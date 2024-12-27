@@ -32,6 +32,7 @@ import { getFilteredData } from "../api_helpers.js";
 import SalesTax from "sales-tax";
 import affiliate_db from "../affiliates/affiliate_db.js";
 import { useGiftCard } from "../gift_cards/gift_card_interactors.js";
+import { determineRevenueTier } from "../affiliates/affiliate_helpers.js";
 
 SalesTax.setTaxOriginCountry("US"); // Set this to your business's country code
 
@@ -337,6 +338,7 @@ export default {
         await sendCodeUsedEmail(order.promo_code);
       }
 
+      // Handle gift cards
       if (order.giftCards && order.giftCards.length > 0) {
         await Promise.all(
           order.giftCards.map(async giftCard => {
@@ -486,7 +488,7 @@ export default {
         filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },
-          "promoCodes.code": params.promo_code,
+          promo_code: params.promo_code,
           createdAt: {
             $gte: new Date(start_date),
             $lte: new Date(end_date),
@@ -498,18 +500,14 @@ export default {
         filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },
-          "promoCodes.code": params.promo_code,
+          promo_code: params.promo_code,
           createdAt: {
             $gte: new Date(start_date),
             $lte: new Date(end_date),
           },
         };
       } else {
-        filter = {
-          deleted: false,
-          "promoCodes.code": params.promo_code,
-          status: { $nin: ["unpaid", "canceled"] },
-        };
+        filter = { deleted: false, promo_code: params.promo_code, status: { $nin: ["unpaid", "canceled"] } };
       }
 
       const limit = "0";
@@ -517,11 +515,12 @@ export default {
 
       const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
 
-      const number_of_uses = orders.filter(order =>
-        order.promoCodes.some(pc => pc.code.toLowerCase() === params.promo_code.toLowerCase())
-      ).length;
+      const number_of_uses = orders
+        .filter(order => order.promo_code)
+        .filter(order => order.promo_code.toLowerCase() === params.promo_code.toLowerCase()).length;
       const revenue = orders
-        .filter(order => order.promoCodes.some(pc => pc.code.toLowerCase() === params.promo_code.toLowerCase()))
+        .filter(order => order.promo_code)
+        .filter(order => order.promo_code.toLowerCase() === params.promo_code.toLowerCase())
         .reduce(
           (a, order) =>
             a +

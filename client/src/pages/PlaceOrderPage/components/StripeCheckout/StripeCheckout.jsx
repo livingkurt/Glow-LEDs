@@ -22,7 +22,6 @@ const StripeCheckout = () => {
     create_account,
     new_password,
     shippingPrice,
-    promo_code,
     itemsPrice,
     taxPrice,
     taxRate,
@@ -36,6 +35,7 @@ const StripeCheckout = () => {
     preOrderShippingRate,
     nonPreOrderShippingRate,
     active_gift_cards,
+    active_promo_codes,
   } = placeOrder;
 
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -62,7 +62,6 @@ const StripeCheckout = () => {
         dispatch(showError({ message: error.message }));
         return;
       }
-
       if (cartItems.length > 0) {
         dispatch(
           API.placeOrder({
@@ -85,7 +84,7 @@ const StripeCheckout = () => {
               order_note,
               production_note,
               tip,
-              promo_code: promo_code ? promo_code : null,
+              promo_code: active_promo_codes.length > 0 ? active_promo_codes[0].promo_code : null,
               giftCards: active_gift_cards.map(card => ({
                 code: card.code,
                 amountUsed: card.amount_used,
