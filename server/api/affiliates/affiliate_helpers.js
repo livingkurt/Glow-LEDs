@@ -71,7 +71,19 @@ export const normalizeAffiliateSearch = query => {
 };
 
 export const determineRevenueTier = (affiliate, revenue) => {
-  if (affiliate.promoter) {
+  if (affiliate.sponsor) {
+    if (revenue < 150) {
+      return 30;
+    } else if (revenue >= 150 && revenue < 300) {
+      return 35;
+    } else if (revenue >= 300 && revenue < 500) {
+      return 40;
+    } else if (revenue >= 500 && revenue < 750) {
+      return 50;
+    } else if (revenue >= 750) {
+      return 60;
+    }
+  } else if (affiliate.promoter) {
     if (revenue < 100) {
       return 10;
     } else if (revenue >= 100 && revenue < 200) {
@@ -84,18 +96,6 @@ export const determineRevenueTier = (affiliate, revenue) => {
       return 35;
     } else if (revenue >= 500) {
       return 40;
-    }
-  } else if (affiliate.sponsor) {
-    if (revenue < 150) {
-      return 30;
-    } else if (revenue >= 150 && revenue < 300) {
-      return 35;
-    } else if (revenue >= 300 && revenue < 500) {
-      return 40;
-    } else if (revenue >= 500 && revenue < 750) {
-      return 50;
-    } else if (revenue >= 750) {
-      return 60;
     }
   }
 };

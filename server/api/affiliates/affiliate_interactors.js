@@ -53,26 +53,32 @@ const determineGiftCardAmount = (taskPoints, revenue, isFullLightshow) => {
   return 0;
 };
 
-export const sendGiftCardEmail = async ({ email, affiliate, giftCard, level, monthlyTasks }) => {
-  console.log({ email, giftCard, level, monthlyTasks, affiliate });
-  const subject = `Your Glow LEDs ${level} Level Gift Card Reward`;
+export const sendGiftCardEmail = async ({ email, affiliate, giftCard, level, monthlyTasks, promoCodeUsage }) => {
+  const subject = `Your Glow LEDs Monthly Earnings`;
 
   // Convert single gift card to array format expected by template
-  const giftCardArray = [
-    {
-      initialBalance: giftCard.initialBalance,
-      quantity: 1,
-      codes: [giftCard.code],
-      display_image_object: giftCard.display_image_object, // if this exists
-    },
-  ];
+  const giftCardArray = giftCard
+    ? [
+        {
+          initialBalance: giftCard.initialBalance,
+          quantity: 1,
+          codes: [giftCard.code],
+          display_image_object: giftCard.display_image_object,
+        },
+      ]
+    : [];
 
   const mailOptionsConfirmation = {
     from: config.DISPLAY_INFO_EMAIL,
     to: email,
     subject,
     html: App({
-      body: AffiliateEarningsTemplate(giftCardArray, "N/A", affiliate, level, monthlyTasks, true),
+      body: AffiliateEarningsTemplate(giftCardArray, "N/A", affiliate, level, monthlyTasks, affiliate.sponsor, {
+        codeUses: promoCodeUsage.number_of_uses,
+        revenue: promoCodeUsage.revenue,
+        earnings: promoCodeUsage.earnings,
+        percentageOff: affiliate.private_code.percentage_off,
+      }),
       unsubscribe: false,
     }),
     headers: {
@@ -85,10 +91,10 @@ export const sendGiftCardEmail = async ({ email, affiliate, giftCard, level, mon
   return email;
 };
 
-const processGiftCardRewards = async (affiliate, currentRevenue) => {
+const processGiftCardRewards = async (affiliate, promoCodeUsage) => {
   console.log("Processing gift card rewards for:", {
     affiliateName: affiliate.artist_name,
-    currentRevenue,
+    currentRevenue: promoCodeUsage.revenue,
   });
 
   const currentDate = new Date();
@@ -99,24 +105,29 @@ const processGiftCardRewards = async (affiliate, currentRevenue) => {
     affiliate.sponsorTasks?.filter(task => task.month === currentMonth && task.year === currentYear && task.verified) ||
     [];
 
-  console.log("Monthly tasks found:", monthlyTasks);
-
   const totalPoints = monthlyTasks.reduce((sum, task) => sum + task.points, 0);
   const isFullLightshow = monthlyTasks.some(task => task.isFullLightshow);
-  console.log("Task summary:", { totalPoints, isFullLightshow });
 
-  const giftCardAmount = determineGiftCardAmount(totalPoints, currentRevenue, isFullLightshow);
-  console.log("Determined gift card amount:", giftCardAmount);
+  const giftCardAmount = determineGiftCardAmount(totalPoints, promoCodeUsage.revenue, isFullLightshow);
 
-  if (giftCardAmount === 0) return null;
+  if (giftCardAmount === 0) {
+    // Even if no gift card, still send monthly stats email
+    await sendGiftCardEmail({
+      email: affiliate.user.email,
+      affiliate,
+      giftCard: null,
+      level: null,
+      monthlyTasks,
+      promoCodeUsage,
+    });
+    return null;
+  }
 
   const level = getLevelName(giftCardAmount);
-  console.log("Generating gift card for level:", level);
 
   const giftCard = await generateGiftCard({
     amount: giftCardAmount,
   });
-  console.log("Generated gift card:", giftCard);
 
   await sendGiftCardEmail({
     email: affiliate.user.email,
@@ -124,8 +135,8 @@ const processGiftCardRewards = async (affiliate, currentRevenue) => {
     giftCard,
     level,
     monthlyTasks,
+    promoCodeUsage,
   });
-  console.log("Sent gift card email to:", affiliate.user.email);
 
   return giftCardAmount;
 };
@@ -201,7 +212,7 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
     // Handle sponsored affiliate rewards
     if (affiliate?.sponsor) {
       console.log("Processing sponsor rewards");
-      const giftCardAmount = await processGiftCardRewards(affiliate, promoCodeUsage.revenue);
+      const giftCardAmount = await processGiftCardRewards(affiliate, promoCodeUsage);
       if (giftCardAmount) {
         description += ` (Including $${giftCardAmount} Gift Card for Task Completion)`;
         console.log("Added gift card to description:", description);
