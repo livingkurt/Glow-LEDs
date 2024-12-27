@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { determine_tracking_link, format_date, toTitleCase } from "../../utils/helper_functions";
+import { determine_tracking_link, determineCartTotal, format_date, toTitleCase } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { Loading } from "../../shared/SharedComponents";
 import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
@@ -14,6 +14,8 @@ import { getItemsTotal } from "../../helpers/sharedHelpers";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
+import OrderSummary from "../PlaceOrderPage/components/OrderSummary";
+import { getHasPreOrderItems, hasActiveSaleItems } from "../PlaceOrderPage/placeOrderHelpers";
 
 const OrderPage = () => {
   const params = useParams();
@@ -39,6 +41,24 @@ const OrderPage = () => {
     }
     return () => (clean = false);
   }, [dispatch, params.id]);
+
+  const hasPreOrderItems = getHasPreOrderItems(order.orderItems);
+
+  // Calculate service fee for tickets
+  const ticketItems = order.orderItems.filter(item => item.itemType === "ticket");
+  const ticketTotal = ticketItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const serviceFee = ticketTotal * 0.1; // 10% service fee
+
+  // Add these new calculations
+  const originalTotal = order.orderItems.reduce((total, item) => {
+    const originalPrice = item.previous_price || item.price;
+    return total + originalPrice * item.quantity;
+  }, 0);
+
+  const saleTotal = determineCartTotal(order.orderItems, current_user.isWholesaler);
+
+  const hasSaleItems = hasActiveSaleItems(order.orderItems);
+  const hasActiveDiscounts = hasSaleItems || order.promo_code || order.active_gift_cards.length > 0;
 
   return (
     <Container maxWidth="lg">
@@ -250,7 +270,34 @@ const OrderPage = () => {
                   )}
                 </div>
               </div>
-              <div
+              <OrderSummary
+                backgroundColor={width > 407 && determineOrderColors(order)}
+                loading={loading}
+                shippingPrice={order.shippingPrice}
+                previousShippingPrice={order.previousShippingPrice}
+                previousNonPreOrderShippingPrice={order.previousNonPreOrderShippingPrice}
+                previousPreOrderShippingPrice={order.previousPreOrderShippingPrice}
+                tip={order.tip}
+                itemsPrice={order.itemsPrice}
+                taxPrice={order.taxPrice}
+                totalPrice={order.totalPrice}
+                preOrderShippingPrice={order.preOrderShippingPrice}
+                nonPreOrderShippingPrice={order.nonPreOrderShippingPrice}
+                splitOrder={order.splitOrder}
+                show_payment={order.show_payment}
+                payment_completed={order.payment_completed}
+                active_promo_codes={order.active_promo_codes}
+                active_gift_cards={order.active_gift_cards}
+                cartItems={order.orderItems}
+                shipping={order.shipping}
+                originalTotal={originalTotal}
+                hasPreOrderItems={hasPreOrderItems}
+                hasSaleItems={hasSaleItems}
+                serviceFee={serviceFee}
+                hasActiveDiscounts={hasActiveDiscounts}
+                saleTotal={saleTotal}
+              />
+              {/* <div
                 className="place_order-action"
                 style={{ backgroundColor: width > 407 && determineOrderColors(order) }}
               >
@@ -409,7 +456,7 @@ const OrderPage = () => {
                     </div>
                   )}
                 </ul>
-              </div>
+              </div> */}
             </div>
           </div>
         )}

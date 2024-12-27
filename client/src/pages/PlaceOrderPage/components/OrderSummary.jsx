@@ -1,54 +1,42 @@
-import React from "react";
+import GLCartItem from "../../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
+import { formatPrice } from "../../../utils/helper_functions";
+
+import ShippingPrice from "./ShippingPrice";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import useTheme from "@mui/material/styles/useTheme";
-import { determineCartTotal, formatPrice } from "../../../utils/helper_functions";
-import ShippingPrice from "./ShippingPrice";
-import GLCartItem from "../../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
-import { determineOrderColors } from "../../OrdersPage/ordersPageHelpers";
 
 const OrderSummary = ({
-  items,
-  shipping,
   loading,
-  itemsPrice,
-  taxPrice,
   shippingPrice,
   previousShippingPrice,
-  totalPrice,
-  tip = 0,
-  hasPreOrderItems,
-  splitOrder,
-  nonPreOrderShippingPrice,
-  preOrderShippingPrice,
   previousNonPreOrderShippingPrice,
   previousPreOrderShippingPrice,
+  tip,
+  itemsPrice,
+  taxPrice,
+  totalPrice,
+  preOrderShippingPrice,
+  nonPreOrderShippingPrice,
+  splitOrder,
   show_payment,
   payment_completed,
-  active_promo_codes = [],
-  active_gift_cards = [],
-  isWholesaler,
+  active_promo_codes,
+  active_gift_cards,
+  cartItems,
+  shipping,
+  originalTotal,
+  hasPreOrderItems,
+  hasSaleItems,
+  serviceFee,
+  saleTotal,
+  hasActiveDiscounts,
   backgroundColor,
 }) => {
   const theme = useTheme();
 
-  // Calculate service fee for tickets
-  const ticketItems = items.filter(item => item.itemType === "ticket");
-  const ticketTotal = ticketItems.reduce((total, item) => total + item.price * item.quantity, 0);
-  const serviceFee = ticketTotal * 0.1; // 10% service fee
-
-  // Calculate original total and discounts
-  const originalTotal = items.reduce((total, item) => {
-    const originalPrice = item.previous_price || item.price;
-    return total + originalPrice * item.quantity;
-  }, 0);
-
-  const saleTotal = determineCartTotal(items, isWholesaler);
-  const hasSaleItems = items.some(item => item.previous_price && item.previous_price > item.price);
-  const hasActiveDiscounts = hasSaleItems || active_promo_codes.length > 0 || active_gift_cards.length > 0;
-
   return (
-    <div className="place_order-action" style={{ backgroundColor: backgroundColor }}>
+    <div className="place_order-action" style={{ backgroundColor }}>
       <ul>
         <li>
           <h4 style={{ marginTop: "0px", marginBottom: "0px" }}>{"Order Summary"}</h4>
@@ -81,10 +69,10 @@ const OrderSummary = ({
                 <div style={{ textAlign: "right" }}>{"Price"}</div>
               </div>
             </li>
-            {items.length === 0 ? (
+            {cartItems.length === 0 ? (
               <div>{"Cart is empty"}</div>
             ) : (
-              items.map((item, index) => <GLCartItem key={index} item={item} index={index} showQuantity={false} />)
+              cartItems.map((item, index) => <GLCartItem key={index} item={item} index={index} showQuantity={false} />)
             )}
           </ul>
         </li>
@@ -216,7 +204,7 @@ const OrderSummary = ({
                   <div>
                     <del style={{ color: "red" }}>
                       <span style={{ color: "#c5c5c5" }}>
-                        {formatPrice(originalTotal + taxPrice + serviceFee + tip)}
+                        {formatPrice(originalTotal + taxPrice + serviceFee + tip + shippingPrice)}
                       </span>
                     </del>
                   </div>
