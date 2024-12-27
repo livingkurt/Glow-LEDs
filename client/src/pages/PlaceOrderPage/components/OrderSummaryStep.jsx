@@ -222,7 +222,7 @@ const OrderSummaryStep = () => {
                   <div>
                     <del style={{ color: "red" }}>
                       <span style={{ color: "#c5c5c5" }}>
-                        {formatPrice(originalTotal + taxPrice + serviceFee + tip)}
+                        {formatPrice(originalTotal + taxPrice + serviceFee + tip + shippingPrice)}
                       </span>
                     </del>
                   </div>

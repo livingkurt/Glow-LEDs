@@ -375,17 +375,11 @@ export default ({ email, order }) => {
                                         <tr>
                                           <td style="font-family:helvetica;padding:5px 0">
                                             <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
-                                              <span style="font-size:16px">Final Order Total</span>
+                                              <span style="font-size:16px">Final Subtotal</span>
                                             </p>
                                           </td>
                                           <td style="font-family:helvetica;padding:5px 0;text-align:right">
-                                            <strong style="font-size:16px;color:white">$${(
-                                              order.itemsPrice +
-                                              order.taxPrice +
-                                              order.shippingPrice +
-                                              (order.serviceFee || 0) +
-                                              (order.tip || 0)
-                                            ).toFixed(2)}</strong>
+                                            <strong style="font-size:16px;color:white">$${order.itemsPrice.toFixed(2)}</strong>
                                           </td>
                                         </tr>
                                         `
@@ -495,9 +489,8 @@ export default ({ email, order }) => {
                                           <strong style="font-size:16px;color:white">$${(
                                             getItemsTotal(order.orderItems) +
                                             order.taxPrice +
-                                            (order.previousShippingPrice || order.shippingPrice) +
-                                            (order.serviceFee || 0) +
-                                            (order.tip || 0)
+                                            order.shippingPrice +
+                                            (order.serviceFee || 0)
                                           ).toFixed(2)}</strong>
                                         </del>
                                       </td>
