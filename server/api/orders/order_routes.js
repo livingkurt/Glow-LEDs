@@ -12,10 +12,7 @@ router.route("/occurrences").get(order_controller.occurrences_orders_c);
 
 router.route("/top_customers").get(order_controller.top_customers_orders_c);
 router.route("/category_occurrences").get(order_controller.category_occurrences_orders_c);
-router.route("/affiliate_code_usage/:promo_code").get(order_controller.affiliate_code_usage_orders_c);
 router.route("/tax_rates").get(order_controller.tax_rates_orders_c);
-router.route("/all_affiliate_code_usage/:year?/:month?").get(order_controller.all_affiliate_code_usage_orders_c);
-router.route("/promo_code_usage/:year?/:month?").get(order_controller.promo_code_usage_orders_c);
 router.route("/code_usage/:promo_code").get(order_controller.code_usage_orders_c);
 router.route("/monthly_code_usage/:promo_code").get(order_controller.monthly_code_usage_orders_c);
 router.route("/:id/invoice").get(order_controller.invoice_orders_c);

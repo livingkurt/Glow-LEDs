@@ -77,9 +77,7 @@ export default {
       console.log("Gift card found:", giftCard);
       if (!giftCard) throw new Error("Invalid or expired gift card");
       return {
-        code: giftCard.code,
-        currentBalance: giftCard.currentBalance,
-        type: giftCard.type,
+        giftCard,
         isValid: true,
       };
     } catch (error) {

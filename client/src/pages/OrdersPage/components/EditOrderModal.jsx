@@ -21,6 +21,7 @@ import {
   usePromosQuery,
   useTicketsQuery,
   useUsersQuery,
+  useGiftCardsQuery,
 } from "../../../api/allRecordsApi";
 import { showConfirm } from "../../../slices/snackbarSlice";
 import Checkbox from "@mui/material/Checkbox";
@@ -43,6 +44,7 @@ const EditOrderModal = () => {
   const { data: tickets, isLoading: ticketsLoading } = useTicketsQuery();
   const { data: users, isLoading: usersLoading } = useUsersQuery();
   const { data: promos, isLoading: promosLoading } = usePromosQuery();
+  const { data: giftCards, isLoading: giftCardsLoading } = useGiftCardsQuery();
 
   const formFields = orderFormFields({
     users: usersLoading ? [] : users,
@@ -53,6 +55,7 @@ const EditOrderModal = () => {
     tags: tagsLoading ? [] : tags,
     events: eventsLoading ? [] : events,
     tickets: ticketsLoading ? [] : tickets,
+    giftCards: giftCardsLoading ? [] : giftCards,
   });
 
   return (
