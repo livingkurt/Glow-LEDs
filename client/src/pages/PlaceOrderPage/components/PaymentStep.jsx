@@ -394,7 +394,7 @@ const PaymentStep = () => {
                           <i className="fas fa-times mr-5px" />
                         </GLButton>
                         <Sell sx={{ mr: 1 }} />
-                        {`Gift Card: $${giftCard.amount_used.toFixed(2)} Applied ($${giftCard.amount_remaining.toFixed(2)} Remaining)`}
+                        {`Gift Card: $${giftCard.amountUsed.toFixed(2)} Applied ($${giftCard.totalOrderCost.toFixed(2)} Remaining)`}
                       </Box>
                     ))}
                   </div>

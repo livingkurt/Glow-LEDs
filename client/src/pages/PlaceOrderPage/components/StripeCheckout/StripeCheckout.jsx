@@ -88,7 +88,7 @@ const StripeCheckout = () => {
               promo_code: active_promo_codes.length > 0 ? active_promo_codes[0].promo_code : null,
               giftCards: active_gift_cards.map(card => ({
                 code: card.code,
-                amountUsed: card.amount_used,
+                amountUsed: card.amountUsed,
                 source: "customer",
                 giftCard: card,
               })),

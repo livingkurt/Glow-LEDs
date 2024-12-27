@@ -184,7 +184,7 @@ export const applyFreeShipping = (state, validPromo) => {
 export const applyGiftCard = (state, eligibleTotal, validGiftCard) => {
   // Calculate total order cost including shipping
   const totalOrderCost = eligibleTotal + state.shippingPrice;
-  const amountRemaining = validGiftCard.amount_remaining || validGiftCard.currentBalance;
+  const amountRemaining = validGiftCard.totalOrderCost || validGiftCard.currentBalance;
 
   // Determine how much of the gift card to use
   const discount = Math.min(amountRemaining, totalOrderCost);
@@ -218,8 +218,8 @@ export const applyGiftCard = (state, eligibleTotal, validGiftCard) => {
   // Return the amount used and new remaining balance
 
   return {
-    amount_used: discount,
-    amount_remaining: Math.max(0, amountRemaining - discount),
+    amountUsed: discount,
+    totalOrderCost: Math.max(0, amountRemaining - discount),
   };
 };
 // Calculate the new total price based on included or excluded products and categories

@@ -1,19 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { determine_tracking_link, format_date, toTitleCase } from "../../utils/helper_functions";
+import { determine_tracking_link, determineCartTotal, format_date, toTitleCase } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { Loading } from "../../shared/SharedComponents";
 import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
-import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
 import * as API from "../../api";
 import { determineOrderColors } from "../OrdersPage/ordersPageHelpers";
 
-import { getItemsTotal } from "../../helpers/sharedHelpers";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
+import OrderSummary from "../PlaceOrderPage/components/OrderSummary";
+import { getHasPreOrderItems, hasActiveSaleItems } from "../PlaceOrderPage/placeOrderHelpers";
+import { Typography } from "@mui/material";
 
 const OrderPage = () => {
   const params = useParams();
@@ -21,10 +22,6 @@ const OrderPage = () => {
   const { width } = useWindowDimensions();
 
   const dispatch = useDispatch();
-
-  const cartPage = useSelector(state => state.carts.cartPage);
-  const { my_cart } = cartPage;
-  const { cartItems } = my_cart;
 
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
@@ -39,6 +36,24 @@ const OrderPage = () => {
     }
     return () => (clean = false);
   }, [dispatch, params.id]);
+
+  const hasPreOrderItems = getHasPreOrderItems(order.orderItems);
+
+  // Calculate service fee for tickets
+  const ticketItems = order.orderItems.filter(item => item.itemType === "ticket");
+  const ticketTotal = ticketItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const serviceFee = ticketTotal * 0.1; // 10% service fee
+
+  // Add these new calculations
+  const originalTotal = order.orderItems.reduce((total, item) => {
+    const originalPrice = item.previous_price || item.price;
+    return total + originalPrice * item.quantity;
+  }, 0);
+
+  const saleTotal = determineCartTotal(order.orderItems, current_user.isWholesaler);
+
+  const hasSaleItems = hasActiveSaleItems(order.orderItems);
+  const hasActiveDiscounts = hasSaleItems || order.promo || order?.giftCards?.length > 0;
 
   return (
     <Container maxWidth="lg">
@@ -83,17 +98,17 @@ const OrderPage = () => {
                   }}
                 >
                   <Box display="flex" alignItems="center" justifyContent="space-between">
-                    <h2>{"Email"}</h2>
+                    <Typography variant="h5">{"Email"}</Typography>
                     <div>{order.shipping.email}</div>
                   </Box>
                   <div className="jc-b w-100per mb-2rem" style={{ borderTop: ".1rem white solid" }} />
                   <Box display="flex" alignItems="center" justifyContent="space-between">
-                    <h2>{"Order Status:"}</h2>
+                    <Typography variant="h5">{"Order Status:"}</Typography>
                     <p>{toTitleCase(order.status)}</p>
                   </Box>
                   <div className="jc-b w-100per mb-2rem" style={{ borderTop: ".1rem white solid" }} />
                   <Box display="flex" alignItems="center" justifyContent="space-between">
-                    <h2>{"Order #:"}</h2>
+                    <Typography variant="h5">{"Order #:"}</Typography>
                     {order._id}
                   </Box>
                 </div>
@@ -112,13 +127,13 @@ const OrderPage = () => {
 
                   <div className="wrap jc-b">
                     <div className="w-100per ">
-                      <h2>{"Shipping"}</h2>
+                      <Typography variant="h5">{"Shipping"}</Typography>
                       <div className="jc-b w-100per mb-2rem" style={{ borderTop: ".1rem white solid" }} />
                       {order.tracking_number &&
                         order.tracking_number.length > 0 &&
                         determine_tracking_link(order.tracking_number) && (
                           <Box display="flex" alignItems="center" justifyContent="space-between">
-                            <h3>{"Tracking #:"}</h3>
+                            <Typography variant="h5">{"Tracking #:"}</Typography>
                             <a
                               href={
                                 order.tracking_url ? order.tracking_url : determine_tracking_link(order.tracking_number)
@@ -138,7 +153,7 @@ const OrderPage = () => {
                       {current_user?.isAdmin && order.return_tracking_number && (
                         <Box display="flex" alignItems="center" justifyContent="space-between">
                           <div>
-                            <h3>{"Return #:"}</h3>
+                            <Typography variant="h5">{"Return #:"}</Typography>
                             <a
                               href={determine_tracking_link(order.return_tracking_number)}
                               target="_blank"
@@ -153,7 +168,7 @@ const OrderPage = () => {
                           </div>
                         </Box>
                       )}
-                      <h3>{"Address"}</h3>
+                      <Typography variant="h5">{"Address"}</Typography>
                       <div className="jc-b wrap w-100per">
                         <div className="paragraph_font lh-25px mb-1rem">
                           <div>
@@ -174,7 +189,7 @@ const OrderPage = () => {
                     </div>
                   </div>
                   <div className="w-100per ">
-                    <h3>{"Speed"}</h3>
+                    <Typography variant="h5">{"Speed"}</Typography>
                     {order.shipping.shipping_rate && (
                       <div className=" w-100per lh-25px">
                         <div className="ai-c jc-b w-100per">
@@ -188,18 +203,18 @@ const OrderPage = () => {
                         <div className="ai-c jc-b w-100per">
                           <div className="mv-0px mr-5px">{"Estimated Processing Time: "}</div>
                           <div className=" mv-0px">
-                            {cartItems
+                            {order.orderItems
                               .filter(item => item.itemType === "product")
                               .some(item => item.processing_time) && (
                               <div>
                                 {Math.max(
-                                  ...cartItems
+                                  ...order.orderItems
                                     .filter(item => item.itemType === "product")
                                     .map(item => item.processing_time[0])
                                 )}{" "}
                                 {"-"}{" "}
                                 {Math.max(
-                                  ...cartItems
+                                  ...order.orderItems
                                     .filter(item => item.itemType === "product")
                                     .map(item => item.processing_time[1])
                                 )}{" "}
@@ -234,7 +249,7 @@ const OrderPage = () => {
                     backgroundColor: width > 407 && determineOrderColors(order),
                   }}
                 >
-                  <h2>{"Payment"}</h2>
+                  <Typography variant="h5">{"Payment"}</Typography>
                   <div style={{ borderTop: ".1rem white solid", width: "100%" }}>
                     <p style={{ marginBottom: "0px" }}>
                       {order.status !== "unpaid" && order.paidAt ? "Paid at " + format_date(order.paidAt) : "Not Paid"}
@@ -250,166 +265,33 @@ const OrderPage = () => {
                   )}
                 </div>
               </div>
-              <div
-                className="place_order-action"
-                style={{ backgroundColor: width > 407 && determineOrderColors(order) }}
-              >
-                <ul>
-                  <li>
-                    <h2 style={{ marginTop: 0 }}>{"Order Summary"}</h2>
-                  </li>
-                  <div
-                    style={{
-                      backgroundColor: width > 407 && determineOrderColors(order),
-                    }}
-                  >
-                    <ul className="cart-list-container mt-0px">
-                      <li>
-                        <div>{"Price"}</div>
-                      </li>
-                      {order.orderItems.length === 0 ? (
-                        <div>{"Cart is empty"}</div>
-                      ) : (
-                        order.orderItems.map((item, index) => (
-                          <GLCartItem key={item._id} item={item} index={index} show_quantity={false} />
-                        ))
-                      )}
-                    </ul>
-                  </div>
-                  {!order.promo && (
-                    <li>
-                      <div>{"Subtotal"}</div>
-                      <div>
-                        {"$"}
-                        {order.itemsPrice && order.itemsPrice.toFixed(2)}
-                      </div>
-                    </li>
-                  )}
-
-                  {order.promo && (
-                    <li>
-                      <del style={{ color: "red" }}>
-                        <div style={{ color: "white" }}>{"Subtotal"}</div>
-                      </del>
-                      <div>
-                        <del style={{ color: "red" }}>
-                          <div style={{ color: "white" }}>
-                            {"$"}
-                            {order.orderItems && getItemsTotal(order.orderItems).toFixed(2)}
-                          </div>
-                        </del>
-                      </div>
-                    </li>
-                  )}
-                  {order.promo && (
-                    <li>
-                      <div>{"Discount"}</div>
-                      <div>
-                        {"-$"}
-                        {(getItemsTotal(order.orderItems) - order.itemsPrice).toFixed(2)}
-                      </div>
-                    </li>
-                  )}
-                  {order.promo && (
-                    <li>
-                      <div>{"New Subtotal"}</div>
-                      <div>
-                        {"$"}
-                        {order.itemsPrice.toFixed(2)}
-                      </div>
-                    </li>
-                  )}
-                  <li>
-                    <div>{"Tax"}</div>
-                    <div>
-                      {"$"}
-                      {order.taxPrice ? order.taxPrice.toFixed(2) : order.taxPrice}
-                    </div>
-                  </li>
-                  <li>
-                    <div>{"Shipping"}</div>
-                    <div>
-                      {"$"}
-                      {order.shippingPrice ? order.shippingPrice.toFixed(2) : order.shippingPrice}
-                    </div>
-                  </li>
-
-                  {order.tip > 0 && (
-                    <li>
-                      <div>{"Tip"}</div>
-                      <div>
-                        {"$"}
-                        {order.tip ? order.tip.toFixed(2) : order.tip}
-                      </div>
-                    </li>
-                  )}
-                  {!order.isRefunded && (
-                    <li>
-                      <div>{"Order Total"}</div>
-                      <div>
-                        {"$"}
-                        {order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}
-                      </div>
-                    </li>
-                  )}
-                  {order.isRefunded && (
-                    <li>
-                      <div>{"Order Total"}</div>
-                      <del style={{ color: "red" }}>
-                        <div style={{ color: "white" }}>
-                          <div>
-                            {"$"}
-                            {order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}
-                          </div>
-                        </div>
-                      </del>
-                    </li>
-                  )}
-                  {order.isRefunded && (
-                    <li>
-                      <div>{"Refund Amount"}</div>
-                      <div>
-                        {"$"}
-                        {(order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}
-                      </div>
-                    </li>
-                  )}
-                  {order.isRefunded && (
-                    <li>
-                      <div>{"New Order Total"}</div>
-                      <div>
-                        {"$"}
-                        {(order.totalPrice - order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}
-                      </div>
-                    </li>
-                  )}
-
-                  {order.promo && (
-                    <div className="">
-                      <div style={{ borderTop: ".1rem white solid" }} className="pt-1rem" htmlFor="promo_code">
-                        {"Promo Code: "}
-                        {order.promo.promo_code}
-                      </div>
-                    </div>
-                  )}
-                  {order.order_note && (
-                    <div className="">
-                      <div style={{ borderTop: ".1rem white solid" }} className="pt-1rem" htmlFor="order_note">
-                        {"Order Note: "}
-                        {order.order_note}
-                      </div>
-                    </div>
-                  )}
-                  {order.production_note && (
-                    <div className="">
-                      <div style={{ borderTop: ".1rem white solid" }} className="pt-1rem" htmlFor="production_note">
-                        {"Production Note: "}
-                        {order.production_note}
-                      </div>
-                    </div>
-                  )}
-                </ul>
-              </div>
+              <OrderSummary
+                backgroundColor={width > 407 && determineOrderColors(order)}
+                loading={loading}
+                shippingPrice={order.shippingPrice}
+                previousShippingPrice={order.previousShippingPrice}
+                previousNonPreOrderShippingPrice={order.previousNonPreOrderShippingPrice}
+                previousPreOrderShippingPrice={order.previousPreOrderShippingPrice}
+                tip={order.tip}
+                itemsPrice={order.itemsPrice}
+                taxPrice={order.taxPrice}
+                totalPrice={order.totalPrice}
+                preOrderShippingPrice={order.preOrderShippingPrice}
+                nonPreOrderShippingPrice={order.nonPreOrderShippingPrice}
+                splitOrder={order.splitOrder}
+                show_payment={true}
+                payment_completed={true}
+                active_promo_codes={[order.promo]}
+                active_gift_cards={order.giftCards}
+                cartItems={order.orderItems}
+                shipping={order.shipping}
+                originalTotal={originalTotal}
+                hasPreOrderItems={hasPreOrderItems}
+                hasSaleItems={hasSaleItems}
+                serviceFee={serviceFee}
+                hasActiveDiscounts={hasActiveDiscounts}
+                saleTotal={saleTotal}
+              />
             </div>
           </div>
         )}
