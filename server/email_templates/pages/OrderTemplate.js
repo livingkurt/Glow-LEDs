@@ -284,18 +284,14 @@ export default ({ email, order }) => {
                                           <td style="font-family:helvetica;padding:5px 0">
                                             <del style="color:red">
                                               <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
-                                                <span style="font-size:16px">Original Order Total</span>
+                                                <span style="font-size:16px">Original Subtotal</span>
                                               </p>
                                             </del>
                                           </td>
                                           <td style="font-family:helvetica;padding:5px 0;text-align:right">
                                             <del style="color:red">
-                                              <strong style="font-size:16px;color:white">$${(
-                                                getItemsTotal(order.orderItems) +
-                                                order.taxPrice +
-                                                (order.previousShippingPrice || order.shippingPrice) +
-                                                (order.serviceFee || 0) +
-                                                (order.tip || 0)
+                                              <strong style="font-size:16px;color:white">$${getItemsTotal(
+                                                order.orderItems
                                               ).toFixed(2)}</strong>
                                             </del>
                                           </td>
@@ -334,14 +330,14 @@ export default ({ email, order }) => {
                                                 </span>
                                               </p>
                                             </td>
+                                            ${console.log({
+                                              giftcardTotal:
+                                                order.giftCards?.reduce((total, card) => total + card.amountUsed, 0) ||
+                                                0,
+                                            })}
                                             <td style="font-family:helvetica;padding:5px 0;text-align:right">
                                               <strong style="font-size:16px;color:white">-$${(
-                                                (10 *
-                                                  (getItemsTotal(order.orderItems) -
-                                                    (order.giftCards?.reduce(
-                                                      (total, card) => total + card.amountUsed,
-                                                      0
-                                                    ) || 0))) /
+                                                (10 * order.itemsPrice) /
                                                 100
                                               ).toFixed(2)}</strong>
                                             </td>
@@ -486,7 +482,7 @@ export default ({ email, order }) => {
                                   ${
                                     hasActiveSale(order.orderItems) || order.promo_code
                                       ? `
-                                    <tr>
+                                   <tr>
                                       <td style="font-family:helvetica;padding:20px 0 0">
                                         <del style="color:red">
                                           <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
