@@ -359,8 +359,15 @@ const placeOrder = createSlice({
 
       if (validGiftCard) {
         const eligibleTotal = state.itemsPrice;
-        state.active_gift_cards.push(validGiftCard);
-        applyGiftCard(state, eligibleTotal, validGiftCard);
+        const giftCardResult = applyGiftCard(state, eligibleTotal, validGiftCard);
+        console.log({ giftCardResult });
+        const giftCardWithAmount = {
+          ...validGiftCard,
+          amount_used: giftCardResult.amount_used,
+          amount_remaining: giftCardResult.amount_remaining,
+          type: "gift_card",
+        };
+        state.active_gift_cards.push(giftCardWithAmount);
       } else if (validPromo) {
         const eligibleTotal = calculateNewItemsPrice({
           cartItems,
@@ -368,7 +375,10 @@ const placeOrder = createSlice({
           isWholesaler: current_user?.isWholesaler,
         });
 
-        state.active_promo_codes.push(validPromo);
+        state.active_promo_codes.push({
+          ...validPromo,
+          type: "promo_code",
+        });
 
         if (validPromo.percentage_off) {
           applyPercentageOff(state, eligibleTotal, validPromo, tax_rate);
@@ -381,6 +391,8 @@ const placeOrder = createSlice({
         }
       }
 
+      // Calculate final total
+      state.totalPrice = state.itemsPrice + state.shippingPrice + state.taxPrice + (state.tip || 0);
       state.show_promo_code_input_box = true;
       state.promo_code = "";
     },
