@@ -10,6 +10,7 @@ router.route("/table").get(affiliate_controller.table_affiliates_c);
 router.route("/:id/generate_sponsor_codes").post(affiliate_controller.generate_sponsor_codes_affiliates_c);
 router.route("/:id/create_product_bundle/:cartId").put(affiliate_controller.create_product_bundle_affiliates_c);
 
+router.route("/filters").get(affiliate_controller.create_filters_affiliates_c);
 router
   .route("/:id")
   .get(affiliate_controller.findById_affiliates_c)

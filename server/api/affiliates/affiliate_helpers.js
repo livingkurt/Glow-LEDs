@@ -70,6 +70,34 @@ export const normalizeAffiliateSearch = query => {
   return search;
 };
 
+export const normalizeAffiliateFilters = input => {
+  console.log({ input });
+  const output = {};
+  Object.keys(input).forEach(key => {
+    switch (key) {
+      case "promoter":
+        for (const promoter of input.promoter) {
+          output.promoter = promoter;
+        }
+        break;
+      case "sponsor":
+        for (const sponsor of input.sponsor) {
+          output.sponsor = sponsor;
+        }
+        break;
+      case "rave_mob":
+        for (const rave_mob of input.rave_mob) {
+          output.rave_mob = rave_mob;
+        }
+        break;
+      default:
+        break;
+    }
+  });
+
+  return output;
+};
+
 export const determineRevenueTier = (affiliate, revenue) => {
   if (affiliate.sponsor) {
     if (revenue < 150) {

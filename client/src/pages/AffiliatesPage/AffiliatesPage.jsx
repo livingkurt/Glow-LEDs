@@ -12,7 +12,6 @@ import * as API from "../../api";
 import PolylineIcon from "@mui/icons-material/Polyline";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 
-import { getAffiliates } from "../../api";
 import { determineColor } from "./affiliateHelpers";
 import { useLocation } from "react-router-dom";
 import { fullName } from "../UsersPage/usersHelpers";
@@ -120,7 +119,8 @@ const AffiliatesPage = () => {
     [dispatch]
   );
 
-  const remoteApi = useCallback(options => getAffiliates(options), []);
+  const remoteApi = useCallback(options => API.getAffiliates(options), []);
+  const remoteFiltersApi = useCallback(options => API.getAffiliateFilters(), []);
 
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
@@ -130,6 +130,7 @@ const AffiliatesPage = () => {
 
       <GLTableV2
         remoteApi={remoteApi}
+        remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
         determineColor={determineColor}
         tableName="Affiliates"

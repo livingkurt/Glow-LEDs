@@ -9,8 +9,6 @@ import store from "../store";
 
 import * as API from ".";
 
-import { handleTokenRefresh } from "./axiosInstance";
-
 export const getAffiliates = async ({ search, sorting, filters, page, pageSize }) => {
   try {
     return await axios.get(`/api/affiliates/table`, {
@@ -25,6 +23,11 @@ export const getAffiliates = async ({ search, sorting, filters, page, pageSize }
   } catch (error) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }
+};
+
+export const getAffiliateFilters = async () => {
+  const { data } = await axios.get(`/api/affiliates/filters`);
+  return data;
 };
 
 export const listAffiliates = createAsyncThunk(

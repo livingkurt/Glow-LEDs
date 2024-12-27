@@ -7,6 +7,7 @@ import {
   createPrivatePromoCode,
   createPublicPromoCode,
   monthToNum,
+  normalizeAffiliateFilters,
   normalizeAffiliateSearch,
 } from "./affiliate_helpers.js";
 import { createStripeAccountLink, payoutAffiliate } from "./affiliate_interactors.js";
@@ -62,7 +63,9 @@ export default {
         sort_options,
         search_name: "artist_name",
         normalizeSearch: normalizeAffiliateSearch,
+        normalizeFilters: normalizeAffiliateFilters,
       });
+      console.log({ filter });
       const affiliates = await affiliate_db.findAll_affiliates_db(filter, sort, limit, page);
       const count = await affiliate_db.count_affiliates_db(filter);
       return {
@@ -76,6 +79,22 @@ export default {
       }
     }
   },
+  create_filters_affiliates_s: async query => {
+    try {
+      const availableFilters = {
+        promoter: ["only_promoter"],
+        sponsor: ["only_sponsor"],
+        rave_mob: ["only_rave_mob"],
+      };
+
+      return { availableFilters };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+
   findById_affiliates_s: async params => {
     try {
       return await affiliate_db.findById_affiliates_db(params.id);

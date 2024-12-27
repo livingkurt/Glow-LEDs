@@ -27,6 +27,15 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  create_filters_affiliates_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const filters = await affiliate_services.create_filters_affiliates_s(query);
+      return res.status(200).send(filters);
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findById_affiliates_c: async (req, res) => {
     const { params } = req;
     try {
