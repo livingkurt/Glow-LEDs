@@ -236,7 +236,7 @@ export default ({ email, order }) => {
 																											<td style='font-family:helvetica;width:100%;white-space:nowrap;'>
 																												<p style='color:white;line-height:150%;font-size:16px;font-weight:600;margin:0 0 0 15px;'
 																													align="right">
-																													${item.quantity > 1 ? item.quantity + "x" : ""} ${Price(item, "white", order?.user?.isWholesaler)}
+																													${item.quantity > 1 ? `${item.quantity}x` : ""} ${Price(item, "white", order?.user?.isWholesaler)}
 																												</p>
 																											</td>
 																										</tr>
@@ -260,7 +260,7 @@ export default ({ email, order }) => {
                                 <table style="width:100%;border-spacing:0;margin-top:20px">
                                   <tbody>
                                     ${
-                                      !order.promo_code && !hasActiveSale(order.orderItems)
+                                      !order.promo_code && !hasActiveSale(order.orderItems) && !order.giftCards?.length
                                         ? `
                                         <tr>
                                           <td style="font-family:helvetica;padding:5px 0">
@@ -319,7 +319,7 @@ export default ({ email, order }) => {
                                             : ""
                                         }
                                         ${
-                                          order.promo_code && !hasActiveSale(order.orderItems)
+                                          order.promo_code
                                             ? `
                                           <tr>
                                             <td style="font-family:helvetica;padding:5px 0">
@@ -336,11 +336,44 @@ export default ({ email, order }) => {
                                             </td>
                                             <td style="font-family:helvetica;padding:5px 0;text-align:right">
                                               <strong style="font-size:16px;color:white">-$${(
-                                                getSaleTotal(order.orderItems) - order.itemsPrice
+                                                (10 *
+                                                  (getItemsTotal(order.orderItems) -
+                                                    (order.giftCards?.reduce(
+                                                      (total, card) => total + card.amountUsed,
+                                                      0
+                                                    ) || 0))) /
+                                                100
                                               ).toFixed(2)}</strong>
                                             </td>
                                           </tr>
                                           `
+                                            : ""
+                                        }
+                                        ${
+                                          order.giftCards && order.giftCards.length > 0
+                                            ? order.giftCards
+                                                .map(
+                                                  giftCard => `
+                                          <tr>
+                                            <td style="font-family:helvetica;padding:5px 0">
+                                              <p style="color:white;line-height:1.2em;font-size:16px;margin:0">
+                                                <span style="font-size:16px">Gift Card</span>
+                                                <span style="font-size:14px;margin-left:5px">
+                                                  <img src="https://images2.imgbox.com/a1/63/ptqm33q2_o.png"
+                                                    style="height:16px;margin-right:10px" alt="gift_card_logo" />
+                                                  <span style="font-size:14px;line-height:1.1;margin-left:-4px">
+                                                    ${giftCard.code.toUpperCase()}
+                                                  </span>
+                                                </span>
+                                              </p>
+                                            </td>
+                                            <td style="font-family:helvetica;padding:5px 0;text-align:right">
+                                              <strong style="font-size:16px;color:white">-$${giftCard.amountUsed.toFixed(2)}</strong>
+                                            </td>
+                                          </tr>
+                                          `
+                                                )
+                                                .join("")
                                             : ""
                                         }
                                         <tr>
