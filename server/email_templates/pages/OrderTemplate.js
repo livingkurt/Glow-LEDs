@@ -330,11 +330,6 @@ export default ({ email, order }) => {
                                                 </span>
                                               </p>
                                             </td>
-                                            ${console.log({
-                                              giftcardTotal:
-                                                order.giftCards?.reduce((total, card) => total + card.amountUsed, 0) ||
-                                                0,
-                                            })}
                                             <td style="font-family:helvetica;padding:5px 0;text-align:right">
                                               <strong style="font-size:16px;color:white">-$${(
                                                 (10 * order.itemsPrice) /
