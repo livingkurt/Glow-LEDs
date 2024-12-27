@@ -183,15 +183,29 @@ export const affiliateFormFields = ({ products, users, microlights, promos, cart
       label: "Active",
       permissions: ["admin"],
     },
-    sponsorMonthlyCheckins: {
-      title: "Sponsor Monthly Checkins",
-      labelProp: "sponsorMonthlyCheckins",
-      label: item => `${item.year} ${item.month}`,
+    sponsorTasks: {
+      title: "Sponsor Tasks",
+      labelProp: "sponsorTasks",
+      label: item => `${item.taskName} - ${item.month} ${item.year}`,
       type: "array",
       permissions: ["admin"],
       itemSchema: {
         type: "object",
         fields: {
+          taskName: {
+            type: "text",
+            label: "Task Name",
+            required: true,
+          },
+          points: {
+            type: "number",
+            label: "Points",
+            required: true,
+          },
+          completedAt: {
+            type: "date",
+            label: "Completed At",
+          },
           month: {
             type: "autocomplete_single",
             label: "Month",
@@ -205,20 +219,24 @@ export const affiliateFormFields = ({ products, users, microlights, promos, cart
           year: {
             type: "number",
             label: "Year",
-            labelProp: "year",
-            required: true,
           },
-          questionsConcerns: {
+          jiraLink: {
             type: "text",
-            label: "Questions or Concerns",
-            labelProp: "questionsConcerns",
-            required: true,
+            label: "Jira Link",
           },
-          numberOfContent: {
+          driveLink: {
             type: "text",
-            label: "Number of Content",
-            labelProp: "numberOfContent",
+            label: "Drive Link",
           },
+          isFullLightshow: {
+            type: "checkbox",
+            label: "Full Lightshow",
+          },
+          verified: {
+            type: "checkbox",
+            label: "Verified",
+          },
+          verifiedBy: userField({ users, permissions: ["admin"] }),
         },
       },
     },

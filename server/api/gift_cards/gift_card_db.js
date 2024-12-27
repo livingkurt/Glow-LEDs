@@ -23,7 +23,7 @@ export default {
 
   findByCode_gift_cards_db: async code => {
     try {
-      return await GiftCard.findOne({ code: code, deleted: false });
+      return await GiftCard.findOne({ code, deleted: false });
     } catch (error) {
       throw new Error(error.message);
     }
@@ -76,7 +76,7 @@ export default {
 
   use_gift_card_db: async (code, amount, orderId) => {
     try {
-      const giftCard = await GiftCard.findOne({ code: code, deleted: false });
+      const giftCard = await GiftCard.findOne({ code, deleted: false });
       if (!giftCard) throw new Error("Gift card not found");
       return await giftCard.use(amount, orderId);
     } catch (error) {

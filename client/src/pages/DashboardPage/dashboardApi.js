@@ -77,9 +77,7 @@ export const dashboardApi = createApi({
     getCurrentStock: builder.query({
       query: () => `/products/current_stock`,
     }),
-    getSponsorCheckinStatus: builder.query({
-      query: ({ start_date, end_date }) => `/affiliates/checkin_status?start_date=${start_date}&end_date=${end_date}`,
-    }),
+
     getQuestionConcerns: builder.query({
       query: ({ start_date, end_date }) =>
         `/affiliates/question_concerns?start_date=${start_date}&end_date=${end_date}`,

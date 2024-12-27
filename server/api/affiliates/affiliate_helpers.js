@@ -70,8 +70,61 @@ export const normalizeAffiliateSearch = query => {
   return search;
 };
 
+export const normalizeAffiliateFilters = input => {
+  console.log({ input });
+  const output = {};
+  Object.keys(input).forEach(key => {
+    switch (key) {
+      case "promoter":
+        for (const promoter of input.promoter) {
+          output.promoter = promoter;
+        }
+        break;
+      case "sponsor":
+        for (const sponsor of input.sponsor) {
+          output.sponsor = sponsor;
+        }
+        break;
+
+      case "rave_mob":
+        for (const rave_mob of input.rave_mob) {
+          output.rave_mob = rave_mob;
+        }
+        break;
+      default:
+        break;
+    }
+  });
+
+  if (input.promoter && input.promoter.includes("only_promoter")) {
+    output.promoter = true;
+  }
+  if (input.sponsor && input.sponsor.includes("only_sponsor")) {
+    output.sponsor = true;
+  }
+  if (input.sponsor_caption && input.sponsor_caption.includes("only_sponsor_caption")) {
+    output.sponsor_caption = true;
+  }
+  if (input.rave_mob && input.rave_mob.includes("only_rave_mob")) {
+    output.rave_mob = true;
+  }
+  return output;
+};
+
 export const determineRevenueTier = (affiliate, revenue) => {
-  if (affiliate.promoter) {
+  if (affiliate.sponsor) {
+    if (revenue < 150) {
+      return 30;
+    } else if (revenue >= 150 && revenue < 300) {
+      return 35;
+    } else if (revenue >= 300 && revenue < 500) {
+      return 40;
+    } else if (revenue >= 500 && revenue < 750) {
+      return 50;
+    } else if (revenue >= 750) {
+      return 60;
+    }
+  } else if (affiliate.promoter) {
     if (revenue < 100) {
       return 10;
     } else if (revenue >= 100 && revenue < 200) {
@@ -85,17 +138,22 @@ export const determineRevenueTier = (affiliate, revenue) => {
     } else if (revenue >= 500) {
       return 40;
     }
-  } else if (affiliate.sponsor) {
-    if (revenue < 150) {
-      return 30;
-    } else if (revenue >= 150 && revenue < 300) {
-      return 35;
-    } else if (revenue >= 300 && revenue < 500) {
-      return 40;
-    } else if (revenue >= 500 && revenue < 750) {
-      return 50;
-    } else if (revenue >= 750) {
-      return 60;
+  }
+};
+
+export const determineSponsorGiftCard = (affiliate, revenue) => {
+  if (affiliate.sponsor) {
+    // Check task points and lightshow requirements
+    const taskPoints = affiliate.taskPoints || 0;
+    const hasLightshow = affiliate.hasLightshow || false;
+
+    if (taskPoints >= 8 && hasLightshow && revenue >= 500) {
+      return 100; // Gold level - $100 gift card
+    } else if (taskPoints >= 5 && hasLightshow) {
+      return 75; // Silver level - $75 gift card
+    } else if (taskPoints >= 3) {
+      return 50; // Bronze level - $50 gift card
     }
+    return 0; // No reward tier met
   }
 };

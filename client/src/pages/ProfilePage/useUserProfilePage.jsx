@@ -11,9 +11,6 @@ export const useUserProfilePage = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
-  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
-  const { monthlyCheckinSuccess } = affiliatePage;
-
   useEffect(() => {
     let cleanup = true;
     if (cleanup) {
@@ -22,7 +19,7 @@ export const useUserProfilePage = () => {
     return () => {
       cleanup = false;
     };
-  }, [current_user._id, dispatch, id, monthlyCheckinSuccess]);
+  }, [current_user._id, dispatch, id]);
 
   const { columnDefs: orderColumnDefs, myRemoteApi: ordersRemoteApi } = useOrdersPage({ userId: id });
   return {

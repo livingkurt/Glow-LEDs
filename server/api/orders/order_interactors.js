@@ -548,6 +548,24 @@ export const generateGiftCards = async orderItems => {
   return giftCardsByAmount;
 };
 
+export const generateGiftCard = async ({ amount }) => {
+  const initialBalance = amount;
+
+  const code = generateRandomCode(16); // Generate 16-character unique code
+
+  const giftCard = await GiftCard.create({
+    code,
+    initialBalance,
+    currentBalance: initialBalance,
+    source: "customer",
+    isActive: true,
+  });
+
+  const newGiftCard = await GiftCard.findOne({ _id: giftCard._id });
+
+  return newGiftCard;
+};
+
 export const sendGiftCardEmail = async order => {
   const giftCardItems = order.orderItems.filter(item => item.itemType === "gift_card");
 

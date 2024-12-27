@@ -7,13 +7,10 @@ const router = express.Router();
 router.route("/").get(affiliate_controller.findAll_affiliates_c).post(isAuth, affiliate_controller.create_affiliates_c);
 
 router.route("/table").get(affiliate_controller.table_affiliates_c);
-// router.route("/reorder").put(affiliate_controller.reorder_affiliates_c);
 router.route("/:id/generate_sponsor_codes").post(affiliate_controller.generate_sponsor_codes_affiliates_c);
-router.route("/checkin_status").get(affiliate_controller.checkin_status_affiliates_c);
-router.route("/question_concerns").get(affiliate_controller.question_concerns_affiliates_c);
-router.route("/:id/monthly_checkin").put(affiliate_controller.sponsor_monthly_checkin_affiliates_c);
 router.route("/:id/create_product_bundle/:cartId").put(affiliate_controller.create_product_bundle_affiliates_c);
 
+router.route("/filters").get(affiliate_controller.create_filters_affiliates_c);
 router
   .route("/:id")
   .get(affiliate_controller.findById_affiliates_c)
@@ -21,5 +18,7 @@ router
   .delete(isAuth, isAdmin, affiliate_controller.remove_affiliates_c);
 
 router.route("/payout").post(affiliate_controller.payout_affiliates_c);
+
+router.post("/:id/tasks", isAuth, isAdmin, affiliate_controller.addSponsorTask);
 
 export default router;

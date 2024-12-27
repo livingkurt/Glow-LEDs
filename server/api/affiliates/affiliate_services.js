@@ -7,6 +7,7 @@ import {
   createPrivatePromoCode,
   createPublicPromoCode,
   monthToNum,
+  normalizeAffiliateFilters,
   normalizeAffiliateSearch,
 } from "./affiliate_helpers.js";
 import { createStripeAccountLink, payoutAffiliate } from "./affiliate_interactors.js";
@@ -62,7 +63,9 @@ export default {
         sort_options,
         search_name: "artist_name",
         normalizeSearch: normalizeAffiliateSearch,
+        normalizeFilters: normalizeAffiliateFilters,
       });
+      console.log({ filter });
       const affiliates = await affiliate_db.findAll_affiliates_db(filter, sort, limit, page);
       const count = await affiliate_db.count_affiliates_db(filter);
       return {
@@ -76,6 +79,36 @@ export default {
       }
     }
   },
+  create_filters_affiliates_s: async query => {
+    try {
+      const availableFilters = {
+        promoter: ["only_promoter"],
+        sponsor: ["only_sponsor"],
+        rave_mob: ["only_rave_mob"],
+      };
+      console.log({ availableFilters });
+      const booleanFilters = {
+        promoter: {
+          label: "Promoter",
+        },
+        sponsor: {
+          label: "Sponsor",
+        },
+        sponsor_caption: {
+          label: "Sponsor Caption",
+        },
+        rave_mob: {
+          label: "Rave Mob",
+        },
+      };
+      return { availableFilters, booleanFilters };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+
   findById_affiliates_s: async params => {
     try {
       return await affiliate_db.findById_affiliates_db(params.id);
@@ -102,77 +135,7 @@ export default {
       }
     }
   },
-  sponsor_monthly_checkin_affiliates_s: async (params, body) => {
-    const { id } = params;
-    const { questionsConcerns, numberOfContent, month, year } = body;
 
-    // Get previous month and year
-    const prevDate = new Date();
-    prevDate.setMonth(prevDate.getMonth() - 1);
-    const prevMonth = prevDate.toLocaleString("default", { month: "long" });
-    const prevYear = prevDate.getFullYear();
-
-    try {
-      // Prepare the check-in object
-      const checkin = {
-        month,
-        year,
-        questionsConcerns,
-        numberOfContent,
-        // add any additional fields here
-      };
-
-      const affiliate = await Affiliate.findOne({ _id: id, deleted: false });
-      if (affiliate) {
-        const existingCheckinIndex = affiliate.sponsorMonthlyCheckins.findIndex(
-          checkin => checkin.month === month && checkin.year === year
-        );
-
-        if (existingCheckinIndex > -1) {
-          // Update the existing checkin
-          affiliate.sponsorMonthlyCheckins[existingCheckinIndex] = checkin;
-        } else {
-          // Find the correct position for the new checkin based on month and year
-          const correctPosition = affiliate.sponsorMonthlyCheckins.findIndex(
-            checkin =>
-              new Date(`${checkin.year}-${monthToNum(checkin.month)}-01`) > new Date(`${year}-${monthToNum(month)}-01`)
-          );
-
-          // If correct position found, insert at that position, else push to the end
-          if (correctPosition !== -1) {
-            affiliate.sponsorMonthlyCheckins.splice(correctPosition, 0, checkin);
-          } else {
-            affiliate.sponsorMonthlyCheckins.push(checkin);
-          }
-          // If the check-in is for the previous month and year, generate sponsor codes
-          if (month === prevMonth && year === prevYear) {
-            console.log("Generating sponsor codes...");
-            await generateSponsorCodes(affiliate);
-          }
-        }
-
-        // Save the updated affiliate
-        await affiliate.save();
-
-        return affiliate;
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
-
-  checkin_status_affiliates_s: async query => {
-    const { start_date, end_date } = query;
-    try {
-      return await affiliate_db.checkin_status_affiliates_db(start_date, end_date);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
   update_affiliates_s: async (params, body) => {
     try {
       return await affiliate_db.update_affiliates_db(params.id, body);
@@ -383,7 +346,7 @@ export default {
       };
 
       // Process each affiliate
-      await affiliates.reduce(async (promise, affiliate) => {
+      await [affiliates.find(affiliate => affiliate.artist_name === "Sponsor")].reduce(async (promise, affiliate) => {
         await promise;
 
         try {

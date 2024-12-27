@@ -5,7 +5,6 @@ import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
 const router = express.Router();
 
 router.route("/affiliate/:id").get(isAuth, paycheck_controller.findMy_paychecks);
-router.route("/pay/:position/:year/:month").get(paycheck_controller.create_affiliate_paychecks_c);
 router.route("/delete_multiple").put(paycheck_controller.remove_multiple_paychecks_c);
 router.route("/filters").get(paycheck_controller.create_filters_paychecks_c);
 router.route("/get_range_payouts").get(paycheck_controller.get_range_payouts_paychecks_c);

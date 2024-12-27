@@ -104,18 +104,6 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  create_affiliate_paychecks_c: async (req, res) => {
-    const { params, query } = req;
-    try {
-      const paycheck = await paycheck_services.create_affiliate_paychecks_s(params);
-      if (paycheck) {
-        return res.status(201).send(paycheck);
-      }
-      return res.status(500).send({ message: "Error Creating Paycheck" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
   update_paychecks_c: async (req, res) => {
     const { params, body } = req;
     try {

@@ -1,3 +1,5 @@
+import config from "../../config.js";
+
 const affiliate_onboard = ({ first_name }) => {
   return `
     <div>
@@ -21,7 +23,7 @@ const affiliate_onboard = ({ first_name }) => {
       <p>Thanks,</p>
       <p>
         <div>Kurt @ Glow LEDs</div>
-        <div><a target="_blank" href="mailto:contact.glowleds@gmail.com">contact.glowleds@gmail.com</a></div>
+        <div><a target="_blank" href="mailto:${config.CONTACT_EMAIL}">${config.CONTACT_EMAIL}</a></div>
         <div><a target="_blank" href="http://www.glow-leds.com/">www.glow-leds.com</a></div>
       </p>
     </div>

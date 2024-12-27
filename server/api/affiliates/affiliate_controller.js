@@ -1,4 +1,4 @@
-import affiliate_db from "./affiliate_db.js";
+import Affiliate from "./affiliate.js";
 import affiliate_services from "./affiliate_services.js";
 
 export default {
@@ -27,6 +27,15 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  create_filters_affiliates_c: async (req, res) => {
+    const { query } = req;
+    try {
+      const filters = await affiliate_services.create_filters_affiliates_s(query);
+      return res.status(200).send(filters);
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
   findById_affiliates_c: async (req, res) => {
     const { params } = req;
     try {
@@ -51,42 +60,7 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  sponsor_monthly_checkin_affiliates_c: async (req, res) => {
-    const { body, params } = req;
-    try {
-      const affiliate = await affiliate_services.sponsor_monthly_checkin_affiliates_s(params, body);
-      if (affiliate) {
-        return res.status(201).send(affiliate);
-      }
-      return res.status(500).send({ message: "Error Creating Affiliate" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
-  checkin_status_affiliates_c: async (req, res) => {
-    const { query } = req;
-    try {
-      const affiliate = await affiliate_services.checkin_status_affiliates_s(query);
-      if (affiliate) {
-        return res.status(201).send(affiliate);
-      }
-      return res.status(500).send({ message: "Error Creating Affiliate" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
-  question_concerns_affiliates_c: async (req, res) => {
-    const { query } = req;
-    try {
-      const affiliate = await affiliate_db.question_concerns_affiliates_db(query.start_date, query.end_date);
-      if (affiliate) {
-        return res.status(201).send(affiliate);
-      }
-      return res.status(500).send({ message: "Error Creating Affiliate" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
+
   update_affiliates_c: async (req, res) => {
     const { params, body } = req;
     try {
@@ -157,6 +131,30 @@ export default {
       return res.status(500).send({ message: "Error Processing Affiliate Payouts" });
     } catch (error) {
       res.status(500).send({ error, message: error.message });
+    }
+  },
+  addSponsorTask: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const task = req.body;
+
+      const affiliate = await Affiliate.findById(id);
+      if (!affiliate) {
+        return res.status(404).json({ message: "Affiliate not found" });
+      }
+
+      affiliate.sponsorTasks = affiliate.sponsorTasks || [];
+      affiliate.sponsorTasks.push({
+        ...task,
+        verifiedBy: req.user._id,
+      });
+
+      await affiliate.save();
+
+      return res.json(affiliate);
+    } catch (error) {
+      console.error("Error adding sponsor task:", error);
+      return res.status(500).json({ message: "Error adding sponsor task" });
     }
   },
 };

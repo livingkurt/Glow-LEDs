@@ -3,8 +3,12 @@ import config from "../../config.js";
 import Stripe from "stripe";
 import paycheck_services from "../paychecks/paycheck_services.js";
 import promo_services from "../promos/promo_services.js";
-import { getCodeUsage } from "../orders/order_interactors.js";
+import { generateGiftCard, getCodeUsage } from "../orders/order_interactors.js";
 import { determineRevenueTier } from "./affiliate_helpers.js";
+import payment_controller from "../payments/payment_controller.js";
+import { sendEmail } from "../emails/email_interactors.js";
+import AffiliateEarningsTemplate from "../../email_templates/pages/AffiliateEarningsTemplate.js";
+import App from "../../email_templates/App.js";
 
 const stripe = new Stripe(config.STRIPE_KEY, {
   apiVersion: "2023-08-16",
@@ -23,67 +27,204 @@ export const createStripeAccountLink = async () => {
   });
 };
 
+const getLevelName = giftCardAmount => {
+  console.log("Getting level name for amount:", giftCardAmount);
+  switch (giftCardAmount) {
+    case 100:
+      return "Gold";
+    case 75:
+      return "Silver";
+    case 50:
+      return "Bronze";
+    default:
+      return "";
+  }
+};
+
+const determineGiftCardAmount = (taskPoints, revenue, isFullLightshow) => {
+  console.log("Determining gift card amount:", { taskPoints, revenue, isFullLightshow });
+  if (taskPoints >= 8 && isFullLightshow && revenue >= 500) {
+    return 100; // Gold Level
+  } else if (taskPoints >= 5 && isFullLightshow) {
+    return 75; // Silver Level
+  } else if (taskPoints >= 3) {
+    return 50; // Bronze Level
+  }
+  return 0;
+};
+
+export const sendAffiliateEarningsEmail = async ({
+  email,
+  affiliate,
+  giftCard,
+  level,
+  monthlyTasks,
+  promoCodeUsage,
+}) => {
+  const subject = `Your Glow LEDs Affiliate Earnings`;
+
+  // Convert single gift card to array format expected by template
+  const giftCardArray = giftCard
+    ? [
+        {
+          initialBalance: giftCard.initialBalance,
+          quantity: 1,
+          codes: [giftCard.code],
+          display_image_object: giftCard.display_image_object,
+        },
+      ]
+    : [];
+
+  const mailOptionsConfirmation = {
+    from: config.DISPLAY_INFO_EMAIL,
+    to: email,
+    subject,
+    html: App({
+      body: AffiliateEarningsTemplate(giftCardArray, affiliate, level, monthlyTasks, affiliate.sponsor, {
+        codeUses: promoCodeUsage.number_of_uses,
+        revenue: promoCodeUsage.revenue,
+        earnings: promoCodeUsage.earnings,
+        percentageOff: affiliate.private_code.percentage_off,
+      }),
+      unsubscribe: false,
+    }),
+    headers: {
+      "Precedence": "transactional",
+      "X-Auto-Response-Suppress": "OOF, AutoReply",
+    },
+  };
+
+  await sendEmail(mailOptionsConfirmation);
+  return email;
+};
+
+const processGiftCardRewards = async (affiliate, promoCodeUsage) => {
+  console.log("Processing gift card rewards for:", {
+    affiliateName: affiliate.artist_name,
+    currentRevenue: promoCodeUsage.revenue,
+  });
+
+  const currentDate = new Date();
+  const currentMonth = currentDate.toLocaleString("default", { month: "long" });
+  const currentYear = currentDate.getFullYear();
+
+  const monthlyTasks =
+    affiliate.sponsorTasks?.filter(task => task.month === currentMonth && task.year === currentYear && task.verified) ||
+    [];
+
+  const totalPoints = monthlyTasks.reduce((sum, task) => sum + task.points, 0);
+  const isFullLightshow = monthlyTasks.some(task => task.isFullLightshow);
+
+  const giftCardAmount = determineGiftCardAmount(totalPoints, promoCodeUsage.revenue, isFullLightshow);
+
+  if (giftCardAmount === 0) {
+    return { giftCardAmount: null, monthlyTasks };
+  }
+
+  const level = getLevelName(giftCardAmount);
+
+  const giftCard = await generateGiftCard({
+    amount: giftCardAmount,
+  });
+
+  return { giftCardAmount, giftCard, level, monthlyTasks };
+};
+
+const createPaycheckRecord = async (affiliate, earnings, promoCodeUsage, description) => {
+  console.log("Creating paycheck record:", {
+    affiliate: affiliate._id,
+    earnings,
+    promoCodeUsage,
+  });
+
+  const paycheck = await paycheck_services.create_paychecks_s({
+    affiliate: affiliate._id,
+    user: affiliate.user._id,
+    amount: earnings,
+    revenue: promoCodeUsage.revenue,
+    promo_code: affiliate.public_code._id,
+    uses: promoCodeUsage.number_of_uses,
+    stripe_connect_id: affiliate.user.stripe_connect_id,
+    paid: !!affiliate.user.stripe_connect_id,
+    description,
+    paid_at: new Date(),
+    email: affiliate.user.email,
+    subject: "Your Glow LEDs Affiliate Earnings",
+  });
+
+  if (!paycheck) {
+    console.error("Failed to create paycheck record");
+    throw new Error("Failed to create paycheck");
+  }
+  console.log("Successfully created paycheck:", paycheck);
+  return paycheck;
+};
+
 export const payoutAffiliate = async (affiliate, start_date, end_date) => {
   try {
-    // Get promo code usage for the date range
-    const promo_code_usage = await getCodeUsage({
+    console.log("Starting affiliate payout process for:", {
+      affiliate: affiliate.artist_name,
+      start_date,
+      end_date,
+    });
+
+    const promoCodeUsage = await getCodeUsage({
       promo_code: affiliate?.public_code?.promo_code,
       start_date,
       end_date,
       sponsor: affiliate?.sponsor,
       sponsorTeamCaptain: affiliate?.sponsorTeamCaptain,
     });
+    console.log("Promo code usage:", promoCodeUsage);
 
-    console.log({
-      affiliate: affiliate?.artist_name,
-      if: affiliate?.user?.stripe_connect_id && promo_code_usage.earnings >= 1,
-    });
+    let description = `Monthly Payout for ${affiliate?.user?.first_name} ${affiliate?.user?.last_name}`;
 
-    console.log({
-      amount: promo_code_usage.earnings,
-      stripe_connect_id: affiliate?.user?.stripe_connect_id,
-      description: `Monthly Payout for ${affiliate?.user?.first_name} ${affiliate?.user?.last_name}`,
-    });
-
-    // Only process Stripe payment if not in test mode
-    if (!affiliate?.user?.stripe_connect_id || promo_code_usage.earnings > 0) {
-      await stripe.transfers.create({
-        amount: promo_code_usage.earnings,
-        currency: "usd",
-        destination: affiliate.user.stripe_connect_id,
-        description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`,
+    // Process payments and create records
+    if (affiliate?.user?.stripe_connect_id && promoCodeUsage.earnings > 0) {
+      console.log("Processing Stripe payout:", {
+        earnings: promoCodeUsage.earnings,
+        stripeConnectId: affiliate.user.stripe_connect_id,
+      });
+      await payment_controller.affiliate_payout_payments_c({
+        earnings: promoCodeUsage.earnings,
+        stripeConnectId: affiliate.user.stripe_connect_id,
+        description,
       });
     }
-
-    // Create paycheck record
-    const paycheck = await paycheck_services.create_paychecks_s({
-      affiliate: affiliate._id,
-      user: affiliate.user._id,
-      amount: promo_code_usage.earnings,
-      revenue: promo_code_usage.revenue,
-      promo_code: affiliate.public_code._id,
-      uses: promo_code_usage.number_of_uses,
-      stripe_connect_id: affiliate.user.stripe_connect_id,
-      paid: !!affiliate?.user?.stripe_connect_id,
-      description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`,
-      paid_at: new Date(),
-      email: affiliate.user.email,
-      subject: "Your Glow LEDs Affiliate Earnings",
-    });
-
-    if (!paycheck) {
-      console.error("Failed to create paycheck");
-      return null;
-    }
-
-    console.log({ paycheck });
+    const paycheck = await createPaycheckRecord(affiliate, promoCodeUsage.earnings, promoCodeUsage, description);
 
     // Update promo code tier
-    const percentage_off = determineRevenueTier(affiliate, promo_code_usage.revenue);
-
+    const percentage_off = determineRevenueTier(affiliate, promoCodeUsage.revenue);
+    console.log("Updating promo code tier:", { percentage_off });
     await promo_services.update_promos_s({ id: affiliate.private_code._id }, { percentage_off });
 
-    console.log({ percentage_off });
+    // Initialize variables for email
+    let giftCard = null;
+    let level = null;
+    let monthlyTasks = [];
+
+    // Get monthly tasks and process rewards if sponsor
+    if (affiliate?.sponsor) {
+      console.log("Processing sponsor rewards");
+
+      const sponsorRewards = await processGiftCardRewards(affiliate, promoCodeUsage);
+      ({ giftCard, level, monthlyTasks } = sponsorRewards);
+
+      if (sponsorRewards.giftCardAmount) {
+        description += ` (Including $${sponsorRewards.giftCardAmount} Gift Card for Task Completion)`;
+        console.log("Added gift card to description:", description);
+      }
+    }
+
+    // Send single earnings email with all information
+    await sendAffiliateEarningsEmail({
+      email: affiliate.user.email,
+      affiliate,
+      giftCard,
+      level,
+      monthlyTasks: monthlyTasks || [], // Ensure monthlyTasks is always an array
+      promoCodeUsage,
+    });
 
     return paycheck;
   } catch (error) {

@@ -14,7 +14,6 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { determineColor } from "../PaychecksPage/paychecksHelpers";
 import { orderStatusColors, determineOrderColors } from "../OrdersPage/ordersPageHelpers";
 
-import SponsorMonthlyCheckinModal from "./components/SponsorMonthlyCheckinModal";
 import { useUserProfilePage } from "./useUserProfilePage";
 import useAffiliateProfilePage from "./useAffiliateProfilePage";
 import { GLDisplayTable } from "../../shared/GlowLEDsComponents/GLDisplayTable";
@@ -30,7 +29,6 @@ import Typography from "@mui/material/Typography";
 export const ProfilePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
 
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, user } = userPage;
@@ -191,7 +189,6 @@ export const ProfilePage = () => {
           )}
         </Grid>
       </Grid>
-      <SponsorMonthlyCheckinModal />
     </Container>
   );
 };

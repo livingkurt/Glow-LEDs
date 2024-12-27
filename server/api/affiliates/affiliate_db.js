@@ -19,6 +19,7 @@ export default {
             { path: "cartItems", populate: [{ path: "tags" }, { path: "display_image_object" }] },
           ],
         })
+        .populate("sponsorTasks.verifiedBy")
         .limit(parseInt(limit, 10))
         .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit, 10))
         .exec();
@@ -42,7 +43,8 @@ export default {
             { path: "images" },
             { path: "cartItems", populate: [{ path: "tags" }, { path: "display_image_object" }] },
           ],
-        });
+        })
+        .populate("sponsorTasks.verifiedBy");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -65,7 +67,8 @@ export default {
             { path: "images" },
             { path: "cartItems", populate: [{ path: "tags" }, { path: "display_image_object" }] },
           ],
-        });
+        })
+        .populate("sponsorTasks.verifiedBy");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -88,152 +91,6 @@ export default {
         throw new Error(error.message);
       }
     }
-  },
-  checkin_status_affiliates_db: async (start_date, end_date) => {
-    try {
-      const startYear = parseInt(start_date.slice(0, 4));
-      const startMonth = parseInt(start_date.slice(5, 7));
-      const endYear = parseInt(end_date.slice(0, 4));
-      const endMonth = parseInt(end_date.slice(5, 7));
-
-      const sponsorCheckins = await Affiliate.aggregate([
-        {
-          $match: {
-            active: true,
-            sponsor: true,
-          },
-        },
-        {
-          $unwind: {
-            path: "$sponsorMonthlyCheckins",
-            preserveNullAndEmptyArrays: true,
-          },
-        },
-        {
-          $addFields: {
-            "sponsorMonthlyCheckins.monthNumber": {
-              $switch: {
-                branches: [
-                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "January"] }, then: 1 },
-                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "February"] }, then: 2 },
-                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "March"] }, then: 3 },
-                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "April"] }, then: 4 },
-                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "May"] }, then: 5 },
-                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "June"] }, then: 6 },
-                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "July"] }, then: 7 },
-                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "August"] }, then: 8 },
-                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "September"] }, then: 9 },
-                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "October"] }, then: 10 },
-                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "November"] }, then: 11 },
-                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "December"] }, then: 12 },
-                ],
-                default: 0,
-              },
-            },
-          },
-        },
-        {
-          $group: {
-            _id: "$_id",
-            artist_name: { $first: "$artist_name" },
-            hasCheckedIn: {
-              $first: {
-                $cond: [
-                  {
-                    $and: [
-                      { $ne: ["$sponsorMonthlyCheckins", null] },
-                      { $gte: ["$sponsorMonthlyCheckins.year", startYear] },
-                      { $lte: ["$sponsorMonthlyCheckins.year", endYear] },
-                      { $gte: ["$sponsorMonthlyCheckins.monthNumber", startMonth] },
-                      { $lte: ["$sponsorMonthlyCheckins.monthNumber", endMonth] },
-                    ],
-                  },
-                  true,
-                  false,
-                ],
-              },
-            },
-            numberOfContent: {
-              $max: {
-                $cond: [
-                  {
-                    $and: [
-                      { $ne: ["$sponsorMonthlyCheckins", null] },
-                      { $gte: ["$sponsorMonthlyCheckins.year", startYear] },
-                      { $lte: ["$sponsorMonthlyCheckins.year", endYear] },
-                      { $gte: ["$sponsorMonthlyCheckins.monthNumber", startMonth] },
-                      { $lte: ["$sponsorMonthlyCheckins.monthNumber", endMonth] },
-                    ],
-                  },
-                  "$sponsorMonthlyCheckins.numberOfContent",
-                  0,
-                ],
-              },
-            },
-            totalNumberOfContent: {
-              $sum: {
-                $cond: [
-                  {
-                    $and: [
-                      { $ne: ["$sponsorMonthlyCheckins", null] },
-                      { $eq: ["$sponsorMonthlyCheckins.year", startYear] },
-                    ],
-                  },
-                  "$sponsorMonthlyCheckins.numberOfContent",
-                  0,
-                ],
-              },
-            },
-          },
-        },
-      ]);
-      return sponsorCheckins;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
-
-  question_concerns_affiliates_db: async (start_date, end_date) => {
-    const startDate = new Date(start_date);
-    const endDate = new Date(end_date);
-
-    const result = await Affiliate.aggregate([
-      {
-        $unwind: "$sponsorMonthlyCheckins",
-      },
-      {
-        $addFields: {
-          checkinDate: {
-            $dateFromString: {
-              dateString: {
-                $concat: [
-                  { $toString: "$sponsorMonthlyCheckins.year" },
-                  "-",
-                  { $toString: "$sponsorMonthlyCheckins.month" },
-                  "-01",
-                ],
-              },
-            },
-          },
-        },
-      },
-      {
-        $match: {
-          checkinDate: { $gte: startDate, $lte: endDate },
-        },
-      },
-      {
-        $project: {
-          artist_name: 1,
-          year: 1,
-          month: 1,
-          questionsConcerns: "$sponsorMonthlyCheckins.questionsConcerns",
-        },
-      },
-    ]);
-    return result;
   },
 
   update_affiliates_db: async (id, body) => {

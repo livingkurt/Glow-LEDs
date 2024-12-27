@@ -35,31 +35,6 @@ export const getProfileTitle = (current_user, first_name) => {
   }
 };
 
-export const monthCheckinStatus = ({ user, currentMonth, currentYear, previousMonth }) => {
-  const affiliateCheckinCompleted = user?.affiliate?.sponsorMonthlyCheckins?.find(
-    checkin => checkin.month === currentMonth && checkin.year === currentYear
-  );
-  const teamCheckinCompleted = user?.team?.teamMonthlyCheckins?.find(
-    checkin => checkin.month === currentMonth && checkin.year === currentYear
-  );
-
-  const affiliatePreviousCheckin = user?.affiliate?.sponsorMonthlyCheckins?.find(
-    checkin => checkin.month === previousMonth && checkin.year === currentYear
-  );
-  const teamPreviousCheckin = user?.team?.teamMonthlyCheckins?.find(
-    checkin => checkin.month === previousMonth && checkin.year === currentYear
-  );
-
-  // Combined checkin status
-  const checkinCompleted = affiliateCheckinCompleted || teamCheckinCompleted;
-  const previousCheckin = affiliatePreviousCheckin || teamPreviousCheckin;
-  return { checkinCompleted, previousCheckin };
-};
-
-export const checkinButtonLabel = ({ checkin, teamCaptain, month }) => {
-  return `${checkin ? "Edit" : `Start ${teamCaptain}` ? "Team" : "Sponsor"} Monthly Checkin for ${month}`;
-};
-
 export const this_month_date_range = () => {
   const today = new Date(); // get current date
   const year = today.getFullYear(); // get current year

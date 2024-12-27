@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { openChangePasswordModal, open_edit_user_modal } from "../../../slices/userSlice";
-import { openMonthlyCheckinModal, open_edit_affiliate_modal } from "../../../slices/affiliateSlice";
+import { open_edit_affiliate_modal } from "../../../slices/affiliateSlice";
 import { open_edit_wholesaler_modal } from "../../../slices/wholesalerSlice";
 import * as API from "../../../api";
 
@@ -11,10 +11,8 @@ import { EditWholesalerModal } from "../../WholesalersPage/components";
 import ChangePasswordModal from "./ChangePasswordModal";
 import { open_edit_team_modal } from "../../../slices/teamSlice";
 import EditTeamModal from "../../TeamsPage/EditTeamModal";
-import { checkinButtonLabel, monthCheckinStatus } from "../profileHelpers";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 
 export const ProfileActions = () => {
   const dispatch = useDispatch();
@@ -25,18 +23,6 @@ export const ProfileActions = () => {
   const { affiliate } = affiliatePage;
   const teamPage = useSelector(state => state.teams.teamPage);
   const { team } = teamPage;
-
-  const date = new Date();
-  date.setMonth(date.getMonth() - 1);
-  const previousMonth = date.toLocaleString("default", { month: "long" });
-  const currentMonth = new Date().toLocaleString("default", { month: "long" });
-  const currentYear = new Date().getFullYear();
-  const { checkinCompleted, previousCheckin } = monthCheckinStatus({
-    user,
-    currentMonth,
-    currentYear,
-    previousMonth,
-  });
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -50,11 +36,9 @@ export const ProfileActions = () => {
         {"Edit Profile"}
       </Button>
 
-      {/* <Link to={current_user?.isAdmin ? "/secure/glow/change_password/" + id : "/account/change_password"} className="w-100per"> */}
       <Button variant="contained" color="secondary" fullWidth onClick={() => dispatch(openChangePasswordModal())}>
         {"Change Password"}
       </Button>
-      {/* </Link> */}
 
       {user.is_affiliated && (
         <Button
@@ -80,49 +64,6 @@ export const ProfileActions = () => {
         >
           {"Edit Team Profile"}
         </Button>
-      )}
-      {user.is_affiliated && (user?.affiliate?.sponsor || user?.affiliate?.teamCaptain) && (
-        <>
-          {/* {!previousCheckin && (
-           <Typography variant="body1" gutterBottom>
-             You have not checked in for the month of {previousMonth}
-           </Typography>
-          )}
-          {!previousCheckin && (
-           <Button
-             variant="contained"
-             color={previousCheckin ? "secondary" : "primary"}
-             onClick={() => {
-               dispatch(openMonthlyCheckinModal({ month: previousMonth, year: currentYear }));
-             }}
-           >
-             {checkinButtonLabel({
-               checkin: previousCheckin,
-               teamCaptain: user?.affiliate?.teamCaptain,
-               month: previousMonth,
-             })}
-           </Button>
-          )} */}
-          {!checkinCompleted && (
-            <Typography variant="body1" gutterBottom>
-              {"You have not checked in for the month of "}
-              {currentMonth}
-            </Typography>
-          )}
-          <Button
-            variant="contained"
-            color={checkinCompleted ? "secondary" : "primary"}
-            onClick={() => {
-              dispatch(openMonthlyCheckinModal({ month: currentMonth, year: currentYear }));
-            }}
-          >
-            {checkinButtonLabel({
-              checkin: checkinCompleted,
-              teamCaptain: user?.affiliate?.teamCaptain,
-              month: currentMonth,
-            })}
-          </Button>
-        </>
       )}
 
       {user.isWholesaler && (

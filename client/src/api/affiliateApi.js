@@ -9,8 +9,6 @@ import store from "../store";
 
 import * as API from ".";
 
-import { handleTokenRefresh } from "./axiosInstance";
-
 export const getAffiliates = async ({ search, sorting, filters, page, pageSize }) => {
   try {
     return await axios.get(`/api/affiliates/table`, {
@@ -25,6 +23,11 @@ export const getAffiliates = async ({ search, sorting, filters, page, pageSize }
   } catch (error) {
     store.dispatch(showError({ message: errorMessage(error) }));
   }
+};
+
+export const getAffiliateFilters = async () => {
+  const { data } = await axios.get(`/api/affiliates/filters`);
+  return data;
 };
 
 export const listAffiliates = createAsyncThunk(
@@ -138,18 +141,12 @@ export const createRaveMobAffiliates = createAsyncThunk(
   }
 );
 
-export const sponsorMonthlyCheckin = createAsyncThunk(
-  "affiliate/sponsorMonthlyCheckin",
-  async ({ affiliateId, questionsConcerns, numberOfContent, month, year }, { dispatch, rejectWithValue }) => {
+export const addSponsorTask = createAsyncThunk(
+  "affiliate/addSponsorTask",
+  async ({ affiliateId, task }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.put(`/api/affiliates/${affiliateId}/monthly_checkin`, {
-        questionsConcerns,
-        numberOfContent,
-        month,
-        year,
-      });
-      dispatch(showSuccess({ message: `Checkin Success` }));
-      await handleTokenRefresh(true);
+      const { data } = await axios.post(`/api/affiliates/${affiliateId}/tasks`, task);
+      dispatch(showSuccess({ message: `Task Added` }));
       return data;
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));

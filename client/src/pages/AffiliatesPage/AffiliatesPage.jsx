@@ -3,12 +3,15 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
-import { open_create_affiliate_modal, open_edit_affiliate_modal } from "../../slices/affiliateSlice";
-import { EditAffiliateModal } from "./components";
+import {
+  open_create_affiliate_modal,
+  open_edit_affiliate_modal,
+  open_sponsor_task_modal,
+} from "../../slices/affiliateSlice";
 import * as API from "../../api";
 import PolylineIcon from "@mui/icons-material/Polyline";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 
-import { getAffiliates } from "../../api";
 import { determineColor } from "./affiliateHelpers";
 import { useLocation } from "react-router-dom";
 import { fullName } from "../UsersPage/usersHelpers";
@@ -22,11 +25,13 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Tooltip from "@mui/material/Tooltip";
+import { EditAffiliateModal } from "./components";
+import SponsorTaskModal from "./components/SponsorTaskModal";
 
 const AffiliatesPage = () => {
   const location = useLocation();
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
-  const { message, loading, remoteVersionRequirement } = affiliatePage;
+  const { loading, remoteVersionRequirement } = affiliatePage;
 
   const dispatch = useDispatch();
 
@@ -90,6 +95,12 @@ const AffiliatesPage = () => {
               <EditIcon color="white" />
             </GLIconButton>
 
+            {affiliate.sponsor && (
+              <GLIconButton tooltip="Add Sponsor Task" onClick={() => dispatch(open_sponsor_task_modal(affiliate))}>
+                <AssignmentIcon color="white" />
+              </GLIconButton>
+            )}
+
             <GLIconButton
               tooltip="Generate Sponsor Codes"
               onClick={() => dispatch(API.generateSponsorCodes(affiliate._id))}
@@ -108,7 +119,8 @@ const AffiliatesPage = () => {
     [dispatch]
   );
 
-  const remoteApi = useCallback(options => getAffiliates(options), []);
+  const remoteApi = useCallback(options => API.getAffiliates(options), []);
+  const remoteFiltersApi = useCallback(options => API.getAffiliateFilters(), []);
 
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
@@ -118,6 +130,7 @@ const AffiliatesPage = () => {
 
       <GLTableV2
         remoteApi={remoteApi}
+        remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
         determineColor={determineColor}
         tableName="Affiliates"
@@ -135,6 +148,7 @@ const AffiliatesPage = () => {
 
       <EditAffiliateModal />
       <EditPromoModal />
+      <SponsorTaskModal />
     </Container>
   );
 };
