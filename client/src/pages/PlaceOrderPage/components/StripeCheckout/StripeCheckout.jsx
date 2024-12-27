@@ -45,8 +45,6 @@ const StripeCheckout = () => {
   const hasPreOrderItems = getHasPreOrderItems(cartItems);
   const preOrderReleaseDate = getPreOrderReleaseDate(cartItems);
 
-  console.log({ active_gift_cards });
-
   const handleSubmit = async (event, stripe, elements) => {
     event.preventDefault();
     dispatch(setPaymentValidations());
