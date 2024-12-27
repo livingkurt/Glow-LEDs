@@ -207,7 +207,7 @@ export const getCodeUsage = async ({ promo_code, start_date, end_date, sponsor, 
           _id: null,
           number_of_uses: { $sum: 1 },
           revenue: { $sum: "$itemsPrice" },
-          totalRefund: { $sum: { $ifNull: [{ $sum: "$refunds.amount" }, 0] } }, // Assuming refunds are in the 'refunds' array
+          totalRefund: { $sum: { $ifNull: [{ $sum: "$refunds.amount" }, 0] } },
         },
       },
       {

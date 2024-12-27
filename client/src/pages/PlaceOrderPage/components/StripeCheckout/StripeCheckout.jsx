@@ -22,6 +22,7 @@ const StripeCheckout = () => {
     create_account,
     new_password,
     shippingPrice,
+    promo_code,
     itemsPrice,
     taxPrice,
     taxRate,
@@ -34,7 +35,6 @@ const StripeCheckout = () => {
     splitOrder,
     preOrderShippingRate,
     nonPreOrderShippingRate,
-    active_promo_codes,
     active_gift_cards,
   } = placeOrder;
 
@@ -85,13 +85,8 @@ const StripeCheckout = () => {
               order_note,
               production_note,
               tip,
-              promo_codes: active_promo_codes.map(code => ({
-                code: code.code,
-                amount_off: code.amount_off,
-                percentage_off: code.percentage_off,
-                free_shipping: code.free_shipping,
-              })),
-              gift_cards: active_gift_cards.map(card => ({
+              promo_code: promo_code ? promo_code : null,
+              giftCards: active_gift_cards.map(card => ({
                 code: card.code,
                 amountUsed: card.amount_used,
                 source: "customer",

@@ -336,8 +336,13 @@ export default {
         await promo_services.update_code_used_promos_s({ promo_code: order.promo_code });
         await sendCodeUsedEmail(order.promo_code);
       }
-      if (order.giftCard) {
-        await useGiftCard(order.giftCard.code, order.giftCard.amountUsed, order._id);
+
+      if (order.giftCards && order.giftCards.length > 0) {
+        await Promise.all(
+          order.giftCards.map(async giftCard => {
+            await useGiftCard(giftCard.code, giftCard.amountUsed, order._id);
+          })
+        );
       }
 
       return updatedOrders;
@@ -474,15 +479,6 @@ export default {
     try {
       const sort = {};
       let filter = {};
-      // const filter = {
-      //   deleted: false,
-      //   promo_code: params.promo_code,
-      //   status: { $nin: ["unpaid", "canceled"] },
-      //   createdAt: {
-      //     $gte: new Date(start_date),
-      //     $lte: new Date(end_date)
-      //   }
-      // };
 
       if (query.month && query.month.length > 0) {
         const start_date = month_dates(query.month, query.year).start_date;
@@ -490,7 +486,7 @@ export default {
         filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },
-          promo_code: params.promo_code,
+          "promoCodes.code": params.promo_code,
           createdAt: {
             $gte: new Date(start_date),
             $lte: new Date(end_date),
@@ -502,14 +498,18 @@ export default {
         filter = {
           deleted: false,
           status: { $nin: ["unpaid", "canceled"] },
-          promo_code: params.promo_code,
+          "promoCodes.code": params.promo_code,
           createdAt: {
             $gte: new Date(start_date),
             $lte: new Date(end_date),
           },
         };
       } else {
-        filter = { deleted: false, promo_code: params.promo_code, status: { $nin: ["unpaid", "canceled"] } };
+        filter = {
+          deleted: false,
+          "promoCodes.code": params.promo_code,
+          status: { $nin: ["unpaid", "canceled"] },
+        };
       }
 
       const limit = "0";
@@ -517,12 +517,11 @@ export default {
 
       const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
 
-      const number_of_uses = orders
-        .filter(order => order.promo_code)
-        .filter(order => order.promo_code.toLowerCase() === params.promo_code.toLowerCase()).length;
+      const number_of_uses = orders.filter(order =>
+        order.promoCodes.some(pc => pc.code.toLowerCase() === params.promo_code.toLowerCase())
+      ).length;
       const revenue = orders
-        .filter(order => order.promo_code)
-        .filter(order => order.promo_code.toLowerCase() === params.promo_code.toLowerCase())
+        .filter(order => order.promoCodes.some(pc => pc.code.toLowerCase() === params.promo_code.toLowerCase()))
         .reduce(
           (a, order) =>
             a +
