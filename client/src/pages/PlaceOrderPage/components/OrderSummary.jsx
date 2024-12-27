@@ -133,7 +133,7 @@ const OrderSummary = ({
                 <div>{`Gift Card (${giftCard.code})`}</div>
                 <div>
                   {"-$"}
-                  {giftCard.amount_used.toFixed(2)}
+                  {giftCard.amountUsed.toFixed(2)}
                 </div>
               </li>
             ))}

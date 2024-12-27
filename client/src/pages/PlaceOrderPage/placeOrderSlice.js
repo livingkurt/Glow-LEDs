@@ -362,8 +362,8 @@ const placeOrder = createSlice({
         const giftCardResult = applyGiftCard(state, eligibleTotal, validGiftCard);
         const giftCardWithAmount = {
           ...validGiftCard,
-          amount_used: giftCardResult.amount_used,
-          amount_remaining: giftCardResult.amount_remaining,
+          amountUsed: giftCardResult.amountUsed,
+          totalOrderCost: giftCardResult.totalOrderCost,
           type: "gift_card",
         };
         state.active_gift_cards.push(giftCardWithAmount);
