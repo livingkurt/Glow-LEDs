@@ -1,8 +1,9 @@
 import config from "../../config.js";
 
-export default (gift_cards, affiliate, level, monthlyTasks, isSponsorReward = false, stats = {}) => {
+export default (gift_cards, affiliate, level, monthlyTasks = [], isSponsorReward = false, stats = {}) => {
   const { codeUses = 0, revenue = 0, earnings = 0, percentageOff = 0 } = stats;
-  const totalPoints = monthlyTasks.reduce((sum, task) => sum + task.points, 0);
+  const tasks = Array.isArray(monthlyTasks) ? monthlyTasks : [];
+  const totalPoints = tasks.reduce((sum, task) => sum + (task?.points || 0), 0);
 
   const getLevelStyle = taskLevel => {
     switch (taskLevel) {
@@ -117,12 +118,18 @@ export default (gift_cards, affiliate, level, monthlyTasks, isSponsorReward = fa
                   <div style="background: #4c4f60; border-radius: 15px; padding: 20px">
                     <h4 style="color:white;font-size:20px;margin:0 0 10px 0;">Task Completion Summary</h4>
                     <p style="color:white;line-height:1.6;font-size:16px;margin:0 0 10px 0;">
-                      <span style="font-size: 24px;">📋</span> Completed Tasks: <strong>${monthlyTasks.length}</strong><br>
+                      <span style="font-size: 24px;">📋</span> Completed Tasks: <strong>${tasks.length}</strong><br>
                       <span style="font-size: 24px;">⭐</span> Total Points: <strong>${totalPoints}</strong>
                     </p>
+                    ${
+                      tasks.length > 0
+                        ? `
                     <ul style="color:white;line-height:1.6;font-size:16px;margin:10px 0;padding-left:20px;">
-                      ${monthlyTasks.map(task => `<li>${task.taskName} (${task.isFullLightshow ? "Full Lightshow" : `${task.points} points`})</li>`).join("")}
+                      ${tasks.map(task => `<li>${task.taskName} (${task.isFullLightshow ? "Full Lightshow" : `${task.points} points`})</li>`).join("")}
                     </ul>
+                    `
+                        : ""
+                    }
                   </div>
 
                   ${(() => {

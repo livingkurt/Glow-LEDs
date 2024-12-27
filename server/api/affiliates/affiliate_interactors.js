@@ -80,7 +80,7 @@ export const sendAffiliateEarningsEmail = async ({
     to: email,
     subject,
     html: App({
-      body: AffiliateEarningsTemplate(giftCardArray, "N/A", affiliate, level, monthlyTasks, affiliate.sponsor, {
+      body: AffiliateEarningsTemplate(giftCardArray, affiliate, level, monthlyTasks, affiliate.sponsor, {
         codeUses: promoCodeUsage.number_of_uses,
         revenue: promoCodeUsage.revenue,
         earnings: promoCodeUsage.earnings,
@@ -118,16 +118,7 @@ const processGiftCardRewards = async (affiliate, promoCodeUsage) => {
   const giftCardAmount = determineGiftCardAmount(totalPoints, promoCodeUsage.revenue, isFullLightshow);
 
   if (giftCardAmount === 0) {
-    // Even if no gift card, still send monthly stats email
-    await sendAffiliateEarningsEmail({
-      email: affiliate.user.email,
-      affiliate,
-      giftCard: null,
-      level: null,
-      monthlyTasks,
-      promoCodeUsage,
-    });
-    return null;
+    return { giftCardAmount: null, monthlyTasks };
   }
 
   const level = getLevelName(giftCardAmount);
@@ -136,16 +127,7 @@ const processGiftCardRewards = async (affiliate, promoCodeUsage) => {
     amount: giftCardAmount,
   });
 
-  await sendAffiliateEarningsEmail({
-    email: affiliate.user.email,
-    affiliate,
-    giftCard,
-    level,
-    monthlyTasks,
-    promoCodeUsage,
-  });
-
-  return giftCardAmount;
+  return { giftCardAmount, giftCard, level, monthlyTasks };
 };
 
 const createPaycheckRecord = async (affiliate, earnings, promoCodeUsage, description) => {
@@ -216,15 +198,34 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
     console.log("Updating promo code tier:", { percentage_off });
     await promo_services.update_promos_s({ id: affiliate.private_code._id }, { percentage_off });
 
-    // Handle sponsored affiliate rewards
+    // Initialize variables for email
+    let giftCard = null;
+    let level = null;
+    let monthlyTasks = [];
+
+    // Get monthly tasks and process rewards if sponsor
     if (affiliate?.sponsor) {
       console.log("Processing sponsor rewards");
-      const giftCardAmount = await processGiftCardRewards(affiliate, promoCodeUsage);
-      if (giftCardAmount) {
-        description += ` (Including $${giftCardAmount} Gift Card for Task Completion)`;
+
+      const sponsorRewards = await processGiftCardRewards(affiliate, promoCodeUsage);
+      ({ giftCard, level, monthlyTasks } = sponsorRewards);
+
+      if (sponsorRewards.giftCardAmount) {
+        description += ` (Including $${sponsorRewards.giftCardAmount} Gift Card for Task Completion)`;
         console.log("Added gift card to description:", description);
       }
     }
+
+    // Send single earnings email with all information
+    await sendAffiliateEarningsEmail({
+      email: affiliate.user.email,
+      affiliate,
+      giftCard,
+      level,
+      monthlyTasks: monthlyTasks || [], // Ensure monthlyTasks is always an array
+      promoCodeUsage,
+    });
+
     return paycheck;
   } catch (error) {
     console.error("Error processing affiliate payout:", error);
