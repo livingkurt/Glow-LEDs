@@ -45,6 +45,8 @@ const StripeCheckout = () => {
   const hasPreOrderItems = getHasPreOrderItems(cartItems);
   const preOrderReleaseDate = getPreOrderReleaseDate(cartItems);
 
+  console.log({ active_gift_cards });
+
   const handleSubmit = async (event, stripe, elements) => {
     event.preventDefault();
     dispatch(setPaymentValidations());
@@ -90,6 +92,7 @@ const StripeCheckout = () => {
                 code: card.code,
                 amountUsed: card.amount_used,
                 source: "customer",
+                giftCard: card,
               })),
               parcel: parcel || null,
               serviceFee,

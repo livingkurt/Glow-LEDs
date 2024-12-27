@@ -156,7 +156,10 @@ export const promoField = ({ promos, ...otherProps }) => {
     label: "Promo",
     options: promos,
     labelProp: "promo_code",
-    getOptionLabel: option => `${option?.promo_code?.toUpperCase()}`,
+    getOptionLabel: option => {
+      if (!option || !option.promo_code) return "";
+      return option.promo_code.toUpperCase();
+    },
     ...otherProps,
   };
 };

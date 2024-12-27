@@ -133,8 +133,8 @@ const orderSchema = new mongoose.Schema(
       {
         code: { type: String },
         amountUsed: { type: Number },
-        type: { type: String, enum: ["sponsored", "supplies"] },
         remainingBalance: { type: Number },
+        giftCard: { type: mongoose.Schema.Types.ObjectId, ref: "GiftCard" },
       },
     ],
 

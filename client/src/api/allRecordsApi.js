@@ -107,6 +107,9 @@ export const allRecordsApi = createApi({
     modes: builder.query({
       query: query => `/modes?${create_query(query)}`,
     }),
+    giftCards: builder.query({
+      query: query => `/gift_cards?${create_query(query)}`,
+    }),
   }),
 });
 
@@ -139,4 +142,5 @@ export const {
   useWholesalersQuery,
   useMicrolightsQuery,
   useModesQuery,
+  useGiftCardsQuery,
 } = allRecordsApi;

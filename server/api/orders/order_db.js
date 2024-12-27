@@ -189,6 +189,7 @@ export default {
         .populate("orderItems.selectedOptions.filament")
         .populate("orderItems.tags")
         .populate("promo")
+        .populate("giftCards.giftCard")
         .sort(sort)
         .limit(parseInt(limit, 10))
         .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit, 10))
@@ -213,6 +214,7 @@ export default {
         .populate("orderItems.selectedOptions.filament")
         .populate("orderItems.tags")
         .populate("promo")
+        .populate("giftCards.giftCard")
         .sort(sort)
         .limit(parseInt(limit, 10))
         .skip(Math.max(parseInt(page, 10), 0) * parseInt(limit, 10))
@@ -235,7 +237,8 @@ export default {
         .populate("orderItems.ticket")
         .populate("orderItems.tags")
         .populate("orderItems.selectedOptions.filament")
-        .populate("promo");
+        .populate("promo")
+        .populate("giftCards.giftCard");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -253,7 +256,8 @@ export default {
         .populate("orderItems.ticket")
         .populate("orderItems.tags")
         .populate("orderItems.selectedOptions.filament")
-        .populate("promo");
+        .populate("promo")
+        .populate("giftCards.giftCard");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
