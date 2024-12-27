@@ -1,4 +1,6 @@
-export default (gift_cards, order_id, affiliate, level, monthlyTasks, isSponsorReward = false, stats = {}) => {
+import config from "../../config.js";
+
+export default (gift_cards, affiliate, level, monthlyTasks, isSponsorReward = false, stats = {}) => {
   const { codeUses = 0, revenue = 0, earnings = 0, percentageOff = 0 } = stats;
   const totalPoints = monthlyTasks.reduce((sum, task) => sum + task.points, 0);
 
@@ -58,11 +60,28 @@ export default (gift_cards, order_id, affiliate, level, monthlyTasks, isSponsorR
               <tr>
                 <td style="font-family:helvetica">
                   <h3 style="color:white;font-size:25px;margin:0 0 15px 0;">Monthly Statistics for ${affiliate.artist_name}</h3>
-                  <div style="color:white;line-height:1.6;font-size:16px;margin:0;">
+                  <div style="background: #4c4f60; border-radius: 15px; padding: 20px">
                     <p style="margin: 5px 0;"><strong>Code Uses:</strong> ${codeUses}</p>
                     <p style="margin: 5px 0;"><strong>Revenue Generated:</strong> $${revenue.toFixed(2)}</p>
                     <p style="margin: 5px 0;"><strong>Your Earnings:</strong> $${earnings.toFixed(2)}</p>
                     <p style="margin: 5px 0;"><strong>Private Code Discount:</strong> ${percentageOff}%</p>
+                  </div>
+                   <div style="background: ${affiliate?.user?.stripe_connect_id ? "#2d5a27" : "#a00808"}; border-radius: 15px; padding: 20px; margin-top: 10px;">
+                    <div style="color:white;line-height:1.6;font-size:16px;margin:0;">
+                    ${
+                      affiliate?.user?.stripe_connect_id
+                        ? `
+                        <p style="margin: 0;">
+                          <span style="font-size: 24px;">💳</span> <strong>Payment Status:</strong> Your earnings have been sent to your Stripe account and will be available within 5 business days.
+                        </p>
+                        `
+                        : `
+                        <p style="margin: 0;">
+                          <span style="font-size: 24px;">⚠️</span> <strong>Action Required:</strong> Please set up your Stripe account to receive your earnings. Contact us at <a href="mailto:${config.CONTACT_EMAIL}" style="color:white;">${config.CONTACT_EMAIL}</a> to get started.
+                        </p>
+                        `
+                    }
+                  </div>
                   </div>
                 </td>
               </tr>
