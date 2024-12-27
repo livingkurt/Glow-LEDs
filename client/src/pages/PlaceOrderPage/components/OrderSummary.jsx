@@ -1,60 +1,54 @@
-import GLCartItem from "../../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
-import { useSelector } from "react-redux";
-import { determineCartTotal, formatPrice } from "../../../utils/helper_functions";
-
-import { getHasPreOrderItems, hasActiveSaleItems } from "../placeOrderHelpers";
-import ShippingPrice from "./ShippingPrice";
+import React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import useTheme from "@mui/material/styles/useTheme";
+import { determineCartTotal, formatPrice } from "../../../utils/helper_functions";
+import ShippingPrice from "./ShippingPrice";
+import GLCartItem from "../../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
+import { determineOrderColors } from "../../OrdersPage/ordersPageHelpers";
 
-const OrderSummaryStep = () => {
+const OrderSummary = ({
+  items,
+  shipping,
+  loading,
+  itemsPrice,
+  taxPrice,
+  shippingPrice,
+  previousShippingPrice,
+  totalPrice,
+  tip = 0,
+  hasPreOrderItems,
+  splitOrder,
+  nonPreOrderShippingPrice,
+  preOrderShippingPrice,
+  previousNonPreOrderShippingPrice,
+  previousPreOrderShippingPrice,
+  show_payment,
+  payment_completed,
+  active_promo_codes = [],
+  active_gift_cards = [],
+  isWholesaler,
+  backgroundColor,
+}) => {
   const theme = useTheme();
-  const { current_user } = useSelector(state => state.users.userPage);
-  const cartPage = useSelector(state => state.carts.cartPage);
-  const { my_cart, shipping } = cartPage;
-  const { cartItems } = my_cart;
-
-  const placeOrder = useSelector(state => state.placeOrder);
-  const {
-    loading,
-    shippingPrice,
-    previousShippingPrice,
-    previousNonPreOrderShippingPrice,
-    previousPreOrderShippingPrice,
-    tip,
-    itemsPrice,
-    taxPrice,
-    totalPrice,
-    preOrderShippingPrice,
-    nonPreOrderShippingPrice,
-    splitOrder,
-    show_payment,
-    payment_completed,
-    active_promo_codes,
-    active_gift_cards,
-  } = placeOrder;
-
-  const hasPreOrderItems = getHasPreOrderItems(cartItems);
 
   // Calculate service fee for tickets
-  const ticketItems = cartItems.filter(item => item.itemType === "ticket");
+  const ticketItems = items.filter(item => item.itemType === "ticket");
   const ticketTotal = ticketItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const serviceFee = ticketTotal * 0.1; // 10% service fee
 
-  // Add these new calculations
-  const originalTotal = cartItems.reduce((total, item) => {
+  // Calculate original total and discounts
+  const originalTotal = items.reduce((total, item) => {
     const originalPrice = item.previous_price || item.price;
     return total + originalPrice * item.quantity;
   }, 0);
 
-  const saleTotal = determineCartTotal(cartItems, current_user.isWholesaler);
-
-  const hasSaleItems = hasActiveSaleItems(cartItems);
+  const saleTotal = determineCartTotal(items, isWholesaler);
+  const hasSaleItems = items.some(item => item.previous_price && item.previous_price > item.price);
   const hasActiveDiscounts = hasSaleItems || active_promo_codes.length > 0 || active_gift_cards.length > 0;
 
   return (
-    <div className="place_order-action">
+    <div className="place_order-action" style={{ backgroundColor: backgroundColor }}>
       <ul>
         <li>
           <h4 style={{ marginTop: "0px", marginBottom: "0px" }}>{"Order Summary"}</h4>
@@ -87,10 +81,10 @@ const OrderSummaryStep = () => {
                 <div style={{ textAlign: "right" }}>{"Price"}</div>
               </div>
             </li>
-            {cartItems.length === 0 ? (
+            {items.length === 0 ? (
               <div>{"Cart is empty"}</div>
             ) : (
-              cartItems.map((item, index) => <GLCartItem key={index} item={item} index={index} showQuantity={false} />)
+              items.map((item, index) => <GLCartItem key={index} item={item} index={index} showQuantity={false} />)
             )}
           </ul>
         </li>
@@ -222,7 +216,7 @@ const OrderSummaryStep = () => {
                   <div>
                     <del style={{ color: "red" }}>
                       <span style={{ color: "#c5c5c5" }}>
-                        {formatPrice(originalTotal + taxPrice + serviceFee + tip + shippingPrice)}
+                        {formatPrice(originalTotal + taxPrice + serviceFee + tip)}
                       </span>
                     </del>
                   </div>
@@ -250,4 +244,4 @@ const OrderSummaryStep = () => {
   );
 };
 
-export default OrderSummaryStep;
+export default OrderSummary;

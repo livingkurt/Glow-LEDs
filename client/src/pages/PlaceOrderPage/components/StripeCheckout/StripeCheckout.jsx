@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CardElement, Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -23,12 +22,10 @@ const StripeCheckout = () => {
     create_account,
     new_password,
     shippingPrice,
-    promo_code,
     itemsPrice,
     taxPrice,
     taxRate,
     totalPrice,
-    activePromoCodeIndicator,
     tip,
     previousShippingPrice,
     order_note,
@@ -37,8 +34,8 @@ const StripeCheckout = () => {
     splitOrder,
     preOrderShippingRate,
     nonPreOrderShippingRate,
-    giftCardAmount,
-    giftCardCode,
+    active_gift_cards,
+    active_promo_codes,
   } = placeOrder;
 
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -65,7 +62,6 @@ const StripeCheckout = () => {
         dispatch(showError({ message: error.message }));
         return;
       }
-
       if (cartItems.length > 0) {
         dispatch(
           API.placeOrder({
@@ -88,15 +84,12 @@ const StripeCheckout = () => {
               order_note,
               production_note,
               tip,
-              promo_code: activePromoCodeIndicator && promo_code,
-              giftCard:
-                activePromoCodeIndicator && promo_code?.length === 16
-                  ? {
-                      code: giftCardCode,
-                      amountUsed: giftCardAmount,
-                      source: "customer",
-                    }
-                  : null,
+              promo_code: active_promo_codes.length > 0 ? active_promo_codes[0].promo_code : null,
+              giftCards: active_gift_cards.map(card => ({
+                code: card.code,
+                amountUsed: card.amount_used,
+                source: "customer",
+              })),
               parcel: parcel || null,
               serviceFee,
               hasPreOrderItems,

@@ -32,6 +32,7 @@ import { getFilteredData } from "../api_helpers.js";
 import SalesTax from "sales-tax";
 import affiliate_db from "../affiliates/affiliate_db.js";
 import { useGiftCard } from "../gift_cards/gift_card_interactors.js";
+import { determineRevenueTier } from "../affiliates/affiliate_helpers.js";
 
 SalesTax.setTaxOriginCountry("US"); // Set this to your business's country code
 
@@ -336,8 +337,14 @@ export default {
         await promo_services.update_code_used_promos_s({ promo_code: order.promo_code });
         await sendCodeUsedEmail(order.promo_code);
       }
-      if (order.giftCard) {
-        await useGiftCard(order.giftCard.code, order.giftCard.amountUsed, order._id);
+
+      // Handle gift cards
+      if (order.giftCards && order.giftCards.length > 0) {
+        await Promise.all(
+          order.giftCards.map(async giftCard => {
+            await useGiftCard(giftCard.code, giftCard.amountUsed, order._id);
+          })
+        );
       }
 
       return updatedOrders;
@@ -474,15 +481,6 @@ export default {
     try {
       const sort = {};
       let filter = {};
-      // const filter = {
-      //   deleted: false,
-      //   promo_code: params.promo_code,
-      //   status: { $nin: ["unpaid", "canceled"] },
-      //   createdAt: {
-      //     $gte: new Date(start_date),
-      //     $lte: new Date(end_date)
-      //   }
-      // };
 
       if (query.month && query.month.length > 0) {
         const start_date = month_dates(query.month, query.year).start_date;

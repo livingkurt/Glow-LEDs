@@ -52,7 +52,6 @@ const PaymentStep = () => {
   const {
     payment_completed,
     show_promo_code,
-    show_promo_code_input_box,
     promo_code_validations,
     create_account,
     password_validations,
@@ -80,6 +79,8 @@ const PaymentStep = () => {
     nonPreOrderShippingPrice,
     giftCardAmount,
     giftCardCode,
+    active_promo_codes,
+    active_gift_cards,
   } = placeOrder;
 
   const hasPreOrderItems = getHasPreOrderItems(cartItems);
@@ -96,7 +97,6 @@ const PaymentStep = () => {
           dispatch(
             activatePromo({
               tax_rate,
-              activePromoCodeIndicator,
               validGiftCard: result,
               cartItems,
               current_user,
@@ -118,7 +118,6 @@ const PaymentStep = () => {
           dispatch(
             activatePromo({
               tax_rate,
-              activePromoCodeIndicator,
               validPromo: result.promo,
               cartItems,
               current_user,
@@ -296,69 +295,108 @@ const PaymentStep = () => {
             )}
             {show_promo_code && !hasSaleItems && (
               <div>
-                {show_promo_code_input_box && (
-                  <div className="mv-10px">
-                    <label htmlFor="promo_code">{"Promo Code"}</label>
-                    <form onSubmit={e => check_code(e)} className="row">
-                      <input
-                        type="text"
-                        name="promo_code"
-                        id="promo_code"
-                        className="w-100per"
-                        style={{
-                          textTransform: "uppercase",
-                        }}
-                        onChange={e => {
-                          dispatch(set_promo_code(e.target.value.toUpperCase()));
-                        }}
-                      />
+                <div className="mv-10px">
+                  <label htmlFor="promo_code">{"Promo Code or Gift Card"}</label>
+                  <form onSubmit={e => check_code(e)} className="row">
+                    <input
+                      type="text"
+                      name="promo_code"
+                      id="promo_code"
+                      value={promo_code}
+                      className="w-100per"
+                      style={{
+                        textTransform: "uppercase",
+                      }}
+                      onChange={e => {
+                        dispatch(set_promo_code(e.target.value.toUpperCase()));
+                      }}
+                    />
 
-                      <GLButton
-                        type="submit"
-                        variant="primary"
-                        style={{
-                          curser: "pointer",
-                        }}
-                      >
-                        {"Apply"}
-                      </GLButton>
-                    </form>
-                  </div>
-                )}
-                <label
+                    <GLButton
+                      type="submit"
+                      variant="primary"
+                      style={{
+                        curser: "pointer",
+                      }}
+                    >
+                      {"Apply"}
+                    </GLButton>
+                  </form>
+                </div>
+                <div
                   className="validation_text"
                   style={{
                     textAlign: "center",
                   }}
                 >
                   {promo_code_validations}
-                </label>
-                {activePromoCodeIndicator && (
-                  <div className="promo_code mv-1rem">
-                    <Box display="flex" alignItems="center">
-                      <GLButton
-                        variant="icon"
-                        onClick={() =>
-                          dispatch(
-                            removePromo({
-                              items_price,
-                              tax_rate,
-                              shippingPrice,
-                              preOrderShippingPrice,
-                              nonPreOrderShippingPrice,
-                              previousShippingPrice,
-                              shipping,
-                              splitOrder,
-                            })
-                          )
-                        }
-                        aria-label="Detete"
-                      >
-                        <i className="fas fa-times mr-5px" />
-                      </GLButton>
-                      <Sell sx={{ mr: 1 }} />
-                      {activePromoCodeIndicator}
-                    </Box>
+                </div>
+                {(active_promo_codes.length > 0 || active_gift_cards.length > 0) && (
+                  <div className="promo_codes mv-1rem">
+                    {active_promo_codes.map((promoCode, index) => (
+                      <Box key={index} display="flex" alignItems="center" className="mb-5px">
+                        <GLButton
+                          variant="icon"
+                          onClick={() =>
+                            dispatch(
+                              removePromo({
+                                items_price,
+                                tax_rate,
+                                shippingPrice,
+                                preOrderShippingPrice,
+                                nonPreOrderShippingPrice,
+                                previousShippingPrice,
+                                shipping,
+                                splitOrder,
+                                code: promoCode.promo_code,
+                                cartItems,
+                                current_user,
+                              })
+                            )
+                          }
+                          aria-label="Delete"
+                        >
+                          <i className="fas fa-times mr-5px" />
+                        </GLButton>
+                        <Sell sx={{ mr: 1 }} />
+                        {promoCode.percentage_off
+                          ? `${promoCode.promo_code?.toUpperCase() || ""} ${promoCode.percentage_off}% Off`
+                          : promoCode.amount_off
+                            ? `${promoCode.promo_code?.toUpperCase() || ""} $${promoCode.amount_off} Off`
+                            : promoCode.free_shipping
+                              ? `${promoCode.promo_code?.toUpperCase() || ""} Free Shipping`
+                              : promoCode.promo_code?.toUpperCase() || ""}
+                      </Box>
+                    ))}
+                    {active_gift_cards.map((giftCard, index) => (
+                      <Box key={index} display="flex" alignItems="center" className="mb-5px">
+                        <GLButton
+                          variant="icon"
+                          onClick={() =>
+                            dispatch(
+                              removePromo({
+                                items_price,
+                                tax_rate,
+                                shippingPrice,
+                                preOrderShippingPrice,
+                                nonPreOrderShippingPrice,
+                                previousShippingPrice,
+                                shipping,
+                                splitOrder,
+                                code: giftCard.code,
+                                cartItems,
+                                current_user,
+                              })
+                            )
+                          }
+                          aria-label="Delete"
+                        >
+                          <i className="fas fa-times mr-5px" />
+                        </GLButton>
+                        <Sell sx={{ mr: 1 }} />
+                        {`Gift Card: $${giftCard.amount_used.toFixed(2)} Applied ($${giftCard.amount_remaining.toFixed(2)} Remaining)`}
+                      </Box>
+                    ))}
                   </div>
                 )}
               </div>

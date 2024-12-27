@@ -183,10 +183,11 @@ export const applyFreeShipping = (state, validPromo) => {
 };
 export const applyGiftCard = (state, eligibleTotal, validGiftCard) => {
   // Calculate total order cost including shipping
-  const totalOrderCost = state.itemsPrice + state.shippingPrice;
+  const totalOrderCost = eligibleTotal + state.shippingPrice;
+  const amountRemaining = validGiftCard.amount_remaining || validGiftCard.currentBalance;
 
   // Determine how much of the gift card to use
-  const discount = Math.min(validGiftCard.currentBalance, totalOrderCost);
+  const discount = Math.min(amountRemaining, totalOrderCost);
 
   // Store previous shipping prices before setting to zero
   state.previousShippingPrice = state.shippingPrice;
@@ -202,23 +203,24 @@ export const applyGiftCard = (state, eligibleTotal, validGiftCard) => {
     state.taxPrice = 0;
     state.free_shipping_message = "Free";
   } else {
-    // Apply discount to items first, then shipping if there's remaining balance
-    const remainingAfterItems = discount - state.itemsPrice;
+    // Apply discount to items first
     state.itemsPrice = Math.max(0, state.itemsPrice - discount);
-
-    if (remainingAfterItems > 0) {
-      state.shippingPrice = Math.max(0, state.shippingPrice - remainingAfterItems);
-      state.preOrderShippingPrice = 0;
-      state.nonPreOrderShippingPrice = 0;
-      state.free_shipping_message = state.shippingPrice === 0 ? "Free" : state.free_shipping_message;
-    }
-
     state.taxPrice = state.taxRate * state.itemsPrice;
   }
 
+  // Calculate final total
+  const finalTotal = state.itemsPrice + state.shippingPrice + state.taxPrice + (state.tip || 0);
+  state.totalPrice = finalTotal;
+
+  // Set the active indicator
   state.activePromoCodeIndicator = `Gift Card: $${discount.toFixed(2)} Applied`;
-  state.giftCardAmount = discount;
-  state.giftCardCode = validGiftCard.code;
+
+  // Return the amount used and new remaining balance
+
+  return {
+    amount_used: discount,
+    amount_remaining: Math.max(0, amountRemaining - discount),
+  };
 };
 // Calculate the new total price based on included or excluded products and categories
 export const calculateNewItemsPrice = ({ cartItems, validPromo, isWholesaler }) => {

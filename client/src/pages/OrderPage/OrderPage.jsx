@@ -7,7 +7,6 @@ import { Loading } from "../../shared/SharedComponents";
 import useWindowDimensions from "../../shared/Hooks/useWindowDimensions";
 import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
-import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 import { determineOrderColors } from "../OrdersPage/ordersPageHelpers";
 
@@ -179,16 +178,16 @@ const OrderPage = () => {
                     {order.shipping.shipping_rate && (
                       <div className=" w-100per lh-25px">
                         <div className="ai-c jc-b w-100per">
-                          <label className="mv-0px mr-5px">{"Carrier: "}</label>
-                          <label className=" mv-0px">{order.shipping.shipping_rate.carrier} </label>
+                          <div className="mv-0px mr-5px">{"Carrier: "}</div>
+                          <div className=" mv-0px">{order.shipping.shipping_rate.carrier} </div>
                         </div>
                         <div className="ai-c jc-b w-100per">
-                          <label className="mv-0px mr-5px">{"Speed: "}</label>
-                          <label className=" mv-0px">{order.shipping.shipping_rate.service} </label>
+                          <div className="mv-0px mr-5px">{"Speed: "}</div>
+                          <div className=" mv-0px">{order.shipping.shipping_rate.service} </div>
                         </div>
                         <div className="ai-c jc-b w-100per">
-                          <label className="mv-0px mr-5px">{"Estimated Processing Time: "}</label>
-                          <label className=" mv-0px">
+                          <div className="mv-0px mr-5px">{"Estimated Processing Time: "}</div>
+                          <div className=" mv-0px">
                             {cartItems
                               .filter(item => item.itemType === "product")
                               .some(item => item.processing_time) && (
@@ -207,23 +206,23 @@ const OrderPage = () => {
                                 {"business days"}
                               </div>
                             )}
-                          </label>
+                          </div>
                         </div>
                         <div className="ai-c jc-b w-100per">
-                          <label className="mv-0px mr-5px">{"Estimated Delivery Time: "}</label>
-                          <label className=" mv-0px">
+                          <div className="mv-0px mr-5px">{"Estimated Delivery Time: "}</div>
+                          <div className=" mv-0px">
                             {order.shipping.shipping_rate.est_delivery_days}{" "}
                             {order.shipping.shipping_rate.est_delivery_days === 1 ? "Business Day" : " Business Days"}{" "}
-                          </label>
+                          </div>
                         </div>
                         <div className="ai-c jc-b w-100per">
-                          <label className="mv-0px mr-5px">{"Rate: "}</label>
-                          <label className=" mv-0px">
+                          <div className="mv-0px mr-5px">{"Rate: "}</div>
+                          <div className=" mv-0px">
                             {"$"}{" "}
                             {order.shipping.international
                               ? order.shipping.shipping_rate.rate
                               : order.shipping.shipping_rate.list_rate || order.shipping.shipping_rate.rate}
-                          </label>
+                          </div>
                         </div>
                       </div>
                     )}
@@ -272,7 +271,7 @@ const OrderPage = () => {
                         <div>{"Cart is empty"}</div>
                       ) : (
                         order.orderItems.map((item, index) => (
-                          <GLCartItem item={item} index={index} show_quantity={false} />
+                          <GLCartItem key={item._id} item={item} index={index} show_quantity={false} />
                         ))
                       )}
                     </ul>
@@ -294,10 +293,10 @@ const OrderPage = () => {
                       </del>
                       <div>
                         <del style={{ color: "red" }}>
-                          <label style={{ color: "white" }}>
+                          <div style={{ color: "white" }}>
                             {"$"}
                             {order.orderItems && getItemsTotal(order.orderItems).toFixed(2)}
-                          </label>
+                          </div>
                         </del>
                       </div>
                     </li>
@@ -357,12 +356,12 @@ const OrderPage = () => {
                     <li>
                       <div>{"Order Total"}</div>
                       <del style={{ color: "red" }}>
-                        <label style={{ color: "white" }}>
+                        <div style={{ color: "white" }}>
                           <div>
                             {"$"}
                             {order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}
                           </div>
-                        </label>
+                        </div>
                       </del>
                     </li>
                   )}

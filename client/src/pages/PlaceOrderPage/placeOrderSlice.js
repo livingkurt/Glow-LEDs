@@ -111,6 +111,8 @@ const initialState = {
   orderIds: [],
   previousPreOrderShippingPrice: 0,
   previousNonPreOrderShippingPrice: 0,
+  active_promo_codes: [],
+  active_gift_cards: [],
 };
 
 const placeOrder = createSlice({
@@ -293,38 +295,88 @@ const placeOrder = createSlice({
       }
     },
     removePromo: (state, { payload }) => {
-      const { items_price, tax_rate, previousShippingPrice, shipping } = payload;
+      const { items_price, tax_rate, previousShippingPrice, shipping, code } = payload;
 
+      // Remove specific code from active lists
+      state.active_promo_codes = state.active_promo_codes.filter(pc => pc.promo_code !== code);
+      state.active_gift_cards = state.active_gift_cards.filter(gc => gc.code !== code);
+
+      // Recalculate totals by reapplying all remaining codes
       state.itemsPrice = items_price;
       state.taxPrice = tax_rate * items_price;
       state.taxRate = parseFloat(tax_rate);
-      state.free_shipping_message = "------";
-      state.activePromoCodeIndicator = "";
+
       if (shipping) {
         state.preOrderShippingPrice = state.previousPreOrderShippingPrice;
         state.nonPreOrderShippingPrice = state.previousNonPreOrderShippingPrice;
         state.shippingPrice = previousShippingPrice;
       }
-      state.promo_code = "";
-      state.show_promo_code_input_box = true;
-      sessionStorage.removeItem("promo_code");
+
+      // Reset if no codes remain
+      if (state.active_promo_codes.length === 0 && state.active_gift_cards.length === 0) {
+        state.free_shipping_message = "------";
+        state.promo_code = "";
+        state.show_promo_code_input_box = true;
+        sessionStorage.removeItem("promo_code");
+      }
+
+      // Reapply all remaining codes
+      [...state.active_promo_codes, ...state.active_gift_cards].forEach(activeCode => {
+        if (activeCode.type === "gift_card") {
+          const eligibleTotal = state.itemsPrice;
+          applyGiftCard(state, eligibleTotal, activeCode);
+        } else {
+          const eligibleTotal = calculateNewItemsPrice({
+            cartItems: payload.cartItems,
+            validPromo: activeCode,
+            isWholesaler: payload.current_user?.isWholesaler,
+          });
+
+          if (activeCode.percentage_off) {
+            applyPercentageOff(state, eligibleTotal, activeCode, tax_rate);
+          } else if (activeCode.amount_off) {
+            applyAmountOff(state, eligibleTotal, activeCode, tax_rate);
+          }
+
+          if (activeCode.free_shipping) {
+            applyFreeShipping(state, activeCode);
+          }
+        }
+      });
     },
     activatePromo: (state, { payload }) => {
-      const { tax_rate, activePromoCodeIndicator, validPromo, validGiftCard, cartItems, current_user } = payload;
+      const { tax_rate, validPromo, validGiftCard, cartItems, current_user } = payload;
 
-      if (activePromoCodeIndicator) {
-        state.promo_code_validations = "Can only use one code at a time";
+      // Check if code is already active
+      const isCodeActive = [...state.active_promo_codes, ...state.active_gift_cards].some(
+        code => code.code === (validPromo?.code || validGiftCard?.code)
+      );
+
+      if (isCodeActive) {
+        state.promo_code_validations = "This code has already been applied";
         return;
       }
 
       if (validGiftCard) {
         const eligibleTotal = state.itemsPrice;
-        applyGiftCard(state, eligibleTotal, validGiftCard);
+        const giftCardResult = applyGiftCard(state, eligibleTotal, validGiftCard);
+        const giftCardWithAmount = {
+          ...validGiftCard,
+          amount_used: giftCardResult.amount_used,
+          amount_remaining: giftCardResult.amount_remaining,
+          type: "gift_card",
+        };
+        state.active_gift_cards.push(giftCardWithAmount);
       } else if (validPromo) {
         const eligibleTotal = calculateNewItemsPrice({
           cartItems,
           validPromo,
           isWholesaler: current_user?.isWholesaler,
+        });
+
+        state.active_promo_codes.push({
+          ...validPromo,
+          type: "promo_code",
         });
 
         if (validPromo.percentage_off) {
@@ -338,7 +390,10 @@ const placeOrder = createSlice({
         }
       }
 
-      state.show_promo_code_input_box = false;
+      // Calculate final total
+      state.totalPrice = state.itemsPrice + state.shippingPrice + state.taxPrice + (state.tip || 0);
+      state.show_promo_code_input_box = true;
+      state.promo_code = "";
     },
 
     re_choose_shipping_rate: (state, { payload }) => {
