@@ -137,7 +137,7 @@ const OrderPage = () => {
 
                       {current_user?.isAdmin && order.return_tracking_number && (
                         <Box display="flex" alignItems="center" justifyContent="space-between">
-                          <label>
+                          <div>
                             <h3>{"Return #:"}</h3>
                             <a
                               href={determine_tracking_link(order.return_tracking_number)}
@@ -150,7 +150,7 @@ const OrderPage = () => {
                             >
                               {order.return_tracking_number}
                             </a>
-                          </label>
+                          </div>
                         </Box>
                       )}
                       <h3>{"Address"}</h3>
@@ -276,7 +276,7 @@ const OrderPage = () => {
                       )}
                     </ul>
                   </div>
-                  {!order.promo_code && (
+                  {!order.promo && (
                     <li>
                       <div>{"Subtotal"}</div>
                       <div>
@@ -286,7 +286,7 @@ const OrderPage = () => {
                     </li>
                   )}
 
-                  {order.promo_code && (
+                  {order.promo && (
                     <li>
                       <del style={{ color: "red" }}>
                         <div style={{ color: "white" }}>{"Subtotal"}</div>
@@ -301,7 +301,7 @@ const OrderPage = () => {
                       </div>
                     </li>
                   )}
-                  {order.promo_code && (
+                  {order.promo && (
                     <li>
                       <div>{"Discount"}</div>
                       <div>
@@ -310,7 +310,7 @@ const OrderPage = () => {
                       </div>
                     </li>
                   )}
-                  {order.promo_code && (
+                  {order.promo && (
                     <li>
                       <div>{"New Subtotal"}</div>
                       <div>
@@ -384,11 +384,11 @@ const OrderPage = () => {
                     </li>
                   )}
 
-                  {order.promo_code && (
+                  {order.promo && (
                     <div className="">
                       <div style={{ borderTop: ".1rem white solid" }} className="pt-1rem" htmlFor="promo_code">
                         {"Promo Code: "}
-                        {order.promo_code}
+                        {order.promo.promo_code}
                       </div>
                     </div>
                   )}

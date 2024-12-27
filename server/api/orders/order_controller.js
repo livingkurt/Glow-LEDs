@@ -1,6 +1,6 @@
 import InvoiceTemplate from "../../email_templates/pages/InvoiceTemplate.js";
 import affiliate_db from "../affiliates/affiliate_db.js";
-import order_services from "../orders/order_services.js";
+import order_services from "./order_services.js";
 
 export default {
   get_table_orders_c: async (req, res) => {
@@ -217,18 +217,7 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  affiliate_code_usage_orders_c: async (req, res) => {
-    const { params, query } = req;
-    try {
-      const orders = await order_services.affiliate_code_usage_orders_s(params, query);
-      if (orders) {
-        return res.status(200).send(orders);
-      }
-      return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
+
   tax_rates_orders_c: async (req, res) => {
     const { query } = req;
     try {
@@ -241,30 +230,7 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  all_affiliate_code_usage_orders_c: async (req, res) => {
-    const { params, query } = req;
-    try {
-      const orders = await order_services.all_affiliate_code_usage_orders_s(params, query);
-      if (orders) {
-        return res.status(200).send(orders);
-      }
-      return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
-  promo_code_usage_orders_c: async (req, res) => {
-    const { params, query } = req;
-    try {
-      const orders = await order_services.promo_code_usage_orders_s(params, query);
-      if (orders) {
-        return res.status(200).send(orders);
-      }
-      return res.status(500).send({ message: "Error Deleting Order" });
-    } catch (error) {
-      res.status(500).send({ error, message: error.message });
-    }
-  },
+
   invoice_orders_c: async (req, res) => {
     const { params } = req;
     try {

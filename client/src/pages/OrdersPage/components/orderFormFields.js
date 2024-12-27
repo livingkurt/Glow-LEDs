@@ -1,8 +1,19 @@
-import { userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
+import { promoField, userField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 import { humanize, toTitleCase } from "../../../utils/helper_functions";
 import { sharedItemSchema } from "../../../utils/helpers/universal_helpers";
 
-export const orderFormFields = ({ users, products, promos, allShipping, parcels, order, tags, events, tickets }) => {
+export const orderFormFields = ({
+  users,
+  products,
+  promos,
+  allShipping,
+  parcels,
+  order,
+  tags,
+  events,
+  tickets,
+  giftCards,
+}) => {
   return {
     user: userField({ users }),
     itemsPrice: {
@@ -167,10 +178,7 @@ export const orderFormFields = ({ users, products, promos, allShipping, parcels,
         return "";
       },
     },
-    // promo_code: {
-    //   type: "text",
-    //   label: "Promo Code",
-    // },
+    promo: promoField({ promos }),
     promo_code: {
       type: "autocomplete_single",
       label: "Promp Code",
@@ -209,6 +217,27 @@ export const orderFormFields = ({ users, products, promos, allShipping, parcels,
       type: "json",
       label: "Error",
     },
+    giftCards: {
+      type: "array",
+      title: "Gift Cards",
+      label: "code",
+
+      itemSchema: {
+        type: "object",
+        fields: {
+          code: { type: "text", label: "Code" },
+          amountUsed: { type: "number", label: "Amount Used" },
+          giftCard: {
+            type: "autocomplete_single",
+            label: "Gift Card",
+            options: giftCards,
+            labelProp: "code",
+            getOptionLabel: option => option.code,
+          },
+        },
+      },
+    },
+
     shipping: {
       type: "object",
       title: "Shipping",

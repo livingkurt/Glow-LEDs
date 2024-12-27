@@ -10,7 +10,6 @@ router
   .put(promo_controller.update_code_used_promos_c);
 router.route("/:affiliate_id/sponsor_codes").get(promo_controller.findByAffiliateId_promos_c);
 
-router.route("/update_discount/:year?/:month?").put(promo_controller.update_affiliate_codes_promos_c);
 router.route("/create_one_time_use_code").put(promo_controller.create_one_time_use_code_promos_c);
 router.route("/refresh_sponsor_codes").post(promo_controller.refresh_sponsor_codes_promos_c);
 router.route("/filters").get(promo_controller.create_filters_promos_c);

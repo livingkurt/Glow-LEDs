@@ -97,7 +97,7 @@ const PaymentStep = () => {
           dispatch(
             activatePromo({
               tax_rate,
-              validGiftCard: result,
+              validGiftCard: result.giftCard,
               cartItems,
               current_user,
             })

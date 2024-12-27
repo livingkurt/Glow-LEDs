@@ -198,69 +198,6 @@ export default {
       }
     }
   },
-  update_affiliate_codes_promos_s: async (params, query) => {
-    try {
-      let o_filter = {};
-      if (params.month && params.month.length > 0) {
-        const start_date = month_dates(params.month, params.year).start_date;
-        const end_date = month_dates(params.month, params.year).end_date;
-        o_filter = {
-          deleted: false,
-          status: { $nin: ["unpaid", "canceled"] },
-          createdAt: {
-            $gte: new Date(start_date),
-            $lte: new Date(end_date),
-          },
-        };
-      } else if (params.year && params.year.length > 0) {
-        const start_date = `${params.year}-01-01`;
-        const end_date = `${params.year}-12-31`;
-        o_filter = {
-          deleted: false,
-          status: { $nin: ["unpaid", "canceled"] },
-          createdAt: {
-            $gte: new Date(start_date),
-            $lte: new Date(end_date),
-          },
-        };
-      } else {
-        o_filter = { deleted: false, status: { $nin: ["unpaid", "canceled"] } };
-      }
-      let a_filter = { deleted: false, active: true };
-      if (query.position === "promoter") {
-        a_filter = { deleted: false, active: true, promoter: true };
-      } else if (query.position === "sponsor") {
-        a_filter = { deleted: false, active: true, sponsor: true };
-      }
-
-      const limit = "0";
-      const page = "1";
-      const orders = await order_db.findAll_orders_db(o_filter, {}, limit, page);
-      const affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, "0", "1");
-
-      affiliates
-        .filter(affiliate => !affiliate.deleted)
-        .filter(affiliate => affiliate.active)
-        .filter(affiliate => affiliate.private_code)
-        .forEach(async affiliate => {
-          const revenue = orders
-            .filter(
-              order =>
-                order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-            )
-            .reduce((a, order) => a + order.totalPrice - order.taxPrice, 0);
-          const percentage_off = determineRevenueTier(affiliate, revenue);
-
-          await promo_db.update_promos_db(affiliate.private_code._id, { percentage_off });
-        });
-
-      return "Success";
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
   update_code_used_promos_s: async (params, body) => {
     try {
       const promo = await promo_db.findByCode_promos_db(params.promo_code.toLowerCase());
