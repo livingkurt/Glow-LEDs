@@ -69,6 +69,7 @@ const affiliatePage = createSlice({
       taskName: "",
       points: 0,
       jiraLink: "",
+      isFullLightshow: false,
       driveLink: "",
     },
     sponsorTaskModal: {

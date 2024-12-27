@@ -54,7 +54,7 @@ const determineGiftCardAmount = (taskPoints, revenue, isFullLightshow) => {
 };
 
 export const sendGiftCardEmail = async ({ email, affiliate, giftCard, level, monthlyTasks, promoCodeUsage }) => {
-  const subject = `Your Glow LEDs Monthly Earnings`;
+  const subject = `Your Glow LEDs Affiliate Earnings`;
 
   // Convert single gift card to array format expected by template
   const giftCardArray = giftCard

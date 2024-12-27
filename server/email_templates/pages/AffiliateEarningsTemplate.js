@@ -1,7 +1,41 @@
 export default (gift_cards, order_id, affiliate, level, monthlyTasks, isSponsorReward = false, stats = {}) => {
   const { codeUses = 0, revenue = 0, earnings = 0, percentageOff = 0 } = stats;
-
   const totalPoints = monthlyTasks.reduce((sum, task) => sum + task.points, 0);
+
+  const getLevelStyle = taskLevel => {
+    switch (taskLevel) {
+      case "Gold":
+        return {
+          color: "white",
+          icon: "🏆",
+          gradient: "linear-gradient(45deg, #B7995D, #FFD700, #B7995D)",
+          border: "2px solid #FFD700",
+        };
+      case "Silver":
+        return {
+          color: "white",
+          icon: "🥈",
+          gradient: "linear-gradient(45deg, #808080, #C0C0C0, #808080)",
+          border: "2px solid #C0C0C0",
+        };
+      case "Bronze":
+        return {
+          color: "white",
+          icon: "🥉",
+          gradient: "linear-gradient(45deg, #804A1F, #CD7F32, #804A1F)",
+          border: "2px solid #CD7F32",
+        };
+      default:
+        return {
+          color: "white",
+          icon: "⭐",
+          gradient: "none",
+          border: "none",
+        };
+    }
+  };
+
+  const levelStyle = getLevelStyle(level);
 
   return `
   <table style="width:100%;border-spacing:0; padding: 10px;">
@@ -12,7 +46,7 @@ export default (gift_cards, order_id, affiliate, level, monthlyTasks, isSponsorR
             <tr>
               <td style="font-family:helvetica;color:white">
                 <h1 style="text-align:center;font-family:helvetica;width:100%;margin:10px auto;line-height:50px;color:#333333;font-size:30px; padding-bottom: 7px;">
-                  ${isSponsorReward ? "Your Glow LEDs Gift Card Reward" : "Your Monthly Earnings Report"}
+                  Your Glow LEDs Affiliate Earnings
                 </h1>
               </td>
             </tr>
@@ -45,29 +79,61 @@ export default (gift_cards, order_id, affiliate, level, monthlyTasks, isSponsorR
                 <td style="font-family:helvetica">
                   <h3 style="color:white;font-size:25px;margin:0 0 15px 0;">Sponsor Rewards</h3>
 
-                  <p style="color:white;line-height:1.6;font-size:14px;margin:10px 0;">
-                    Your completed ${monthlyTasks.length} tasks (${totalPoints} points total):
-                  </p>
-                  <ul style="color:white;line-height:1.6;font-size:16px;margin:0;padding-left:20px; margin-bottom: 10px;">
-                    ${monthlyTasks.map(task => `<li>${task.taskName} (${task.points} points)</li>`).join("")}
-                  </ul>
-                   ${
-                     totalPoints >= 3
-                       ? `
-                      <p style="color:white;line-height:1.6;font-size:14px;margin:0;">
-                        ${
-                          gift_cards[0]?.initialBalance
-                            ? `You've earned a $${gift_cards[0]?.initialBalance.toFixed(2)} gift card for achieving ${level} Level status this month!`
-                            : "While you completed the minimum tasks, you did not qualify for a gift card reward this month."
-                        }
+                  ${
+                    gift_cards[0]?.initialBalance
+                      ? `
+                    <div style="background: ${levelStyle.gradient}; border: ${levelStyle.border}; border-radius: 15px; padding: 20px; margin-bottom: 20px; text-align: center;">
+                      <div style="font-size: 48px; margin-bottom: 10px;">${levelStyle.icon}</div>
+                      <h2 style="color: ${levelStyle.color}; font-size: 32px; margin: 0 0 10px 0; text-transform: uppercase;">
+                        ${level} Level Achieved!
+                      </h2>
+                      <p style="color:white;font-size:18px;margin:0;">
+                        Congratulations! You've earned a <strong style="color: ${levelStyle.color}">$${gift_cards[0].initialBalance.toFixed(2)} Gift Card</strong>
                       </p>
+                    </div>
                     `
-                       : `
-                      <p style="color:white;line-height:1.6;font-size:14px;margin:0;">
-                        <strong style="color:#ff4444">⚠️ Warning:</strong> You completed less than 3 task points this month which counts as a strike. Remember to complete at least 3 task points each month to avoid strikes.
-                      </p>
-                    `
-                   }
+                      : ""
+                  }
+
+                  <div style="background: #4c4f60; border-radius: 15px; padding: 20px">
+                    <h4 style="color:white;font-size:20px;margin:0 0 10px 0;">Task Completion Summary</h4>
+                    <p style="color:white;line-height:1.6;font-size:16px;margin:0 0 10px 0;">
+                      <span style="font-size: 24px;">📋</span> Completed Tasks: <strong>${monthlyTasks.length}</strong><br>
+                      <span style="font-size: 24px;">⭐</span> Total Points: <strong>${totalPoints}</strong>
+                    </p>
+                    <ul style="color:white;line-height:1.6;font-size:16px;margin:10px 0;padding-left:20px;">
+                      ${monthlyTasks.map(task => `<li>${task.taskName} (${task.isFullLightshow ? "Full Lightshow" : `${task.points} points`})</li>`).join("")}
+                    </ul>
+                  </div>
+
+                  ${(() => {
+                    if (totalPoints < 3) {
+                      return `
+                        <div style="background: #a00808; border-radius: 15px; padding: 20px; margin-top: 10px;">
+                          <p style="color:white;line-height:1.6;font-size:16px;margin:0;">
+                            <span style="font-size: 24px;">⚠️</span> <strong>Warning:</strong> You completed less than 3 task points this month which counts as a strike. Remember to complete at least 3 task points each month to avoid strikes.
+                          </p>
+                        </div>
+                      `;
+                    }
+
+                    if (gift_cards[0]?.initialBalance) {
+                      return "";
+                    }
+
+                    return `
+                        <div style="background: #4c4f60; border-radius: 15px; padding: 20px;">
+                          <p style="color:white;line-height:1.6;font-size:16px;margin:0;">
+                            <span style="font-size: 24px;">ℹ️</span> While you completed the minimum tasks, additional requirements are needed for a gift card reward.
+                            <br><br>
+                            <strong>Next Level Requirements:</strong><br>
+                            🥉 Bronze: 3 points + any tasks<br>
+                            🥈 Silver: 5 points + full lightshow<br>
+                            🏆 Gold: 8 points + full lightshow + $500 revenue
+                          </p>
+                        </div>
+                    `;
+                  })()}
                 </td>
               </tr>
             </tbody>
@@ -86,23 +152,23 @@ export default (gift_cards, order_id, affiliate, level, monthlyTasks, isSponsorR
                 <tr>
                   <td style="font-family:helvetica">
                     <h2 style="color:white;text-align:center;font-size:25px;margin:10px 0;">
-                      $${gift_card?.initialBalance.toFixed(2)} Gift Card${gift_card?.quantity > 1 ? "s" : ""}
+                      Your Gift Card${gift_card?.quantity > 1 ? "s" : ""}
                     </h2>
 
                     ${Array(gift_card?.quantity)
                       .fill()
                       .map(
                         (_, index) => `
-                      <div style="background: #4c4f60; padding: 15px; border-radius: 10px; margin: 15px 0; text-align: center;">
+                      <div style="background: ${levelStyle.gradient}; padding: 20px; border-radius: 15px; margin: 15px 0; text-align: center; border: ${levelStyle.border};">
                         ${
                           gift_card?.display_image_object?.link
                             ? `<img src="${gift_card?.display_image_object?.link}" alt="Gift Card" style="max-width: 200px; margin-bottom: 15px; border-radius: 8px;">`
                             : ""
                         }
-                        <div style="font-size: 16px; color: white; margin-bottom: 10px; font-weight: bold;">
-                          Gift Card ${gift_card.quantity > 1 ? index + 1 : ""}
+                        <div style="font-size: 24px; color: ${levelStyle.color}; margin-bottom: 10px; font-weight: bold;">
+                          $${gift_card.initialBalance.toFixed(2)} Gift Card ${gift_card.quantity > 1 ? index + 1 : ""}
                         </div>
-                        <div style="font-size: 20px; letter-spacing: 2px; color: white; background: #6a6c80; padding: 15px; border-radius: 10px; font-weight: bold;">
+                        <div style="font-size: 20px; letter-spacing: 2px; color: white; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; font-weight: bold;">
                           ${gift_card.codes[index]}
                         </div>
                       </div>

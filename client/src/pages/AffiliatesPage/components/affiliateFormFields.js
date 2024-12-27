@@ -228,6 +228,10 @@ export const affiliateFormFields = ({ products, users, microlights, promos, cart
             type: "text",
             label: "Drive Link",
           },
+          isFullLightshow: {
+            type: "checkbox",
+            label: "Full Lightshow",
+          },
           verified: {
             type: "checkbox",
             label: "Verified",
