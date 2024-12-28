@@ -21,7 +21,7 @@ import {
 import { Print, Email, Info } from "@mui/icons-material";
 import { detailsOrder } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
-import { printLabel } from "../../pages/OrdersPage/ordersPageHelpers";
+import { printCustomerLabel } from "../../pages/OrdersPage/ordersPageHelpers";
 
 const ReturnLabelPage = () => {
   const dispatch = useDispatch();
@@ -46,7 +46,7 @@ const ReturnLabelPage = () => {
 
   const handlePrintLabel = () => {
     if (order?.shipping?.return_shipping_label?.postage_label?.label_url) {
-      printLabel(order?.shipping?.return_shipping_label?.postage_label?.label_url, order, returnDeadline);
+      printCustomerLabel(order?.shipping?.return_shipping_label?.postage_label?.label_url, order, returnDeadline);
     }
   };
 

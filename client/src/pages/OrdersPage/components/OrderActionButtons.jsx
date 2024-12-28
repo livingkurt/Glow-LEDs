@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../../api";
 import { API_Orders } from "../../../utils";
 import { Loading } from "../../../shared/SharedComponents";
-import { printInvoice, printLabel } from "../ordersPageHelpers";
+import { printCustomerLabel, printInvoice, printLabel } from "../ordersPageHelpers";
 import { openLinkLabelModal } from "../../../slices/shippingSlice";
 import { openShippingModal, set_order } from "../../../slices/orderSlice";
 import { showConfirm, showError, showSuccess } from "../../../slices/snackbarSlice";
@@ -25,7 +25,7 @@ const OrderActionButtons = ({ order }) => {
   const handlePrintReturnLabel = () => {
     const labelUrl = order?.shipping?.return_shipping_label?.postage_label?.label_url;
     const deadline = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(); // 30 days from now
-    printLabel(labelUrl, order, deadline);
+    printCustomerLabel(labelUrl, order, deadline);
   };
 
   const handleReturnConfirm = async returnData => {
