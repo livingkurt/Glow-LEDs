@@ -28,7 +28,6 @@ import Typography from "@mui/material/Typography";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, user } = userPage;

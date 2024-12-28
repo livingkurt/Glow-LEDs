@@ -176,14 +176,6 @@ export default {
       const user = await User.findById(userId);
 
       await sendEmailVerifiedSuccess(user);
-
-      const currentDate = new Date();
-      const startDate = new Date("2024-10-24");
-      const endDate = new Date("2024-10-30");
-
-      if (currentDate > startDate && currentDate < endDate) {
-        await sendAnnouncementEmail(user.email);
-      }
       res.status(200).json({ message: "Email verified successfully" });
     } catch (error) {
       res.status(500).json({ message: error.message });

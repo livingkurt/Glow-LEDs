@@ -131,7 +131,6 @@ export const {
   useGetProductRevenueQuery,
   useGetMonthlyRevenueProductOrdersQuery,
   useGetYearlyRevenueProductOrdersQuery,
-  useGetSponsorCheckinStatusQuery,
   useGetYearlyExpenseOrdersQuery,
   useGetMonthlyExpenseOrdersQuery,
   useGetDailyExpenseOrdersQuery,

@@ -14,7 +14,6 @@ import CategorySales from "./components/CategorySales";
 import CurrentStock from "./components/CurrentStock";
 import TotalsTable from "./components/TotalsTable";
 import AllProductRevenue from "./components/AllProductRevenue";
-import SponsorCheckins from "./components/SponsorCheckins";
 import GcodeGeneratorModal from "./components/GcodeGeneratorModal/GcodeGeneratorModal";
 import ProductRevenue from "./components/ProductRevenue";
 import AppBar from "@mui/material/AppBar";
@@ -37,8 +36,6 @@ const DashboardPage = () => {
   const all_product_revenue = API.useGetProductRevenueQuery({ start_date, end_date });
   const range_payouts = API.useGetRangePayoutsQuery({ start_date, end_date });
   const range_expenses = API.useGetRangeExpensesQuery({ start_date, end_date });
-  const sponsorCheckinStatus = API.useGetSponsorCheckinStatusQuery({ start_date, end_date });
-  const questionConcerns = API.useGetQuestionConcernsQuery({ start_date, end_date });
 
   return (
     <Container maxWidth="lg" sx={{ py: 2 }}>
@@ -108,14 +105,6 @@ const DashboardPage = () => {
         </GLTabPanel>
         <GLTabPanel value={tabIndex} index={4}>
           <ProductRevenue />
-        </GLTabPanel>
-        <GLTabPanel value={tabIndex} index={5}>
-          <SponsorCheckins
-            month={month}
-            year={year}
-            sponsorCheckinStatus={sponsorCheckinStatus}
-            questionConcerns={questionConcerns}
-          />
         </GLTabPanel>
         <CurrentStock />
         <GcodeGeneratorModal />
