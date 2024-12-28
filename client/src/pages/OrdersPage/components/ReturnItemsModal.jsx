@@ -28,8 +28,7 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
       ...item,
       returnQuantity: 0,
       returnReason: "",
-      exchangeProductId: "",
-      exchangeQuantity: 0,
+      exchangeItems: [],
     })) || []
   );
 
@@ -50,21 +49,37 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
     setReturnItems(newReturnItems);
   };
 
-  const handleExchangeProductChange = (index, product) => {
+  const handleAddExchangeProduct = returnItemIndex => {
     const newReturnItems = [...returnItems];
-    newReturnItems[index].exchangeProductId = product;
+    newReturnItems[returnItemIndex].exchangeItems.push({
+      productId: "",
+      quantity: 0,
+    });
     setReturnItems(newReturnItems);
   };
 
-  const handleExchangeQuantityChange = (index, value) => {
-    const newQuantity = Math.min(Math.max(0, parseInt(value) || 0), returnItems[index].returnQuantity);
+  const handleRemoveExchangeProduct = (returnItemIndex, exchangeItemIndex) => {
     const newReturnItems = [...returnItems];
-    newReturnItems[index].exchangeQuantity = newQuantity;
+    newReturnItems[returnItemIndex].exchangeItems.splice(exchangeItemIndex, 1);
+    setReturnItems(newReturnItems);
+  };
+
+  const handleExchangeProductSelect = (returnItemIndex, exchangeItemIndex, productId) => {
+    const newReturnItems = [...returnItems];
+    newReturnItems[returnItemIndex].exchangeItems[exchangeItemIndex].productId = productId;
+    setReturnItems(newReturnItems);
+  };
+
+  const handleExchangeQuantityChange = (returnItemIndex, exchangeItemIndex, value) => {
+    const newQuantity = Math.min(Math.max(0, parseInt(value) || 0), returnItems[returnItemIndex].returnQuantity);
+    const newReturnItems = [...returnItems];
+    newReturnItems[returnItemIndex].exchangeItems[exchangeItemIndex].quantity = newQuantity;
     setReturnItems(newReturnItems);
   };
 
   const handleConfirm = () => {
     const itemsToReturn = returnItems.filter(item => item.returnQuantity > 0);
+    console.log("Items to return:", itemsToReturn);
     if (itemsToReturn.length === 0) {
       alert("Please select at least one item to return");
       return;
@@ -80,16 +95,13 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
     // Create return and exchange data structure
     const returnData = {
       returningItems: itemsToReturn.map(item => ({
-        productId: item.productId,
+        productId: item._id,
         quantity: item.returnQuantity,
         reason: item.returnReason,
       })),
-      exchangeItems: itemsToReturn
-        .filter(item => item.exchangeProductId && item.exchangeQuantity > 0)
-        .map(item => ({
-          productId: item.exchangeProductId,
-          quantity: item.exchangeQuantity,
-        })),
+      exchangeItems: itemsToReturn.flatMap(item =>
+        item.exchangeItems.filter(exchange => exchange.productId && exchange.quantity > 0)
+      ),
     };
 
     onConfirm(returnData);
@@ -169,58 +181,86 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
             <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
               {"Select replacement items for exchange"}
             </Typography>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>{"Returning Item"}</TableCell>
-                  <TableCell>{"Return Quantity"}</TableCell>
-                  <TableCell>{"Exchange For"}</TableCell>
-                  <TableCell align="right">{"Exchange Quantity"}</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {returnItems
-                  .filter(item => item.returnQuantity > 0)
-                  .map((item, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{item.name}</TableCell>
-                      <TableCell>{item.returnQuantity}</TableCell>
-                      <TableCell>
-                        <FormControl fullWidth size="small">
-                          <Select
-                            value={item.exchangeProductId}
-                            onChange={e => handleExchangeProductChange(index, e.target.value)}
+            {returnItems
+              .filter(item => item.returnQuantity > 0)
+              .map((item, returnItemIndex) => (
+                <Box key={returnItemIndex} sx={{ mb: 4 }}>
+                  <Typography variant="subtitle1" sx={{ mb: 1 }}>
+                    {`Returning: ${item.name} (Quantity: ${item.returnQuantity})`}
+                  </Typography>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>{"Exchange For"}</TableCell>
+                        <TableCell align="right">{"Exchange Quantity"}</TableCell>
+                        <TableCell align="right">{"Actions"}</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {item.exchangeItems.map((exchangeItem, exchangeItemIndex) => (
+                        <TableRow key={exchangeItemIndex}>
+                          <TableCell>
+                            <FormControl fullWidth size="small">
+                              <Select
+                                value={exchangeItem.productId}
+                                onChange={e =>
+                                  handleExchangeProductSelect(returnItemIndex, exchangeItemIndex, e.target.value)
+                                }
+                              >
+                                <MenuItem value="">
+                                  <em>{"Select product"}</em>
+                                </MenuItem>
+                                {availableProducts?.map(product => (
+                                  <MenuItem key={product._id} value={product._id}>
+                                    {product.name}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                          </TableCell>
+                          <TableCell align="right">
+                            <TextField
+                              type="number"
+                              value={exchangeItem.quantity}
+                              onChange={e =>
+                                handleExchangeQuantityChange(returnItemIndex, exchangeItemIndex, e.target.value)
+                              }
+                              disabled={!exchangeItem.productId}
+                              inputProps={{
+                                min: 0,
+                                max: item.returnQuantity,
+                                style: { textAlign: "right" },
+                              }}
+                              size="small"
+                              sx={{ width: 80 }}
+                            />
+                          </TableCell>
+                          <TableCell align="right">
+                            <Button
+                              onClick={() => handleRemoveExchangeProduct(returnItemIndex, exchangeItemIndex)}
+                              color="error"
+                              size="small"
+                            >
+                              {"Remove"}
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                      <TableRow>
+                        <TableCell colSpan={3}>
+                          <Button
+                            onClick={() => handleAddExchangeProduct(returnItemIndex)}
+                            color="primary"
+                            size="small"
                           >
-                            <MenuItem value="">
-                              <em>{"No exchange"}</em>
-                            </MenuItem>
-                            {availableProducts?.map(product => (
-                              <MenuItem key={product.id} value={product.id}>
-                                {product.name}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </TableCell>
-                      <TableCell align="right">
-                        <TextField
-                          type="number"
-                          value={item.exchangeQuantity}
-                          onChange={e => handleExchangeQuantityChange(index, e.target.value)}
-                          disabled={!item.exchangeProductId}
-                          inputProps={{
-                            min: 0,
-                            max: item.returnQuantity,
-                            style: { textAlign: "right" },
-                          }}
-                          size="small"
-                          sx={{ width: 80 }}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
+                            {"Add Exchange Item"}
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </Box>
+              ))}
           </>
         )}
       </DialogContent>

@@ -29,11 +29,12 @@ const OrderActionButtons = ({ order }) => {
   };
 
   const handleReturnConfirm = async returnData => {
+    console.log({ returnData });
     try {
       // Create return order
       dispatch(
         API.createReturnLabel({
-          orderId: order.id,
+          orderId: order._id,
           items: returnData.returningItems,
         })
       );
@@ -43,9 +44,10 @@ const OrderActionButtons = ({ order }) => {
         dispatch(
           API.saveOrder({
             ...order,
-            isUpdated: true,
+            _id: null,
+            orderItems: returnData.returningItems,
             status: "paid",
-            originalOrderId: order.id,
+            originalOrderId: order._id,
             returnItems: returnData.exchangeItems,
             change_log: [
               ...order.change_log,
