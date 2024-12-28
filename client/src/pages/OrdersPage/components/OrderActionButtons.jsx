@@ -6,10 +6,11 @@ import { Loading } from "../../../shared/SharedComponents";
 import { printInvoice, printLabel } from "../ordersPageHelpers";
 import { openLinkLabelModal } from "../../../slices/shippingSlice";
 import { openShippingModal, set_order } from "../../../slices/orderSlice";
-import { showConfirm, showSuccess } from "../../../slices/snackbarSlice";
+import { showConfirm, showError, showSuccess } from "../../../slices/snackbarSlice";
 import ReturnItemsModal from "./ReturnItemsModal";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import { useProductsQuery } from "../../../api/allRecordsApi";
 
 const OrderActionButtons = ({ order }) => {
   const dispatch = useDispatch();
@@ -27,38 +28,47 @@ const OrderActionButtons = ({ order }) => {
     printLabel(labelUrl, order, deadline);
   };
 
-  const handleReturnItemsConfirm = returnItems => {
-    setReturnModalOpen(false);
-    dispatch(
-      showConfirm({
-        title: "Are you sure you want to Buy a RETURN Label for this Order?",
-        inputLabel: "Describe why you made this change to the order",
-        onConfirm: inputText => {
-          dispatch(
-            API.createReturnLabel({
-              orderId: order._id,
-              returnItems: returnItems,
-            })
-          );
-          dispatch(
-            API.saveOrder({
-              ...order,
-              isUpdated: true,
-              returnItems: returnItems,
-              change_log: [
-                ...order.change_log,
-                {
-                  change: inputText,
-                  changedAt: new Date(),
-                  changedBy: current_user,
-                },
-              ],
-            })
-          );
-        },
-      })
-    );
+  const handleReturnConfirm = async returnData => {
+    try {
+      // Create return order
+      dispatch(
+        API.createReturnLabel({
+          orderId: order.id,
+          items: returnData.returningItems,
+        })
+      );
+
+      // If there are exchange items, create a new order for them
+      if (returnData.exchangeItems?.length > 0) {
+        dispatch(
+          API.saveOrder({
+            ...order,
+            isUpdated: true,
+            status: "paid",
+            originalOrderId: order.id,
+            returnItems: returnData.exchangeItems,
+            change_log: [
+              ...order.change_log,
+              {
+                change: "Return and exchange processed successfully",
+                changedAt: new Date(),
+                changedBy: current_user,
+              },
+            ],
+          })
+        );
+      }
+
+      // Show success message
+      dispatch(showSuccess({ message: "Return and exchange processed successfully" }));
+      setReturnModalOpen(false);
+      // Refresh order list or navigate to return label page
+    } catch (error) {
+      dispatch(showError({ message: "Error processing return and exchange" }));
+    }
   };
+
+  const productsQuery = useProductsQuery({ hidden: false });
 
   return (
     <div>
@@ -238,7 +248,8 @@ const OrderActionButtons = ({ order }) => {
         open={returnModalOpen}
         onClose={() => setReturnModalOpen(false)}
         order={order}
-        onConfirm={handleReturnItemsConfirm}
+        onConfirm={handleReturnConfirm}
+        availableProducts={productsQuery.isLoading ? [] : productsQuery.data}
       />
     </div>
   );
