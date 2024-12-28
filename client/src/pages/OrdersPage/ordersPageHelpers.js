@@ -175,7 +175,7 @@ export const sendEmail = shipping => {
   document.location = "mailto:" + email + "?subject=" + subject + "&body=" + emailBody;
 };
 
-const waitForImagesToLoad = async html => {
+const waitForCustomerImagesToLoad = async html => {
   return new Promise((resolve, reject) => {
     try {
       const container = document.createElement("div");
@@ -215,7 +215,56 @@ const waitForImagesToLoad = async html => {
   });
 };
 
-export const printLabel = async (label, order, deadline) => {
+const waitForImagesToLoad = htmlString => {
+  return new Promise(resolve => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, "text/html");
+    const images = doc.querySelectorAll("img");
+    let imagesLoaded = 0;
+
+    if (images.length === 0) {
+      resolve();
+    } else {
+      images.forEach(img => {
+        const tmpImage = new Image();
+        tmpImage.src = img.src;
+        tmpImage.onload = () => {
+          imagesLoaded++;
+          if (imagesLoaded === images.length) {
+            resolve();
+          }
+        };
+        tmpImage.onerror = () => {
+          imagesLoaded++;
+          if (imagesLoaded === images.length) {
+            resolve();
+          }
+        };
+      });
+    }
+  });
+};
+
+export const printLabel = async label => {
+  const html = `<div style="width: 100%; height: auto;">
+      <img style="margin: auto; text-align: center;" src="${label}" alt="label" />
+  </div>`;
+  await waitForImagesToLoad(html);
+
+  const d = new Printd();
+  const container = document.createElement("div");
+  container.innerHTML = html;
+  d.print(container, [
+    `
+    html {
+    color: black;
+    font-family: helvetica, sans-serif;
+  }
+`,
+  ]);
+};
+
+export const printCustomerLabel = async (label, order, deadline) => {
   const itemsTable = order?.orderItems
     ? `
     <div style="margin-top: 1rem;">
@@ -279,7 +328,7 @@ export const printLabel = async (label, order, deadline) => {
     </div>
   `;
 
-  await waitForImagesToLoad(html);
+  await waitForCustomerImagesToLoad(html);
 
   const d = new Printd();
   const container = document.createElement("div");
