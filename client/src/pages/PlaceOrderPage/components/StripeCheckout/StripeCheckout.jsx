@@ -14,33 +14,35 @@ const stripePromise = loadStripe(config.VITE_STRIPE_KEY);
 
 const StripeCheckout = () => {
   const dispatch = useDispatch();
-  const placeOrder = useSelector(state => state.placeOrder);
+
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { my_cart, shipping, payment } = cartPage;
+  const { cartItems } = my_cart;
+
+  const placeOrderPage = useSelector(state => state.placeOrder);
   const {
+    create_account,
+    new_password,
+    order_note,
+    production_note,
+    tip,
+    active_promo_codes,
+    active_gift_cards,
+    unpaidOrderId,
     shipment_id,
     shipping_rate,
     parcel,
-    create_account,
-    new_password,
     shippingPrice,
     itemsPrice,
     taxPrice,
     taxRate,
     totalPrice,
-    tip,
     previousShippingPrice,
-    order_note,
-    production_note,
     serviceFee,
     splitOrder,
     preOrderShippingRate,
     nonPreOrderShippingRate,
-    active_gift_cards,
-    active_promo_codes,
-  } = placeOrder;
-
-  const cartPage = useSelector(state => state.carts.cartPage);
-  const { my_cart, shipping, payment } = cartPage;
-  const { cartItems } = my_cart;
+  } = placeOrderPage;
 
   const hasPreOrderItems = getHasPreOrderItems(cartItems);
   const preOrderReleaseDate = getPreOrderReleaseDate(cartItems);
@@ -62,7 +64,15 @@ const StripeCheckout = () => {
         dispatch(showError({ message: error.message }));
         return;
       }
-      if (cartItems.length > 0) {
+
+      if (unpaidOrderId) {
+        dispatch(
+          API.payOrder({
+            orderId: unpaidOrderId,
+            paymentMethod,
+          })
+        );
+      } else if (cartItems.length > 0) {
         dispatch(
           API.placeOrder({
             order: {

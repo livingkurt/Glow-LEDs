@@ -113,6 +113,7 @@ const initialState = {
   previousNonPreOrderShippingPrice: 0,
   active_promo_codes: [],
   active_gift_cards: [],
+  unpaidOrderId: null,
 };
 
 const placeOrder = createSlice({
@@ -588,12 +589,31 @@ const placeOrder = createSlice({
       state.hideCheckoutButton = true;
     },
     [API.placeOrder.fulfilled]: (state, { payload }) => {
+      console.log({ payload });
       state.loadingPayment = false;
       state.orderCompleted = true;
       state.paymentValidations = payload.message;
     },
+
     [API.placeOrder.rejected]: (state, { payload, error }) => {
+      console.log({ payload, error });
+      if (payload.status === "unpaid") {
+        state.unpaidOrderId = payload._id;
+      } else {
+        state.unpaidOrderId = null;
+      }
       state.loadingPayment = false;
+    },
+    [API.payOrder.fulfilled]: (state, { payload }) => {
+      console.log({ payload });
+      state.loadingPayment = false;
+      state.orderCompleted = true;
+      state.paymentValidations = payload.message;
+      if (payload.status === "unpaid") {
+        state.unpaidOrderId = payload._id;
+      } else {
+        state.unpaidOrderId = null;
+      }
     },
     [API.validatePromoCode.fulfilled]: (state, { payload }) => {
       state.promo_code_validations = payload.errors.promo_code;

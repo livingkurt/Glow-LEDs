@@ -23,6 +23,7 @@ router.route("/guest").post(order_controller.create_orders_c);
 router.route("/guest/:id").get(order_controller.findById_orders_c);
 router.route("/secure").post(isAuth, order_controller.create_orders_c);
 router.route("/secure/:id").get(isAuth, order_controller.findById_orders_c);
+router.route("/:id/pay").put(order_controller.pay_order_c);
 // router.route("/get_product_quantities").put(order_controller.get_product_quantities);
 // router.route("/get_category_quantities").put(order_controller.get_category_quantities);
 

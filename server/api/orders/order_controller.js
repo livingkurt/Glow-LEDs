@@ -100,6 +100,13 @@ export default {
       }
       return res.status(500).send(order);
     } catch (error) {
+      if (error.orderId) {
+        return res.status(500).send({
+          error,
+          message: error.message,
+          orderId: error.orderId,
+        });
+      }
       res.status(500).send({ error, message: error.message });
     }
   },
@@ -516,6 +523,22 @@ export default {
         return res.status(204).send({ message: "Order Deleted" });
       }
       return res.status(500).send({ message: "Error Deleting Order" });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
+  pay_order_c: async (req, res) => {
+    const { id } = req.params;
+    const { paymentMethod } = req.body;
+
+    try {
+      const order = await order_services.pay_order_s(id, paymentMethod);
+      if (order) {
+        console.log("ordersChanged socket triggered");
+        req.io.emit("ordersChanged");
+        return res.status(200).send(order);
+      }
+      return res.status(500).send(order);
     } catch (error) {
       res.status(500).send({ error, message: error.message });
     }
