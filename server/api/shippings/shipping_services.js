@@ -133,10 +133,8 @@ export default {
     }
   },
   create_return_label_shipping_s: async (params, query, body) => {
-    console.log({ params, query, body });
     try {
       const order = (await order_db.findById_orders_db(params.order_id)).toObject();
-      console.log({ order });
 
       // Update order with return items if provided
       if (body.returnItems) {
