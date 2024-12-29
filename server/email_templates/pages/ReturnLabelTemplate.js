@@ -1,7 +1,7 @@
 import config from "../../config.js";
 
-export default ({ order, title, exchangeItems }) => {
-  console.log({ order, title, exchangeItems });
+export default ({ order }) => {
+  console.log({ order });
   const printPageUrl = `${config.DOMAIN}/account/return_label?orderId=${order._id}&deadline=${encodeURIComponent(
     new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
   )}`;
@@ -48,7 +48,7 @@ export default ({ order, title, exchangeItems }) => {
 
   // Generate exchange items table HTML if there are exchange items
   const exchangeItemsTable =
-    exchangeItems?.length > 0
+    order.exchangeItems?.length > 0
       ? `
     <h3 style="font-family:helvetica; color:white; margin: 30px 0 15px;">Exchange Items</h3>
     <table style="width:100%; margin: 20px 0; border-collapse: collapse; background-color: #4c4f60; border-radius: 10px;">
@@ -60,7 +60,7 @@ export default ({ order, title, exchangeItems }) => {
         </tr>
       </thead>
       <tbody>
-        ${exchangeItems
+        ${order.exchangeItems
           .map(
             item => `
           <tr>
@@ -94,7 +94,7 @@ export default ({ order, title, exchangeItems }) => {
             <tr>
               <td style="font-family:helvetica;color:white">
                 <h1 style="text-align:center;font-family:helvetica;width:100%;margin:10px auto;line-height:50px;color:#333333;font-size:50px; padding-bottom: 7px;">
-                  ${title}
+                  Return Shipping Label
                 </h1>
               </td>
             </tr>

@@ -136,32 +136,28 @@ export default {
     try {
       const order = (await order_db.findById_orders_db(params.order_id)).toObject();
 
-      // Update order with return items if provided
-      if (body.returnItems) {
-        order.returnItems = body.returnItems;
-
-        await order_db.update_orders_db(params.order_id, order);
-      }
-
-      if (body.exchangeItems) {
-        order.exchangeItems = body.exchangeItems;
-
-        await order_db.update_orders_db(params.order_id, order);
-      }
+      const updatedOrder = await order_db.update_orders_db(params.order_id, {
+        ...order,
+        returnItems: body.returnItems || [],
+        exchangeItems: body.exchangeItems || [],
+      });
+      console.log({ order, body, updatedOrder });
 
       const { shipment } = await createShippingRates({
-        order,
+        order: updatedOrder,
         returnLabel: true,
         returnToHeadquarters: query.return_to_headquarters,
       });
 
       const label = await EasyPost.Shipment.buy(shipment.id, shipment.lowestRate());
-      await addTracking({ order, label, shipping_rate: label.selected_rate, isReturnTracking: true });
+      await addTracking({ order: updatedOrder, label, shipping_rate: label.selected_rate, isReturnTracking: true });
 
       // Send return label email
       await email_services.send_return_label_emails_s({
-        order: { ...order, shipping: { ...order.shipping, return_shipping_label: label } },
-        exchangeItems: body.exchangeItems,
+        order: {
+          ...updatedOrder,
+          shipping: { ...updatedOrder.shipping, return_shipping_label: label },
+        },
       });
 
       return { label: label.postage_label.label_url };

@@ -744,7 +744,7 @@ export default {
       return mailRecipients.join(", ");
     }
   },
-  send_return_label_emails_s: async ({ order, exchangeItems }) => {
+  send_return_label_emails_s: async ({ order, exchangeItems, returnItems }) => {
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
       to: order.shipping.email,
@@ -752,8 +752,6 @@ export default {
       html: App({
         body: ReturnLabelTemplate({
           order,
-          title: "Return Shipping Label",
-          exchangeItems,
         }),
         unsubscribe: false,
       }),

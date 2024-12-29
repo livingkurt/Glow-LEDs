@@ -46,6 +46,9 @@ const OrderActionButtons = ({ order }) => {
           API.saveOrder({
             ...order,
             _id: null,
+            itemPrice: returnData.exchangeItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
+            taxPrice: 0,
+            totalPrice: 0,
             orderItems: returnData.exchangeItems,
             status: "paid",
             relatedOrder: order._id,
