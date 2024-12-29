@@ -35,7 +35,11 @@ const OrderActionButtons = ({ order }) => {
       dispatch(
         API.createReturnLabel({
           orderId: order._id,
-          items: returnData.returningItems,
+          returnItems: returnData.returningItems.map(item => ({
+            ...item,
+            quantity: item.returnQuantity,
+            reason: item.returnReason,
+          })),
           exchangeItems: returnData.exchangeItems,
         })
       );
@@ -46,6 +50,23 @@ const OrderActionButtons = ({ order }) => {
           API.saveOrder({
             ...order,
             _id: null,
+            shipping: {
+              ...order.shipping,
+              shipment_id: null,
+              shipping_rate: null,
+              shipment_tracker: null,
+              shipping_label: null,
+              return_shipment_id: null,
+              return_shipping_rate: null,
+              return_shipment_tracker: null,
+              return_shipping_label: null,
+            },
+            return_tracking_url: "",
+            tracking_url: "",
+            return_tracking_number: "",
+            user: order?.user,
+            tracking_number: "",
+            shippingPrice: 0,
             itemPrice: returnData.exchangeItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
             taxPrice: 0,
             totalPrice: 0,
@@ -159,7 +180,7 @@ const OrderActionButtons = ({ order }) => {
                           ...order.shipping,
                           shipment_id: null,
                           shipping_rate: null,
-                          shipment_tracker: null,
+                          shipping_tracker: null,
                           shipping_label: null,
                           return_shipment_id: null,
                           return_shipping_rate: null,

@@ -86,6 +86,10 @@ const orderItemSchema = {
   ...sharedItemSchema,
   reviewed: { type: Boolean, default: false },
   review_email_sent: { type: Boolean, default: false },
+  returnQuantity: { type: Number },
+  returnReason: { type: String },
+  exchangeQuantity: { type: Number },
+  exchangeReason: { type: String },
 };
 
 const orderSchema = new mongoose.Schema(
@@ -93,6 +97,7 @@ const orderSchema = new mongoose.Schema(
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     orderItems: [orderItemSchema],
     returnItems: [orderItemSchema],
+    exchangeItems: [orderItemSchema],
     messages: [messageSchema],
     shipping: shippingSchema,
     payment: paymentSchema, // Deprecated

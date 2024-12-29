@@ -275,7 +275,10 @@ export default {
   },
   update_orders_db: async (id, body) => {
     try {
-      return await Order.findOneAndUpdate({ _id: id }, body);
+      const order = await Order.findOne({ _id: id, deleted: false });
+      if (order) {
+        return await Order.updateOne({ _id: id }, body);
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
