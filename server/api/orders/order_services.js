@@ -844,4 +844,49 @@ export default {
       }
     }
   },
+  pay_order_s: async (orderId, paymentMethod) => {
+    try {
+      const order = await Order.findById(orderId);
+      if (!order) {
+        throw new Error("Order not found");
+      }
+
+      if (order.status !== "unpaid") {
+        throw new Error("Order is not in unpaid status");
+      }
+
+      const updatedOrder = await processPayment(orderId, paymentMethod, order.totalPrice);
+
+      // Send order confirmation emails
+      await sendOrderEmail(updatedOrder);
+      if (updatedOrder.orderItems.some(item => item.itemType === "ticket")) {
+        await sendTicketEmail(updatedOrder);
+      }
+      if (updatedOrder.orderItems.some(item => item.itemType === "gift_card")) {
+        await sendGiftCardEmail(updatedOrder);
+      }
+
+      // Handle promo code if it exists
+      if (updatedOrder.promo && updatedOrder.promo.length !== 16) {
+        await promo_services.update_code_used_promos_s({ promo_code: updatedOrder.promo.promo_code });
+        await sendCodeUsedEmail(updatedOrder.promo.promo_code);
+      }
+
+      // Handle gift cards if they exist
+      if (updatedOrder.giftCards && updatedOrder.giftCards.length > 0) {
+        await Promise.all(
+          updatedOrder.giftCards.map(async giftCard => {
+            await useGiftCard(giftCard.code, giftCard.amountUsed, orderId);
+          })
+        );
+      }
+
+      return updatedOrder;
+    } catch (error) {
+      console.log({ pay_order_s: error });
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
 };

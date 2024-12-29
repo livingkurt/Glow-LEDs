@@ -6,8 +6,6 @@ import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
 import { showError, showSuccess } from "../slices/snackbarSlice";
 import store from "../store";
-import config from "../config";
-import { sendOrderEmail, sendTicketEmail } from "./emailApi";
 
 export const getOrders = async ({ search, sorting, filters, page, pageSize }) => {
   try {
@@ -111,16 +109,6 @@ export const placeOrder = createAsyncThunk(
     },
     { dispatch, rejectWithValue }
   ) => {
-    console.log({
-      order,
-      cartId,
-      paymentMethod,
-      create_account,
-      new_password,
-      splitOrder,
-      preOrderShippingRate,
-      nonPreOrderShippingRate,
-    });
     try {
       const { data } = await axios.post("/api/orders/place_order", {
         order,
@@ -233,13 +221,18 @@ export const refundOrder = createAsyncThunk(
 );
 export const payOrder = createAsyncThunk(
   "orders/payOrder",
-  async ({ order, paymentMethod }, { dispatch, rejectWithValue }) => {
+  async ({ orderId, paymentMethod }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.put("/api/payments/secure/pay/" + order._id, { paymentMethod });
-      dispatch(showSuccess({ message: `Order Paid` }));
+      const { data } = await axios.put(`/api/orders/${orderId}/pay`, { paymentMethod });
+      dispatch(showSuccess({ message: "Payment processed successfully" }));
+      sessionStorage.removeItem("shippingAddress");
+      sessionStorage.setItem("manualNavigation", "true");
+      localStorage.removeItem("cartItems");
+      sessionStorage.removeItem("promo_code");
       return data;
     } catch (error) {
-      dispatch(showError({ message: errorMessage(error) }));
+      dispatch(showError({ message: errorMessage(error), duration: 10000 }));
+      console.log({ error });
       return rejectWithValue(error.response?.data);
     }
   }

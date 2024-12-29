@@ -520,4 +520,20 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  pay_order_c: async (req, res) => {
+    const { orderId } = req.params;
+    const { paymentMethod } = req.body;
+
+    try {
+      const order = await order_services.pay_order_s(orderId, paymentMethod);
+      if (order) {
+        console.log("ordersChanged socket triggered");
+        req.io.emit("ordersChanged");
+        return res.status(200).send(order);
+      }
+      return res.status(500).send(order);
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
 };
