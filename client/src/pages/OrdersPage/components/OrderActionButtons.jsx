@@ -36,6 +36,7 @@ const OrderActionButtons = ({ order }) => {
         API.createReturnLabel({
           orderId: order._id,
           items: returnData.returningItems,
+          exchangeItems: returnData.exchangeItems,
         })
       );
 
@@ -47,16 +48,9 @@ const OrderActionButtons = ({ order }) => {
             _id: null,
             orderItems: returnData.exchangeItems,
             status: "paid",
-            originalOrderId: order._id,
+            relatedOrder: order._id,
             returnItems: returnData.returningItems,
-            change_log: [
-              ...order.change_log,
-              {
-                change: "Return and exchange processed successfully",
-                changedAt: new Date(),
-                changedBy: current_user,
-              },
-            ],
+            change_log: [],
           })
         );
       }

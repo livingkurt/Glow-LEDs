@@ -139,6 +139,13 @@ export default {
       // Update order with return items if provided
       if (body.returnItems) {
         order.returnItems = body.returnItems;
+
+        await order_db.update_orders_db(params.order_id, order);
+      }
+
+      if (body.exchangeItems) {
+        order.exchangeItems = body.exchangeItems;
+
         await order_db.update_orders_db(params.order_id, order);
       }
 
@@ -154,10 +161,12 @@ export default {
       // Send return label email
       await email_services.send_return_label_emails_s({
         order: { ...order, shipping: { ...order.shipping, return_shipping_label: label } },
+        exchangeItems: body.exchangeItems,
       });
 
       return { label: label.postage_label.label_url };
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
