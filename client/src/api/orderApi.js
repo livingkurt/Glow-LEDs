@@ -128,6 +128,14 @@ export const placeOrder = createAsyncThunk(
       sessionStorage.removeItem("promo_code");
       return data;
     } catch (error) {
+      if (error.response?.data?.orderId) {
+        dispatch(showError({ message: errorMessage(error), duration: 10000 }));
+        return rejectWithValue({
+          status: "unpaid",
+          _id: error.response.data.orderId,
+          message: errorMessage(error),
+        });
+      }
       dispatch(showError({ message: errorMessage(error), duration: 10000 }));
       return rejectWithValue(error.response?.data);
     }

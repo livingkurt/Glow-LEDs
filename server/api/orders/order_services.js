@@ -298,14 +298,21 @@ export default {
       // Process payment if necessary
       if (paymentOrder) {
         if (paymentMethod || paymentOrder.totalPrice <= 0) {
-          paymentOrder = await processPayment(paymentOrder._id, paymentMethod, paymentOrder.totalPrice);
+          try {
+            paymentOrder = await processPayment(paymentOrder._id, paymentMethod, paymentOrder.totalPrice);
 
-          // After processing payment, update the preOrderOrder if it exists
-          if (splitOrder && preOrderOrder && preOrderOrder._id !== paymentOrder._id) {
-            preOrderOrder.status = "paid_pre_order";
-            preOrderOrder.paidAt = Date.now();
-            preOrderOrder.payment = paymentOrder.payment; // Use the same payment info
-            await preOrderOrder.save();
+            // After processing payment, update the preOrderOrder if it exists
+            if (splitOrder && preOrderOrder && preOrderOrder._id !== paymentOrder._id) {
+              preOrderOrder.status = "paid_pre_order";
+              preOrderOrder.paidAt = Date.now();
+              preOrderOrder.payment = paymentOrder.payment; // Use the same payment info
+              await preOrderOrder.save();
+            }
+          } catch (error) {
+            // If payment fails, throw error with order ID
+            const err = new Error(error.message);
+            err.orderId = paymentOrder._id;
+            throw err;
           }
         } else {
           throw new Error("Payment method is required for orders with a positive total price.");
@@ -351,6 +358,12 @@ export default {
     } catch (error) {
       console.log({ place_order_orders_s: error });
       if (error instanceof Error) {
+        // Include the order ID in the error if it exists
+        if (error.orderId) {
+          const err = new Error(error.message);
+          err.orderId = error.orderId;
+          throw err;
+        }
         throw new Error(error.message);
       }
     }
@@ -844,9 +857,9 @@ export default {
       }
     }
   },
-  pay_order_s: async (orderId, paymentMethod) => {
+  pay_order_s: async (id, paymentMethod) => {
     try {
-      const order = await Order.findById(orderId);
+      const order = await Order.findById(id);
       if (!order) {
         throw new Error("Order not found");
       }
@@ -855,7 +868,7 @@ export default {
         throw new Error("Order is not in unpaid status");
       }
 
-      const updatedOrder = await processPayment(orderId, paymentMethod, order.totalPrice);
+      const updatedOrder = await processPayment(id, paymentMethod, order.totalPrice);
 
       // Send order confirmation emails
       await sendOrderEmail(updatedOrder);
@@ -876,7 +889,7 @@ export default {
       if (updatedOrder.giftCards && updatedOrder.giftCards.length > 0) {
         await Promise.all(
           updatedOrder.giftCards.map(async giftCard => {
-            await useGiftCard(giftCard.code, giftCard.amountUsed, orderId);
+            await useGiftCard(giftCard.code, giftCard.amountUsed, id);
           })
         );
       }
