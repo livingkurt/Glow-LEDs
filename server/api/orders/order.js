@@ -86,18 +86,18 @@ const orderItemSchema = {
   ...sharedItemSchema,
   reviewed: { type: Boolean, default: false },
   review_email_sent: { type: Boolean, default: false },
+  returnQuantity: { type: Number },
+  returnReason: { type: String },
+  exchangeQuantity: { type: Number },
+  exchangeReason: { type: String },
 };
 
 const orderSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     orderItems: [orderItemSchema],
-    returnItems: [
-      {
-        ...orderItemSchema,
-        returnQuantity: { type: Number, required: true },
-      },
-    ],
+    returnItems: [orderItemSchema],
+    exchangeItems: [orderItemSchema],
     messages: [messageSchema],
     shipping: shippingSchema,
     payment: paymentSchema, // Deprecated
@@ -165,6 +165,7 @@ const orderSchema = new mongoose.Schema(
     hasPreOrderItems: { type: Boolean, default: false },
     preOrderShippingDate: { type: Date },
     splitOrder: { type: mongoose.Schema.Types.ObjectId, ref: "Order" },
+    relatedOrder: { type: mongoose.Schema.Types.ObjectId, ref: "Order" },
     deleted: { type: Boolean, default: false },
   },
   {

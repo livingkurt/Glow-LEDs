@@ -70,10 +70,8 @@ export default {
   buy_label_shipping_s: async params => {
     try {
       const order = await order_db.findById_orders_db(params.order_id);
-      console.log({ buy_label_shipping_s: order });
       const { shipping_rate, shipment_id } = order.shipping;
       const label = await buyLabel({ shipment_id, shipping_rate });
-      console.log({ label });
       await addTracking({ order, label, shipping_rate });
       return { invoice: InvoiceTemplate({ order }), label: label.postage_label.label_url };
     } catch (error) {
@@ -134,13 +132,13 @@ export default {
   },
   create_return_label_shipping_s: async (params, query, body) => {
     try {
-      const order = (await order_db.findById_orders_db(params.order_id)).toObject();
+      const order = await order_db.findById_orders_db(params.order_id);
 
-      // Update order with return items if provided
-      if (body.returnItems) {
-        order.returnItems = body.returnItems;
-        await order_db.update_orders_db(params.order_id, order);
-      }
+      order.returnItems = body.returnItems || [];
+      order.exchangeItems = body.exchangeItems || [];
+
+      await order.save();
+      console.log({ order, body });
 
       const { shipment } = await createShippingRates({
         order,
@@ -151,13 +149,25 @@ export default {
       const label = await EasyPost.Shipment.buy(shipment.id, shipment.lowestRate());
       await addTracking({ order, label, shipping_rate: label.selected_rate, isReturnTracking: true });
 
+      const latestOrder = (await order_db.findById_orders_db(params.order_id)).toObject();
+      console.log({ latestOrder });
+
       // Send return label email
       await email_services.send_return_label_emails_s({
-        order: { ...order, shipping: { ...order.shipping, return_shipping_label: label } },
+        order: {
+          ...latestOrder,
+          shipping: {
+            ...latestOrder.shipping,
+            return_shipping_label: label,
+          },
+        },
+        returnItems: body.returnItems || [],
+        exchangeItems: body.exchangeItems || [],
       });
 
       return { label: label.postage_label.label_url };
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

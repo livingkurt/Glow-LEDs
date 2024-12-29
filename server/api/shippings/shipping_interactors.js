@@ -268,7 +268,6 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
         handling_instructions: order.shipping.handling_instructions,
       },
     });
-    console.log({ shipment });
     return { shipment, parcel };
   } catch (error) {
     console.log({ error, errors: error.errors });

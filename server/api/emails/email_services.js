@@ -744,15 +744,19 @@ export default {
       return mailRecipients.join(", ");
     }
   },
-  send_return_label_emails_s: async ({ order }) => {
+  send_return_label_emails_s: async ({ order, returnItems, exchangeItems }) => {
+    // Convert Mongoose document to plain object
+    const plainOrder = order.toObject ? order.toObject() : order;
+
     const mailOptions = {
       from: config.DISPLAY_INFO_EMAIL,
       to: order.shipping.email,
       subject: "Your Return Shipping Label",
       html: App({
         body: ReturnLabelTemplate({
-          order,
-          title: "Return Shipping Label",
+          order: plainOrder,
+          returnItems,
+          exchangeItems,
         }),
         unsubscribe: false,
       }),
