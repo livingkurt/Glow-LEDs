@@ -92,12 +92,7 @@ const orderSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     orderItems: [orderItemSchema],
-    returnItems: [
-      {
-        ...orderItemSchema,
-        returnQuantity: { type: Number, required: true },
-      },
-    ],
+    returnItems: [orderItemSchema],
     messages: [messageSchema],
     shipping: shippingSchema,
     payment: paymentSchema, // Deprecated

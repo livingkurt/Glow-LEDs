@@ -45,10 +45,10 @@ const OrderActionButtons = ({ order }) => {
           API.saveOrder({
             ...order,
             _id: null,
-            orderItems: returnData.returningItems,
+            orderItems: returnData.exchangeItems,
             status: "paid",
             originalOrderId: order._id,
-            returnItems: returnData.exchangeItems,
+            returnItems: returnData.returningItems,
             change_log: [
               ...order.change_log,
               {

@@ -21,7 +21,7 @@ import {
   Tab,
 } from "@mui/material";
 import CustomizationOption from "../../ProductPage/components/CustomizationOption";
-import { calculateAdditionalCost } from "../../ProductPage/productHelpers";
+import { calculateAdditionalCost, getActiveOptions, getSelectedOptions } from "../../ProductPage/productHelpers";
 
 const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }) => {
   const [activeTab, setActiveTab] = useState(0);
@@ -76,14 +76,37 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
       price: selectedProduct.price,
       category: selectedProduct.category,
       subcategory: selectedProduct.subcategory,
-      product_collection: selectedProduct.product_collection,
-      display_image: selectedProduct.display_image,
-      display_image_object: selectedProduct.display_image_object,
       quantity: newReturnItems[returnItemIndex].exchangeItems[exchangeItemIndex].quantity || 0,
-      currentOptions: selectedProduct.options || [],
-      selectedOptions: [],
       product: selectedProduct._id,
       pathname: selectedProduct.pathname,
+      short_description: selectedProduct.short_description,
+      fact: selectedProduct.fact,
+      images: selectedProduct.images,
+      set_of: selectedProduct.set_of,
+      original_images: selectedProduct.images,
+      display_image_object: selectedProduct.images[0],
+      product_collection: selectedProduct.product_collection,
+      facts: selectedProduct.facts,
+      included_items: selectedProduct.included_items,
+      itemType: "product",
+      microlights: selectedProduct.microlights,
+      tags: selectedProduct.tags,
+      wholesale_price: selectedProduct.wholesale_price,
+      previous_price: selectedProduct.previous_price,
+      sale: selectedProduct.sale,
+      size: selectedProduct.size,
+      max_display_quantity: selectedProduct.max_display_quantity,
+      max_quantity: selectedProduct.max_quantity,
+      count_in_stock: selectedProduct.count_in_stock,
+      dimensions: selectedProduct.dimensions,
+      processing_time: selectedProduct.processing_time,
+      rating: selectedProduct.rating,
+      wholesale_product: selectedProduct.wholesale_product,
+      isPreOrder: selectedProduct.isPreOrder,
+      preOrderReleaseDate: selectedProduct.preOrderReleaseDate,
+      preOrderQuantity: selectedProduct.preOrderQuantity,
+      selectedOptions: getSelectedOptions(selectedProduct),
+      currentOptions: getActiveOptions(selectedProduct),
     };
     setReturnItems(newReturnItems);
   };
@@ -138,10 +161,13 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
       return;
     }
 
+    console.log({ itemsToReturn });
+
     // Create return and exchange data structure
     const returnData = {
       returningItems: itemsToReturn.map(item => ({
-        productId: item.product,
+        ...item,
+        product: item.product,
         quantity: item.returnQuantity,
         reason: item.returnReason,
       })),
