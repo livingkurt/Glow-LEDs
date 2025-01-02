@@ -221,14 +221,15 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
     let returnAddress = productionReturnAddress;
 
     const headquartersReturnAddress = {
-      street1: config.HEADQUARTERS_ADDRESS,
+      street1: config.HEADQUARTERS_ADDRESS_1,
+      street2: config.HEADQUARTERS_ADDRESS_2,
       email: config.INFO_EMAIL,
       city: config.HEADQUARTERS_CITY,
       state: config.HEADQUARTERS_STATE,
       zip: config.HEADQUARTERS_POSTAL_CODE,
       country: config.HEADQUARTERS_COUNTRY,
       company: "Glow LEDs",
-      phone: config.PHONE_NUMBER,
+      phone: config.HEADQUARTERS_PHONE,
     };
 
     if (returnToHeadquarters === "true") {
@@ -325,6 +326,7 @@ export const createCustomShippingRates = async ({ toShipping, fromShipping, parc
 
     return { shipment, parcel };
   } catch (error) {
+    console.log({ error, errors: error.errors });
     if (error instanceof Error) {
       throw new Error(error.errors?.map(error => `${error.field} ${error.message}`).join(", "));
     }

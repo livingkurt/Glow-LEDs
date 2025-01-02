@@ -95,12 +95,14 @@ const CreateLabelModal = () => {
   const headquartersAddress = {
     first_name: config.VITE_HEADQUARTERS_FIRST_NAME,
     last_name: config.VITE_HEADQUARTERS_LAST_NAME,
-    address_1: config.VITE_HEADQUARTERS_ADDRESS,
+    address_1: config.VITE_HEADQUARTERS_ADDRESS_1,
+    address_2: config.VITE_HEADQUARTERS_ADDRESS_2,
     city: config.VITE_HEADQUARTERS_CITY,
     state: config.VITE_HEADQUARTERS_STATE,
     postalCode: config.VITE_HEADQUARTERS_POSTAL_CODE,
     country: config.VITE_HEADQUARTERS_COUNTRY,
     phone: config.VITE_HEADQUARTERS_PHONE_NUMBER,
+    international: true,
     email: config.VITE_INFO_EMAIL,
     company: "Glow LEDs",
   };
@@ -140,12 +142,12 @@ const CreateLabelModal = () => {
         first_name: {
           type: "text",
           label: "First Name",
-          validate: value => isRequired(value, "First Name"),
+          // validate: value => isRequired(value, "First Name"),
         },
         last_name: {
           type: "text",
           label: "Last Name",
-          validate: value => isRequired(value, "Last Name"),
+          // validate: value => isRequired(value, "Last Name"),
         },
         address_1: {
           type: "autocomplete_address",
@@ -190,7 +192,7 @@ const CreateLabelModal = () => {
         email: {
           type: "text",
           label: "Email",
-          validate: value => validateEmail(value),
+          // validate: value => validateEmail(value),
         },
         company: {
           type: "text",
@@ -205,12 +207,12 @@ const CreateLabelModal = () => {
         first_name: {
           type: "text",
           label: "First Name",
-          validate: value => isRequired(value, "First Name"),
+          // validate: value => isRequired(value, "First Name"),
         },
         last_name: {
           type: "text",
           label: "Last Name",
-          validate: value => isRequired(value, "Last Name"),
+          // validate: value => isRequired(value, "Last Name"),
         },
         address_1: {
           type: "autocomplete_address",
@@ -256,7 +258,7 @@ const CreateLabelModal = () => {
         email: {
           type: "text",
           label: "Email",
-          validate: value => validateEmail(value),
+          // validate: value => validateEmail(value),
         },
         company: {
           type: "text",
@@ -314,7 +316,7 @@ const CreateLabelModal = () => {
         weight_ounces: {
           type: "text",
           label: "Package oz",
-          validate: value => (value === "" ? "Package oz is Required" : null),
+          // validate: value => (value === "" ? "Package oz is Required" : null),
         },
       },
     },
@@ -346,7 +348,6 @@ const CreateLabelModal = () => {
     // You can set errorMessages to state if you want to display them
     return isValid;
   };
-  console.log({ shippingRates });
 
   return (
     <GLActionModal
