@@ -48,16 +48,6 @@ export const determineOrderColors = order => {
   return result;
 };
 
-// export const daysBetweenWeekdays = (date1, date2) => {
-//   const date_1 = new Date(date1);
-//   const date_2 = new Date(date2);
-//   let diffTime = date_1.getTime() - date_2.getTime();
-//   const weekendDays = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7)) * 2;
-//   diffTime = diffTime - weekendDays * (1000 * 60 * 60 * 24);
-//   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-//   return diffDays;
-// };
-
 export const sinceOrdered = date => {
   const today = new Date();
   const numDays = daysBetween(formatDate(today), formatDate(date));
@@ -83,61 +73,6 @@ export const determine_tracking_link = tracking_number => {
       return `https://www.fedex.com/apps/fedextrack/?tracknumbers=${tracking_number}`;
     }
   }
-};
-
-export const print_invoice = contents => {
-  // // const contents = document.getElementById(id).innerHTML;
-  // const frame1 = document.createElement("iframe");
-  // frame1.name = "frame1";
-  // frame1.style.position = "absolute";
-  // frame1.style.top = "-1000000px";
-  // document.body.appendChild(frame1);
-  // const frameDoc = frame1.contentWindow
-  //   ? frame1.contentWindow
-  //   : frame1?.contentDocument?.document
-  //   ? frame1?.contentDocument?.document
-  //   : frame1.contentDocument;
-  // frameDoc.document.open();
-  // frameDoc.document.write("</head><body>");
-  // frameDoc.document.write(contents);
-  // frameDoc.document.write("</body></html>");
-  // frameDoc.document.close();
-  // setTimeout(function () {
-  //   window.frames["frame1"].focus();
-  //   window.frames["frame1"].print();
-  //   document.body.removeChild(frame1);
-  // }, 500);
-  return false;
-};
-
-export const print_label = content => {
-  // // const content = document.getElementById(id).innerHTML;
-  // const frame1 = document.createElement("iframe");
-  // frame1.name = "frame1";
-  // frame1.style.position = "absolute";
-  // frame1.style.top = "-1000000px";
-  // document.body.appendChild(frame1);
-  // const frameDoc = frame1.contentWindow
-  //   ? frame1.contentWindow
-  //   : frame1?.contentDocument?.document
-  //   ? frame1?.contentDocument?.document
-  //   : frame1.contentDocument;
-  // frameDoc.document.open();
-  // frameDoc.document.write("</head><body>");
-  // frameDoc.document.write(`<div style="width: 100%;
-  // display: flex;
-  // height: 100%;
-  // align-items: center;;">
-  //     <img style="margin: auto; text-align: center;" src="${content}" alt="label" />
-  // </div>`);
-  // frameDoc.document.write("</body></html>");
-  // frameDoc.document.close();
-  // setTimeout(function () {
-  //   window.frames["frame1"].focus();
-  //   window.frames["frame1"].print();
-  //   document.body.removeChild(frame1);
-  // }, 500);
-  return false;
 };
 
 export const duplicateOrder = order => {
@@ -371,13 +306,9 @@ export const printInvoice = async invoice => {
 };
 
 export const updateOrderPrices = ({ orderItems = [], shippingPrice = 0, taxRate = 0, tip = 0 }) => {
-  console.log({ orderItems, shippingPrice, taxRate, tip });
   let itemsPrice = orderItems.reduce((total, item) => total + item.price * item.quantity, 0);
-  console.log({ itemsPrice });
   let taxPrice = itemsPrice * taxRate;
-  console.log({ taxPrice });
   let totalPrice = itemsPrice + taxPrice + shippingPrice + tip;
-  console.log({ totalPrice });
 
   return { itemsPrice, taxPrice, totalPrice };
 };
