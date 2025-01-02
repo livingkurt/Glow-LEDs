@@ -53,6 +53,12 @@ const shippingSlice = createSlice({
       email: "",
       company: "",
     },
+    customs_info: {
+      contents_type: "",
+      restriction_type: "",
+      non_delivery_option: "",
+      customs_items: [],
+    },
   },
   reducers: {
     clearPrints: (state, { payload }) => {

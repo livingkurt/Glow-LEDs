@@ -324,23 +324,22 @@ export const createCustomShippingRates = async ({ toShipping, fromShipping, parc
 
     // Add customs info for international shipments
     if (isInternational) {
+      const { customs_info } = parcel;
       shipmentConfig.customs_info = {
         eel_pfc: "NOEEI 30.37(a)",
         customs_certify: true,
         customs_signer: `${fromShipping.first_name} ${fromShipping.last_name}`,
-        contents_type: "merchandise",
-        restriction_type: "none",
-        non_delivery_option: "return",
-        customs_items: [
-          {
-            description: parcel.parcelChoice?.type || "Package",
-            quantity: 1,
-            value: parcel.value || 10.0, // Default value if not provided
-            weight,
-            origin_country: fromShipping.country,
-            hs_tariff_number: "3926.40",
-          },
-        ],
+        contents_type: customs_info.contents_type,
+        restriction_type: customs_info.restriction_type,
+        non_delivery_option: customs_info.non_delivery_option,
+        customs_items: customs_info.customs_items.map(item => ({
+          description: item.description,
+          quantity: item.quantity,
+          value: item.value,
+          weight: item.weight_pounds * 16 + (item.weight_ounces || 0),
+          origin_country: item.origin_country,
+          hs_tariff_number: item.hs_tariff_number,
+        })),
       };
     }
 

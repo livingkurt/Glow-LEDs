@@ -22,6 +22,7 @@ import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import Typography from "@mui/material/Typography";
+import { stringAutocompleteField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 
 const CreateLabelModal = () => {
   const dispatch = useDispatch();
@@ -318,11 +319,80 @@ const CreateLabelModal = () => {
           label: "Package oz",
           // validate: value => (value === "" ? "Package oz is Required" : null),
         },
-        value: {
-          type: "text",
-          label: "Package Value ($)",
-          validate: value =>
-            toShipping.international && value === "" ? "Package Value is Required for International Shipments" : null,
+        customs_info: {
+          type: "object",
+          title: "Customs Information",
+          hidden: !toShipping.international,
+          fields: {
+            contents_type: stringAutocompleteField({
+              label: "Contents Type",
+              options: ["merchandise", "gift", "documents", "returned_goods", "sample", "other"],
+              validate: value =>
+                toShipping.international && !value ? "Contents Type is Required for International Shipments" : null,
+            }),
+            restriction_type: stringAutocompleteField({
+              label: "Restriction Type",
+              options: ["none", "quarantine", "sanitary_phytosanitary_inspection", "other"],
+              validate: value =>
+                toShipping.international && !value ? "Restriction Type is Required for International Shipments" : null,
+            }),
+            non_delivery_option: stringAutocompleteField({
+              label: "Non Delivery Option",
+              options: ["return", "abandon"],
+              validate: value =>
+                toShipping.international && !value
+                  ? "Non Delivery Option is Required for International Shipments"
+                  : null,
+            }),
+            customs_items: {
+              type: "array",
+              title: "Customs Items",
+              label: "description",
+              validate: value =>
+                toShipping.international && (!value || value.length === 0)
+                  ? "At least one customs item is required for international shipments"
+                  : null,
+              itemSchema: {
+                type: "object",
+                fields: {
+                  description: {
+                    type: "text",
+                    label: "Description",
+                    validate: value => (value === "" ? "Description is Required" : null),
+                  },
+                  quantity: {
+                    type: "number",
+                    label: "Quantity",
+                    validate: value => (value === "" ? "Quantity is Required" : null),
+                  },
+                  value: {
+                    type: "number",
+                    label: "Value ($)",
+                    validate: value => (value === "" ? "Value is Required" : null),
+                  },
+                  weight_pounds: {
+                    type: "number",
+                    label: "Weight (lbs)",
+                  },
+                  weight_ounces: {
+                    type: "number",
+                    label: "Weight (oz)",
+                    validate: value => (!value && !parcel.weight_pounds ? "Weight is Required" : null),
+                  },
+                  origin_country: {
+                    type: "text",
+                    label: "Origin Country",
+                    validate: value => (value === "" ? "Origin Country is Required" : null),
+                  },
+                  hs_tariff_number: {
+                    type: "text",
+                    label: "HS Tariff Number",
+                    validate: value => (value === "" ? "HS Tariff Number is Required" : null),
+                  },
+                },
+              },
+            },
+          },
         },
       },
     },
