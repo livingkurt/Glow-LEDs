@@ -12,7 +12,7 @@ import * as API from "../../../api";
 import { closeCreateLabelModal } from "../../../slices/shippingSlice";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 
-import { humanize, state_names, toCapitalize } from "../../../utils/helper_functions";
+import { state_names } from "../../../utils/helper_functions";
 import config from "../../../config";
 import { Loading } from "../../../shared/SharedComponents";
 import { printLabel } from "../ordersPageHelpers";
@@ -22,6 +22,7 @@ import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import Typography from "@mui/material/Typography";
+import { stringAutocompleteField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 
 const CreateLabelModal = () => {
   const dispatch = useDispatch();
@@ -39,8 +40,6 @@ const CreateLabelModal = () => {
   } = shipping;
 
   const [formErrors, setFormErrors] = useState({});
-  const parcelPage = useSelector(state => state.parcels);
-  const { parcels } = parcelPage;
 
   useEffect(() => {
     let clean = true;
@@ -95,12 +94,14 @@ const CreateLabelModal = () => {
   const headquartersAddress = {
     first_name: config.VITE_HEADQUARTERS_FIRST_NAME,
     last_name: config.VITE_HEADQUARTERS_LAST_NAME,
-    address_1: config.VITE_HEADQUARTERS_ADDRESS,
+    address_1: config.VITE_HEADQUARTERS_ADDRESS_1,
+    address_2: config.VITE_HEADQUARTERS_ADDRESS_2,
     city: config.VITE_HEADQUARTERS_CITY,
     state: config.VITE_HEADQUARTERS_STATE,
     postalCode: config.VITE_HEADQUARTERS_POSTAL_CODE,
     country: config.VITE_HEADQUARTERS_COUNTRY,
     phone: config.VITE_HEADQUARTERS_PHONE_NUMBER,
+    international: true,
     email: config.VITE_INFO_EMAIL,
     company: "Glow LEDs",
   };
@@ -118,179 +119,82 @@ const CreateLabelModal = () => {
   };
 
   const isRequired = (value, fieldName) => (value === "" ? `${fieldName} is Required` : null);
-  const isValidEmail = value =>
-    !value.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/) ? "Invalid email format" : null;
-
-  // Composite Validation Function
-  const validateEmail = value => {
-    const required = isRequired(value, "Email");
-    if (required) return required;
-
-    const valid = isValidEmail(value);
-    if (valid) return valid;
-
-    return null;
-  };
 
   const shippingFormFields = {
+    first_name: {
+      type: "text",
+      label: "First Name",
+    },
+    last_name: {
+      type: "text",
+      label: "Last Name",
+    },
+    address_1: {
+      type: "autocomplete_address",
+      label: "Address Line 1",
+      validate: value => isRequired(value, "Address"),
+      setGeneratedAddress: place => setGeneratedAddress(place, "to"),
+    },
+    address_2: {
+      type: "text",
+      label: "Address Line 2",
+    },
+    city: {
+      type: "text",
+      label: "City",
+      validate: value => isRequired(value, "City"),
+    },
+    state: {
+      type: "autocomplete_single",
+      label: "State",
+      validate: value => isRequired(value, "State"),
+      getOptionLabel: option => option.long_name,
+      options: state_names,
+    },
+    postalCode: {
+      type: "text",
+      label: "Postal Code",
+      validate: value => isRequired(value, "Postal Code"),
+    },
+    country: {
+      type: "text",
+      label: "Country",
+      validate: value => isRequired(value, "Country"),
+    },
+    international: {
+      type: "checkbox",
+      label: "International",
+    },
+    phone: {
+      type: "text",
+      label: "Phone",
+    },
+    email: {
+      type: "text",
+      label: "Email",
+    },
+    company: {
+      type: "text",
+      label: "Company",
+    },
+  };
+
+  const createLabelFormFields = {
     toShipping: {
       type: "object",
       title: "To Shipping Address",
-      fields: {
-        first_name: {
-          type: "text",
-          label: "First Name",
-          validate: value => isRequired(value, "First Name"),
-        },
-        last_name: {
-          type: "text",
-          label: "Last Name",
-          validate: value => isRequired(value, "Last Name"),
-        },
-        address_1: {
-          type: "autocomplete_address",
-          label: "Address Line 1",
-          validate: value => isRequired(value, "Address"),
-          setGeneratedAddress: place => setGeneratedAddress(place, "to"),
-        },
-        address_2: {
-          type: "text",
-          label: "Address Line 2",
-        },
-        city: {
-          type: "text",
-          label: "City",
-          validate: value => isRequired(value, "City"),
-        },
-        state: {
-          type: "autocomplete_single",
-          label: "State",
-          validate: value => isRequired(value, "State"),
-          getOptionLabel: option => option.long_name,
-          options: state_names,
-        },
-        postalCode: {
-          type: "text",
-          label: "Postal Code",
-          validate: value => isRequired(value, "Postal Code"),
-        },
-        country: {
-          type: "text",
-          label: "Country",
-          validate: value => isRequired(value, "Country"),
-        },
-        international: {
-          type: "checkbox",
-          label: "International",
-        },
-        phone: {
-          type: "text",
-          label: "Phone",
-        },
-        email: {
-          type: "text",
-          label: "Email",
-          validate: value => validateEmail(value),
-        },
-        company: {
-          type: "text",
-          label: "Company",
-        },
-      },
+      fields: shippingFormFields,
     },
     fromShipping: {
       type: "object",
       title: "From Shipping Address",
-      fields: {
-        first_name: {
-          type: "text",
-          label: "First Name",
-          validate: value => isRequired(value, "First Name"),
-        },
-        last_name: {
-          type: "text",
-          label: "Last Name",
-          validate: value => isRequired(value, "Last Name"),
-        },
-        address_1: {
-          type: "autocomplete_address",
-          label: "Address Line 1",
-          validate: value => isRequired(value, "Address"),
-          setGeneratedAddress: place => setGeneratedAddress(place, "from"),
-        },
-        address_2: {
-          type: "text",
-          label: "Address Line 2",
-        },
-        city: {
-          type: "text",
-          label: "City",
-          validate: value => isRequired(value, "City"),
-        },
-        state: {
-          type: "autocomplete_single",
-          label: "State",
-          labelProps: "state",
-          validate: value => isRequired(value, "State"),
-          getOptionLabel: option => option.long_name,
-          options: state_names,
-        },
-        postalCode: {
-          type: "text",
-          label: "Postal Code",
-          validate: value => isRequired(value, "Postal Code"),
-        },
-        country: {
-          type: "text",
-          label: "Country",
-          validate: value => isRequired(value, "Country"),
-        },
-        international: {
-          type: "checkbox",
-          label: "International",
-        },
-        phone: {
-          type: "text",
-          label: "Phone",
-        },
-        email: {
-          type: "text",
-          label: "Email",
-          validate: value => validateEmail(value),
-        },
-        company: {
-          type: "text",
-          label: "Company",
-        },
-      },
+      fields: shippingFormFields,
     },
 
     parcel: {
       type: "object",
       title: "Parcel",
       fields: {
-        parcelChoice: {
-          type: "autocomplete_single",
-          label: "Parcels",
-          options: parcels,
-          labelProp: "parcel",
-          getOptionLabel: parcel => {
-            if (!parcel) {
-              return "";
-            }
-
-            let { type, length, width, height } = parcel;
-            if (type && length && width) {
-              if (type === "bubble_mailer") {
-                return `${humanize(type)} - ${length} X ${width}`;
-              } else if (height) {
-                return `${humanize(type)} - ${length} X ${width} X ${height}`;
-              }
-            }
-
-            return "";
-          },
-        },
         length: {
           type: "text",
           label: "Package Length",
@@ -316,6 +220,81 @@ const CreateLabelModal = () => {
           label: "Package oz",
           validate: value => (value === "" ? "Package oz is Required" : null),
         },
+        customs_info: {
+          type: "object",
+          title: "Customs Information",
+          hidden: !toShipping.international,
+          fields: {
+            contents_type: stringAutocompleteField({
+              label: "Contents Type",
+              options: ["merchandise", "gift", "documents", "returned_goods", "sample", "other"],
+              validate: value =>
+                toShipping.international && !value ? "Contents Type is Required for International Shipments" : null,
+            }),
+            restriction_type: stringAutocompleteField({
+              label: "Restriction Type",
+              options: ["none", "quarantine", "sanitary_phytosanitary_inspection", "other"],
+              validate: value =>
+                toShipping.international && !value ? "Restriction Type is Required for International Shipments" : null,
+            }),
+            non_delivery_option: stringAutocompleteField({
+              label: "Non Delivery Option",
+              options: ["return", "abandon"],
+              validate: value =>
+                toShipping.international && !value
+                  ? "Non Delivery Option is Required for International Shipments"
+                  : null,
+            }),
+            customs_items: {
+              type: "array",
+              title: "Customs Items",
+              label: "description",
+              validate: value =>
+                toShipping.international && (!value || value.length === 0)
+                  ? "At least one customs item is required for international shipments"
+                  : null,
+              itemSchema: {
+                type: "object",
+                fields: {
+                  description: {
+                    type: "text",
+                    label: "Description",
+                    validate: value => (value === "" ? "Description is Required" : null),
+                  },
+                  quantity: {
+                    type: "number",
+                    label: "Quantity",
+                    validate: value => (value === "" ? "Quantity is Required" : null),
+                  },
+                  value: {
+                    type: "number",
+                    label: "Value ($)",
+                    validate: value => (value === "" ? "Value is Required" : null),
+                  },
+                  weight_pounds: {
+                    type: "number",
+                    label: "Weight (lbs)",
+                  },
+                  weight_ounces: {
+                    type: "number",
+                    label: "Weight (oz)",
+                    validate: value => (!value && !parcel.weight_pounds ? "Weight is Required" : null),
+                  },
+                  origin_country: {
+                    type: "text",
+                    label: "Origin Country",
+                    validate: value => (value === "" ? "Origin Country is Required" : null),
+                  },
+                  hs_tariff_number: {
+                    type: "text",
+                    label: "HS Tariff Number",
+                    validate: value => (value === "" ? "HS Tariff Number is Required" : null),
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     },
   };
@@ -338,9 +317,9 @@ const CreateLabelModal = () => {
       });
     };
 
-    validateSection(shippingFormFields.toShipping.fields, toShipping);
-    validateSection(shippingFormFields.fromShipping.fields, fromShipping);
-    validateSection(shippingFormFields.parcel.fields, parcel);
+    validateSection(createLabelFormFields.toShipping.fields, toShipping);
+    validateSection(createLabelFormFields.fromShipping.fields, fromShipping);
+    validateSection(createLabelFormFields.parcel.fields, parcel);
 
     setFormErrors(errorMessages);
     // You can set errorMessages to state if you want to display them
@@ -367,7 +346,7 @@ const CreateLabelModal = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography component="h6" variant="h6" className="ta-c">
-            {shippingFormFields.toShipping.title}
+            {createLabelFormFields.toShipping.title}
           </Typography>
 
           <Grid container spacing={2}>
@@ -403,7 +382,7 @@ const CreateLabelModal = () => {
             </Grid>
           </Grid>
           <GLForm
-            formData={shippingFormFields.toShipping.fields}
+            formData={createLabelFormFields.toShipping.fields}
             state={toShipping}
             onChange={value => dispatch(setToShipping(value))}
             formErrors={formErrors} // Pass the errors here
@@ -412,7 +391,7 @@ const CreateLabelModal = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography component="h6" variant="h6" className="ta-c">
-            {shippingFormFields.fromShipping.title}
+            {createLabelFormFields.fromShipping.title}
           </Typography>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -447,7 +426,7 @@ const CreateLabelModal = () => {
             </Grid>
           </Grid>
           <GLForm
-            formData={shippingFormFields.fromShipping.fields}
+            formData={createLabelFormFields.fromShipping.fields}
             state={fromShipping}
             onChange={value => dispatch(setFromShipping(value))}
             formErrors={formErrors} // Pass the errors here
@@ -456,10 +435,10 @@ const CreateLabelModal = () => {
         </Grid>
       </Grid>
       <Typography component="h6" variant="h6" className="ta-c">
-        {shippingFormFields.parcel.title}
+        {createLabelFormFields.parcel.title}
       </Typography>
       <GLForm
-        formData={shippingFormFields.parcel.fields}
+        formData={createLabelFormFields.parcel.fields}
         state={parcel}
         onChange={value => dispatch(setParcel(value))}
         formErrors={formErrors} // Pass the errors here

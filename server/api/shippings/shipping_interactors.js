@@ -221,14 +221,15 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
     let returnAddress = productionReturnAddress;
 
     const headquartersReturnAddress = {
-      street1: config.HEADQUARTERS_ADDRESS,
+      street1: config.HEADQUARTERS_ADDRESS_1,
+      street2: config.HEADQUARTERS_ADDRESS_2,
       email: config.INFO_EMAIL,
       city: config.HEADQUARTERS_CITY,
       state: config.HEADQUARTERS_STATE,
       zip: config.HEADQUARTERS_POSTAL_CODE,
       country: config.HEADQUARTERS_COUNTRY,
       company: "Glow LEDs",
-      phone: config.PHONE_NUMBER,
+      phone: config.HEADQUARTERS_PHONE,
     };
 
     if (returnToHeadquarters === "true") {
@@ -279,7 +280,10 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
 
 export const createCustomShippingRates = async ({ toShipping, fromShipping, parcel }) => {
   try {
-    const shipment = await EasyPost.Shipment.create({
+    const isInternational = toShipping.country !== "US" || toShipping.international;
+    const weight = parcel.weight_pounds * 16 + (parcel.weight_ounces || 0);
+
+    const shipmentConfig = {
       to_address: {
         verify: ["delivery"],
         email: toShipping.email,
@@ -309,16 +313,46 @@ export const createCustomShippingRates = async ({ toShipping, fromShipping, parc
         length: parcel.length,
         width: parcel.width,
         height: parcel.height,
-        weight: covertToOunces({ weight_pounds: parcel.weight_pounds, weight_ounces: parcel.weight_ounces }),
+        weight,
       },
       options: {
         commercial_invoice_letterhead: "IMAGE_1",
         commercial_invoice_signature: "IMAGE_2",
         handling_instructions: toShipping.handling_instructions,
       },
-    });
+    };
+
+    // Add customs info for international shipments
+    if (isInternational) {
+      const { customs_info } = parcel;
+      shipmentConfig.customs_info = {
+        eel_pfc: "NOEEI 30.37(a)",
+        customs_certify: true,
+        customs_signer: `${fromShipping.first_name} ${fromShipping.last_name}`,
+        contents_type: customs_info.contents_type,
+        restriction_type: customs_info.restriction_type,
+        non_delivery_option: customs_info.non_delivery_option,
+        customs_items: customs_info.customs_items.map(item => ({
+          description: item.description,
+          quantity: item.quantity,
+          value: item.value,
+          weight: item.weight_pounds * 16 + (item.weight_ounces || 0),
+          origin_country: item.origin_country,
+          hs_tariff_number: item.hs_tariff_number,
+        })),
+      };
+    }
+
+    const shipment = await EasyPost.Shipment.create(shipmentConfig);
+
+    // Sort rates by price
+    if (shipment.rates) {
+      shipment.rates.sort((a, b) => parseFloat(a.rate) - parseFloat(b.rate));
+    }
+
     return { shipment, parcel };
   } catch (error) {
+    console.log({ error, errors: error.errors });
     if (error instanceof Error) {
       throw new Error(error.errors?.map(error => `${error.field} ${error.message}`).join(", "));
     }

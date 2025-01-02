@@ -1,3 +1,5 @@
+import { toCapitalize } from "../../../utils/helper_functions";
+
 export const formatDate = dateString => {
   const date = new Date(dateString);
   const year = date.getUTCFullYear();
@@ -184,6 +186,19 @@ export const modeField = ({ modes, ...otherProps }) => {
     options: modes,
     labelProp: "name",
     getOptionLabel: option => option.name,
+    ...otherProps,
+  };
+};
+
+export const stringAutocompleteField = ({ options, ...otherProps }) => {
+  return {
+    type: "autocomplete_single",
+    getOptionLabel: option => {
+      if (typeof option === "string") {
+        return toCapitalize(option);
+      }
+    },
+    options: options,
     ...otherProps,
   };
 };

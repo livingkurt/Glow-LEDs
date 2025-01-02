@@ -1,5 +1,8 @@
-import { affiliateField, tagField } from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
-import { toCapitalize } from "../../../utils/helper_functions";
+import {
+  affiliateField,
+  stringAutocompleteField,
+  tagField,
+} from "../../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
 
 export const tutorialFormFields = ({ affiliates, tags }) => {
   return {
@@ -16,16 +19,10 @@ export const tutorialFormFields = ({ affiliates, tags }) => {
       type: "text_multiline",
       label: "Description",
     },
-    level: {
-      type: "autocomplete_single",
-      label: "Difficulty",
-      getOptionLabel: option => {
-        if (typeof option === "string") {
-          return toCapitalize(option);
-        }
-      },
+    level: stringAutocompleteField({
       options: ["beginner", "intermediate", "advanced"],
-    },
+      label: "Difficulty",
+    }),
     tags: tagField({ tags }),
     order: {
       label: "Order",

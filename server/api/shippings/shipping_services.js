@@ -276,7 +276,8 @@ export default {
   create_custom_label_shipping_s: async body => {
     const { selectedRateId, shipmentId } = body;
     try {
-      return await EasyPost.Shipment.buy(shipmentId, selectedRateId);
+      const shipment = await EasyPost.Shipment.retrieve(shipmentId);
+      return await EasyPost.Shipment.buy(shipment.id, selectedRateId);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
