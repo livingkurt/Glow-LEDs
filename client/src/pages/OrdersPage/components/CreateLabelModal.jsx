@@ -272,28 +272,6 @@ const CreateLabelModal = () => {
       type: "object",
       title: "Parcel",
       fields: {
-        parcelChoice: {
-          type: "autocomplete_single",
-          label: "Parcels",
-          options: parcels,
-          labelProp: "parcel",
-          getOptionLabel: parcel => {
-            if (!parcel) {
-              return "";
-            }
-
-            let { type, length, width, height } = parcel;
-            if (type && length && width) {
-              if (type === "bubble_mailer") {
-                return `${humanize(type)} - ${length} X ${width}`;
-              } else if (height) {
-                return `${humanize(type)} - ${length} X ${width} X ${height}`;
-              }
-            }
-
-            return "";
-          },
-        },
         length: {
           type: "text",
           label: "Package Length",
@@ -317,7 +295,7 @@ const CreateLabelModal = () => {
         weight_ounces: {
           type: "text",
           label: "Package oz",
-          // validate: value => (value === "" ? "Package oz is Required" : null),
+          validate: value => (value === "" ? "Package oz is Required" : null),
         },
         customs_info: {
           type: "object",
