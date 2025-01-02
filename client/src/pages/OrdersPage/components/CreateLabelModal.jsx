@@ -346,6 +346,7 @@ const CreateLabelModal = () => {
     // You can set errorMessages to state if you want to display them
     return isValid;
   };
+  console.log({ shippingRates });
 
   return (
     <GLActionModal

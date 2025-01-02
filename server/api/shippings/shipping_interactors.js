@@ -309,7 +309,7 @@ export const createCustomShippingRates = async ({ toShipping, fromShipping, parc
         length: parcel.length,
         width: parcel.width,
         height: parcel.height,
-        weight: covertToOunces({ weight_pounds: parcel.weight_pounds, weight_ounces: parcel.weight_ounces }),
+        weight: parcel.weight_pounds * 16 + (parcel.weight_ounces || 0),
       },
       options: {
         commercial_invoice_letterhead: "IMAGE_1",
@@ -317,6 +317,12 @@ export const createCustomShippingRates = async ({ toShipping, fromShipping, parc
         handling_instructions: toShipping.handling_instructions,
       },
     });
+
+    // Sort rates by price
+    if (shipment.rates) {
+      shipment.rates.sort((a, b) => parseFloat(a.rate) - parseFloat(b.rate));
+    }
+
     return { shipment, parcel };
   } catch (error) {
     if (error instanceof Error) {
