@@ -318,6 +318,12 @@ const CreateLabelModal = () => {
           label: "Package oz",
           // validate: value => (value === "" ? "Package oz is Required" : null),
         },
+        value: {
+          type: "text",
+          label: "Package Value ($)",
+          validate: value =>
+            toShipping.international && value === "" ? "Package Value is Required for International Shipments" : null,
+        },
       },
     },
   };

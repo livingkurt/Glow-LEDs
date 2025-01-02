@@ -280,7 +280,10 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
 
 export const createCustomShippingRates = async ({ toShipping, fromShipping, parcel }) => {
   try {
-    const shipment = await EasyPost.Shipment.create({
+    const isInternational = toShipping.country !== "US" || toShipping.international;
+    const weight = parcel.weight_pounds * 16 + (parcel.weight_ounces || 0);
+
+    const shipmentConfig = {
       to_address: {
         verify: ["delivery"],
         email: toShipping.email,
@@ -310,14 +313,38 @@ export const createCustomShippingRates = async ({ toShipping, fromShipping, parc
         length: parcel.length,
         width: parcel.width,
         height: parcel.height,
-        weight: parcel.weight_pounds * 16 + (parcel.weight_ounces || 0),
+        weight,
       },
       options: {
         commercial_invoice_letterhead: "IMAGE_1",
         commercial_invoice_signature: "IMAGE_2",
         handling_instructions: toShipping.handling_instructions,
       },
-    });
+    };
+
+    // Add customs info for international shipments
+    if (isInternational) {
+      shipmentConfig.customs_info = {
+        eel_pfc: "NOEEI 30.37(a)",
+        customs_certify: true,
+        customs_signer: `${fromShipping.first_name} ${fromShipping.last_name}`,
+        contents_type: "merchandise",
+        restriction_type: "none",
+        non_delivery_option: "return",
+        customs_items: [
+          {
+            description: parcel.parcelChoice?.type || "Package",
+            quantity: 1,
+            value: parcel.value || 10.0, // Default value if not provided
+            weight,
+            origin_country: fromShipping.country,
+            hs_tariff_number: "3926.40",
+          },
+        ],
+      };
+    }
+
+    const shipment = await EasyPost.Shipment.create(shipmentConfig);
 
     // Sort rates by price
     if (shipment.rates) {
