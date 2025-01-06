@@ -67,7 +67,6 @@
   "atlascode.bitbucket.enabled": false,
   "atlascode.jira.enabled": true,
   "atlascode.jira.jqlList": [
-    ,
     {
       "id": "16680d7e-ddba-493b-9aab-c7559f2183cb",
       "enabled": true,
