@@ -7,7 +7,17 @@ export async function up() {
     // Update all expenses with specified cards to have is_direct_expense = true
     const result = await Expense.updateMany(
       {
-        card: { $in: ["Glow LEDs Checking 0584", "Amazon Business 1004"] },
+        card: {
+          $in: [
+            "Glow LEDs Checking 0584",
+            "Amazon Business 1004",
+            "\nAmazon Business 1004\n",
+            "Amazon Business 0584",
+            "Amazon Business 1005",
+            "Amazon 9204",
+            "Amazon Business Prime Card",
+          ],
+        },
         deleted: false,
       },
       {
@@ -27,7 +37,17 @@ export async function down() {
     // Revert the changes by setting is_direct_expense back to false
     const result = await Expense.updateMany(
       {
-        card: { $in: ["Glow LEDs Checking 0584", "Amazon Business 1004"] },
+        card: {
+          $in: [
+            "Glow LEDs Checking 0584",
+            "Amazon Business 1004",
+            "\nAmazon Business 1004\n",
+            "Amazon Business 0584",
+            "Amazon Business 1005",
+            "Amazon 9204",
+            "Amazon Business Prime Card",
+          ],
+        },
         deleted: false,
         is_direct_expense: true,
       },

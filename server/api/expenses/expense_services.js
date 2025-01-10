@@ -127,7 +127,7 @@ export default {
             date_of_purchase: formatDateToISODate(expense.date),
             expense_name: expense.description,
             place_of_purchase: determine_place(expense.description),
-            card: card,
+            card,
             url: "",
             application: determine_application(expense.description),
             category: determine_category(expense.description),
