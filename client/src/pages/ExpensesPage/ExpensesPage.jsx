@@ -65,6 +65,10 @@ const ExpensesPage = () => {
         title: "Amount",
         display: expense => (expense.amount ? `$${expense.amount.toFixed(2)}` : "$0.00"),
       },
+      {
+        title: "Direct Expense",
+        display: row => (row.is_direct_expense ? "Yes" : "No"),
+      },
 
       {
         title: "",

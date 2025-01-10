@@ -17,7 +17,7 @@ async function generateMigration() {
   const migrationName = args[0].toLowerCase();
   const fileName = `${timestamp}_${migrationName}.js`;
 
-  const template = `import mongoose from 'mongoose';
+  const template = `// ${timestamp} ${migrationName}
 
 export async function up() {
   // Add your migration code here
