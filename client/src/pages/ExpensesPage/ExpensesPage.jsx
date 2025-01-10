@@ -10,7 +10,7 @@ import { getExpenses } from "../../api";
 import { open_create_expense_modal, open_edit_expense_modal } from "../../slices/expenseSlice";
 import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageModal";
 import { close_image_display_modal } from "../../slices/imageSlice";
-import { determineExpenseColors } from "./expensesPageHelpers";
+import { determineExpenseColors, irsCategories } from "./expensesPageHelpers";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -25,7 +25,7 @@ import ContentCopy from "@mui/icons-material/ContentCopy";
 
 const ExpensesPage = () => {
   const expensePage = useSelector(state => state.expenses.expensePage);
-  const { loading, remoteVersionRequirement, expenses } = expensePage;
+  const { loading, remoteVersionRequirement } = expensePage;
   const imagePage = useSelector(state => state.images.imagePage);
   const { image_display_modal, selected_image } = imagePage;
 
@@ -122,10 +122,16 @@ const ExpensesPage = () => {
     Papa.parse(file, {
       header: true,
       complete: function (results) {
-        console.log({ data: results.data });
         const expenses = results.data
           .filter(
-            row => row.Date && row.Amount && row.Category && row["Original Statement"] && row.Merchant && row.Account
+            row =>
+              row.Date &&
+              row.Amount &&
+              row.Category &&
+              row["Original Statement"] &&
+              row.Merchant &&
+              row.Account &&
+              irsCategories.includes(row.Category)
           )
           .map(row => ({
             date_of_purchase: row.Date,

@@ -1,24 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
-import { set_edit_expense_modal, set_expense } from "../../../slices/expenseSlice";
+import { set_edit_expense_modal, set_expense, set_filters } from "../../../slices/expenseSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { expenseFormFields } from "./expenseFormFields";
 import { useEffect } from "react";
-import { useState } from "react";
 
 const EditExpenseModal = () => {
   const dispatch = useDispatch();
   const expensePage = useSelector(state => state.expenses.expensePage);
-  const { edit_expense_modal, expense, loading, expenses } = expensePage;
+  const { edit_expense_modal, expense, loading, expenses, filters } = expensePage;
 
-  const [filters, setFilters] = useState({});
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch(API.listExpenses({ is_subscription: true }));
+      const response = await API.getExpenseFilters();
 
-  useEffect(async () => {
-    dispatch(API.listExpenses({ is_subscription: true }));
-    const response = await API.getExpenseFilters();
-    setFilters(response);
-  }, []);
+      dispatch(set_filters(response));
+    };
+    fetchData();
+  }, [dispatch]);
 
   const formFields = expenseFormFields({
     expense,
