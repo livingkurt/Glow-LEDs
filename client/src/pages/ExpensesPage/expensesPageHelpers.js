@@ -29,3 +29,22 @@ export const determineRepeatOnOptions = frequency => {
     ];
   }
 };
+
+export const irsCategories = [
+  "Advertising and Promotion",
+  "Bank Fees",
+  "Car and Truck Expenses",
+  "Contract Labor",
+  "Employee Benefit Programs",
+  "Inventory Purchase",
+  "Legal and Professional Services",
+  "Meals",
+  "Office Expense",
+  "Other Expenses",
+  "Rent or Lease",
+  "Shipping and Postage",
+  "Supplies",
+  "Tools and Equipment",
+  "Travel",
+  "Utilities",
+];

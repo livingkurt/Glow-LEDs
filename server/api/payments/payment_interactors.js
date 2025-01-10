@@ -23,10 +23,8 @@ export const createOrUpdateCustomer = async current_userrmation => {
     if (error.code === "resource_already_exists") {
       const existingCustomer = await stripe.customers.retrieve(error.raw.requestId);
       return existingCustomer;
-    } else {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
+    } else if (error instanceof Error) {
+      throw new Error(error.message);
     }
   }
 };
@@ -112,6 +110,7 @@ export const logStripeFeeToExpenses = async confirmedResult => {
       category: "Stripe Fees",
       date_of_purchase: Date.now(),
       place_of_purchase: "Stripe",
+      is_direct_expense: true,
       irs_category: "Bank Fees",
       card: "Stripe",
       application: "Payments",

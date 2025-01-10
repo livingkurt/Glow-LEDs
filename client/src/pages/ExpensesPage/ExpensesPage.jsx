@@ -7,10 +7,10 @@ import { EditExpenseModal } from "./components";
 import * as API from "../../api";
 
 import { getExpenses } from "../../api";
-import { open_create_expense_modal, open_edit_expense_modal } from "../../slices/expenseSlice";
+import { open_create_expense_modal, open_edit_expense_modal, set_loading } from "../../slices/expenseSlice";
 import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageModal";
 import { close_image_display_modal } from "../../slices/imageSlice";
-import { determineExpenseColors } from "./expensesPageHelpers";
+import { determineExpenseColors, irsCategories } from "./expensesPageHelpers";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -22,10 +22,11 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import ContentCopy from "@mui/icons-material/ContentCopy";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const ExpensesPage = () => {
   const expensePage = useSelector(state => state.expenses.expensePage);
-  const { loading, remoteVersionRequirement, expenses } = expensePage;
+  const { loading, remoteVersionRequirement } = expensePage;
   const imagePage = useSelector(state => state.images.imagePage);
   const { image_display_modal, selected_image } = imagePage;
 
@@ -64,6 +65,10 @@ const ExpensesPage = () => {
       {
         title: "Amount",
         display: expense => (expense.amount ? `$${expense.amount.toFixed(2)}` : "$0.00"),
+      },
+      {
+        title: "Direct Expense",
+        display: row => <GLBoolean boolean={row.is_direct_expense} />,
       },
 
       {
@@ -121,28 +126,29 @@ const ExpensesPage = () => {
 
     Papa.parse(file, {
       header: true,
-      complete: function (results) {
+      complete: results => {
         const expenses = results.data
           .filter(
             row =>
-              row.date_of_purchase &&
-              row.amount &&
-              row.category &&
-              row.irs_category &&
-              row.expense_name &&
-              row.place_of_purchase &&
-              row.card
+              row.Date &&
+              row.Amount &&
+              row.Category &&
+              row["Original Statement"] &&
+              row.Merchant &&
+              row.Account &&
+              irsCategories.includes(row.Category)
           )
           .map(row => ({
-            date_of_purchase: new Date(row.date_of_purchase),
-            amount: parseFloat(row.amount),
-            category: row.category,
-            irs_category: row.irs_category,
-            expense_name: row.expense_name,
-            place_of_purchase: row.place_of_purchase,
-            card: row.card,
+            date_of_purchase: row.Date,
+            amount: Math.abs(parseFloat(row.Amount)),
+            category: row.Category,
+            irs_category: row.Category,
+            is_direct_expense: row.Tags === "Business" ? true : false,
+            expense_name: row["Original Statement"],
+            place_of_purchase: row.Merchant,
+            card: row.Account,
           }));
-        dispatch(API.bulkSaveExpenses(expenses));
+        dispatch(API.bulkSaveExpenses(expenses)).unwrap();
       },
     });
   };

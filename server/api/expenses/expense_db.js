@@ -91,6 +91,7 @@ export default {
         {
           $match: {
             deleted: false,
+            is_direct_expense: true,
             date_of_purchase: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),
@@ -117,8 +118,8 @@ export default {
         {
           $match: {
             deleted: false,
+            is_direct_expense: true,
             date_of_purchase: {
-              // Assuming 'date_of_purchase' is the field that holds the date_of_purchase information
               $gte: new Date(`${year}-01-01T00:00:00.000Z`),
               $lt: new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`),
             },
@@ -130,7 +131,7 @@ export default {
         {
           $group: {
             _id: {
-              month: { $month: "$date_of_purchase" }, // Apply $month and $dayOfMonth to 'date_of_purchase' field
+              month: { $month: "$date_of_purchase" },
               day: { $dayOfMonth: "$date_of_purchase" },
             },
             dailyAmount: {
@@ -175,6 +176,7 @@ export default {
         {
           $match: {
             deleted: false,
+            is_direct_expense: true,
             irs_category: {
               $nin: ["Travel", "Meals", "Rent or Lease", "Car and Truck Expenses"],
             },
@@ -226,6 +228,7 @@ export default {
         {
           $match: {
             deleted: false,
+            is_direct_expense: true,
             date_of_purchase: {
               $gte: new Date(start_date),
               $lt: new Date(end_date),

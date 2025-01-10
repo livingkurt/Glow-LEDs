@@ -15,6 +15,7 @@ const expense = {
   amount: 0,
   documents: [],
   is_subscription: false,
+  is_direct_expense: false,
   subscription: {
     amount: 0,
     frequency: "",
@@ -35,6 +36,7 @@ const expensePage = createSlice({
     expense_modal: false,
     message: "",
     error: {},
+    filters: {},
   },
   reducers: {
     set_expense: (state, { payload }) => {
@@ -71,6 +73,9 @@ const expensePage = createSlice({
     expense_uploaded: (state, { payload }) => {
       state.upload_expense_modal = false;
       state.remoteVersionRequirement = Date.now();
+    },
+    set_filters: (state, { payload }) => {
+      state.filters = payload;
     },
   },
   extraReducers: {
@@ -181,5 +186,6 @@ export const {
   close_expense_modal,
   open_edit_expense_modal,
   expense_uploaded,
+  set_filters,
 } = expensePage.actions;
 export default expensePage.reducer;
