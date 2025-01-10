@@ -213,18 +213,18 @@ const shippingSlice = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
-    [API.createReturnLabel.pending]: (state, { payload }) => {
+    [API.initiateReturnExchange.pending]: (state, { payload }) => {
       state.loading_label = true;
       state.invoice = "";
       state.label = "";
     },
-    [API.createReturnLabel.fulfilled]: (state, { payload }) => {
+    [API.initiateReturnExchange.fulfilled]: (state, { payload }) => {
       const { label } = payload;
       state.loading_label = false;
       state.label = label;
       state.message = "Label Bought";
     },
-    [API.createReturnLabel.rejected]: (state, { payload, error }) => {
+    [API.initiateReturnExchange.rejected]: (state, { payload, error }) => {
       state.loading_label = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";

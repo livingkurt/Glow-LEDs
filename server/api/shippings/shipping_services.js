@@ -130,7 +130,7 @@ export default {
       }
     }
   },
-  create_return_label_shipping_s: async (params, query, body) => {
+  initiate_return_exchange_shipping_s: async (params, query, body) => {
     try {
       const order = await order_db.findById_orders_db(params.order_id);
 
@@ -150,7 +150,6 @@ export default {
       await addTracking({ order, label, shipping_rate: label.selected_rate, isReturnTracking: true });
 
       const latestOrder = (await order_db.findById_orders_db(params.order_id)).toObject();
-      console.log({ latestOrder });
 
       // Send return label email
       await email_services.send_return_label_emails_s({
@@ -164,6 +163,44 @@ export default {
         returnItems: body.returnItems || [],
         exchangeItems: body.exchangeItems || [],
       });
+      if (body.exchangeItems?.length > 0) {
+        const newOrder = await order_db.create_orders_db({
+          ...latestOrder,
+          _id: null,
+          shipping: {
+            ...latestOrder.shipping,
+            shipment_id: null,
+            shipping_rate: null,
+            shipment_tracker: null,
+            shipping_label: null,
+            return_shipment_id: null,
+            return_shipping_rate: null,
+            return_shipment_tracker: null,
+            return_shipping_label: null,
+          },
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          return_tracking_url: "",
+          tracking_url: "",
+          return_tracking_number: "",
+          user: latestOrder?.user,
+          tracking_number: "",
+          shippingPrice: 0,
+          itemPrice: body.exchangeItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
+          taxPrice: 0,
+          totalPrice: 0,
+          orderItems: body.exchangeItems,
+          status: "paid",
+          relatedOrder: order._id,
+          returnItems: body.returnItems,
+          change_log: [],
+        });
+        await email_services.send_order_emails_s({
+          order: newOrder,
+          email: latestOrder.user.email,
+          subject: "You're Glow LEDs Exchange Order",
+        });
+      }
 
       return { label: label.postage_label.label_url };
     } catch (error) {

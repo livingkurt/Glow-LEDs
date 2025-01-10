@@ -71,12 +71,12 @@ export const createTracker = createAsyncThunk(
     }
   }
 );
-export const createReturnLabel = createAsyncThunk(
-  "shipping/createReturnLabel",
+export const initiateReturnExchange = createAsyncThunk(
+  "shipping/initiateReturnExchange",
   async ({ orderId, returnToHeadquarters, returnItems, exchangeItems }, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.put(
-        `/api/shipping/${orderId}/create_return_label?return_to_headquarters=${
+        `/api/shipping/${orderId}/initiate_return_exchange?return_to_headquarters=${
           returnToHeadquarters ? "true" : "false"
         }`,
         { returnItems, exchangeItems }
@@ -270,11 +270,11 @@ export const differentShippingRates = createAsyncThunk(
 //   }
 // );
 
-// export const createReturnLabel = createAsyncThunk("shipping/createReturnLabel", async ({ order, shipping_rate }, { dispatch, rejectWithValue }) => {
+// export const initiateReturnExchange = createAsyncThunk("shipping/initiateReturnExchange", async ({ order, shipping_rate }, { dispatch, rejectWithValue }) => {
 
 //   try {
 //     const { data } = await axios.put(
-//       "/api/shipping/create_return_label",
+//       "/api/shipping/initiate_return_exchange",
 //       {
 //         order,
 //         shipping_rate
