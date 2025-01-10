@@ -15,6 +15,7 @@ const expense = {
   amount: 0,
   documents: [],
   is_subscription: false,
+  direct_expense: false,
   subscription: {
     amount: 0,
     frequency: "",

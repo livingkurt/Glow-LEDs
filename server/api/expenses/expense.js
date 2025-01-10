@@ -19,11 +19,10 @@ const expenseSchema = new mongoose.Schema(
     card: { type: String },
     amount: { type: Number },
     documents: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
-    airtable_id: { type: String },
-    airtable_invoice_links: { type: Array },
     subscription: subscriptionSchema,
     parent_subscription: { type: mongoose.Schema.Types.ObjectId, ref: "Expense" },
     is_subscription: { type: Boolean, default: false },
+    direct_expense: { type: Boolean, default: false },
     deleted: { type: Boolean, default: false },
   },
   {
