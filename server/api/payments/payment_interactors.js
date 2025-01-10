@@ -110,7 +110,7 @@ export const logStripeFeeToExpenses = async confirmedResult => {
       category: "Stripe Fees",
       date_of_purchase: Date.now(),
       place_of_purchase: "Stripe",
-      direct_expense: true,
+      is_direct_expense: true,
       irs_category: "Bank Fees",
       card: "Stripe",
       application: "Payments",

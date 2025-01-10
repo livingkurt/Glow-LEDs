@@ -68,7 +68,7 @@ export const expenseFormFields = ({ expense, dispatch, expenses, filters }) => {
       type: "checkbox",
       label: "Is Subscription",
     },
-    direct_expense: {
+    is_direct_expense: {
       type: "checkbox",
       label: "Is Direct Expense",
     },

@@ -122,26 +122,22 @@ const ExpensesPage = () => {
     Papa.parse(file, {
       header: true,
       complete: function (results) {
+        console.log({ data: results.data });
         const expenses = results.data
           .filter(
-            row =>
-              row.date_of_purchase &&
-              row.amount &&
-              row.category &&
-              row.irs_category &&
-              row.expense_name &&
-              row.place_of_purchase &&
-              row.card
+            row => row.Date && row.Amount && row.Category && row["Original Statement"] && row.Merchant && row.Account
           )
           .map(row => ({
-            date_of_purchase: new Date(row.date_of_purchase),
-            amount: parseFloat(row.amount),
-            category: row.category,
-            irs_category: row.irs_category,
-            expense_name: row.expense_name,
-            place_of_purchase: row.place_of_purchase,
-            card: row.card,
+            date_of_purchase: row.Date,
+            amount: Math.abs(parseFloat(row.Amount)),
+            category: row.Category,
+            irs_category: row.Category,
+            is_direct_expense: row.Tags === "Business" ? true : false,
+            expense_name: row["Original Statement"],
+            place_of_purchase: row.Merchant,
+            card: row.Account,
           }));
+        console.log({ expenses });
         dispatch(API.bulkSaveExpenses(expenses));
       },
     });

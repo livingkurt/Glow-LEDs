@@ -22,7 +22,7 @@ const expenseSchema = new mongoose.Schema(
     subscription: subscriptionSchema,
     parent_subscription: { type: mongoose.Schema.Types.ObjectId, ref: "Expense" },
     is_subscription: { type: Boolean, default: false },
-    direct_expense: { type: Boolean, default: false },
+    is_direct_expense: { type: Boolean, default: false },
     deleted: { type: Boolean, default: false },
   },
   {
