@@ -95,7 +95,7 @@ export const deleteExpense = createAsyncThunk(
 );
 
 export const deleteMultipleExpenses = createAsyncThunk(
-  "paycheck/deleteMultipleExpenses",
+  "expenses/deleteMultipleExpenses",
   async (ids, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.put(`/api/expenses/delete_multiple`, { ids });
@@ -109,7 +109,7 @@ export const deleteMultipleExpenses = createAsyncThunk(
 );
 
 export const backfillSubscriptions = createAsyncThunk(
-  "paycheck/backfillSubscriptions",
+  "expenses/backfillSubscriptions",
   async (expenseId, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.put(`/api/expenses/${expenseId}/subscriptions/backfill`);
@@ -122,11 +122,11 @@ export const backfillSubscriptions = createAsyncThunk(
   }
 );
 export const bulkSaveExpenses = createAsyncThunk(
-  "paycheck/bulkSaveExpenses",
+  "expenses/bulkSaveExpenses",
   async (expenses, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await axios.post(`/api/expenses/bulk`, { expenses });
-      dispatch(showSuccess({ message: `Bulk Save Complete` }));
+      dispatch(showSuccess({ message: `Bulk Save Complete - ${data.message}` }));
       return data;
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));

@@ -95,7 +95,30 @@ export default {
   bulk_create_expenses_s: async body => {
     const { expenses } = body;
     try {
-      return await expense_db.bulk_create_expenses_db(expenses);
+      // Check all expenses in parallel for duplicates
+      const existingChecks = await Promise.all(
+        expenses.map(expense =>
+          Expense.findOne({
+            date_of_purchase: new Date(expense.date_of_purchase),
+            expense_name: expense.expense_name,
+            amount: expense.amount,
+            card: expense.card,
+            deleted: false,
+          })
+        )
+      );
+
+      const uniqueExpenses = expenses.filter((_, index) => !existingChecks[index]);
+
+      if (uniqueExpenses.length === 0) {
+        return { message: "No new expenses to add - all records already exist" };
+      }
+
+      const result = await expense_db.bulk_create_expenses_db(uniqueExpenses);
+      return {
+        message: `Created ${result.length} new expenses, skipped ${expenses.length - uniqueExpenses.length} duplicates`,
+        result,
+      };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

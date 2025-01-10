@@ -7,7 +7,7 @@ import { EditExpenseModal } from "./components";
 import * as API from "../../api";
 
 import { getExpenses } from "../../api";
-import { open_create_expense_modal, open_edit_expense_modal } from "../../slices/expenseSlice";
+import { open_create_expense_modal, open_edit_expense_modal, set_loading } from "../../slices/expenseSlice";
 import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageModal";
 import { close_image_display_modal } from "../../slices/imageSlice";
 import { determineExpenseColors, irsCategories } from "./expensesPageHelpers";
@@ -22,6 +22,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import ContentCopy from "@mui/icons-material/ContentCopy";
+import GLBoolean from "../../shared/GlowLEDsComponents/GLBoolean/GLBoolean";
 
 const ExpensesPage = () => {
   const expensePage = useSelector(state => state.expenses.expensePage);
@@ -67,7 +68,7 @@ const ExpensesPage = () => {
       },
       {
         title: "Direct Expense",
-        display: row => (row.is_direct_expense ? "Yes" : "No"),
+        display: row => <GLBoolean boolean={row.is_direct_expense} />,
       },
 
       {
@@ -125,7 +126,7 @@ const ExpensesPage = () => {
 
     Papa.parse(file, {
       header: true,
-      complete: function (results) {
+      complete: results => {
         const expenses = results.data
           .filter(
             row =>
@@ -147,8 +148,7 @@ const ExpensesPage = () => {
             place_of_purchase: row.Merchant,
             card: row.Account,
           }));
-        console.log({ expenses });
-        dispatch(API.bulkSaveExpenses(expenses));
+        dispatch(API.bulkSaveExpenses(expenses)).unwrap();
       },
     });
   };
