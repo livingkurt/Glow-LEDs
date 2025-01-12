@@ -15,7 +15,6 @@ import {
   Select,
   MenuItem,
   FormControl,
-  InputLabel,
   Box,
   Tabs,
   Tab,
@@ -34,7 +33,14 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
     })) || []
   );
 
-  const returnReasons = ["Wrong size", "Defective item", "Not as described", "Changed mind", "Other"];
+  const returnReasons = [
+    "Wrong size",
+    "Defective item",
+    "Partial Defective Item",
+    "Not as described",
+    "Changed mind",
+    "Other",
+  ];
 
   const handleQuantityChange = (index, value) => {
     const newQuantity = Math.min(Math.max(0, parseInt(value) || 0), returnItems[index].quantity);
@@ -76,7 +82,7 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
       price: selectedProduct.price,
       category: selectedProduct.category,
       subcategory: selectedProduct.subcategory,
-      quantity: newReturnItems[returnItemIndex].exchangeItems[exchangeItemIndex].quantity || 0,
+      quantity: 1,
       product: selectedProduct._id,
       pathname: selectedProduct.pathname,
       short_description: selectedProduct.short_description,
@@ -160,8 +166,6 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
       alert("Please provide a reason for each return item");
       return;
     }
-
-    console.log({ itemsToReturn });
 
     // Create return and exchange data structure
     const returnData = {
