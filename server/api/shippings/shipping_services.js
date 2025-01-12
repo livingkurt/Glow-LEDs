@@ -16,6 +16,7 @@ import {
 
 import easy_post_api from "@easypost/api";
 import email_services from "../emails/email_services.js";
+import { sendExchangeOrderEmail } from "../orders/order_interactors.js";
 
 const EasyPost = new easy_post_api(config.EASY_POST);
 
@@ -195,11 +196,8 @@ export default {
           returnItems: body.returnItems,
           change_log: [],
         });
-        await email_services.send_order_emails_s({
-          order: newOrder,
-          email: latestOrder.user.email,
-          subject: "You're Glow LEDs Exchange Order",
-        });
+        console.log({ newOrder });
+        await sendExchangeOrderEmail(newOrder);
       }
 
       return { label: label.postage_label.label_url };

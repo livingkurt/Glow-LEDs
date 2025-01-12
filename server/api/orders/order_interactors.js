@@ -401,6 +401,29 @@ export const sendOrderEmail = async orderData => {
   }
 };
 
+export const sendExchangeOrderEmail = async orderData => {
+  try {
+    const bodyConfirmation = {
+      email: {
+        h1: "YOUR EXCHANGE ORDER HAS BEEN PLACED! 🎉",
+        h2: "We will begin production on your exchange order when your return items are received. We will notify your as your order progresses.",
+      },
+      title: "Thank you for your purchase!",
+      order: orderData,
+    };
+    const mailOptionsConfirmation = {
+      from: config.DISPLAY_INFO_EMAIL,
+      to: orderData.shipping.email,
+      subject: "Thank you for your Glow LEDs Order",
+      html: App({ body: OrderTemplate(bodyConfirmation), unsubscribe: false }),
+    };
+    await sendEmail(mailOptionsConfirmation);
+  } catch (error) {
+    console.error("Error sending order email:", error);
+    throw new Error("Failed to send order email");
+  }
+};
+
 export const sendTicketEmail = async orderData => {
   try {
     const ticketQRCodes = await generateTicketQRCodes(orderData);
