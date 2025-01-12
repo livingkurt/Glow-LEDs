@@ -165,9 +165,9 @@ export default {
         exchangeItems: body.exchangeItems || [],
       });
       if (body.exchangeItems?.length > 0) {
+        const { _id, ...orderWithoutId } = latestOrder;
         const newOrder = await order_db.create_orders_db({
-          ...latestOrder,
-          _id: null,
+          ...orderWithoutId,
           shipping: {
             ...latestOrder.shipping,
             shipment_id: null,
