@@ -249,9 +249,15 @@ const orderPage = createSlice({
     [API.createTracker.fulfilled]: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
     },
-    // [API.getShipments.fulfilled]: (state, { payload }) => {
-    //   state.order = payload.order;
-    // },
+    [API.initiateReturnExchange.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [API.initiateReturnExchange.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+    },
+    [API.initiateReturnExchange.rejected]: (state, { payload, error }) => {
+      state.loading = false;
+    },
   },
 });
 

@@ -20,11 +20,12 @@ const StyledStepper = styled(Stepper)(({ theme }) => ({
   flexGrow: 1,
   justifyContent: "space-between",
   maxWidth: "75%",
+  marginTop: theme.spacing(3),
 }));
 
 const StyledDivider = styled(Divider)(({ theme }) => ({
-  marginTop: theme.spacing(2),
-  marginBottom: theme.spacing(2),
+  marginTop: theme.spacing(4),
+  marginBottom: theme.spacing(4),
 }));
 
 const TwoStepModal = ({

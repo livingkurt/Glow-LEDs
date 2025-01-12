@@ -81,7 +81,7 @@ export const initiateReturnExchange = createAsyncThunk(
         }`,
         { returnItems, exchangeItems }
       );
-      dispatch(showSuccess({ message: `Return Label Created` }));
+      dispatch(showSuccess({ message: `Return/Exchange Initiated` }));
       return data;
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));
