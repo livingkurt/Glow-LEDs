@@ -371,7 +371,8 @@ export default {
 
   create_orders_s: async body => {
     try {
-      return await order_db.create_orders_db(body);
+      const newOrder = await order_db.create_orders_db(body);
+      return await order_db.findById_orders_db(newOrder._id);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

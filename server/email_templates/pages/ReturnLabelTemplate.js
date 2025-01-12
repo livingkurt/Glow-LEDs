@@ -1,11 +1,23 @@
 import config from "../../config.js";
 
 export default ({ order, returnItems, exchangeItems }) => {
-  console.log({
-    order,
-    returnItems,
-    exchangeItems,
-  });
+  console.log(
+    JSON.stringify(
+      {
+        order,
+        returnItemsDetails: returnItems.map(item => ({
+          name: item.name,
+          selectedOptions: item.selectedOptions,
+        })),
+        exchangeItemsDetails: exchangeItems?.map(item => ({
+          name: item.name,
+          selectedOptions: item.selectedOptions,
+        })),
+      },
+      null,
+      2
+    )
+  );
   const printPageUrl = `${config.DOMAIN}/account/return_label?orderId=${order._id}&deadline=${encodeURIComponent(
     new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
   )}`;
@@ -32,9 +44,11 @@ export default ({ order, returnItems, exchangeItems }) => {
             <td style="padding: 10px; text-align: left;">
               ${item.name}
               ${
-                item.selectedOptions?.length
+                item.selectedOptions?.length && item.currentOptions?.length
                   ? `<br><span style="font-size: 14px; color: #a0a0a0;">
-                      ${item.selectedOptions.map(opt => `${opt.name}: ${opt.value?.name || opt.value}`).join(", ")}
+                      ${item.currentOptions
+                        .map((opt, index) => `${opt.name}: ${item.selectedOptions[index]?.name}`)
+                        .join(", ")}
                      </span>`
                   : ""
               }
@@ -71,9 +85,11 @@ export default ({ order, returnItems, exchangeItems }) => {
             <td style="padding: 10px; text-align: left;">
               ${item.name}
               ${
-                item.selectedOptions?.length
+                item.selectedOptions?.length && item.currentOptions?.length
                   ? `<br><span style="font-size: 14px; color: #a0a0a0;">
-                      ${item.selectedOptions.map(opt => `${opt.name}: ${opt.value?.name || opt.value}`).join(", ")}
+                      ${item.currentOptions
+                        .map((opt, index) => `${opt.name}: ${item.selectedOptions[index]?.name}`)
+                        .join(", ")}
                      </span>`
                   : ""
               }

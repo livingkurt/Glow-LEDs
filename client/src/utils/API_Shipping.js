@@ -51,8 +51,8 @@ const shipping_routes = {
   buy_label: (shipment_id, shipping_rate) => {
     return axios.put("/api/shipping/buy_label", { shipment_id, shipping_rate });
   },
-  create_return_label: (order, shipping_rate) => {
-    return axios.put("/api/shipping/create_return_label", {
+  initiate_return_exchange: (order, shipping_rate) => {
+    return axios.put("/api/shipping/initiate_return_exchange", {
       order,
       shipping_rate,
     });

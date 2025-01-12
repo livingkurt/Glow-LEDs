@@ -6,7 +6,7 @@ import { Loading } from "../../../shared/SharedComponents";
 import { printCustomerLabel, printInvoice, printLabel } from "../ordersPageHelpers";
 import { openLinkLabelModal } from "../../../slices/shippingSlice";
 import { openShippingModal, set_order } from "../../../slices/orderSlice";
-import { showConfirm, showError, showSuccess } from "../../../slices/snackbarSlice";
+import { showConfirm, showSuccess } from "../../../slices/snackbarSlice";
 import ReturnItemsModal from "./ReturnItemsModal";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -26,66 +26,6 @@ const OrderActionButtons = ({ order }) => {
     const labelUrl = order?.shipping?.return_shipping_label?.postage_label?.label_url;
     const deadline = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(); // 30 days from now
     printCustomerLabel(labelUrl, order, deadline);
-  };
-
-  const handleReturnConfirm = async returnData => {
-    console.log({ returnData });
-    try {
-      // Create return order
-      dispatch(
-        API.createReturnLabel({
-          orderId: order._id,
-          returnItems: returnData.returningItems.map(item => ({
-            ...item,
-            quantity: item.returnQuantity,
-            reason: item.returnReason,
-          })),
-          exchangeItems: returnData.exchangeItems,
-        })
-      );
-
-      // If there are exchange items, create a new order for them
-      if (returnData.exchangeItems?.length > 0) {
-        dispatch(
-          API.saveOrder({
-            ...order,
-            _id: null,
-            shipping: {
-              ...order.shipping,
-              shipment_id: null,
-              shipping_rate: null,
-              shipment_tracker: null,
-              shipping_label: null,
-              return_shipment_id: null,
-              return_shipping_rate: null,
-              return_shipment_tracker: null,
-              return_shipping_label: null,
-            },
-            return_tracking_url: "",
-            tracking_url: "",
-            return_tracking_number: "",
-            user: order?.user,
-            tracking_number: "",
-            shippingPrice: 0,
-            itemPrice: returnData.exchangeItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
-            taxPrice: 0,
-            totalPrice: 0,
-            orderItems: returnData.exchangeItems,
-            status: "paid",
-            relatedOrder: order._id,
-            returnItems: returnData.returningItems,
-            change_log: [],
-          })
-        );
-      }
-
-      // Show success message
-      dispatch(showSuccess({ message: "Return and exchange processed successfully" }));
-      setReturnModalOpen(false);
-      // Refresh order list or navigate to return label page
-    } catch (error) {
-      dispatch(showError({ message: "Error processing return and exchange" }));
-    }
   };
 
   const productsQuery = useProductsQuery({ hidden: false });
@@ -141,10 +81,21 @@ const OrderActionButtons = ({ order }) => {
               color="secondary"
               variant="contained"
               onClick={() => {
-                const confirm = window.confirm("Are you sure you want REFUND the LABEL for this order?");
-                if (confirm) {
-                  dispatch(API.refundLabel({ orderId: order._id, isReturnTracking: false }));
-                }
+                dispatch(
+                  showConfirm({
+                    title: "Are you sure you want REFUND the LABEL for this order?",
+                    inputLabel: "Describe the why you made this change to the order",
+                    onConfirm: inputText => {
+                      dispatch(
+                        API.refundLabel({
+                          orderId: order._id,
+                          isReturnTracking: false,
+                          reason: inputText,
+                        })
+                      );
+                    },
+                  })
+                );
               }}
               className="w-100per mv-5px"
             >
@@ -252,10 +203,21 @@ const OrderActionButtons = ({ order }) => {
                 variant="contained"
                 className="w-100per mv-5px"
                 onClick={() => {
-                  const confirm = window.confirm("Are you sure you want REFUND the RETURN LABEL for this order?");
-                  if (confirm) {
-                    dispatch(API.refundLabel({ orderId: order._id, isReturnTracking: true }));
-                  }
+                  dispatch(
+                    showConfirm({
+                      title: "Are you sure you want REFUND the RETURN LABEL for this order?",
+                      inputLabel: "Describe the why you made this change to the order",
+                      onConfirm: inputText => {
+                        dispatch(
+                          API.refundLabel({
+                            orderId: order._id,
+                            isReturnTracking: true,
+                            reason: inputText,
+                          })
+                        );
+                      },
+                    })
+                  );
                 }}
               >
                 {"Refund Return Label"}
@@ -268,7 +230,19 @@ const OrderActionButtons = ({ order }) => {
         open={returnModalOpen}
         onClose={() => setReturnModalOpen(false)}
         order={order}
-        onConfirm={handleReturnConfirm}
+        onConfirm={returnData => {
+          dispatch(
+            API.initiateReturnExchange({
+              orderId: order._id,
+              returnItems: returnData.returningItems.map(item => ({
+                ...item,
+                quantity: item.returnQuantity,
+                reason: item.returnReason,
+              })),
+              exchangeItems: returnData.exchangeItems,
+            })
+          );
+        }}
         availableProducts={productsQuery.isLoading ? [] : productsQuery.data}
       />
     </div>

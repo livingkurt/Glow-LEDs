@@ -6,7 +6,9 @@ const router = express.Router();
 
 router.route("/:order_id/buy_label").put(isAuth, isAdmin, shipping_controller.buy_label_shipping_c);
 router.route("/:order_id/create_label/:speed").put(isAuth, isAdmin, shipping_controller.create_label_shipping_c);
-router.route("/:order_id/create_return_label").put(isAuth, isAdmin, shipping_controller.create_return_label_shipping_c);
+router
+  .route("/:order_id/initiate_return_exchange")
+  .put(isAuth, isAdmin, shipping_controller.initiate_return_exchange_shipping_c);
 router.route("/:order_id/generate_csv_label").put(isAuth, isAdmin, shipping_controller.generate_csv_label_shipping_c);
 router.route("/create_pickup").put(isAuth, isAdmin, shipping_controller.create_pickup_shipping_c);
 router.route("/confirm_pickup").put(isAuth, isAdmin, shipping_controller.confirm_pickup_shipping_c);

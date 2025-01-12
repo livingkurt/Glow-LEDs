@@ -243,15 +243,21 @@ const orderPage = createSlice({
     [API.createLabel.fulfilled]: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
     },
-    [API.createReturnLabel.fulfilled]: (state, { payload }) => {
+    [API.initiateReturnExchange.fulfilled]: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
     },
     [API.createTracker.fulfilled]: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
     },
-    // [API.getShipments.fulfilled]: (state, { payload }) => {
-    //   state.order = payload.order;
-    // },
+    [API.initiateReturnExchange.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [API.initiateReturnExchange.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+    },
+    [API.initiateReturnExchange.rejected]: (state, { payload, error }) => {
+      state.loading = false;
+    },
   },
 });
 
