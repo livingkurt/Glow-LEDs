@@ -710,24 +710,34 @@ export default {
       return affiliate.sponsor === true || affiliate.promoter === true;
     });
 
-    const earnings = await Promise.all(
+    const affiliateEarnings = await Promise.all(
       filtered_affiliates.map(async affiliate => {
         const promo_code = affiliate?.public_code?.promo_code;
         const sponsor = affiliate.sponsor;
         const sponsorTeamCaptain = affiliate.sponsorTeamCaptain;
-        const { number_of_uses, revenue, earnings } = await getCodeUsage({
-          promo_code,
-          start_date,
-          end_date,
-          sponsor,
-          sponsorTeamCaptain,
-        });
+        const { number_of_uses, revenue, earnings, product_revenue, product_uses, ticket_revenue, ticket_uses } =
+          await getCodeUsage({
+            promo_code,
+            start_date,
+            end_date,
+            sponsor,
+            sponsorTeamCaptain,
+          });
 
-        return { number_of_uses, revenue, earnings, artist_name: affiliate.artist_name };
+        return {
+          number_of_uses,
+          revenue,
+          earnings,
+          product_revenue,
+          product_uses,
+          ticket_revenue,
+          ticket_uses,
+          artist_name: affiliate.artist_name,
+        };
       })
     );
 
-    return earnings;
+    return affiliateEarnings;
   },
   code_usage_orders_s: async (params, query) => {
     const { start_date, end_date, sponsor, sponsorTeamCaptain } = query;

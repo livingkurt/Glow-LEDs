@@ -202,37 +202,73 @@ export const getCodeUsage = async ({ promo_code, start_date, end_date, sponsor, 
 
     const aggregationPipeline = [
       { $match: matchFilter },
+      { $unwind: "$orderItems" },
       {
         $group: {
           _id: null,
           number_of_uses: { $sum: 1 },
-          revenue: { $sum: "$itemsPrice" },
+          revenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } },
           totalRefund: { $sum: { $ifNull: [{ $sum: "$refunds.amount" }, 0] } },
+          product_revenue: {
+            $sum: {
+              $cond: [
+                { $eq: ["$orderItems.itemType", "product"] },
+                { $multiply: ["$orderItems.price", "$orderItems.quantity"] },
+                0,
+              ],
+            },
+          },
+          product_uses: {
+            $sum: {
+              $cond: [{ $eq: ["$orderItems.itemType", "product"] }, 1, 0],
+            },
+          },
+          ticket_revenue: {
+            $sum: {
+              $cond: [
+                { $eq: ["$orderItems.itemType", "ticket"] },
+                { $multiply: ["$orderItems.price", "$orderItems.quantity"] },
+                0,
+              ],
+            },
+          },
+          ticket_uses: {
+            $sum: {
+              $cond: [{ $eq: ["$orderItems.itemType", "ticket"] }, 1, 0],
+            },
+          },
         },
       },
       {
         $project: {
+          _id: 0,
           number_of_uses: 1,
-          revenue: 1,
-          earnings: { $multiply: ["$revenue", earningsMultiplier] },
-          totalRefund: 1,
-        },
-      },
-      {
-        $addFields: {
           revenue: { $subtract: ["$revenue", { $divide: ["$totalRefund", 100] }] },
+          earnings: {
+            $multiply: [{ $subtract: ["$revenue", { $divide: ["$totalRefund", 100] }] }, earningsMultiplier],
+          },
+          product_revenue: 1,
+          product_uses: 1,
+          ticket_revenue: 1,
+          ticket_uses: 1,
         },
       },
     ];
 
     const results = await Order.aggregate(aggregationPipeline);
     if (results.length === 0) {
-      return { number_of_uses: 0, revenue: 0, earnings: 0 };
+      return {
+        number_of_uses: 0,
+        revenue: 0,
+        earnings: 0,
+        product_revenue: 0,
+        product_uses: 0,
+        ticket_revenue: 0,
+        ticket_uses: 0,
+      };
     }
 
-    const { number_of_uses, revenue, earnings } = results[0];
-
-    return { number_of_uses, revenue, earnings };
+    return results[0];
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);

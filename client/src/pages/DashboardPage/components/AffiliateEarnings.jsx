@@ -1,6 +1,7 @@
 import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTable";
 
 const AffiliateEarnings = ({ year, month, affiliate_earnings_code_usage }) => {
+  console.log({ affiliate_earnings_code_usage });
   return (
     <GLDisplayTable
       title={`${
@@ -16,8 +17,26 @@ const AffiliateEarnings = ({ year, month, affiliate_earnings_code_usage }) => {
         { title: "Ranking", display: (row, index) => `${index + 1}.`, sortable: true },
         { title: "Affiliate", display: row => row?.artist_name, sortable: true },
         { title: "Code Usage", display: row => (row.number_of_uses ? row?.number_of_uses : "0"), sortable: true },
-        { title: "Earnings", display: row => `$${row.earnings ? row?.earnings?.toFixed(2) : "0:00"}`, sortable: true },
-        { title: "Revenue", display: row => `$${row?.revenue ? row?.revenue?.toFixed(2) : "0:00"}`, sortable: true },
+        {
+          title: "Product Sales",
+          display: row => `$${row.product_revenue?.toFixed(2) || "0.00"} (${row.product_uses || 0} uses)`,
+          sortable: true,
+        },
+        {
+          title: "Ticket Sales",
+          display: row => `$${row.ticket_revenue?.toFixed(2) || "0.00"} (${row.ticket_uses || 0} uses)`,
+          sortable: true,
+        },
+        {
+          title: "Total Earnings",
+          display: row => `$${row.earnings ? row?.earnings?.toFixed(2) : "0.00"}`,
+          sortable: true,
+        },
+        {
+          title: "Total Revenue",
+          display: row => `$${row?.revenue ? row?.revenue?.toFixed(2) : "0.00"}`,
+          sortable: true,
+        },
       ]}
     />
   );
