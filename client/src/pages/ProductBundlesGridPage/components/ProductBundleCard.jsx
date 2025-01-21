@@ -2,7 +2,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 
 import { Link } from "react-router-dom";
-import { random } from "lodash/_DataView";
+import random from "lodash/random";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
