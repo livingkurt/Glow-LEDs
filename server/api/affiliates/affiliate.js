@@ -49,6 +49,15 @@ const affiliateSchema = new mongoose.Schema(
     ],
     percentage_off: { type: Number },
     sponsorTasks: [sponsorTaskSchema],
+    giftCardRewards: [
+      {
+        month: { type: String },
+        year: { type: Number },
+        amount: { type: Number },
+        code: { type: String },
+        issuedAt: { type: Date },
+      },
+    ],
     public_code: { type: mongoose.Schema.Types.ObjectId, ref: "Promo" },
     private_code: { type: mongoose.Schema.Types.ObjectId, ref: "Promo" },
     location: { type: String },
