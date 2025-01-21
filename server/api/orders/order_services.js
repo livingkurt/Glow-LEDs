@@ -746,7 +746,7 @@ export default {
       return affiliate.sponsor === true || affiliate.promoter === true;
     });
 
-    const earnings = await Promise.all(
+    const affiliateEarnings = await Promise.all(
       filtered_affiliates.map(async affiliate => {
         const promo_code = affiliate?.public_code?.promo_code;
         const sponsor = affiliate.sponsor;
@@ -763,7 +763,7 @@ export default {
       })
     );
 
-    return earnings;
+    return affiliateEarnings;
   },
   code_usage_orders_s: async (params, query) => {
     const { start_date, end_date, sponsor, sponsorTeamCaptain } = query;
