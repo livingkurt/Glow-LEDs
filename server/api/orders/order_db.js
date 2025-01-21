@@ -1216,10 +1216,41 @@ export default {
                 },
               },
               {
+                $unwind: "$orderItems",
+              },
+              {
                 $group: {
                   _id: null,
                   number_of_uses: { $sum: 1 },
-                  total_revenue: { $sum: "$totalPrice" },
+                  total_revenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } },
+                  product_revenue: {
+                    $sum: {
+                      $cond: [
+                        { $eq: ["$orderItems.itemType", "product"] },
+                        { $multiply: ["$orderItems.price", "$orderItems.quantity"] },
+                        0,
+                      ],
+                    },
+                  },
+                  product_uses: {
+                    $sum: {
+                      $cond: [{ $eq: ["$orderItems.itemType", "product"] }, 1, 0],
+                    },
+                  },
+                  ticket_revenue: {
+                    $sum: {
+                      $cond: [
+                        { $eq: ["$orderItems.itemType", "ticket"] },
+                        { $multiply: ["$orderItems.price", "$orderItems.quantity"] },
+                        0,
+                      ],
+                    },
+                  },
+                  ticket_uses: {
+                    $sum: {
+                      $cond: [{ $eq: ["$orderItems.itemType", "ticket"] }, 1, 0],
+                    },
+                  },
                 },
               },
             ],
@@ -1228,8 +1259,12 @@ export default {
         },
         {
           $addFields: {
-            number_of_uses: { $arrayElemAt: ["$affiliate_orders.number_of_uses", 0] },
-            revenue: { $arrayElemAt: ["$affiliate_orders.total_revenue", 0] },
+            number_of_uses: { $ifNull: [{ $arrayElemAt: ["$affiliate_orders.number_of_uses", 0] }, 0] },
+            revenue: { $ifNull: [{ $arrayElemAt: ["$affiliate_orders.total_revenue", 0] }, 0] },
+            product_revenue: { $ifNull: [{ $arrayElemAt: ["$affiliate_orders.product_revenue", 0] }, 0] },
+            product_uses: { $ifNull: [{ $arrayElemAt: ["$affiliate_orders.product_uses", 0] }, 0] },
+            ticket_revenue: { $ifNull: [{ $arrayElemAt: ["$affiliate_orders.ticket_revenue", 0] }, 0] },
+            ticket_uses: { $ifNull: [{ $arrayElemAt: ["$affiliate_orders.ticket_uses", 0] }, 0] },
           },
         },
         {
@@ -1250,9 +1285,14 @@ export default {
             number_of_uses: 1,
             revenue: 1,
             earnings: 1,
+            product_revenue: 1,
+            product_uses: 1,
+            ticket_revenue: 1,
+            ticket_uses: 1,
           },
         },
       ]);
+      console.log({ affiliatesEarnings });
 
       return affiliatesEarnings;
     } catch (error) {

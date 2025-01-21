@@ -202,55 +202,139 @@ export const getCodeUsage = async ({ promo_code, start_date, end_date, sponsor, 
 
     const aggregationPipeline = [
       { $match: matchFilter },
+      // First, get all orders and their items
+      {
+        $group: {
+          _id: "$_id",
+          orderData: { $first: "$$ROOT" },
+          number_of_uses: { $sum: 1 },
+          totalRefund: { $sum: { $ifNull: [{ $sum: "$refunds.amount" }, 0] } },
+        },
+      },
+      // Unwind items while keeping order context
+      {
+        $project: {
+          _id: 1,
+          number_of_uses: 1,
+          totalRefund: 1,
+          orderItems: "$orderData.orderItems",
+        },
+      },
       { $unwind: "$orderItems" },
+      // Group by type to get revenue and uses per type
+      {
+        $group: {
+          _id: "$orderItems.itemType",
+          revenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } },
+          uses: { $sum: 1 },
+          number_of_uses: { $first: "$number_of_uses" },
+          totalRefund: { $first: "$totalRefund" },
+        },
+      },
+      // Combine all types
       {
         $group: {
           _id: null,
-          number_of_uses: { $sum: 1 },
-          revenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } },
-          totalRefund: { $sum: { $ifNull: [{ $sum: "$refunds.amount" }, 0] } },
-          product_revenue: {
-            $sum: {
-              $cond: [
-                { $eq: ["$orderItems.itemType", "product"] },
-                { $multiply: ["$orderItems.price", "$orderItems.quantity"] },
-                0,
-              ],
-            },
-          },
-          product_uses: {
-            $sum: {
-              $cond: [{ $eq: ["$orderItems.itemType", "product"] }, 1, 0],
-            },
-          },
-          ticket_revenue: {
-            $sum: {
-              $cond: [
-                { $eq: ["$orderItems.itemType", "ticket"] },
-                { $multiply: ["$orderItems.price", "$orderItems.quantity"] },
-                0,
-              ],
-            },
-          },
-          ticket_uses: {
-            $sum: {
-              $cond: [{ $eq: ["$orderItems.itemType", "ticket"] }, 1, 0],
-            },
-          },
+          types: { $push: { type: "$_id", revenue: "$revenue", uses: "$uses" } },
+          number_of_uses: { $first: "$number_of_uses" },
+          totalRefund: { $first: "$totalRefund" },
         },
       },
       {
         $project: {
           _id: 0,
           number_of_uses: 1,
-          revenue: { $subtract: ["$revenue", { $divide: ["$totalRefund", 100] }] },
-          earnings: {
-            $multiply: [{ $subtract: ["$revenue", { $divide: ["$totalRefund", 100] }] }, earningsMultiplier],
+          product_revenue: {
+            $ifNull: [
+              {
+                $reduce: {
+                  input: {
+                    $filter: {
+                      input: "$types",
+                      as: "type",
+                      cond: { $eq: ["$$type.type", "product"] },
+                    },
+                  },
+                  initialValue: 0,
+                  in: { $add: ["$$value", "$$this.revenue"] },
+                },
+              },
+              0,
+            ],
           },
+          product_uses: {
+            $ifNull: [
+              {
+                $reduce: {
+                  input: {
+                    $filter: {
+                      input: "$types",
+                      as: "type",
+                      cond: { $eq: ["$$type.type", "product"] },
+                    },
+                  },
+                  initialValue: 0,
+                  in: { $add: ["$$value", "$$this.uses"] },
+                },
+              },
+              0,
+            ],
+          },
+          ticket_revenue: {
+            $ifNull: [
+              {
+                $reduce: {
+                  input: {
+                    $filter: {
+                      input: "$types",
+                      as: "type",
+                      cond: { $eq: ["$$type.type", "ticket"] },
+                    },
+                  },
+                  initialValue: 0,
+                  in: { $add: ["$$value", "$$this.revenue"] },
+                },
+              },
+              0,
+            ],
+          },
+          ticket_uses: {
+            $ifNull: [
+              {
+                $reduce: {
+                  input: {
+                    $filter: {
+                      input: "$types",
+                      as: "type",
+                      cond: { $eq: ["$$type.type", "ticket"] },
+                    },
+                  },
+                  initialValue: 0,
+                  in: { $add: ["$$value", "$$this.uses"] },
+                },
+              },
+              0,
+            ],
+          },
+          totalRefund: 1,
+        },
+      },
+      {
+        $project: {
+          number_of_uses: 1,
           product_revenue: 1,
           product_uses: 1,
           ticket_revenue: 1,
           ticket_uses: 1,
+          revenue: {
+            $subtract: [{ $add: ["$product_revenue", "$ticket_revenue"] }, { $divide: ["$totalRefund", 100] }],
+          },
+          earnings: {
+            $multiply: [
+              { $subtract: [{ $add: ["$product_revenue", "$ticket_revenue"] }, { $divide: ["$totalRefund", 100] }] },
+              earningsMultiplier,
+            ],
+          },
         },
       },
     ];
