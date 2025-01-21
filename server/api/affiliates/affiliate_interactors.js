@@ -9,6 +9,7 @@ import payment_controller from "../payments/payment_controller.js";
 import { sendEmail } from "../emails/email_interactors.js";
 import AffiliateEarningsTemplate from "../../email_templates/pages/AffiliateEarningsTemplate.js";
 import App from "../../email_templates/App.js";
+import Paycheck from "../paychecks/paycheck.js";
 
 const stripe = new Stripe(config.STRIPE_KEY, {
   apiVersion: "2023-08-16",
@@ -118,7 +119,7 @@ const createPaycheckRecord = async (affiliate, earnings, promoCodeUsage, descrip
   const oneWeekAgo = new Date();
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
-  const existingPaycheck = await paycheck_services.findOne_paychecks_s({
+  const existingPaycheck = await Paycheck.findOne({
     affiliate: affiliate._id,
     amount: earnings,
     created_at: { $gte: oneWeekAgo },

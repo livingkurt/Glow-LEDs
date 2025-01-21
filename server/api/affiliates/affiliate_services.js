@@ -335,11 +335,9 @@ export default {
   payout_affiliates_s: async () => {
     try {
       // const { start_date, end_date } = last_month_date_range();
-      const { start_date, end_date } = { start_date: "2024-12-01", end_date: "2024-12-31" };
+      const { start_date, end_date } = { start_date: "2024-01-01", end_date: "2024-01-31" };
       // Get active affiliates with populated user data
-      const affiliates = await affiliate_db
-        .findAll_affiliates_db({ active: true, rave_mob: false }, { _id: -1 })
-        .populate("user");
+      const affiliates = await affiliate_db.findAll_affiliates_db({ active: true, rave_mob: false }, { _id: -1 });
 
       const results = {
         successful: [],
