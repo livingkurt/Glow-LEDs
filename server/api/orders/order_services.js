@@ -319,30 +319,13 @@ export default {
         }
       }
 
-      // Process payments and send emails for each order
-      const updatedOrders = await Promise.all(
-        orders.map(async order => {
-          const freshOrder = await order_db.findById_orders_db(order._id);
-          await sendOrderEmail(freshOrder);
-          if (order.orderItems.some(item => item.itemType === "ticket")) {
-            await sendTicketEmail(freshOrder);
-          }
-          if (order.orderItems.some(item => item.itemType === "gift_card")) {
-            await sendGiftCardEmail(freshOrder);
-          }
-
-          return order;
-        })
-      );
-
-      // Update stock and empty cart
+      // Update stock and empty cart first
       await product_services.update_stock_products_s({ cartItems: order.orderItems });
       await cart_services.empty_carts_s({ id: cartId });
 
       // Handle promo code
       if (order.promo && order.promo.length !== 16) {
         await promo_services.update_code_used_promos_s({ promo_code: order.promo.promo_code });
-        await sendCodeUsedEmail(order.promo.promo_code);
       }
 
       // Handle gift cards
@@ -354,7 +337,60 @@ export default {
         );
       }
 
-      return updatedOrders;
+      // Send emails asynchronously without waiting
+      orders.forEach(async updateOrder => {
+        try {
+          const freshOrder = await order_db.findById_orders_db(updateOrder._id);
+          // Set a timeout for email sending
+          const emailTimeout = 10000; // 10 seconds timeout
+
+          const sendEmailWithTimeout = async emailPromise => {
+            let timeoutId;
+            const timeoutPromise = new Promise((_, reject) => {
+              timeoutId = setTimeout(() => reject(new Error("Email sending timed out")), emailTimeout);
+            });
+
+            try {
+              const result = await Promise.race([emailPromise, timeoutPromise]);
+              clearTimeout(timeoutId);
+              return result;
+            } catch (error) {
+              clearTimeout(timeoutId);
+              throw error;
+            }
+          };
+
+          // Send order confirmation email
+          sendEmailWithTimeout(sendOrderEmail(freshOrder)).catch(error => {
+            console.error("Error sending order confirmation email:", error);
+          });
+
+          // Send ticket email if needed
+          if (updateOrder.orderItems.some(item => item.itemType === "ticket")) {
+            sendEmailWithTimeout(sendTicketEmail(freshOrder)).catch(error => {
+              console.error("Error sending ticket email:", error);
+            });
+          }
+
+          // Send gift card email if needed
+          if (updateOrder.orderItems.some(item => item.itemType === "gift_card")) {
+            sendEmailWithTimeout(sendGiftCardEmail(freshOrder)).catch(error => {
+              console.error("Error sending gift card email:", error);
+            });
+          }
+
+          // Send promo code used email if needed
+          if (order.promo && order.promo.length !== 16) {
+            sendEmailWithTimeout(sendCodeUsedEmail(order.promo.promo_code)).catch(error => {
+              console.error("Error sending promo code used email:", error);
+            });
+          }
+        } catch (error) {
+          console.error("Error in email sending process:", error);
+        }
+      });
+
+      return orders;
     } catch (error) {
       console.log({ place_order_orders_s: error });
       if (error instanceof Error) {
