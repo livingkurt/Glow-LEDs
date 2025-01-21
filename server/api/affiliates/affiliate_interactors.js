@@ -256,11 +256,11 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
             earnings: promoCodeUsage.earnings,
             stripeConnectId: affiliate.user.stripe_connect_id,
           });
-          // await payment_controller.affiliate_payout_payments_c({
-          //   earnings: promoCodeUsage.earnings,
-          //   stripeConnectId: affiliate.user.stripe_connect_id,
-          //   description,
-          // });
+          await payment_controller.affiliate_payout_payments_c({
+            earnings: promoCodeUsage.earnings,
+            stripeConnectId: affiliate.user.stripe_connect_id,
+            description,
+          });
 
           // Update paycheck as paid
           paycheck.paid = true;
@@ -297,14 +297,14 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
     }
 
     // Send single earnings email with all information
-    // await sendAffiliateEarningsEmail({
-    //   email: affiliate.user.email,
-    //   affiliate,
-    //   giftCard,
-    //   level,
-    //   monthlyTasks: monthlyTasks || [], // Ensure monthlyTasks is always an array
-    //   promoCodeUsage,
-    // });
+    await sendAffiliateEarningsEmail({
+      email: affiliate.user.email,
+      affiliate,
+      giftCard,
+      level,
+      monthlyTasks: monthlyTasks || [], // Ensure monthlyTasks is always an array
+      promoCodeUsage,
+    });
 
     return paycheck;
   } catch (error) {
