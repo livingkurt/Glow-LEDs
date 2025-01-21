@@ -334,10 +334,12 @@ export default {
 
   payout_affiliates_s: async () => {
     try {
-      const { start_date, end_date } = last_month_date_range();
-
-      // Get active affiliates
-      const affiliates = await affiliate_db.findAll_affiliates_db({ active: true, rave_mob: false }, { _id: -1 });
+      // const { start_date, end_date } = last_month_date_range();
+      const { start_date, end_date } = { start_date: "2024-12-01", end_date: "2024-12-31" };
+      // Get active affiliates with populated user data
+      const affiliates = await affiliate_db
+        .findAll_affiliates_db({ active: true, rave_mob: false }, { _id: -1 })
+        .populate("user");
 
       const results = {
         successful: [],
@@ -346,10 +348,18 @@ export default {
       };
 
       // Process each affiliate
-      await affiliates.reduce(async (promise, affiliate) => {
-        await promise;
-
+      for (const affiliate of affiliates) {
         try {
+          // Skip if affiliate has no user data
+          if (!affiliate.user) {
+            console.log(`Skipping affiliate ${affiliate.artist_name} - no user data`);
+            results.skipped.push({
+              affiliate: affiliate.artist_name,
+              reason: "No user data found",
+            });
+            continue;
+          }
+
           // Add delay between iterations to avoid rate limiting
           if (results.successful.length > 0) {
             await new Promise(resolve => setTimeout(resolve, 1000));
@@ -375,7 +385,7 @@ export default {
             error: error.message,
           });
         }
-      }, Promise.resolve());
+      }
 
       return {
         message: "Affiliate payouts processed",

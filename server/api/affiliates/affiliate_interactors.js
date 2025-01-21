@@ -132,17 +132,26 @@ const processGiftCardRewards = async (affiliate, promoCodeUsage) => {
 
 const createPaycheckRecord = async (affiliate, earnings, promoCodeUsage, description) => {
   console.log("Creating paycheck record:", {
-    affiliate: affiliate._id,
+    affiliate: affiliate?._id,
     earnings,
     promoCodeUsage,
   });
+
+  if (!affiliate?._id || !affiliate?.user?._id) {
+    console.error("Invalid affiliate data:", {
+      affiliateId: affiliate?._id,
+      userId: affiliate?.user?._id,
+      artistName: affiliate?.artist_name,
+    });
+    throw new Error("Invalid affiliate data - missing required IDs");
+  }
 
   const paycheck = await paycheck_services.create_paychecks_s({
     affiliate: affiliate._id,
     user: affiliate.user._id,
     amount: earnings,
     revenue: promoCodeUsage.revenue,
-    promo_code: affiliate.public_code._id,
+    promo_code: affiliate.public_code?._id,
     uses: promoCodeUsage.number_of_uses,
     stripe_connect_id: affiliate.user.stripe_connect_id,
     paid: !!affiliate.user.stripe_connect_id,
@@ -185,11 +194,11 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
         earnings: promoCodeUsage.earnings,
         stripeConnectId: affiliate.user.stripe_connect_id,
       });
-      await payment_controller.affiliate_payout_payments_c({
-        earnings: promoCodeUsage.earnings,
-        stripeConnectId: affiliate.user.stripe_connect_id,
-        description,
-      });
+      // await payment_controller.affiliate_payout_payments_c({
+      //   earnings: promoCodeUsage.earnings,
+      //   stripeConnectId: affiliate.user.stripe_connect_id,
+      //   description,
+      // });
     }
     const paycheck = await createPaycheckRecord(affiliate, promoCodeUsage.earnings, promoCodeUsage, description);
 
@@ -209,7 +218,7 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
 
       const sponsorRewards = await processGiftCardRewards(affiliate, promoCodeUsage);
       ({ giftCard, level, monthlyTasks } = sponsorRewards);
-
+      console.log("Sponsor rewards:", { giftCard, level, monthlyTasks });
       if (sponsorRewards.giftCardAmount) {
         description += ` (Including $${sponsorRewards.giftCardAmount} Gift Card for Task Completion)`;
         console.log("Added gift card to description:", description);
@@ -217,14 +226,14 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
     }
 
     // Send single earnings email with all information
-    await sendAffiliateEarningsEmail({
-      email: affiliate.user.email,
-      affiliate,
-      giftCard,
-      level,
-      monthlyTasks: monthlyTasks || [], // Ensure monthlyTasks is always an array
-      promoCodeUsage,
-    });
+    // await sendAffiliateEarningsEmail({
+    //   email: affiliate.user.email,
+    //   affiliate,
+    //   giftCard,
+    //   level,
+    //   monthlyTasks: monthlyTasks || [], // Ensure monthlyTasks is always an array
+    //   promoCodeUsage,
+    // });
 
     return paycheck;
   } catch (error) {
