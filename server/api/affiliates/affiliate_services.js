@@ -336,8 +336,10 @@ export default {
     try {
       const { start_date, end_date } = last_month_date_range();
 
-      // Get active affiliates
-      const affiliates = await affiliate_db.findAll_affiliates_db({ active: true, rave_mob: false }, { _id: -1 });
+      const affiliates = await affiliate_db.findAll_affiliates_db(
+        { active: true, rave_mob: false, deleted: false },
+        { _id: -1 }
+      );
 
       const results = {
         successful: [],
