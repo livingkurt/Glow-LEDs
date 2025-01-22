@@ -186,7 +186,19 @@ export const diminish_helios_glove_set_stock = async (product, item) => {
   const batteriesId = "60e1581fe615fa002a6c2d98";
   const batteries = await product_db.findById_products_db(batteriesId);
   if (batteries) {
-    await diminish_batteries_stock(batteries, { ...item, quantity: item.quantity * 20 });
+    // Format the batteries item to match the shared item schema with Set of 20 option
+    const batteriesItem = {
+      ...item,
+      product: batteries._id,
+      selectedOptions: [
+        batteries.options
+          .find(option => option.name.toLowerCase() === "set of")
+          .values.find(value => value.name === "20"),
+      ],
+      quantity: item.quantity, // This will use 20 batteries per set since we're selecting the Set of 20 option
+    };
+    console.log({ batteries, batteriesItem });
+    await diminish_batteries_stock(batteries, batteriesItem);
   }
 
   // Update selected glove size stock
