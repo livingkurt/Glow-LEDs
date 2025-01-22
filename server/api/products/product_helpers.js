@@ -26,7 +26,6 @@ export const updateProductStock = async (product, quantityToReduce) => {
 };
 
 export const diminish_batteries_stock = async (product, item, isRefreshPack = false) => {
-  console.log({ product, item });
   console.log(`Diminishing batteries stock for product: ${product.name}`);
   let batteries_to_remove = 0;
 
@@ -197,7 +196,6 @@ export const diminish_helios_glove_set_stock = async (product, item) => {
       ],
       quantity: item.quantity, // This will use 20 batteries per set since we're selecting the Set of 20 option
     };
-    console.log({ batteries, batteriesItem });
     await diminish_batteries_stock(batteries, batteriesItem);
   }
 
