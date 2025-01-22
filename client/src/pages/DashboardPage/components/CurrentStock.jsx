@@ -3,17 +3,11 @@ import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTabl
 
 import { useDispatch } from "react-redux";
 import * as API from "../../../api";
-import GLTabPanel from "../../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
-import AppBar from "@mui/material/AppBar";
-import Paper from "@mui/material/Paper";
-import Tab from "@mui/material/Tab";
-import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
 
 const CurrentStock = () => {
   const dispatch = useDispatch();
   const currentStock = API.useGetCurrentStockQuery();
-  const [tabIndex, setTabIndex] = React.useState(0);
 
   // Group products by category and subcategory
   const groupedProducts = React.useMemo(() => {
