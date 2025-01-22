@@ -41,7 +41,6 @@ const ContentsPage = () => {
   const dispatch = useDispatch();
   const contentPage = useSelector(state => state.contents.contentPage);
   const { content, loading } = contentPage;
-  console.log({ content });
 
   const { data: products, isLoading: productsLoading } = useProductsQuery();
   const { data: tags, isLoading: tagsLoading } = useTagsQuery();
@@ -167,7 +166,6 @@ const ContentsPage = () => {
             <HomePageEditor
               initialModules={content?.home_page?.modules || []}
               onChange={modules => {
-                console.log({ ContentPageModules: modules });
                 handleContentChange({
                   ...content,
                   home_page: {

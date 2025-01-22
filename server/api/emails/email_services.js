@@ -162,7 +162,6 @@ export default {
     return body.email;
   },
   send_order_emails_s: async body => {
-    console.log({ body });
     const { order, email, subject } = body;
     const orderData = await order_db.findById_orders_db(order._id);
     const bodyConfirmation = {

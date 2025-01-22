@@ -89,7 +89,6 @@ export default {
     }
   },
   update_teams_db: async (id, body) => {
-    console.log({ id, body });
     try {
       const team = await Team.findOne({ _id: id, deleted: false });
       if (team) {

@@ -30,7 +30,6 @@ const MODULE_TYPES = [
 
 const EmailTemplateEditor = ({ initialModules = [], onChange }) => {
   const [modules, setModules] = useState(initialModules.map(module => ({ ...module, content: { ...module.content } })));
-  console.log({ modules });
 
   useEffect(() => {
     if (JSON.stringify(modules) !== JSON.stringify(initialModules)) {

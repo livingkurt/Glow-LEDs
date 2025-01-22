@@ -545,7 +545,7 @@ export default {
             } else if (product.category === "glove_sets") {
               await diminish_helios_glove_set_stock(product, item);
             } else {
-              await updateProductStock(product, item);
+              await updateProductStock(product, item.quantity);
             }
           }
         } else if (item.itemType === "ticket") {

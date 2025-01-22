@@ -131,7 +131,6 @@ const GLLoginModal = () => {
   };
 
   useEffect(() => {
-    console.log({ token });
     if (token) {
       dispatch(
         API.verifyUser({

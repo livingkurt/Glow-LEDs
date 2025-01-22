@@ -392,7 +392,6 @@ export default {
 
       return orders;
     } catch (error) {
-      console.log({ place_order_orders_s: error });
       if (error instanceof Error) {
         // Include the order ID in the error if it exists
         if (error.orderId) {
@@ -933,7 +932,6 @@ export default {
 
       return updatedOrder;
     } catch (error) {
-      console.log({ pay_order_s: error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
