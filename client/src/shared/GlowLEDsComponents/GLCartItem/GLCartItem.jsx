@@ -23,6 +23,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import useTheme from "@mui/material/styles/useTheme";
 
 const GLCartItem = ({ item, index, showQuantity, isOrderItem = false }) => {
+  console.log({ item });
   const { current_user } = useSelector(state => state.users.userPage);
   const { my_cart } = useSelector(state => state.carts.cartPage);
   const dispatch = useDispatch();
