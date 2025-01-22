@@ -128,39 +128,18 @@ const CurrentStock = () => {
         {"Current Stock"}
       </Typography>
 
-      <Paper>
-        <AppBar position="sticky" color="transparent">
-          <Tabs
-            value={tabIndex}
-            className="jc-b"
-            onChange={(e, newValue) => setTabIndex(newValue)}
-            variant="scrollable"
-            scrollButtons="auto"
-          >
-            {groupedProducts.map((group, index) => (
-              <Tab
-                key={`${group.category}/${group.subcategory}`}
-                label={formatTitle(group.category, group.subcategory)}
-                value={index}
-              />
-            ))}
-          </Tabs>
-        </AppBar>
-      </Paper>
-
       {groupedProducts.map((group, index) => (
-        <GLTabPanel key={`${group.category}/${group.subcategory}`} value={tabIndex} index={index}>
-          <GLDisplayTable
-            title={`${formatTitle(group.category, group.subcategory)} Stock`}
-            loading={currentStock.isLoading}
-            defaultSorting={[0, "desc"]}
-            onEdit={handleEdit}
-            rows={group.products}
-            defaultSortColumn="Name"
-            defaultSort="desc"
-            columnDefs={columnDefs}
-          />
-        </GLTabPanel>
+        <GLDisplayTable
+          key={`${group.category}/${group.subcategory}`}
+          title={`${formatTitle(group.category, group.subcategory)} Stock`}
+          loading={currentStock.isLoading}
+          defaultSorting={[0, "desc"]}
+          onEdit={handleEdit}
+          rows={group.products}
+          defaultSortColumn="Name"
+          defaultSort="desc"
+          columnDefs={columnDefs}
+        />
       ))}
     </div>
   );
