@@ -36,20 +36,6 @@ const CurrentStock = () => {
     });
   }, [currentStock.data]);
 
-  console.log({
-    "Helios Glove Set": groupedProducts
-      .find(g => g.category === "glove_sets")
-      ?.products.find(p => p.name === "Helios Glove Set")?.count_in_stock,
-    "Helios Microlight": groupedProducts
-      .find(g => g.category === "microlight")
-      ?.products.find(p => p.name === "Helios Microlight")?.count_in_stock,
-    "Glow Jar": groupedProducts.find(g => g.category === "storage")?.products.find(p => p.name === "Glow Jar")
-      ?.count_in_stock,
-    "Bulk CR1620 Batteries": groupedProducts
-      .find(g => g.category === "batteries")
-      ?.products.find(p => p.name === "Bulk CR1620 Batteries")?.count_in_stock,
-  });
-
   const handleEdit = async value => {
     try {
       // First update the main product
