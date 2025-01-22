@@ -169,15 +169,25 @@ export const normalizeOrderSearch = query => {
   } else {
     search = query.search
       ? {
-          $expr: {
-            $regexMatch: {
-              input: {
-                $concat: ["$shipping.first_name", " ", "$shipping.last_name"],
+          $or: [
+            {
+              $expr: {
+                $regexMatch: {
+                  input: {
+                    $concat: ["$shipping.first_name", " ", "$shipping.last_name"],
+                  },
+                  regex: query.search,
+                  options: "i",
+                },
               },
-              regex: query.search,
-              options: "i",
             },
-          },
+            {
+              "orderItems.name": {
+                $regex: query.search,
+                $options: "i",
+              },
+            },
+          ],
         }
       : {};
   }
