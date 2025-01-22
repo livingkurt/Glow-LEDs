@@ -39,7 +39,7 @@ export default {
   },
   findByPathname_tickets_db: async pathname => {
     try {
-      return await Ticket.findOne({ pathname: pathname, deleted: false })
+      return await Ticket.findOne({ pathname, deleted: false })
         .populate("image")
         .populate({
           path: "backup_ticket",
@@ -92,7 +92,6 @@ export default {
   },
   update_tickets_db: async (params, body) => {
     const { id } = params;
-    console.log({ id, body });
     try {
       const ticket = await Ticket.findOne({ _id: id, deleted: false });
       if (ticket) {

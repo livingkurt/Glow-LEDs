@@ -3,17 +3,38 @@ import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTabl
 
 import { useDispatch } from "react-redux";
 import * as API from "../../../api";
-import GLTabPanel from "../../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
-import AppBar from "@mui/material/AppBar";
-import Paper from "@mui/material/Paper";
-import Tab from "@mui/material/Tab";
-import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
 
 const CurrentStock = () => {
   const dispatch = useDispatch();
   const currentStock = API.useGetCurrentStockQuery();
-  const [tabIndex, setTabIndex] = React.useState(0);
+
+  // Group products by category and subcategory
+  const groupedProducts = React.useMemo(() => {
+    if (!currentStock.data) return [];
+
+    return Object.values(
+      currentStock.data.reduce((acc, product) => {
+        const category = product.category || "tickets";
+        const subcategory = product.subcategory || "general";
+        const key = `${category}/${subcategory}`;
+
+        return {
+          ...acc,
+          [key]: {
+            category,
+            subcategory,
+            products: [...(acc[key]?.products || []), product],
+          },
+        };
+      }, {})
+    ).sort((a, b) => {
+      if (a.category === b.category) {
+        return a.subcategory.localeCompare(b.subcategory);
+      }
+      return a.category.localeCompare(b.category);
+    });
+  }, [currentStock.data]);
 
   const handleEdit = async value => {
     try {
@@ -58,6 +79,7 @@ const CurrentStock = () => {
                     ...optionProduct,
                     count_in_stock: batchStock,
                     max_quantity: batchStock,
+                    max_display_quantity: batchStock > 30 ? 30 : batchStock,
                   })
                 );
               })
@@ -69,11 +91,12 @@ const CurrentStock = () => {
       // Refresh the data
       currentStock.refetch();
     } catch (error) {
-      console.error("Error updating stock:", error);
+      // Handle error appropriately
+      dispatch({ type: "SET_ERROR", payload: "Error updating stock" });
     }
   };
 
-  const gloveColumnDefs = [
+  const columnDefs = [
     { title: "Name", display: "name", sortable: true, editable: false },
     {
       title: "Count in Stock",
@@ -84,159 +107,34 @@ const CurrentStock = () => {
     },
   ];
 
+  const formatTitle = (category, subcategory) => {
+    const formatWord = word =>
+      word
+        .split("_")
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ");
+    return subcategory === "general" ? formatWord(category) : `${formatWord(category)} - ${formatWord(subcategory)}`;
+  };
+
   return (
     <div>
       <Typography variant="h4" align="center" sx={{ mb: 2 }}>
         {"Current Stock"}
       </Typography>
 
-      <Paper>
-        <AppBar position="sticky" color="transparent">
-          <Tabs
-            value={tabIndex}
-            className="jc-b"
-            onChange={(e, newValue) => setTabIndex(newValue)}
-            variant="scrollable"
-            scrollButtons="false"
-          >
-            <Tab label="Ultra Gloves" value={0} />
-            <Tab label="Supreme V2" value={1} />
-            <Tab label="Supreme V1" value={2} />
-            <Tab label="Refresh Packs" value={3} />
-            <Tab label="Batteries" value={4} />
-          </Tabs>
-        </AppBar>
-      </Paper>
-
-      <GLTabPanel value={tabIndex} index={0}>
+      {groupedProducts.map((group, index) => (
         <GLDisplayTable
-          title="Ultra Gloves Stock"
-          loading={currentStock.isLoading && currentStock.data}
+          key={`${group.category}/${group.subcategory}`}
+          title={`${formatTitle(group.category, group.subcategory)} Stock`}
+          loading={currentStock.isLoading}
           defaultSorting={[0, "desc"]}
           onEdit={handleEdit}
-          rows={
-            !currentStock.isLoading &&
-            currentStock.data?.filter(
-              row => row.name.toLowerCase().includes("ultra") && !row.name.toLowerCase().includes("refresh")
-            )
-          }
+          rows={group.products}
           defaultSortColumn="Name"
           defaultSort="desc"
-          columnDefs={gloveColumnDefs}
+          columnDefs={columnDefs}
         />
-      </GLTabPanel>
-
-      <GLTabPanel value={tabIndex} index={1}>
-        <GLDisplayTable
-          title="Supreme V2 Gloves Stock"
-          loading={currentStock.isLoading && currentStock.data}
-          defaultSorting={[0, "desc"]}
-          onEdit={handleEdit}
-          rows={
-            !currentStock.isLoading &&
-            currentStock.data?.filter(
-              row => row.name.toLowerCase().includes("v2") && !row.name.toLowerCase().includes("refresh")
-            )
-          }
-          defaultSortColumn="Name"
-          defaultSort="desc"
-          columnDefs={gloveColumnDefs}
-        />
-      </GLTabPanel>
-
-      <GLTabPanel value={tabIndex} index={2}>
-        <GLDisplayTable
-          title="Supreme V1 Gloves Stock"
-          loading={currentStock.isLoading && currentStock.data}
-          defaultSorting={[0, "desc"]}
-          onEdit={handleEdit}
-          rows={
-            !currentStock.isLoading &&
-            currentStock.data?.filter(
-              row =>
-                (row.name.toLowerCase().includes("v1") || row.name.toLowerCase().includes("supreme")) &&
-                !row.name.toLowerCase().includes("v2") &&
-                !row.name.toLowerCase().includes("refresh")
-            )
-          }
-          defaultSortColumn="Name"
-          defaultSort="desc"
-          columnDefs={gloveColumnDefs}
-        />
-      </GLTabPanel>
-
-      <GLTabPanel value={tabIndex} index={3}>
-        <GLDisplayTable
-          title="Refresh Packs Stock"
-          loading={currentStock.isLoading && currentStock.data}
-          defaultSorting={[0, "desc"]}
-          onEdit={handleEdit}
-          rows={!currentStock.isLoading && currentStock.data?.filter(row => row.name.toLowerCase().includes("refresh"))}
-          defaultSortColumn="Name"
-          defaultSort="desc"
-          columnDefs={[
-            { title: "Name", display: "name", sortable: true, editable: false },
-            {
-              title: "Count in Stock",
-              display: row => row?.count_in_stock,
-              attribute: "count_in_stock",
-              sortable: true,
-              editable: false,
-            },
-          ]}
-        />
-      </GLTabPanel>
-
-      <GLTabPanel value={tabIndex} index={4}>
-        <GLDisplayTable
-          title="Current Battery Stock"
-          loading={currentStock.isLoading && currentStock.data}
-          rows={!currentStock.isLoading && currentStock?.data?.filter(row => row.category === "batteries")}
-          defaultSorting={[0, "desc"]}
-          onEdit={async updatedProduct => {
-            // First update the main product
-            await dispatch(
-              API.saveProduct({
-                ...updatedProduct,
-                max_quantity: updatedProduct.count_in_stock,
-                max_display_quantity: updatedProduct.count_in_stock > 30 ? 30 : updatedProduct.count_in_stock,
-              })
-            );
-
-            // Get option products from the optionProducts array
-            if (updatedProduct.options && updatedProduct.options.length > 0) {
-              await Promise.all(
-                updatedProduct.options.map(async option => {
-                  await Promise.all(
-                    option.values.map(async value => {
-                      const { data: valueProduct } = await dispatch(
-                        API.detailsProduct({ pathname: value.product })
-                      ).unwrap();
-                      // Use the name field as the size
-                      const setSize = Number(value.name);
-                      const batchStock = Math.floor(updatedProduct.count_in_stock / setSize);
-                      return dispatch(
-                        API.saveProduct({
-                          _id: valueProduct._id,
-                          name: valueProduct.name,
-                          count_in_stock: batchStock,
-                          max_quantity: batchStock,
-                          max_display_quantity: batchStock > 30 ? 30 : batchStock,
-                        })
-                      );
-                    })
-                  );
-                })
-              );
-            }
-
-            currentStock.refetch();
-          }}
-          defaultSortColumn="Name"
-          defaultSort="desc"
-          columnDefs={gloveColumnDefs}
-        />
-      </GLTabPanel>
+      ))}
     </div>
   );
 };

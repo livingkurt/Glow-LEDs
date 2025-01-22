@@ -71,7 +71,6 @@ export const normalizeAffiliateSearch = query => {
 };
 
 export const normalizeAffiliateFilters = input => {
-  console.log({ input });
   const output = {};
   Object.keys(input).forEach(key => {
     switch (key) {

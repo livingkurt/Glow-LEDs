@@ -164,10 +164,8 @@ export default {
   send_contact_emails_c: async (req, res) => {
     try {
       const recipient = await email_services.send_contact_emails_s(req.body);
-      console.log({ send_contact_emails_c: recipient });
       res.status(200).send({ message: `User Contact Email Sent to ${recipient}` });
     } catch (error) {
-      console.log({ send_contact_emails_c: error });
       res.status(500).send({ error, message: error.message });
     }
   },

@@ -147,7 +147,6 @@ export default {
   //       order.orderItems
   //         .filter(item => item.itemType === "ticket" && item.event.toString() === eventId)
   //         .map(item => {
-  //           console.log({ item });
   //           return {
   //             firstName: order.shipping.first_name,
   //             lastName: order.shipping.last_name,

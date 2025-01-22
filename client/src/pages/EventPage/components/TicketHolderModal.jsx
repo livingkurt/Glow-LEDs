@@ -40,7 +40,6 @@ const TicketHoldersModal = ({ open, onClose, event, allTickets }) => {
   ];
 
   const determineTicketHolderColors = row => {
-    console.log({ row });
     const ticket = allTickets.find(ticket => ticket.ticket_type === row.ticketType);
 
     return darken(ticket.color, 0.2);

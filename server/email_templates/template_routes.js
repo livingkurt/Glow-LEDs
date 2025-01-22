@@ -138,7 +138,6 @@ router.get("/code_used", async (req, res) => {
 });
 router.get("/paycheck", async (req, res) => {
   const paycheckDocument = await paycheck_db.findById_paychecks_db("656bc32d9701b7f4b9b9bd43");
-  console.log({ paycheckDocument });
 
   res.send(App({ body: PaycheckTemplate(paycheckDocument), unsubscribe: false }));
 });
@@ -497,7 +496,6 @@ router.get("/account_created", async (req, res) => {
 
 router.get("/return_label", async (req, res) => {
   const order = await Order.findOne({ "shipping.return_shipping_label": { $exists: true } });
-  console.log({ order });
   res.send(App({ body: ReturnLabelTemplate({ order, title: "Return Label" }) }));
 });
 

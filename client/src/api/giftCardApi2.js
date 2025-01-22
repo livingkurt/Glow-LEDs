@@ -20,7 +20,6 @@ export const getGiftCards = async ({ search, sorting, filters, page, pageSize })
       },
     });
   } catch (error) {
-    console.log({ error });
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };

@@ -3,6 +3,7 @@ import Product from "./product.js";
 import Tag from "../tags/tag.js";
 import Order from "../orders/order.js";
 import Microlight from "../microlights/microlight.js";
+import product_db from "./product_db.js";
 
 export const updateProductStock = async (product, quantityToReduce) => {
   console.log(`Updating stock for product: ${product.name}`);
@@ -159,6 +160,65 @@ export const diminish_sampler_stock = async (product, item) => {
     await updateProductStock(gloveProduct, item.quantity);
   }
 };
+
+export const diminish_helios_glove_set_stock = async (product, item) => {
+  console.log(`Diminishing Helios Glove Set stock for product: ${product.name}`);
+
+  // Update main product stock
+  await updateProductStock(product, item.quantity);
+
+  // Update Helios Microlights stock (10 per set)
+  const heliosMicrolightId = "66fbf1228dd670049ec52850";
+  const heliosMicrolight = await product_db.findById_products_db(heliosMicrolightId);
+  if (heliosMicrolight) {
+    await updateProductStock(heliosMicrolight, item.quantity * 10);
+  }
+
+  // Update Glow Jar stock (1 per set)
+  const glowJarId = "66c9fdd30378a2bd91493db4";
+  const glowJar = await product_db.findById_products_db(glowJarId);
+  if (glowJar) {
+    await updateProductStock(glowJar, item.quantity);
+  }
+
+  // Update Batteries stock (20 per set)
+  const batteriesId = "60e1581fe615fa002a6c2d98";
+  const batteries = await product_db.findById_products_db(batteriesId);
+  if (batteries) {
+    // Format the batteries item to match the shared item schema with Set of 20 option
+    const batteriesItem = {
+      ...item,
+      product: batteries._id,
+      selectedOptions: [
+        batteries.options
+          .find(option => option.name.toLowerCase() === "set of")
+          .values.find(value => value.name === "20"),
+      ],
+      quantity: item.quantity, // This will use 20 batteries per set since we're selecting the Set of 20 option
+    };
+    await diminish_batteries_stock(batteries, batteriesItem);
+  }
+
+  // Update selected glove size stock
+  const gloveOption = product.options.find(option => option.name === "Gloves Size");
+  if (gloveOption) {
+    const selectedGloveSize = item.selectedOptions.find(opt =>
+      gloveOption.values.some(value => value._id.toString() === opt._id.toString())
+    );
+
+    if (selectedGloveSize) {
+      const selectedGlove = gloveOption.values.find(value => value._id.toString() === selectedGloveSize._id.toString());
+
+      if (selectedGlove?.product) {
+        const gloveProduct = await product_db.findById_products_db(selectedGlove.product);
+        if (gloveProduct) {
+          await updateProductStock(gloveProduct, item.quantity);
+        }
+      }
+    }
+  }
+};
+
 export const normalizeProductFilters = input => {
   const output = {};
   Object.keys(input).forEach(key => {

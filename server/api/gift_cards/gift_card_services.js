@@ -18,7 +18,6 @@ export default {
         currentPage: parseInt(page, 10),
       };
     } catch (error) {
-      console.log({ error });
       throw new Error(error.message);
     }
   },
@@ -72,9 +71,7 @@ export default {
 
   validate_gift_card_s: async params => {
     try {
-      console.log("Validating gift card:", params.code);
       const giftCard = await gift_card_db.validate_gift_card_db(params.code);
-      console.log("Gift card found:", giftCard);
       if (!giftCard) throw new Error("Invalid or expired gift card");
       return {
         giftCard,

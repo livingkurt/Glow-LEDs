@@ -36,7 +36,6 @@ const TagsPage = () => {
             <GLIconButton
               tooltip="Edit"
               onClick={() => {
-                console.log({ tag });
                 dispatch(open_edit_tag_modal(tag));
               }}
             >

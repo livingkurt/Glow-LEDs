@@ -6,6 +6,7 @@ import {
   diminish_batteries_stock,
   diminish_refresh_pack_stock,
   diminish_single_glove_stock,
+  diminish_helios_glove_set_stock,
   normalizeProductFilters,
   normalizeProductSearch,
   generateProductOptionsProducts,
@@ -17,6 +18,7 @@ import {
   handleMicrolightFiltering,
   applyProductSales,
   clearProductSales,
+  updateProductStock,
 } from "./product_helpers.js";
 import { categories, determine_filter, snake_case, subcategories } from "../../utils/util.js";
 import { getFilteredData } from "../api_helpers.js";
@@ -540,6 +542,10 @@ export default {
               await diminish_refresh_pack_stock(product, item);
             } else if (product.subcategory === "coin") {
               await diminish_batteries_stock(product, item);
+            } else if (product.category === "glove_sets") {
+              await diminish_helios_glove_set_stock(product, item);
+            } else {
+              await updateProductStock(product, item.quantity);
             }
           }
         } else if (item.itemType === "ticket") {

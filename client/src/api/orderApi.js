@@ -240,7 +240,6 @@ export const payOrder = createAsyncThunk(
       return data;
     } catch (error) {
       dispatch(showError({ message: errorMessage(error), duration: 10000 }));
-      console.log({ error });
       return rejectWithValue(error.response?.data);
     }
   }

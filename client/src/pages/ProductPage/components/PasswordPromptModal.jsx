@@ -68,7 +68,6 @@ const PasswordPromptModal = ({ productId, onUnlock, product }) => {
 
     try {
       const response = await dispatch(API.checkProductPassword({ productId, password: passwordToSubmit }));
-      console.log({ response });
       if (response.payload.success) {
         // Animate through the unlocking phrases
         for (let i = 1; i <= unlockingPhrases.length; i++) {

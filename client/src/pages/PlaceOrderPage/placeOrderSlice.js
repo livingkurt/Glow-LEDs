@@ -589,14 +589,12 @@ const placeOrder = createSlice({
       state.hideCheckoutButton = true;
     },
     [API.placeOrder.fulfilled]: (state, { payload }) => {
-      console.log({ payload });
       state.loadingPayment = false;
       state.orderCompleted = true;
       state.paymentValidations = payload.message;
     },
 
     [API.placeOrder.rejected]: (state, { payload, error }) => {
-      console.log({ payload, error });
       if (payload.status === "unpaid") {
         state.unpaidOrderId = payload._id;
       } else {
@@ -605,7 +603,6 @@ const placeOrder = createSlice({
       state.loadingPayment = false;
     },
     [API.payOrder.fulfilled]: (state, { payload }) => {
-      console.log({ payload });
       state.loadingPayment = false;
       state.orderCompleted = true;
       state.paymentValidations = payload.message;

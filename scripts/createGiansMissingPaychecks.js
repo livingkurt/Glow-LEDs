@@ -21,7 +21,6 @@ const createMissingPaychecks = async () => {
 
     // First, get the affiliate data to have all necessary information
     const { data: affiliate } = await axios.get(`${domainUrl}/api/affiliates/${promoCode}/pathname`);
-    console.log({ affiliate });
 
     console.log(`\nCreating missing paychecks for: ${promoCode}`);
     console.log("----------------------------------------");

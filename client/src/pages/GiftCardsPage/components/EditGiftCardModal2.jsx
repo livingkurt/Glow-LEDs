@@ -10,8 +10,6 @@ const EditGiftCardModal2 = () => {
   const giftCardPage = useSelector(state => state.giftCards.giftCardPage);
   const { edit_gift_card_modal, gift_card, loading } = giftCardPage;
 
-  console.log({ gift_card });
-
   const formFields = giftCardFormFields();
 
   return (
