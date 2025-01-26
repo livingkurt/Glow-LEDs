@@ -70,23 +70,11 @@ export default {
   },
   create_paychecks_db: async body => {
     try {
-      // Convert amount to number if it's a string
-      const payloadToSave = {
-        ...body,
-        amount: typeof body.amount === "string" ? parseFloat(body.amount) : body.amount,
-      };
-
-      // Create a new document instance
-      const paycheck = new Paycheck(payloadToSave);
-
-      // Save the document
-      const savedPaycheck = await paycheck.save();
-
-      console.log("Saved paycheck before return:", savedPaycheck);
-      return savedPaycheck;
+      return await Paycheck.create(body);
     } catch (error) {
-      console.error("Error creating paycheck:", error);
-      throw error;
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_paychecks_db: async (id, body) => {
