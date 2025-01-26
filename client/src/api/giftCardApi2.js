@@ -84,3 +84,15 @@ export const deleteGiftCard = createAsyncThunk(
     }
   }
 );
+
+export const generateGiftCard = createAsyncThunk(
+  "giftCard/generate",
+  async ({ initialBalance }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post("/api/gift_cards/generate", { amount: initialBalance });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

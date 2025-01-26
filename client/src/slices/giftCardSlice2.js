@@ -20,6 +20,7 @@ const giftCardPage = createSlice({
     remoteVersionRequirement: 0,
     edit_gift_card_modal: false,
     upload_gift_card_modal: false,
+    generate_gift_card_modal: false,
     gift_card_modal: false,
     message: "",
     error: {},
@@ -55,6 +56,13 @@ const giftCardPage = createSlice({
     open_gift_card_modal: (state, { payload }) => {
       state.gift_card_modal = true;
       state.gift_card = payload;
+    },
+    set_generate_gift_card_modal: (state, action) => {
+      state.generate_gift_card_modal = action.payload;
+    },
+    open_generate_gift_card_modal: state => {
+      state.gift_card = {};
+      state.generate_gift_card_modal = true;
     },
   },
   extraReducers: {
@@ -108,6 +116,20 @@ const giftCardPage = createSlice({
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
+    [API.generateGiftCard.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [API.generateGiftCard.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.message = "Gift Card Generated Successfully";
+      state.generate_gift_card_modal = false;
+      state.gift_card = {};
+    },
+    [API.generateGiftCard.rejected]: (state, { payload, error }) => {
+      state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
   },
 });
 
@@ -120,5 +142,6 @@ export const {
   close_gift_card_modal,
   open_edit_gift_card_modal,
   gift_card_uploaded,
+  set_generate_gift_card_modal,
 } = giftCardPage.actions;
 export default giftCardPage.reducer;

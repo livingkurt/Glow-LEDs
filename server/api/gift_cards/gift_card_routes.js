@@ -1,6 +1,7 @@
 import express from "express";
 import gift_card_controller from "./gift_card_controller.js";
 import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
+import gift_card_services from "./gift_card_services.js";
 
 const router = express.Router();
 
@@ -22,5 +23,7 @@ router.route("/validate/:code").get(gift_card_controller.validate_gift_card_c);
 router.route("/balance/:code").get(gift_card_controller.check_balance_c);
 router.route("/transactions/:code").get(isAuth, gift_card_controller.get_transactions_c);
 router.route("/use/:code").post(isAuth, gift_card_controller.use_gift_card_c);
+
+router.post("/generate", isAuth, isAdmin, gift_card_controller.generate_gift_card_c);
 
 export default router;

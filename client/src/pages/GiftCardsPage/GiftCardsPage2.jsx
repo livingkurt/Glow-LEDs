@@ -3,13 +3,18 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Helmet } from "react-helmet";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
-import { open_create_gift_card_modal, open_edit_gift_card_modal } from "../../slices/giftCardSlice2";
+import {
+  open_create_gift_card_modal,
+  open_edit_gift_card_modal,
+  open_generate_gift_card_modal,
+} from "../../slices/giftCardSlice2";
 import * as API from "../../api";
 
 import GLIconButton from "../../shared/GlowLEDsComponents/GLIconButton/GLIconButton";
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import EditGiftCardModal from "./components/EditGiftCardModal2";
+import GenerateGiftCardModal from "./components/GenerateGiftCardModal";
 import { formatDate, formatPrice } from "../../utils/helper_functions";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -47,7 +52,6 @@ const GiftCardsPage = () => {
         ),
       },
     ],
-
     [dispatch]
   );
 
@@ -69,13 +73,19 @@ const GiftCardsPage = () => {
         enableRowSelect
         enableDragDrop
         titleActions={
-          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_gift_card_modal())}>
-            {"Create Gift Card"}
-          </Button>
+          <Box display="flex" gap={2}>
+            <Button color="primary" variant="contained" onClick={() => dispatch(open_create_gift_card_modal())}>
+              {"Create Gift Card"}
+            </Button>
+            <Button color="secondary" variant="contained" onClick={() => dispatch(open_generate_gift_card_modal())}>
+              {"Generate Gift Card"}
+            </Button>
+          </Box>
         }
       />
 
       <EditGiftCardModal />
+      <GenerateGiftCardModal />
     </Container>
   );
 };
