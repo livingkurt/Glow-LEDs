@@ -126,13 +126,35 @@ export default {
     }
   },
   create_paychecks_s: async body => {
+    console.log("Creating paycheck with body:", body);
     try {
-      const paycheck = await paycheck_db.create_paychecks_db(body);
-      return await paycheck_db.findById_paychecks_db(paycheck._id);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
+      // Extract just the user ID if a full user object was passed
+      const payloadToSave = {
+        ...body,
+        user: body.user?._id || body.user,
+        id: undefined, // Remove the id field if it exists
+      };
+
+      const paycheck = await paycheck_db.create_paychecks_db(payloadToSave);
+      console.log("Created paycheck:", paycheck);
+
+      if (!paycheck || !paycheck._id) {
+        console.error("Invalid paycheck created:", paycheck);
+        throw new Error("Failed to create paycheck - invalid response from database");
       }
+
+      // Try to find the newly created paycheck
+      const savedPaycheck = await paycheck_db.findById_paychecks_db(paycheck._id);
+      if (!savedPaycheck) {
+        console.error("Could not find newly created paycheck");
+        throw new Error("Failed to find newly created paycheck");
+      }
+
+      console.log("Found saved paycheck:", savedPaycheck);
+      return savedPaycheck;
+    } catch (error) {
+      console.error("Error in create_paychecks_s:", error);
+      throw error;
     }
   },
   update_paychecks_s: async (params, body) => {
