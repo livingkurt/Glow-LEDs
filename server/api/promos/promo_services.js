@@ -1,19 +1,11 @@
-import { determine_filter, make_private_code, month_dates } from "../../utils/util.js";
+import { determine_filter, make_private_code } from "../../utils/util.js";
 import Affiliate from "../affiliates/affiliate.js";
-import affiliate_db from "../affiliates/affiliate_db.js";
 import { getFilteredData } from "../api_helpers.js";
-import order_db from "../orders/order_db.js";
 import Promo from "./promo.js";
 import promo_db from "./promo_db.js";
 import { containsIncludedItems, containsOnlyExcludedItems, determineCartTotal, extractCodes } from "./promo_helpers.js";
-import {
-  deactivateOldCodes,
-  generateSponsorCodes,
-  normalizePromoFilters,
-  normalizePromoSearch,
-} from "./promo_interactors.js";
+import { normalizePromoFilters, normalizePromoSearch } from "./promo_interactors.js";
 import gift_card_db from "../gift_cards/gift_card_db.js";
-import { determineRevenueTier } from "../affiliates/affiliate_helpers.js";
 
 export default {
   findAll_promos_s: async query => {
@@ -42,23 +34,14 @@ export default {
         sort = { _id: -1 };
       }
       const promos = await promo_db.findAll_promos_db(filter, sort, limit, page);
-      const count = await promo_db.count_promos_db(filter);
-      if (count !== undefined) {
-        return {
-          promos,
-          totalPages: Math.ceil(count / parseInt(limit, 10)),
-          currentPage: page,
-        };
-      } else {
-        throw new Error("Count is undefined");
-      }
+      return promos;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  findAllTable_promos_s: async query => {
+  table_promos_s: async query => {
     try {
       const sort_options = [
         "createdAt",
