@@ -176,6 +176,13 @@ const affiliatePage = createSlice({
         isOpen: false,
         affiliate: null,
       };
+      state.task = {
+        taskName: "",
+        points: 0,
+        jiraLink: "",
+        isFullLightshow: false,
+        driveLink: "",
+      };
     },
   },
   extraReducers: {
