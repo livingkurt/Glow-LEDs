@@ -75,12 +75,7 @@ const affiliatePage = createSlice({
     sponsorTaskModal: {
       isOpen: false,
       affiliate: null,
-      task: {
-        taskName: "",
-        points: 0,
-        jiraLink: "",
-        driveLink: "",
-      },
+      tasks: [],
     },
     productBundle: {
       title: "",
@@ -100,7 +95,7 @@ const affiliatePage = createSlice({
       const updated_sponsor_task = payload;
       return {
         ...state,
-        task: { ...state.task, ...updated_sponsor_task },
+        tasks: updated_sponsor_task.tasks || [],
       };
     },
     set_loading: (state, { payload }) => {
@@ -176,13 +171,7 @@ const affiliatePage = createSlice({
         isOpen: false,
         affiliate: null,
       };
-      state.task = {
-        taskName: "",
-        points: 0,
-        jiraLink: "",
-        isFullLightshow: false,
-        driveLink: "",
-      };
+      state.tasks = [];
     },
   },
   extraReducers: {
