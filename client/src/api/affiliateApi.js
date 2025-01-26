@@ -143,10 +143,10 @@ export const createRaveMobAffiliates = createAsyncThunk(
 
 export const addSponsorTask = createAsyncThunk(
   "affiliate/addSponsorTask",
-  async ({ affiliateId, task }, { dispatch, rejectWithValue }) => {
+  async ({ affiliateId, tasks }, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await axios.post(`/api/affiliates/${affiliateId}/tasks`, task);
-      dispatch(showSuccess({ message: `Task Added` }));
+      const { data } = await axios.post(`/api/affiliates/${affiliateId}/tasks`, tasks);
+      dispatch(showSuccess({ message: `Tasks Added` }));
       return data;
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));

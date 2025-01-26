@@ -136,7 +136,7 @@ export default {
   addSponsorTask: async (req, res) => {
     try {
       const { id } = req.params;
-      const task = req.body;
+      const tasks = req.body;
 
       const affiliate = await Affiliate.findById(id);
       if (!affiliate) {
@@ -144,17 +144,18 @@ export default {
       }
 
       affiliate.sponsorTasks = affiliate.sponsorTasks || [];
-      affiliate.sponsorTasks.push({
+      const tasksWithVerification = tasks.map(task => ({
         ...task,
         verifiedBy: req.user._id,
-      });
+      }));
+      affiliate.sponsorTasks.push(...tasksWithVerification);
 
       await affiliate.save();
 
       return res.json(affiliate);
     } catch (error) {
-      console.error("Error adding sponsor task:", error);
-      return res.status(500).json({ message: "Error adding sponsor task" });
+      console.error("Error adding sponsor tasks:", error);
+      return res.status(500).json({ message: "Error adding sponsor tasks" });
     }
   },
 };
