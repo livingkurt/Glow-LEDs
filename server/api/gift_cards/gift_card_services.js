@@ -1,5 +1,6 @@
 import gift_card_db from "./gift_card_db.js";
 import { getFilteredData } from "../api_helpers.js";
+import { generateGiftCard } from "../orders/order_interactors.js";
 
 export default {
   get_table_gift_cards_s: async query => {
@@ -129,6 +130,14 @@ export default {
       if (!giftCard) throw new Error("Gift card not found");
 
       return giftCard.transactions;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  generate_gift_card_s: async ({ amount }) => {
+    try {
+      return await generateGiftCard({ amount });
     } catch (error) {
       throw new Error(error.message);
     }

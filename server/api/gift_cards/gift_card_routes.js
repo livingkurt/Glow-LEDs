@@ -23,4 +23,6 @@ router.route("/balance/:code").get(gift_card_controller.check_balance_c);
 router.route("/transactions/:code").get(isAuth, gift_card_controller.get_transactions_c);
 router.route("/use/:code").post(isAuth, gift_card_controller.use_gift_card_c);
 
+router.post("/generate", isAuth, isAdmin, gift_card_controller.generate_gift_card_c);
+
 export default router;
