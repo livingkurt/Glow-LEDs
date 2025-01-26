@@ -22,7 +22,7 @@ import Container from "@mui/material/Container";
 
 const GiftCardsPage = () => {
   const giftCardPage = useSelector(state => state.giftCards.giftCardPage);
-  const { loading } = giftCardPage;
+  const { loading, remoteVersionRequirement } = giftCardPage;
 
   const dispatch = useDispatch();
 
@@ -68,10 +68,10 @@ const GiftCardsPage = () => {
         tableName="Gift Cards"
         namespaceScope="giftCards"
         namespace="giftCardTable"
+        remoteVersionRequirement={remoteVersionRequirement}
         columnDefs={columnDefs}
         loading={loading}
         enableRowSelect
-        enableDragDrop
         titleActions={
           <Box display="flex" gap={2}>
             <Button color="primary" variant="contained" onClick={() => dispatch(open_create_gift_card_modal())}>

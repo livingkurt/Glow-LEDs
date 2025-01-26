@@ -124,6 +124,7 @@ const giftCardPage = createSlice({
       state.message = "Gift Card Generated Successfully";
       state.generate_gift_card_modal = false;
       state.gift_card = {};
+      state.remoteVersionRequirement = Date.now();
     },
     [API.generateGiftCard.rejected]: (state, { payload, error }) => {
       state.loading = false;
@@ -143,5 +144,6 @@ export const {
   open_edit_gift_card_modal,
   gift_card_uploaded,
   set_generate_gift_card_modal,
+  open_generate_gift_card_modal,
 } = giftCardPage.actions;
 export default giftCardPage.reducer;

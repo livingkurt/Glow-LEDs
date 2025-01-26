@@ -1,7 +1,6 @@
 import express from "express";
 import gift_card_controller from "./gift_card_controller.js";
 import { isAdmin, isAuth } from "../../middlewares/authMiddleware.js";
-import gift_card_services from "./gift_card_services.js";
 
 const router = express.Router();
 
