@@ -1,7 +1,6 @@
 import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTable";
 import { IconButton, Menu, MenuItem, Box, Typography } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import dayjs from "dayjs";
 
@@ -79,7 +78,7 @@ const AffiliateEarnings = ({ year, month, affiliate_earnings_code_usage }) => {
         PaperProps={{
           sx: {
             maxHeight: 400,
-            minWidth: 250,
+            minWidth: 300,
           },
         }}
       >
@@ -101,7 +100,7 @@ const AffiliateEarnings = ({ year, month, affiliate_earnings_code_usage }) => {
           >
             <Typography variant="subtitle2">{`${ticket.first_name} ${ticket.last_name}`}</Typography>
             <Typography variant="body2" color="text.secondary">
-              {`${ticket.quantity} ticket${ticket.quantity > 1 ? "s" : ""}`}
+              {`${ticket.quantity} ${ticket.ticket_type}`}
             </Typography>
             <Typography variant="caption" color="text.secondary">
               {dayjs(ticket.date).format("MMM D, YYYY")}
