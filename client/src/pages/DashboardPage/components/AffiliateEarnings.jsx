@@ -41,7 +41,7 @@ const AffiliateEarnings = ({ year, month, affiliate_earnings_code_usage }) => {
           { title: "Code Usage", display: row => (row.number_of_uses ? row?.number_of_uses : "0"), sortable: true },
           {
             title: "Sales",
-            display: row => `$${row.revenue?.toFixed(2) || "0.00"} (${row.number_of_uses || 0} uses)`,
+            display: row => `$${row.revenue?.toFixed(2) || "0.00"}`,
             sortable: true,
           },
           {
