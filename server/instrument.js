@@ -1,8 +1,9 @@
 // Import with `import * as Sentry from "@sentry/node"` if you are using ESM
 import * as Sentry from "@sentry/node";
 import { nodeProfilingIntegration } from "@sentry/profiling-node";
+import config from "./config.js";
 
-if (process.env.NODE_ENV === "production") {
+if (config.NODE_ENV === "production") {
   Sentry.init({
     dsn: "https://ef35b0775a9ecd31de7edc7c2068a1d4@o4508738260434944.ingest.us.sentry.io/4508738339471360",
     integrations: [nodeProfilingIntegration()],
@@ -13,7 +14,7 @@ if (process.env.NODE_ENV === "production") {
 
 // Manually call startProfiler and stopProfiler
 // to profile the code in between
-if (process.env.NODE_ENV === "production") {
+if (config.NODE_ENV === "production") {
   Sentry.profiler.startProfiler();
 
   // Starts a transaction that will also be profiled
