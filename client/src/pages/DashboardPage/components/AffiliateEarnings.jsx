@@ -1,7 +1,6 @@
 import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTable";
 
 const AffiliateEarnings = ({ year, month, affiliate_earnings_code_usage }) => {
-  console.log({ affiliate_earnings_code_usage });
   return (
     <GLDisplayTable
       title={`${
@@ -18,13 +17,13 @@ const AffiliateEarnings = ({ year, month, affiliate_earnings_code_usage }) => {
         { title: "Affiliate", display: row => row?.artist_name, sortable: true },
         { title: "Code Usage", display: row => (row.number_of_uses ? row?.number_of_uses : "0"), sortable: true },
         {
-          title: "Product Sales",
-          display: row => `$${row.product_revenue?.toFixed(2) || "0.00"} (${row.product_uses || 0} uses)`,
+          title: "Sales",
+          display: row => `$${row.revenue?.toFixed(2) || "0.00"} `,
           sortable: true,
         },
         {
-          title: "Ticket Sales",
-          display: row => `$${row.ticket_revenue?.toFixed(2) || "0.00"} (${row.ticket_uses || 0} uses)`,
+          title: "Tickets Sold",
+          display: row => `${row.ticket_uses || 0} tickets`,
           sortable: true,
         },
         {
