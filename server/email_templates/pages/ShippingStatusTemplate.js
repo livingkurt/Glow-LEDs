@@ -141,7 +141,7 @@ const createOrderItemsHTML = (orderItems, isWholesaler) => {
     .join("");
 };
 
-export default ({ order, status, title, tracker }) => {
+export default ({ order, status, title, tracker, isReturnTracking = false }) => {
   try {
     const orderItemsHTML = createOrderItemsHTML(order.orderItems, order?.user?.isWholesaler);
 
@@ -178,7 +178,7 @@ export default ({ order, status, title, tracker }) => {
                             <td style="vertical-align:top;color:#333333;font-size:20px" valign="top" align="center">
                               <strong>${tracker?.carrier} Tracking #:</strong>
                               <a style="color:#333333; padding: 15px 0px;border:none; font-family:helvetica;"
-                                href="${order?.tracking_url ? order?.tracking_url : determine_tracking_link(order?.tracking_number)}" target="_blank">${order?.tracking_number}</a><br />
+                                href="${isReturnTracking ? order?.return_tracking_url : order?.tracking_url}" target="_blank">${isReturnTracking ? order?.return_tracking_number : order?.tracking_number}</a><br />
                             </td>
                           </tr>
                         </tbody>
@@ -191,7 +191,7 @@ export default ({ order, status, title, tracker }) => {
                 <tbody>
                   <tr>
                     <td style="font-family:helvetica">
-                      ${shipping_status_steps(order, status)}
+                      ${shipping_status_steps(order, status, isReturnTracking)}
                     </td>
                   </tr>
                 </tbody>
@@ -329,5 +329,89 @@ export default ({ order, status, title, tracker }) => {
         </tr>
       </table>
     `;
+  }
+};
+
+const shipping_status_steps = (order, status, isReturnTracking) => {
+  const steps = isReturnTracking
+    ? [
+        { status: "return_initiated", label: "Return Initiated" },
+        { status: "return_in_transit", label: "In Transit to Us" },
+        { status: "return_out_for_delivery", label: "Out for Delivery to Us" },
+        { status: "return_delivered", label: "Return Received" },
+      ]
+    : [
+        { status: "pre_transit", label: "Label Created" },
+        { status: "in_transit", label: "In Transit" },
+        { status: "out_for_delivery", label: "Out for Delivery" },
+        { status: "delivered", label: "Delivered" },
+      ];
+
+  return `
+    <div style="margin-bottom:40px;">
+      ${steps
+        .map(
+          (step, index) => `
+        <div style="position:relative;padding-bottom:${index === steps.length - 1 ? "0" : "30px"}">
+          <div style="display:flex;align-items:center;">
+            <div style="
+              width:30px;
+              height:30px;
+              border-radius:50%;
+              background-color:${determineStepColor(order.status, step.status)};
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              margin-right:10px;
+            ">
+              <span style="color:white;font-weight:bold;">${index + 1}</span>
+            </div>
+            <div style="color:${determineStepColor(order.status, step.status)};font-weight:bold;">
+              ${step.label}
+            </div>
+          </div>
+          ${
+            index !== steps.length - 1
+              ? `<div style="
+                  position:absolute;
+                  left:15px;
+                  top:30px;
+                  bottom:0;
+                  width:2px;
+                  background-color:${determineStepColor(order.status, step.status)};
+                "></div>`
+              : ""
+          }
+        </div>
+      `
+        )
+        .join("")}
+    </div>
+  `;
+};
+
+const determineStepColor = (currentStatus, stepStatus) => {
+  const statusOrder = {
+    // Regular shipping statuses
+    pre_transit: 0,
+    in_transit: 1,
+    out_for_delivery: 2,
+    delivered: 3,
+    // Return shipping statuses
+    return_initiated: 0,
+    return_in_transit: 1,
+    return_out_for_delivery: 2,
+    return_delivered: 3,
+  };
+
+  const currentStep = statusOrder[currentStatus] || -1;
+  const step = statusOrder[stepStatus] || -1;
+
+  if (currentStep >= step) {
+    return "#4CAF50"; // Completed step
+  } else if (currentStep + 1 === step) {
+    return "#FFA726"; // Current step
+  } else {
+    return "#E0E0E0"; // Future step
   }
 };

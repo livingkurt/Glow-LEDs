@@ -3,21 +3,21 @@ import { toCamelCase } from "./email_helpers.js";
 import config from "../../config.js";
 import nodemailer from "nodemailer";
 
-export const determine_status = status => {
+export const determine_status = (status, isReturnTracking = false) => {
+  const prefix = isReturnTracking ? "Return Package: " : "";
   switch (status) {
     case "delivered":
-      return "Your Package has Arrived!";
+      return `${prefix}${isReturnTracking ? "Your Return Has Been Received!" : "Your Package has Arrived!"}`;
     case "out_for_delivery":
-      return "Your Package is Out for Delivery!";
+      return `${prefix}${isReturnTracking ? "Your Return is Out for Delivery to Us!" : "Your Package is Out for Delivery!"}`;
     case "in_transit":
-      return "Your Package is in Transit!";
+      return `${prefix}${isReturnTracking ? "Your Return is in Transit to Us!" : "Your Package is in Transit!"}`;
     case "pre_transit":
-      return "Your Label has been Created!";
+      return `${prefix}${isReturnTracking ? "Your Return Label has been Created!" : "Your Label has been Created!"}`;
     case "return_to_sender":
-      return "Your Package has been Returned to Sender.";
+      return `${prefix}Your Package has been Returned to Sender.`;
     case "failure":
-      return "Your Package has Failed to Deliver.";
-
+      return `${prefix}Your Package has Failed to Deliver.`;
     default:
       return "";
   }
@@ -61,7 +61,7 @@ export const updateOrder = async (status, order) => {
 export const shouldSendEmail = (trackerStatus, orderStatus) => {
   return (
     ["in_transit", "out_for_delivery", "delivered"].includes(trackerStatus) &&
-    (orderStatus === "packaged" || trackerStatus !== "in_transit")
+    (orderStatus === "packaged" || orderStatus === "return_initiated" || trackerStatus !== "in_transit")
   );
 };
 

@@ -19,7 +19,6 @@ export const orderStatusColors = {
   in_transit: { name: "In Transit", color: "#707070" },
   out_for_delivery: { name: "Out for Delivery", color: "#4f4f4f" },
   delivered: { name: "Delivered", color: "#333333" },
-  return_label_created: { name: "Return Label Created", color: "#1e544c" },
   canceled: { name: "Canceled", color: "#2f0000" },
 };
 export const orderExceptionStatusColors = {

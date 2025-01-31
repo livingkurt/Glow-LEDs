@@ -82,9 +82,6 @@ export const normalizeOrderFilters = input => {
             case "isPrintIssue":
               output.isPrintIssue = true;
               break;
-            case "Return Label Created":
-              output.status = "return_label_created";
-              break;
           }
         }
         break;

@@ -635,35 +635,65 @@ export default {
   send_shipping_status_emails_s: async event => {
     if (event.object === "Event" && event.description === "tracker.updated") {
       const tracker = event.result;
-      const order = await order_db.findBy_orders_db({ tracking_number: tracker.tracking_code, deleted: false });
+      const order = await order_db.findBy_orders_db({
+        $or: [{ tracking_number: tracker.tracking_code }, { return_tracking_number: tracker.tracking_code }],
+        deleted: false,
+      });
+
+      if (!order) {
+        console.log(`No order found for tracking code: ${tracker.tracking_code}`);
+        return "No order found for tracking code";
+      }
+
+      const isReturnTracking = order.return_tracking_number === tracker.tracking_code;
+      const trackingUrl = isReturnTracking ? order.return_tracking_url : order.tracking_url;
 
       if (shouldSendEmail(tracker.status, order.status)) {
         const body = {
           email: {},
-          title: determine_status(tracker.status),
+          title: determine_status(tracker.status, isReturnTracking),
           order,
           status: tracker.status,
           tracker,
+          isReturnTracking,
         };
-        const mailOptions = {
-          from: config.DISPLAY_INFO_EMAIL,
-          to: order.shipping.email,
-          subject: determine_status(tracker.status),
-          html: App({
-            body: ShippingStatusTemplate(body),
-            unsubscribe: false,
-          }),
-        };
-        await sendEmail(mailOptions);
+
+        // Send email to customer for regular shipping updates
+        if (!isReturnTracking) {
+          const customerMailOptions = {
+            from: config.DISPLAY_INFO_EMAIL,
+            to: order.shipping.email,
+            subject: determine_status(tracker.status),
+            html: App({
+              body: ShippingStatusTemplate(body),
+              unsubscribe: false,
+            }),
+          };
+          await sendEmail(customerMailOptions);
+        }
+
+        // Send email to admin for return shipping updates
+        if (isReturnTracking) {
+          const adminMailOptions = {
+            from: config.DISPLAY_INFO_EMAIL,
+            to: config.INFO_EMAIL,
+            subject: `Return Package Update: ${determine_status(tracker.status)}`,
+            html: App({
+              body: ShippingStatusTemplate(body),
+              unsubscribe: false,
+            }),
+          };
+          await sendEmail(adminMailOptions);
+        }
       }
 
       if (tracker.status === "delivered") {
-        await updateOrder("delivered", order);
+        await updateOrder(isReturnTracking ? "return_delivered" : "delivered", order);
       } else if (tracker.status === "out_for_delivery") {
-        await updateOrder("out_for_delivery", order);
+        await updateOrder(isReturnTracking ? "return_out_for_delivery" : "out_for_delivery", order);
       } else if (tracker.status === "in_transit") {
-        if (order.status === "packaged") {
-          await updateOrder("in_transit", order);
+        if (order.status === "packaged" || order.status === "return_initiated") {
+          await updateOrder(isReturnTracking ? "return_in_transit" : "in_transit", order);
         }
       }
       return "Tracker event processed successfully";
