@@ -1,5 +1,5 @@
 import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTable";
-import { IconButton, Popover, Box, Typography, List, ListItem, ListItemText } from "@mui/material";
+import { IconButton, Menu, MenuItem, Box, Typography } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -9,14 +9,12 @@ const AffiliateEarnings = ({ year, month, affiliate_earnings_code_usage }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedTickets, setSelectedTickets] = useState([]);
 
-  console.log({ affiliate_earnings_code_usage });
-
-  const handlePopoverOpen = (event, tickets) => {
+  const handleMenuOpen = (event, tickets) => {
     setAnchorEl(event.currentTarget);
     setSelectedTickets(tickets);
   };
 
-  const handlePopoverClose = () => {
+  const handleMenuClose = () => {
     setAnchorEl(null);
     setSelectedTickets([]);
   };
@@ -64,7 +62,7 @@ const AffiliateEarnings = ({ year, month, affiliate_earnings_code_usage }) => {
             display: row => (
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 {row.ticket_orders?.length > 0 && (
-                  <IconButton size="small" onClick={e => handlePopoverOpen(e, row.ticket_orders)} sx={{ padding: 0.5 }}>
+                  <IconButton size="small" onClick={e => handleMenuOpen(e, row.ticket_orders)} sx={{ padding: 0.5 }}>
                     <InfoIcon fontSize="small" />
                   </IconButton>
                 )}
@@ -74,54 +72,43 @@ const AffiliateEarnings = ({ year, month, affiliate_earnings_code_usage }) => {
           },
         ]}
       />
-      <Popover
-        open={open}
+      <Menu
         anchorEl={anchorEl}
-        onClose={handlePopoverClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "left",
+        open={open}
+        onClose={handleMenuClose}
+        PaperProps={{
+          sx: {
+            maxHeight: 400,
+            minWidth: 250,
+          },
         }}
       >
-        <Box sx={{ p: 2, maxWidth: 400, maxHeight: 400, overflow: "auto" }}>
-          <Typography variant="h6" gutterBottom>
-            {"Ticket Orders"}
-          </Typography>
-          <List>
-            {selectedTickets.map((ticket, index) => (
-              <ListItem
-                key={index}
-                component={Link}
-                to={`/secure/account/order/${ticket.order_id}`}
-                sx={{
-                  textDecoration: "none",
-                  color: "inherit",
-                  "&:hover": {
-                    backgroundColor: "action.hover",
-                  },
-                }}
-              >
-                <ListItemText
-                  primary={`${ticket.first_name} ${ticket.last_name}`}
-                  secondary={
-                    <>
-                      <Typography component="span" variant="body2" color="text.primary">
-                        {`${ticket.quantity} ticket${ticket.quantity > 1 ? "s" : ""}`}
-                      </Typography>
-                      <br />
-                      {`Ordered on ${dayjs(ticket.date).format("MMM D, YYYY")}`}
-                    </>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      </Popover>
+        {selectedTickets.map((ticket, index) => (
+          <MenuItem
+            key={index}
+            component="a"
+            href={`/secure/account/order/${ticket.order_id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={handleMenuClose}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              py: 1,
+              borderBottom: index < selectedTickets.length - 1 ? "1px solid rgba(0, 0, 0, 0.12)" : "none",
+            }}
+          >
+            <Typography variant="subtitle2">{`${ticket.first_name} ${ticket.last_name}`}</Typography>
+            <Typography variant="body2" color="text.secondary">
+              {`${ticket.quantity} ticket${ticket.quantity > 1 ? "s" : ""}`}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              {dayjs(ticket.date).format("MMM D, YYYY")}
+            </Typography>
+          </MenuItem>
+        ))}
+      </Menu>
     </>
   );
 };
