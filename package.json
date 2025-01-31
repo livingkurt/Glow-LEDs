@@ -6,6 +6,9 @@
   "main": "dist/server.js",
   "dependencies": {
     "@easypost/api": "^7.3.0",
+    "@sentry/cli": "^2.41.1",
+    "@sentry/node": "^8.53.0",
+    "@sentry/profiling-node": "^8.53.0",
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
@@ -68,7 +71,7 @@
     "server-dev": "nodemon dist/server.js",
     "serve:client": "cd client && npm run preview",
     "client": "cd client && npm run dev -- --host",
-    "build": "babel server --out-dir dist --source-maps --copy-files",
+    "build": "babel server --out-dir dist --source-maps --copy-files && npm run sentry:sourcemaps",
     "heroku-postbuild": "npm run build && cd client && npm install --legacy-peer-deps && npm run build",
     "install": "cd client && npm install --legacy-peer-deps",
     "build:client": "cd client && npm run build && npm run preview",
@@ -85,7 +88,9 @@
     "generate-migration": "node server/api/migrations/scripts/migration_generator.js",
     "migrate": "node -e \"import('./server/api/migrations/scripts/migration_runner.js').then(m => m.runMigrations('up'))\"",
     "migrate:down": "node server/api/migrations/scripts/migration_runner.js down",
-    "migrate:redo": "node server/api/migrations/scripts/migration_runner.js redo"
+    "migrate:redo": "node server/api/migrations/scripts/migration_runner.js redo",
+    "build-source-maps": "babel server -d dist --source-maps",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org glow-leds --project node-express ./dist && sentry-cli sourcemaps upload --org glow-leds --project node-express ./dist"
   },
   "engines": {
     "node": "20.11.1",

@@ -26,6 +26,7 @@
     "@mui/icons-material": "^6.1.5",
     "@mui/material": "^6.1.5",
     "@reduxjs/toolkit": "^1.9.5",
+    "@sentry/react": "^8.53.0",
     "@stripe/react-stripe-js": "^2.7.1",
     "@stripe/stripe-js": "^2.1.0",
     "@vitejs/plugin-react": "^4.3.3",
