@@ -1,4 +1,4 @@
-import { createElement, useEffect } from "react";
+import { createElement, useEffect, Suspense } from "react";
 import { Route, BrowserRouter as Router, Routes, useLocation, useNavigate } from "react-router-dom";
 import { ScrollToTop } from "./shared/SharedComponents";
 
@@ -57,30 +57,100 @@ const App = () => {
 
   const theme = createTheme(GLTheme);
 
+  const LoadingFallback = () => (
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+      <GLLoading />
+    </div>
+  );
+
   return (
     <ThemeProvider theme={theme}>
       <Head />
       <Router>
         <ScrollToTop>
-          <Routes>
-            <Route
-              path="/collections/all/products/helios_gloveset"
-              element={
-                <CustomRedirect from="/collections/all/products/helios_gloveset" to="/products/helios_gloveset" />
-              }
-            />
-
-            {privateRoutes.map((route, index) => (
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
               <Route
-                key={index}
-                path={route.path}
-                exact={route.exact}
+                path="/collections/all/products/helios_gloveset"
                 element={
-                  <ProtectedRoute>
-                    {route.element === "PlaceOrderPage" ? (
+                  <CustomRedirect from="/collections/all/products/helios_gloveset" to="/products/helios_gloveset" />
+                }
+              />
+
+              {privateRoutes.map((route, index) => (
+                <Route
+                  key={index}
+                  path={route.path}
+                  exact={route.exact}
+                  element={
+                    <ProtectedRoute>
+                      {route.element === "PlaceOrderPage" ? (
+                        <PlaceOrderLayout>
+                          <Suspense fallback={<LoadingFallback />}>
+                            {createElement(
+                              PrivateComponents[route.element] ||
+                                (() => (
+                                  <div>
+                                    {"Component not found "}
+                                    {route.element}{" "}
+                                  </div>
+                                ))
+                            )}
+                          </Suspense>
+                        </PlaceOrderLayout>
+                      ) : (
+                        <MainLayout>
+                          <Suspense fallback={<LoadingFallback />}>
+                            {createElement(
+                              PrivateComponents[route.element] ||
+                                (() => (
+                                  <div>
+                                    {"Component not found "}
+                                    {route.element}{" "}
+                                  </div>
+                                ))
+                            )}
+                          </Suspense>
+                        </MainLayout>
+                      )}
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
+              {adminRoutes.map((route, index) => (
+                <Route
+                  key={index}
+                  path={route.path}
+                  exact={route.exact}
+                  element={
+                    <ProtectedRoute isAdminRoute={true}>
+                      <MainLayout>
+                        {createElement(
+                          AdminComponents[route.element] ||
+                            (() => (
+                              <div>
+                                {"Component not found "}
+                                {route.element}{" "}
+                              </div>
+                            ))
+                        )}
+                      </MainLayout>
+                    </ProtectedRoute>
+                  }
+                />
+              ))}
+
+              {routes.map((route, index) => (
+                <Route
+                  key={index}
+                  path={route.path}
+                  exact={route.exact}
+                  element={
+                    route.element === "PlaceOrderPage" ? (
                       <PlaceOrderLayout>
                         {createElement(
-                          PrivateComponents[route.element] ||
+                          Components[route.element] ||
                             (() => (
                               <div>
                                 {"Component not found "}
@@ -92,7 +162,7 @@ const App = () => {
                     ) : (
                       <MainLayout>
                         {createElement(
-                          PrivateComponents[route.element] ||
+                          Components[route.element] ||
                             (() => (
                               <div>
                                 {"Component not found "}
@@ -101,88 +171,30 @@ const App = () => {
                             ))
                         )}
                       </MainLayout>
-                    )}
-                  </ProtectedRoute>
-                }
-              />
-            ))}
+                    )
+                  }
+                />
+              ))}
 
-            {adminRoutes.map((route, index) => (
               <Route
-                key={index}
-                path={route.path}
-                exact={route.exact}
+                path="/"
+                exact={true}
                 element={
-                  <ProtectedRoute isAdminRoute={true}>
-                    <MainLayout>
-                      {createElement(
-                        AdminComponents[route.element] ||
-                          (() => (
-                            <div>
-                              {"Component not found "}
-                              {route.element}{" "}
-                            </div>
-                          ))
-                      )}
-                    </MainLayout>
-                  </ProtectedRoute>
+                  <MainLayout>
+                    <HomePage />
+                  </MainLayout>
                 }
               />
-            ))}
 
-            {routes.map((route, index) => (
               <Route
-                key={index}
-                path={route.path}
-                exact={route.exact}
                 element={
-                  route.element === "PlaceOrderPage" ? (
-                    <PlaceOrderLayout>
-                      {createElement(
-                        Components[route.element] ||
-                          (() => (
-                            <div>
-                              {"Component not found "}
-                              {route.element}{" "}
-                            </div>
-                          ))
-                      )}
-                    </PlaceOrderLayout>
-                  ) : (
-                    <MainLayout>
-                      {createElement(
-                        Components[route.element] ||
-                          (() => (
-                            <div>
-                              {"Component not found "}
-                              {route.element}{" "}
-                            </div>
-                          ))
-                      )}
-                    </MainLayout>
-                  )
+                  <MainLayout>
+                    <Four04Page />
+                  </MainLayout>
                 }
               />
-            ))}
-
-            <Route
-              path="/"
-              exact={true}
-              element={
-                <MainLayout>
-                  <HomePage />
-                </MainLayout>
-              }
-            />
-
-            <Route
-              element={
-                <MainLayout>
-                  <Four04Page />
-                </MainLayout>
-              }
-            />
-          </Routes>
+            </Routes>
+          </Suspense>
         </ScrollToTop>
         <AskForEmailModal />
         <UpdateNotifier />
