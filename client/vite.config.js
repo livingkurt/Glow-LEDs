@@ -23,7 +23,10 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks: {
-            vendor: ["react", "react-dom", "react-router-dom"],
+            "vendor-mui": ["@mui/material", "@mui/icons-material"],
+            "vendor-react": ["react", "react-dom", "react-router-dom"],
+            "vendor-redux": ["redux", "react-redux", "@reduxjs/toolkit"],
+            "vendor-core": ["axios", "lodash"],
           },
         },
       },
