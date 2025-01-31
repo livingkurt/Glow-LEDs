@@ -1,5 +1,5 @@
 import express from "express";
-import path from "path";
+import path, { dirname } from "path";
 import mongoose from "mongoose";
 import template_routes from "./email_templates/template_routes.js";
 import config from "./config.js";
@@ -9,10 +9,10 @@ import compression from "compression";
 import { createServer } from "http";
 import { Server as SocketIOServer } from "socket.io";
 import { fileURLToPath } from "url";
-import { dirname } from "path";
 import routes from "./api/index.js"; // Make sure to add the .js extension
 import sslRedirect from "heroku-ssl-redirect";
 import configurePassport from "./passport.js";
+import * as Sentry from "@sentry/node";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -46,6 +46,10 @@ mongoose.Query.prototype.populate = function (...args) {
 };
 
 const app = express();
+
+// Use setupExpressErrorHandler instead of Handlers.errorHandler
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
 
 const server = createServer(app); // Attach Express to HTTP Server
 const io = new SocketIOServer(server, {
@@ -89,6 +93,8 @@ configurePassport(passport);
 
 app.use(routes);
 app.use("/api/templates", template_routes);
+
+Sentry.setupExpressErrorHandler(app);
 
 if (process.env.NODE_ENV === "production") {
   // Serve static files from the React app

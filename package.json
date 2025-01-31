@@ -6,6 +6,8 @@
   "main": "dist/server.js",
   "dependencies": {
     "@easypost/api": "^7.3.0",
+    "@sentry/node": "^8.53.0",
+    "@sentry/profiling-node": "^8.53.0",
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
