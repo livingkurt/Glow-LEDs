@@ -26,25 +26,40 @@ const Components = {
   TeamPage: lazyNamedComponent(() => import("../../pages/TeamPage"), "TeamPage"),
   ManualPage: lazyNamedComponent(() => import("../../pages/ManualPage"), "ManualPage"),
   ColorPalettePage: lazyNamedComponent(() => import("../../pages/ColorPalettesPage"), "ColorPalettePage"),
-  SupportCenterPage: lazy(() => import("../../pages/SupportCenterPage/SupportCenterPage")),
+  SupportCenterPage: lazyNamedComponent(
+    () => import("../../pages/SupportCenterPage/SupportCenterPage"),
+    "SupportCenterPage"
+  ),
   TermsPage: lazyNamedComponent(() => import("../../pages/TermsPage"), "TermsPage"),
-  MenuPage: lazy(() => import("../../pages/MenuPage/MenuPage")),
+  MenuPage: lazyNamedComponent(() => import("../../pages/MenuPage/MenuPage"), "MenuPage"),
   AboutPage: lazyNamedComponent(() => import("../../pages/AboutPage"), "AboutPage"),
   SitemapPage: lazyNamedComponent(() => import("../../pages/SitemapPage"), "SitemapPage"),
   TutorialsGridPage: lazyNamedComponent(() => import("../../pages/TutorialsGridPage"), "TutorialsGridPage"),
-  EventPage: lazy(() => import("../../pages/EventPage/EventPage")),
-  ArticlesGridPage: lazy(() => import("../../pages/ArticlesGridPage/ArticlesGridPage")),
-  ArticlePage: lazy(() => import("../../pages/ArticlePage/ArticlePage")),
-  AcademyPage: lazy(() => import("../../pages/AcademyPage/AcademyPage")),
-  UnsubscribePage: lazy(() => import("../../pages/UnsubscribePage/UnsubscribePage")),
-  ProductBundlesGridPage: lazy(() => import("../../pages/ProductBundlesGridPage/ProductBundlesGridPage")),
-  ProductBundlePage: lazy(() => import("../../pages/ProductBundlePage/ProductBundlePage")),
-  GiftCardPage: lazy(() => import("../../pages/GiftCardPage/GiftCardPage2")),
-  GiftCardsGridPage: lazy(() => import("../../pages/GiftCardsGridPage2/GiftCardsGridPage2")),
-  ModeCreatorPage: lazy(() => import("../../pages/ModeCreatorPage/ModeCreatorPage")),
-  ModePage: lazy(() => import("../../pages/ModePage/ModePage")),
-  ModesGridPage: lazy(() => import("../../pages/ModesGridPage/ModesGridPage")),
-  ReturnLabelPage: lazy(() => import("../../pages/ReturnLabelPage/ReturnLabelPage")),
+  EventPage: lazyNamedComponent(() => import("../../pages/EventPage/EventPage"), "EventPage"),
+  ArticlesGridPage: lazyNamedComponent(
+    () => import("../../pages/ArticlesGridPage/ArticlesGridPage"),
+    "ArticlesGridPage"
+  ),
+  ArticlePage: lazyNamedComponent(() => import("../../pages/ArticlePage/ArticlePage"), "ArticlePage"),
+  AcademyPage: lazyNamedComponent(() => import("../../pages/AcademyPage/AcademyPage"), "AcademyPage"),
+  UnsubscribePage: lazyNamedComponent(() => import("../../pages/UnsubscribePage/UnsubscribePage"), "UnsubscribePage"),
+  ProductBundlesGridPage: lazyNamedComponent(
+    () => import("../../pages/ProductBundlesGridPage/ProductBundlesGridPage"),
+    "ProductBundlesGridPage"
+  ),
+  ProductBundlePage: lazyNamedComponent(
+    () => import("../../pages/ProductBundlePage/ProductBundlePage"),
+    "ProductBundlePage"
+  ),
+  GiftCardPage: lazyNamedComponent(() => import("../../pages/GiftCardPage/GiftCardPage2"), "GiftCardPage"),
+  GiftCardsGridPage: lazyNamedComponent(
+    () => import("../../pages/GiftCardsGridPage2/GiftCardsGridPage2"),
+    "GiftCardsGridPage"
+  ),
+  ModeCreatorPage: lazyNamedComponent(() => import("../../pages/ModeCreatorPage/ModeCreatorPage"), "ModeCreatorPage"),
+  ModePage: lazyNamedComponent(() => import("../../pages/ModePage/ModePage"), "ModePage"),
+  ModesGridPage: lazyNamedComponent(() => import("../../pages/ModesGridPage/ModesGridPage"), "ModesGridPage"),
+  ReturnLabelPage: lazyNamedComponent(() => import("../../pages/ReturnLabelPage/ReturnLabelPage"), "ReturnLabelPage"),
 };
 
 const AdminComponents = {
@@ -52,7 +67,7 @@ const AdminComponents = {
   OrdersPage: lazyNamedComponent(() => import("../../pages/OrdersPage"), "OrdersPage"),
   UsersPage: lazyNamedComponent(() => import("../../pages/UsersPage"), "UsersPage"),
   PaychecksPage: lazyNamedComponent(() => import("../../pages/PaychecksPage"), "PaychecksPage"),
-  TagsPage: lazy(() => import("../../pages/TagsPage/TagsPage")),
+  TagsPage: lazyNamedComponent(() => import("../../pages/TagsPage/TagsPage"), "TagsPage"),
   SurveysPage: lazyNamedComponent(() => import("../../pages/SurveysPage"), "SurveysPage"),
   ParcelsPage: lazyNamedComponent(() => import("../../pages/ParcelsPage"), "ParcelsPage"),
   PalettesPage: lazyNamedComponent(() => import("../../pages/PalettesPage"), "PalettesPage"),
@@ -70,17 +85,17 @@ const AdminComponents = {
   AnnouncementEmail: lazyNamedComponent(() => import("../../pages/EmailsPage/components"), "AnnouncementEmail"),
   PromosPage: lazyNamedComponent(() => import("../../pages/PromosPage"), "PromosPage"),
   AffiliatesPage: lazyNamedComponent(() => import("../../pages/AffiliatesPage"), "AffiliatesPage"),
-  TeamsPage: lazy(() => import("../../pages/TeamsPage/TeamsPage")),
-  MicrolightsPage: lazy(() => import("../../pages/MicrolightsPage/MicrolightsPage")),
-  ModesPage: lazy(() => import("../../pages/ModesPage/ModesPage")),
+  TeamsPage: lazyNamedComponent(() => import("../../pages/TeamsPage/TeamsPage"), "TeamsPage"),
+  MicrolightsPage: lazyNamedComponent(() => import("../../pages/MicrolightsPage/MicrolightsPage"), "MicrolightsPage"),
+  ModesPage: lazyNamedComponent(() => import("../../pages/ModesPage/ModesPage"), "ModesPage"),
   TutorialsPage: lazyNamedComponent(() => import("../../pages/TutorialsPage"), "TutorialsPage"),
   ImagesPage: lazyNamedComponent(() => import("../../pages/ImagesPage"), "ImagesPage"),
   WholesalersPage: lazyNamedComponent(() => import("../../pages/WholesalersPage"), "WholesalersPage"),
   EmailsPage: lazyNamedComponent(() => import("../../pages/EmailsPage"), "EmailsPage"),
-  EventsPage: lazy(() => import("../../pages/EventsPage/EventsPage")),
-  TicketsPage: lazy(() => import("../../pages/TicketsPage/TicketsPage")),
-  ArticlesPage: lazy(() => import("../../pages/ArticlesPage/ArticlesPage")),
-  GiftCardsPage: lazy(() => import("../../pages/GiftCardsPage/GiftCardsPage2")),
+  EventsPage: lazyNamedComponent(() => import("../../pages/EventsPage/EventsPage"), "EventsPage"),
+  TicketsPage: lazyNamedComponent(() => import("../../pages/TicketsPage/TicketsPage"), "TicketsPage"),
+  ArticlesPage: lazyNamedComponent(() => import("../../pages/ArticlesPage/ArticlesPage"), "ArticlesPage"),
+  GiftCardsPage: lazyNamedComponent(() => import("../../pages/GiftCardsPage/GiftCardsPage2"), "GiftCardsPage"),
 };
 
 const PrivateComponents = {
