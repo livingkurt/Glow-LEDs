@@ -750,23 +750,16 @@ export default {
         const promo_code = affiliate?.public_code?.promo_code;
         const sponsor = affiliate.sponsor;
         const sponsorTeamCaptain = affiliate.sponsorTeamCaptain;
-        const { number_of_uses, revenue, earnings, product_revenue, product_uses, ticket_revenue, ticket_uses } =
-          await getCodeUsage({
-            promo_code,
-            start_date,
-            end_date,
-            sponsor,
-            sponsorTeamCaptain,
-          });
+        const affiliateMetrics = await getCodeUsage({
+          promo_code,
+          start_date,
+          end_date,
+          sponsor,
+          sponsorTeamCaptain,
+        });
 
         return {
-          number_of_uses,
-          revenue,
-          earnings,
-          product_revenue,
-          product_uses,
-          ticket_revenue,
-          ticket_uses,
+          ...affiliateMetrics,
           artist_name: affiliate.artist_name,
         };
       })
