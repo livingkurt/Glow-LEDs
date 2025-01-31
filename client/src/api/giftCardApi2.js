@@ -20,7 +20,6 @@ export const getGiftCards = async ({ search, sorting, filters, page, pageSize })
       },
     });
   } catch (error) {
-    console.log({ error });
     store.dispatch(showError({ message: errorMessage(error) }));
   }
 };
@@ -82,6 +81,18 @@ export const deleteGiftCard = createAsyncThunk(
     } catch (error) {
       dispatch(showError({ message: errorMessage(error) }));
       return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const generateGiftCard = createAsyncThunk(
+  "giftCard/generate",
+  async ({ initialBalance }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post("/api/gift_cards/generate", { amount: initialBalance });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
     }
   }
 );

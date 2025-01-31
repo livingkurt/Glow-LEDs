@@ -3,7 +3,6 @@ import { isColorLight, getItemsTotal, getSaleTotal, hasActiveSale } from "../ema
 import Price from "../components/Price.js";
 
 export default ({ email, order }) => {
-  console.log({ email, order });
   return `<table style="width:100%;border-spacing:0; padding: 10px;">
 	<tr>
 		<td style="font-family:helvetica;border:0">

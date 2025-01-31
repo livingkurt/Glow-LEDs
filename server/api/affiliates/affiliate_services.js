@@ -65,7 +65,6 @@ export default {
         normalizeSearch: normalizeAffiliateSearch,
         normalizeFilters: normalizeAffiliateFilters,
       });
-      console.log({ filter });
       const affiliates = await affiliate_db.findAll_affiliates_db(filter, sort, limit, page);
       const count = await affiliate_db.count_affiliates_db(filter);
       return {
@@ -86,7 +85,6 @@ export default {
         sponsor: ["only_sponsor"],
         rave_mob: ["only_rave_mob"],
       };
-      console.log({ availableFilters });
       const booleanFilters = {
         promoter: {
           label: "Promoter",
@@ -336,8 +334,10 @@ export default {
     try {
       const { start_date, end_date } = last_month_date_range();
 
-      // Get active affiliates
-      const affiliates = await affiliate_db.findAll_affiliates_db({ active: true, rave_mob: false }, { _id: -1 });
+      const affiliates = await affiliate_db.findAll_affiliates_db(
+        { active: true, rave_mob: false, deleted: false },
+        { _id: -1 }
+      );
 
       const results = {
         successful: [],

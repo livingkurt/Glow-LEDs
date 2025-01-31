@@ -6,6 +6,7 @@ import {
   diminish_batteries_stock,
   diminish_refresh_pack_stock,
   diminish_single_glove_stock,
+  diminish_helios_glove_set_stock,
   normalizeProductFilters,
   normalizeProductSearch,
   generateProductOptionsProducts,
@@ -17,6 +18,7 @@ import {
   handleMicrolightFiltering,
   applyProductSales,
   clearProductSales,
+  updateProductStock,
 } from "./product_helpers.js";
 import { categories, determine_filter, snake_case, subcategories } from "../../utils/util.js";
 import { getFilteredData } from "../api_helpers.js";
@@ -260,70 +262,77 @@ export default {
     const { cartItems } = body;
     const outOfStockItems = [];
 
-    for (const item of cartItems) {
-      if (item.itemType === "product") {
-        const product = await Product.findOne({ _id: item.product, deleted: false });
-        if (!product) {
-          outOfStockItems.push({ id: item.product, name: "Unknown Product", itemType: "product" });
-          continue;
-        }
+    await Promise.all(
+      cartItems.map(async item => {
+        if (item.itemType === "product") {
+          const product = await Product.findOne({ _id: item.product, deleted: false });
+          if (!product) {
+            outOfStockItems.push({ id: item.product, name: "Unknown Product", itemType: "product" });
+            return;
+          }
 
-        let isOutOfStock = product.finite_stock && product.count_in_stock < item.quantity;
+          let isOutOfStock = product.finite_stock && product.count_in_stock < item.quantity;
 
-        // Check selected options for stock/availability
-        if (!isOutOfStock && item.selectedOptions?.length > 0) {
-          for (const selectedOption of item.selectedOptions) {
-            const option = product.options.find(opt =>
-              opt.values.some(val => val._id.toString() === selectedOption._id.toString())
-            );
+          // Check selected options for stock/availability
+          if (!isOutOfStock && item.selectedOptions?.length > 0) {
+            await Promise.all(
+              item.selectedOptions.map(async selectedOption => {
+                if (!selectedOption?._id) return;
 
-            if (option) {
-              const optionValue = option.values.find(val => val._id.toString() === selectedOption._id.toString());
+                const option = product.options.find(opt =>
+                  opt.values.some(val => val?._id && val._id.toString() === selectedOption._id.toString())
+                );
 
-              // If this option value links to another product, check its stock
-              if (optionValue?.product) {
-                const linkedProduct = await Product.findOne({ _id: optionValue.product, deleted: false });
-                if (linkedProduct?.finite_stock && linkedProduct.count_in_stock < item.quantity) {
-                  isOutOfStock = true;
-                  outOfStockItems.push({
-                    id: item.product,
-                    optionId: optionValue.product,
-                    name: product.name,
-                    option: `${option.name}: ${optionValue.name}`,
-                    itemType: "product",
-                  });
+                if (option) {
+                  const optionValue = option.values.find(
+                    val => val?._id && val._id.toString() === selectedOption._id.toString()
+                  );
+
+                  // If this option value links to another product, check its stock
+                  if (optionValue?.product) {
+                    const linkedProduct = await Product.findOne({ _id: optionValue.product, deleted: false });
+                    if (linkedProduct?.finite_stock && linkedProduct.count_in_stock < item.quantity) {
+                      isOutOfStock = true;
+                      outOfStockItems.push({
+                        id: item.product,
+                        optionId: optionValue.product,
+                        name: product.name,
+                        option: `${option.name}: ${optionValue.name}`,
+                        itemType: "product",
+                      });
+                    }
+                  }
                 }
-              }
-            }
+              })
+            );
+          }
+
+          if (isOutOfStock && !outOfStockItems.find(i => i.id === item.product)) {
+            outOfStockItems.push({
+              id: item.product,
+              name: product.name,
+              itemType: "product",
+            });
+          }
+        } else if (item.itemType === "ticket") {
+          const ticket = await Ticket.findOne({ _id: item.ticket, deleted: false });
+          if (!ticket) {
+            outOfStockItems.push({ id: item.ticket, name: "Unknown Ticket", itemType: "ticket" });
+            return;
+          }
+          if (ticket.count_in_stock < item.quantity) {
+            outOfStockItems.push({
+              id: item.ticket,
+              name: ticket.title,
+              itemType: "ticket",
+              count_in_stock: ticket.count_in_stock,
+            });
           }
         }
+      })
+    );
 
-        if (isOutOfStock && !outOfStockItems.find(i => i.id === item.product)) {
-          outOfStockItems.push({
-            id: item.product,
-            name: product.name,
-            itemType: "product",
-          });
-        }
-      } else if (item.itemType === "ticket") {
-        const ticket = await Ticket.findOne({ _id: item.ticket, deleted: false });
-        if (!ticket) {
-          outOfStockItems.push({ id: item.ticket, name: "Unknown Ticket", itemType: "ticket" });
-          continue;
-        }
-        // Add ticket availability check logic here
-        // For example, if tickets have a limited quantity:
-        if (ticket.count_in_stock < item.quantity) {
-          outOfStockItems.push({
-            id: item.ticket,
-            name: ticket.title,
-            itemType: "ticket",
-            count_in_stock: ticket.count_in_stock,
-          });
-        }
-      }
-    }
-    return outOfStockItems; // Return the details of out of stock items
+    return outOfStockItems;
   },
 
   create_products_s: async body => {
@@ -533,6 +542,10 @@ export default {
               await diminish_refresh_pack_stock(product, item);
             } else if (product.subcategory === "coin") {
               await diminish_batteries_stock(product, item);
+            } else if (product.category === "glove_sets") {
+              await diminish_helios_glove_set_stock(product, item);
+            } else {
+              await updateProductStock(product, item.quantity);
             }
           }
         } else if (item.itemType === "ticket") {

@@ -76,7 +76,6 @@ const Footer = () => {
     if (isValid) {
       try {
         const { payload } = await dispatch(API.sendEmailSubscription({ email }));
-        console.log({ payload });
         if (payload.message === "Email already exists") {
           setEmailError("Email already exists");
         } else {

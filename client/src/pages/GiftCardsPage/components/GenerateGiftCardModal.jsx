@@ -1,29 +1,38 @@
 import { useDispatch, useSelector } from "react-redux";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
-import { set_edit_gift_card_modal, set_gift_card } from "../../../slices/giftCardSlice2";
+import { set_generate_gift_card_modal, set_gift_card } from "../../../slices/giftCardSlice2";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { giftCardFormFields } from "./giftCardFormFields";
 
-const EditGiftCardModal2 = () => {
+const generateGiftCardFormFields = () => ({
+  initialBalance: {
+    type: "number",
+    label: "Initial Balance",
+    required: true,
+    min: 0,
+    step: "0.01",
+  },
+});
+
+const GenerateGiftCardModal = () => {
   const dispatch = useDispatch();
-  const giftCardPage = useSelector(state => state.giftCards.giftCardPage);
-  const { edit_gift_card_modal, gift_card, loading } = giftCardPage;
+  const giftCards = useSelector(state => state.giftCards.giftCardPage);
+  const { generate_gift_card_modal, loading, gift_card } = giftCards;
 
-  const formFields = giftCardFormFields();
+  const formFields = generateGiftCardFormFields();
 
   return (
     <div>
       <GLActionModal
-        isOpen={edit_gift_card_modal}
+        isOpen={generate_gift_card_modal}
         onConfirm={() => {
-          dispatch(API.saveGiftCard(gift_card));
+          dispatch(API.generateGiftCard(gift_card));
         }}
         onCancel={() => {
-          dispatch(set_edit_gift_card_modal(false));
+          dispatch(set_generate_gift_card_modal(false));
         }}
-        title="Edit GiftCard"
-        confirmLabel="Save"
+        title="Generate Gift Card"
+        confirmLabel="Generate"
         confirmColor="primary"
         cancelLabel="Cancel"
         cancelColor="secondary"
@@ -42,4 +51,4 @@ const EditGiftCardModal2 = () => {
   );
 };
 
-export default EditGiftCardModal2;
+export default GenerateGiftCardModal;

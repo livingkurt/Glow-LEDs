@@ -95,7 +95,6 @@ export default {
             used: false,
           }));
       }
-      console.log({ ticketsUsed: ticketItem.ticketsUsed });
 
       const ticketToUse = ticketItem.ticketsUsed[ticketIndex];
       if (!ticketToUse) {

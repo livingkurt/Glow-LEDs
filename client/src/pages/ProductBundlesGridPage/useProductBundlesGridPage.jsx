@@ -10,7 +10,6 @@ export const useProductBundlesGridPage = () => {
   const dispatch = useDispatch();
 
   const { selectedTags, selectedAffiliate, sort } = useSelector(state => state.carts.productBundlesGridPage);
-  console.log({ selectedTags, selectedAffiliate, sort });
 
   const {
     data: bundles,

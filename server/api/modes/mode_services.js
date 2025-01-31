@@ -89,7 +89,6 @@ export default {
     }
   },
   create_modes_s: async body => {
-    console.log({ body });
     try {
       const mode = await mode_db.create_modes_db(body);
       if (body.user) {
@@ -99,7 +98,6 @@ export default {
       if (body.affiliate) {
         await Affiliate.findByIdAndUpdate(body.affiliate, { $push: { modes: mode._id } });
       }
-      console.log({ mode });
 
       return mode;
     } catch (error) {

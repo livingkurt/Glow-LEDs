@@ -11,7 +11,6 @@ export const buyLabel = async ({ shipment_id, shipping_rate }) => {
   try {
     return await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
   } catch (error) {
-    console.log({ buyLabel: error });
     if (error instanceof Error) {
       throw new Error(error.errors?.map(error => `${error.field} ${error.message}`).join(", ") || error.message);
     }

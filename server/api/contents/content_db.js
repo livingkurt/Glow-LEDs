@@ -153,7 +153,6 @@ export default {
     }
   },
   update_contents_db: async (id, body) => {
-    console.log({ home_page_modules: body.home_page.modules, id });
     try {
       const content = await Content.findOne({ _id: id, deleted: false });
       if (content) {

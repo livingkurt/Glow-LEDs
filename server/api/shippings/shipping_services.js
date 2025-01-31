@@ -76,7 +76,6 @@ export default {
       await addTracking({ order, label, shipping_rate });
       return { invoice: InvoiceTemplate({ order }), label: label.postage_label.label_url };
     } catch (error) {
-      console.log({ error, errors: error.errors });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -139,7 +138,6 @@ export default {
       order.exchangeItems = body.exchangeItems || [];
 
       await order.save();
-      console.log({ order, body });
 
       const { shipment } = await createShippingRates({
         order,
@@ -196,13 +194,11 @@ export default {
           returnItems: body.returnItems,
           change_log: [],
         });
-        console.log({ newOrder });
         await sendExchangeOrderEmail(newOrder);
       }
 
       return { label: label.postage_label.label_url };
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

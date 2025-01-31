@@ -47,7 +47,6 @@ const EditEmailModal = () => {
 
   const handleEmailChange = newModules => {
     const updatedEmail = { ...email, modules: newModules };
-    console.log({ updatedEmail });
     dispatch(set_email(updatedEmail));
     setDebounceValue(Date.now()); // Use current timestamp to trigger debounce
   };

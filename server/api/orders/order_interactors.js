@@ -25,6 +25,7 @@ import promo_db from "../promos/promo_db.js";
 import bcrypt from "bcryptjs";
 import { useGiftCard } from "../gift_cards/gift_card_interactors.js";
 import { determineRevenueTier } from "../affiliates/affiliate_helpers.js";
+import dayjs from "dayjs";
 
 export const normalizeOrderFilters = input => {
   const output = {};
@@ -168,15 +169,25 @@ export const normalizeOrderSearch = query => {
   } else {
     search = query.search
       ? {
-          $expr: {
-            $regexMatch: {
-              input: {
-                $concat: ["$shipping.first_name", " ", "$shipping.last_name"],
+          $or: [
+            {
+              $expr: {
+                $regexMatch: {
+                  input: {
+                    $concat: ["$shipping.first_name", " ", "$shipping.last_name"],
+                  },
+                  regex: query.search,
+                  options: "i",
+                },
               },
-              regex: query.search,
-              options: "i",
             },
-          },
+            {
+              "orderItems.name": {
+                $regex: query.search,
+                $options: "i",
+              },
+            },
+          ],
         }
       : {};
   }
@@ -188,7 +199,7 @@ export const getCodeUsage = async ({ promo_code, start_date, end_date, sponsor, 
     const matchFilter = {
       deleted: false,
       status: { $nin: ["unpaid", "canceled"] },
-      createdAt: { $gte: new Date(start_date), $lte: new Date(end_date) },
+      createdAt: { $gte: new Date(dayjs(start_date).startOf("day")), $lte: new Date(dayjs(end_date).endOf("day")) },
       promo_code: new RegExp(`^${promo_code}$`, "i"), // Match exact promo code
     };
 

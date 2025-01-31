@@ -1,23 +1,6 @@
 import config from "../../config.js";
 
 export default ({ order, returnItems, exchangeItems }) => {
-  console.log(
-    JSON.stringify(
-      {
-        order,
-        returnItemsDetails: returnItems.map(item => ({
-          name: item.name,
-          selectedOptions: item.selectedOptions,
-        })),
-        exchangeItemsDetails: exchangeItems?.map(item => ({
-          name: item.name,
-          selectedOptions: item.selectedOptions,
-        })),
-      },
-      null,
-      2
-    )
-  );
   const printPageUrl = `${config.DOMAIN}/account/return_label?orderId=${order._id}&deadline=${encodeURIComponent(
     new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
   )}`;

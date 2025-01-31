@@ -119,3 +119,22 @@ export const logStripeFeeToExpenses = async confirmedResult => {
     console.error("Error tracking Stripe fee:", feeError);
   }
 };
+
+export const affiliatePayoutPayments = async (earnings, stripeConnectId, description) => {
+  try {
+    // Parse the earnings to ensure it's a number and round to 2 decimal places
+    const formattedEarnings = parseFloat(earnings).toFixed(2);
+    // Convert to cents and ensure it's an integer
+    const amountInCents = Math.round(parseFloat(formattedEarnings) * 100);
+
+    await stripe.transfers.create({
+      amount: amountInCents,
+      currency: "usd",
+      destination: stripeConnectId,
+      description,
+    });
+  } catch (error) {
+    console.error("Error processing affiliate payout:", error);
+    throw error; // Re-throw the error to be handled by the caller
+  }
+};

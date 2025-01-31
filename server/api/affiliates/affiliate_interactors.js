@@ -9,6 +9,7 @@ import payment_controller from "../payments/payment_controller.js";
 import { sendEmail } from "../emails/email_interactors.js";
 import AffiliateEarningsTemplate from "../../email_templates/pages/AffiliateEarningsTemplate.js";
 import App from "../../email_templates/App.js";
+import { affiliatePayoutPayments } from "../payments/payment_interactors.js";
 
 const stripe = new Stripe(config.STRIPE_KEY, {
   apiVersion: "2023-08-16",
@@ -177,7 +178,7 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
     });
     console.log("Promo code usage:", promoCodeUsage);
 
-    let description = `Monthly Payout for ${affiliate?.user?.first_name} ${affiliate?.user?.last_name}`;
+    const description = `Monthly Payout for ${affiliate?.user?.first_name} ${affiliate?.user?.last_name}`;
 
     // Process payments and create records
     if (affiliate?.user?.stripe_connect_id && promoCodeUsage.earnings > 0) {
@@ -185,11 +186,7 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
         earnings: promoCodeUsage.earnings,
         stripeConnectId: affiliate.user.stripe_connect_id,
       });
-      await payment_controller.affiliate_payout_payments_c({
-        earnings: promoCodeUsage.earnings,
-        stripeConnectId: affiliate.user.stripe_connect_id,
-        description,
-      });
+      await affiliatePayoutPayments(promoCodeUsage.earnings, affiliate.user.stripe_connect_id, description);
     }
     const paycheck = await createPaycheckRecord(affiliate, promoCodeUsage.earnings, promoCodeUsage, description);
 
@@ -225,7 +222,6 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
       monthlyTasks: monthlyTasks || [], // Ensure monthlyTasks is always an array
       promoCodeUsage,
     });
-
     return paycheck;
   } catch (error) {
     console.error("Error processing affiliate payout:", error);
