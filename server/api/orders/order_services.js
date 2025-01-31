@@ -33,6 +33,7 @@ import SalesTax from "sales-tax";
 import affiliate_db from "../affiliates/affiliate_db.js";
 import { useGiftCard } from "../gift_cards/gift_card_interactors.js";
 import { determineRevenueTier } from "../affiliates/affiliate_helpers.js";
+import email_services from "../emails/email_services.js";
 
 SalesTax.setTaxOriginCountry("US"); // Set this to your business's country code
 
@@ -309,6 +310,14 @@ export default {
               await preOrderOrder.save();
             }
           } catch (error) {
+            // Send error notification
+            await email_services.send_order_error_notification_s({
+              order: paymentOrder,
+              error: {
+                message: `Payment processing failed: ${error.message}`,
+                stack: error.stack,
+              },
+            });
             // If payment fails, throw error with order ID
             const err = new Error(error.message);
             err.orderId = paymentOrder._id;
@@ -320,21 +329,56 @@ export default {
       }
 
       // Update stock and empty cart first
-      await product_services.update_stock_products_s({ cartItems: order.orderItems });
-      await cart_services.empty_carts_s({ id: cartId });
+      try {
+        await product_services.update_stock_products_s({ cartItems: order.orderItems });
+        await cart_services.empty_carts_s({ id: cartId });
+      } catch (error) {
+        await email_services.send_order_error_notification_s({
+          order: paymentOrder,
+          error: {
+            message: `Failed to update stock or empty cart: ${error.message}`,
+            stack: error.stack,
+          },
+        });
+        throw error;
+      }
 
       // Handle promo code
       if (order.promo && order.promo.length !== 16) {
-        await promo_services.update_code_used_promos_s({ promo_code: order.promo.promo_code });
+        try {
+          await promo_services.update_code_used_promos_s({ promo_code: order.promo.promo_code });
+        } catch (error) {
+          await email_services.send_order_error_notification_s({
+            order: paymentOrder,
+            error: {
+              message: `Failed to update promo code: ${error.message}`,
+              stack: error.stack,
+            },
+          });
+          // Don't throw here as this is not critical
+          console.error("Failed to update promo code:", error);
+        }
       }
 
       // Handle gift cards
       if (order.giftCards && order.giftCards.length > 0) {
-        await Promise.all(
-          order.giftCards.map(async giftCard => {
-            await useGiftCard(giftCard.code, giftCard.amountUsed, order._id);
-          })
-        );
+        try {
+          await Promise.all(
+            order.giftCards.map(async giftCard => {
+              await useGiftCard(giftCard.code, giftCard.amountUsed, order._id);
+            })
+          );
+        } catch (error) {
+          await email_services.send_order_error_notification_s({
+            order: paymentOrder,
+            error: {
+              message: `Failed to process gift cards: ${error.message}`,
+              stack: error.stack,
+            },
+          });
+          // Don't throw here as payment is already processed
+          console.error("Failed to process gift cards:", error);
+        }
       }
 
       // Send emails asynchronously without waiting
@@ -361,37 +405,85 @@ export default {
           };
 
           // Send order confirmation email
-          sendEmailWithTimeout(sendOrderEmail(freshOrder)).catch(error => {
-            console.error("Error sending order confirmation email:", error);
-          });
+          try {
+            await sendEmailWithTimeout(sendOrderEmail(freshOrder));
+          } catch (error) {
+            await email_services.send_order_error_notification_s({
+              order: freshOrder,
+              error: {
+                message: `Failed to send order confirmation email: ${error.message}`,
+                stack: error.stack,
+              },
+            });
+          }
 
           // Send ticket email if needed
           if (updateOrder.orderItems.some(item => item.itemType === "ticket")) {
-            sendEmailWithTimeout(sendTicketEmail(freshOrder)).catch(error => {
-              console.error("Error sending ticket email:", error);
-            });
+            try {
+              await sendEmailWithTimeout(sendTicketEmail(freshOrder));
+            } catch (error) {
+              await email_services.send_order_error_notification_s({
+                order: freshOrder,
+                error: {
+                  message: `Failed to send ticket email: ${error.message}`,
+                  stack: error.stack,
+                },
+              });
+            }
           }
 
           // Send gift card email if needed
           if (updateOrder.orderItems.some(item => item.itemType === "gift_card")) {
-            sendEmailWithTimeout(sendGiftCardEmail(freshOrder)).catch(error => {
-              console.error("Error sending gift card email:", error);
-            });
+            try {
+              await sendEmailWithTimeout(sendGiftCardEmail(freshOrder));
+            } catch (error) {
+              await email_services.send_order_error_notification_s({
+                order: freshOrder,
+                error: {
+                  message: `Failed to send gift card email: ${error.message}`,
+                  stack: error.stack,
+                },
+              });
+            }
           }
 
           // Send promo code used email if needed
           if (order.promo && order.promo.length !== 16) {
-            sendEmailWithTimeout(sendCodeUsedEmail(order.promo.promo_code)).catch(error => {
-              console.error("Error sending promo code used email:", error);
-            });
+            try {
+              await sendEmailWithTimeout(sendCodeUsedEmail(order.promo.promo_code));
+            } catch (error) {
+              await email_services.send_order_error_notification_s({
+                order: freshOrder,
+                error: {
+                  message: `Failed to send promo code used email: ${error.message}`,
+                  stack: error.stack,
+                },
+              });
+            }
           }
         } catch (error) {
-          console.error("Error in email sending process:", error);
+          await email_services.send_order_error_notification_s({
+            order: updateOrder,
+            error: {
+              message: `General error in email sending process: ${error.message}`,
+              stack: error.stack,
+            },
+          });
         }
       });
 
       return orders;
     } catch (error) {
+      // Send error notification for any uncaught errors
+      await email_services.send_order_error_notification_s({
+        order,
+        error: {
+          message: `Uncaught error in place_order_orders_s: ${error.message}`,
+          stack: error.stack,
+        },
+      });
+
+      console.error({ error });
       if (error instanceof Error) {
         // Include the order ID in the error if it exists
         if (error.orderId) {

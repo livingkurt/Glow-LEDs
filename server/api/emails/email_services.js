@@ -45,6 +45,7 @@ import order_services from "../orders/order_services.js";
 import CodeUsedTemplate from "../../email_templates/pages/CodeUsedTemplate.js";
 import ReturnLabelTemplate from "../../email_templates/pages/ReturnLabelTemplate.js";
 import { determineRevenueTier } from "../affiliates/affiliate_helpers.js";
+import OrderErrorTemplate from "../../email_templates/pages/OrderErrorTemplate.js";
 
 export default {
   get_table_emails_s: async query => {
@@ -763,5 +764,32 @@ export default {
     };
     await sendEmail(mailOptions);
     return order.shipping.email;
+  },
+  send_order_error_notification_s: async ({ order, error }) => {
+    try {
+      const mailOptions = {
+        from: config.DISPLAY_INFO_EMAIL,
+        to: config.DISPLAY_CONTACT_EMAIL, // Send to admin email
+        subject: `⚠️ Order Processing Error - ${order._id || "New Order"}`,
+        html: App({
+          body: OrderErrorTemplate({
+            order,
+            error,
+            errorTime: new Date(),
+          }),
+          unsubscribe: false,
+        }),
+        headers: {
+          "X-Priority": "1",
+          "X-MSMail-Priority": "High",
+          "Importance": "high",
+        },
+      };
+      await sendEmail(mailOptions);
+      return config.DISPLAY_CONTACT_EMAIL;
+    } catch (emailError) {
+      console.error("Failed to send error notification email:", emailError);
+      // Don't throw here as this is already error handling
+    }
   },
 };
