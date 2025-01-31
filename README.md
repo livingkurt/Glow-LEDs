@@ -1,12 +1,11 @@
 <p align="center">
-  <img style="text-align: center;" src="./client/public/images/optimized_images/logo_images/glow_logo_optimized.png">
-  <h1 style="text-align: center;">3D Printed LED toys, by a glover that wants the world to stay lit</h1>
-  <!-- <h1 style="text-align: center;">3D Printed LED toys and accessories, by a glover that just wants to light up the world</h1> -->
+  <img style="text-align: center;" src="./client/public/images/optimized_images/logo_images/glow_leds_text_logo.png" height="300">
+  <h1 style="text-align: center;">A comprehensive e-commerce platform for managing payments, orders, inventory and everything in between</h1>
 </p>
 
 # About
 
-Glow LEDs is a full-stack e-commerce application specializing in 3D printed LED toys and accessories. The platform provides a seamless shopping experience with features for both users and administrators.
+Glow LEDs is a leader in the LED Gloving community, and is the go-to place for all things Gloving. We are a passionate team who are dedicated to providing the best possible products and experience for our users.
 
 # Tech Stack
 
@@ -65,6 +64,7 @@ Before installation, ensure you have the following installed:
 - Git
 - XCode
 - Homebrew (for MongoDB installation)
+- Stripe Account (for payment processing)
 
 ## Installing MongoDB on macOS
 
@@ -137,6 +137,31 @@ Homebrew automatically adds MongoDB binaries to your PATH. If you need to add th
    source ~/.bash_profile  # for Bash
    ```
 
+## Setting Up Stripe API Keys
+
+1. Create a Stripe account at [stripe.com](https://stripe.com)
+
+2. Once logged in, go to the Stripe Dashboard
+
+3. Switch to Test Mode by toggling the "Test Mode" switch in the top right
+
+4. Navigate to Developers > API keys
+
+   ```
+   https://dashboard.stripe.com/test/apikeys
+   ```
+
+5. You'll find two keys:
+
+   - Publishable key (starts with 'pk*test*')
+   - Secret key (starts with 'sk*test*')
+
+   Note: For production, you'll need to use the live keys instead of test keys.
+
+6. Keep these keys handy for the .env file configuration
+
+Note: Never commit your Stripe secret key to version control. Always use environment variables.
+
 # Installation
 
 1. Clone the repository:
@@ -158,29 +183,139 @@ Homebrew automatically adds MongoDB binaries to your PATH. If you need to add th
    cat /dev/urandom | head -c 64 | base64
    ```
 
-4. Create a .env file in the root directory with the following variables:
+4. Create two .env files:
 
-   ```
-   # Database
+   A. Root directory `.env` file (Backend):
+
+   ```bash
+   ################## Database ##################
    MONGODB_URI=mongodb://localhost:27017/glow_leds  # local MongoDB URI
 
-   # Authentication
-   JWT_SECRET=your_generated_jwt_secret_from_step_3
+   ################## User Login ##################
+   # Local Authorization
+   ACCESS_TOKEN_SECRET=your_generated_jwt_secret    # From step 3
+   REFRESH_TOKEN_SECRET=your_generated_jwt_secret   # Generate another one
 
-   # Payment Processing
-   STRIPE_SECRET_KEY=your_stripe_secret
-   STRIPE_PUBLISHABLE_KEY=your_stripe_publishable
+   # Sign in with Google
+   GOOGLE_CLIENT_ID=from_google_cloud_console
+   GOOGLE_CLIENT_SECRET=from_google_cloud_console
+   GOOGLE_CALLBACK_URL=your_callback_url
 
-   # Email
-   EMAIL_USER=your_email
-   EMAIL_PASS=your_email_app_password
-
-   # Shipping
-   EASYPOST_API_KEY=your_easypost_key
-
-   # Environment
+   ################## Server ##################
+   PORT=8080
    NODE_ENV=development
+
+   ################## Company Info ##################
+   # No Reply Email
+   INFO_EMAIL=your_no_reply_email
+   INFO_PASSWORD=your_email_password
+   DISPLAY_INFO_EMAIL="Company Name <no-reply@example.com>"
+
+   # Contact Email
+   CONTACT_EMAIL=your_contact_email
+   CONTACT_PASSWORD=your_contact_email_password
+   DISPLAY_CONTACT_EMAIL="Company Support <support@example.com>"
+
+   # Admin Login
+   LOGIN_EMAIL=admin@example.com
+   LOGIN_PASSWORD=secure_admin_password
+
+   # Temp Password
+   TEMP_PASS=temporary_password_for_resets
+
+   # Production Address
+   PRODUCTION_ADDRESS=your_address
+   PRODUCTION_CITY=your_city
+   PRODUCTION_STATE=your_state
+   PRODUCTION_POSTAL_CODE=your_postal_code
+   PRODUCTION_COUNTRY=your_country
+
+   ################## Easy Post ##################
+   EASY_POST=your_easypost_api_key
+
+   ################## Google Sheets ##################
+   VITE_GOOGLE_SHEETS_PRIVATE=your_google_sheets_key
+
+   ################## Stripe ##################
+   STRIPE_KEY=sk_test_your_stripe_secret_key
+
+   ################## Airtable ##################
+   AIRTABLE_API_KEY=your_airtable_api_key
+   VITE_AIRTABLE_ACCESS_TOKEN=your_airtable_access_token
+
+   ################## Debugging ##################
+   # Bugsnag
+   BUGSNAG_KEY=your_bugsnag_key
+
+   # New Relic
+   NEW_RELIC_APP_NAME=your_app_name
+   NEW_RELIC_KEY=your_new_relic_key
+
+   # Scout
+   SCOUT_KEY=your_scout_key
+   SCOUT_LOG_LEVEL=info
+   SCOUT_MONITOR=true
+
+   ################## Email ##################
+   # Google OAuth for Emails
+   GOOGLE_INFO_OAUTH_ID=your_oauth_id
+   GOOGLE_INFO_OAUTH_SECRET=your_oauth_secret
+   GOOGLE_INFO_OAUTH_REFRESH_TOKEN=your_refresh_token
+
+   GOOGLE_CONTACT_OAUTH_ID=your_oauth_id
+   GOOGLE_CONTACT_OAUTH_SECRET=your_oauth_secret
+   GOOGLE_CONTACT_OAUTH_REFRESH_TOKEN=your_refresh_token
+
+   GOOGLE_EMAIL_OAUTH_API=your_oauth_api_key
+
+   ################## Image Uploading ##################
+   # Imgur
+   IMGUR_ClIENT_ID=your_imgur_client_id
+   IMGUR_ClIENT_SECRET=your_imgur_client_secret
    ```
+
+   B. Client directory `.env` file (Frontend):
+
+   ```bash
+   ################## Stripe ##################
+   VITE_STRIPE_KEY=pk_test_your_stripe_publishable_key
+
+   ################## Company Info ##################
+   # Emails
+   VITE_INFO_EMAIL=your_info_email
+   VITE_CONTACT_EMAIL=your_contact_email
+
+   # Production Address
+   VITE_PRODUCTION_ADDRESS=your_address
+   VITE_PRODUCTION_CITY=your_city
+   VITE_PRODUCTION_STATE=your_state
+   VITE_PRODUCTION_POSTAL_CODE=your_postal_code
+   VITE_PRODUCTION_COUNTRY=your_country
+
+   # Temp Password
+   VITE_TEMP_PASS=temporary_password_for_resets
+
+   ################## Google Services ##################
+   VITE_GOOGLE_SHEETS_PRIVATE=your_google_sheets_key
+   VITE_GOOGLE_PLACES_KEY=your_google_places_api_key
+
+   ################## React ##################
+   SKIP_PREFLIGHT_CHECK=true
+
+   ################## Debugging ##################
+   VITE_BUGSNAG_KEY=your_bugsnag_key
+
+   ################## Airtable ##################
+   VITE_AIRTABLE_ACCESS_TOKEN=your_airtable_access_token
+   ```
+
+   Note:
+
+   - Never commit these .env files to version control
+   - Keep your API keys and secrets secure
+   - For production, use different keys than development
+   - Some services require both frontend and backend configuration
+   - All frontend environment variables must start with `VITE_` to be accessible
 
 5. Start MongoDB (if not already running):
 
