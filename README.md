@@ -152,32 +152,49 @@ Homebrew automatically adds MongoDB binaries to your PATH. If you need to add th
    npm run clean-install
    ```
 
-3. Create a .env file in the root directory with the following variables:
+3. Generate a secure JWT secret:
+
+   ```bash
+   cat /dev/urandom | head -c 64 | base64
+   ```
+
+4. Create a .env file in the root directory with the following variables:
 
    ```
+   # Database
    MONGODB_URI=mongodb://localhost:27017/glow_leds  # local MongoDB URI
-   JWT_SECRET=your_jwt_secret
+
+   # Authentication
+   JWT_SECRET=your_generated_jwt_secret_from_step_3
+
+   # Payment Processing
    STRIPE_SECRET_KEY=your_stripe_secret
    STRIPE_PUBLISHABLE_KEY=your_stripe_publishable
+
+   # Email
    EMAIL_USER=your_email
    EMAIL_PASS=your_email_app_password
+
+   # Shipping
    EASYPOST_API_KEY=your_easypost_key
+
+   # Environment
    NODE_ENV=development
    ```
 
-4. Start MongoDB (if not already running):
+5. Start MongoDB (if not already running):
 
    ```bash
    brew services start mongodb-community
    ```
 
-5. Start the transpiler server:
+6. Start the transpiler server:
 
    ```bash
    npm run transpile-watch
    ```
 
-6. Start the development server:
+7. Start the development server:
    ```bash
    npm run start:dev
    ```
