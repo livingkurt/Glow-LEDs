@@ -750,7 +750,7 @@ export default {
         const promo_code = affiliate?.public_code?.promo_code;
         const sponsor = affiliate.sponsor;
         const sponsorTeamCaptain = affiliate.sponsorTeamCaptain;
-        const { number_of_uses, revenue, earnings } = await getCodeUsage({
+        const affiliateMetrics = await getCodeUsage({
           promo_code,
           start_date,
           end_date,
@@ -758,7 +758,10 @@ export default {
           sponsorTeamCaptain,
         });
 
-        return { number_of_uses, revenue, earnings, artist_name: affiliate.artist_name };
+        return {
+          ...affiliateMetrics,
+          artist_name: affiliate.artist_name,
+        };
       })
     );
 

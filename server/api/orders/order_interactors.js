@@ -211,7 +211,35 @@ export const getCodeUsage = async ({ promo_code, start_date, end_date, sponsor, 
       earningsMultiplier = 0.2;
     }
 
-    const aggregationPipeline = [
+    // First get the ticket count and order details
+    const ticketCountPipeline = [
+      { $match: matchFilter },
+      { $unwind: "$orderItems" },
+      {
+        $match: {
+          "orderItems.itemType": "ticket",
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          ticket_uses: { $sum: "$orderItems.quantity" },
+          ticket_orders: {
+            $push: {
+              order_id: "$_id",
+              first_name: "$shipping.first_name",
+              last_name: "$shipping.last_name",
+              quantity: "$orderItems.quantity",
+              date: "$createdAt",
+              ticket_type: "$orderItems.name",
+            },
+          },
+        },
+      },
+    ];
+
+    // Then get the revenue data
+    const revenuePipeline = [
       { $match: matchFilter },
       {
         $group: {
@@ -236,14 +264,34 @@ export const getCodeUsage = async ({ promo_code, start_date, end_date, sponsor, 
       },
     ];
 
-    const results = await Order.aggregate(aggregationPipeline);
-    if (results.length === 0) {
-      return { number_of_uses: 0, revenue: 0, earnings: 0 };
+    const [ticketResults, revenueResults] = await Promise.all([
+      Order.aggregate(ticketCountPipeline),
+      Order.aggregate(revenuePipeline),
+    ]);
+
+    if (revenueResults.length === 0) {
+      return {
+        number_of_uses: 0,
+        revenue: 0,
+        earnings: 0,
+        ticket_uses: 0,
+        ticket_orders: [],
+      };
     }
 
-    const { number_of_uses, revenue, earnings } = results[0];
+    const { number_of_uses, revenue, earnings } = revenueResults[0];
+    const ticket_uses = ticketResults[0]?.ticket_uses || 0;
+    const ticket_orders = ticketResults[0]?.ticket_orders || [];
 
-    return { number_of_uses, revenue, earnings };
+    console.log({ ticket_orders });
+
+    return {
+      number_of_uses,
+      revenue,
+      earnings,
+      ticket_uses,
+      ticket_orders,
+    };
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
