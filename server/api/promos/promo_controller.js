@@ -13,10 +13,10 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
-  findAllTable_promos_c: async (req, res) => {
+  table_promos_c: async (req, res) => {
     const { query } = req;
     try {
-      const promos = await promo_services.findAllTable_promos_s(query);
+      const promos = await promo_services.table_promos_s(query);
       if (promos) {
         return res.status(200).send(promos);
       }
