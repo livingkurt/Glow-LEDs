@@ -93,11 +93,11 @@ configurePassport(passport);
 app.use(routes);
 app.use("/api/templates", template_routes);
 
-if (process.env.NODE_ENV === "production") {
+if (config.NODE_ENV === "production") {
   Sentry.setupExpressErrorHandler(app);
 }
 
-if (process.env.NODE_ENV === "production") {
+if (config.NODE_ENV === "production") {
   // Serve static files from the React app
   app.use(express.static(path.join(__dirname, "../client/dist")));
 
