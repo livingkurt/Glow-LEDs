@@ -1,135 +1,154 @@
-# Glow LEDs
-
 <p align="center">
   <img style="text-align: center;" src="./client/public/images/optimized_images/logo_images/glow_logo_optimized.png">
   <h1 style="text-align: center;">3D Printed LED toys, by a glover that wants the world to stay lit</h1>
   <!-- <h1 style="text-align: center;">3D Printed LED toys and accessories, by a glover that just wants to light up the world</h1> -->
 </p>
 
-# Inspiration
+# About
 
-I have been facinated with LEDs ever since I saw my first light show back in early 2014, and always wanted the top of the line gloves so that I could customize the modes as much as possible. I've noticed that led diffusers have not made any significant advancements and feel little bored with what is avaiable. So then I bought my Prusa i3 MK3s 3D printer, and got to work developing what I call **\_\_\_** (To Be Announced)!
+Glow LEDs is a full-stack e-commerce application specializing in 3D printed LED toys and accessories. The platform provides a seamless shopping experience with features for both users and administrators.
+
+# Tech Stack
+
+## Frontend
+
+- React 18
+- Vite
+- Redux Toolkit
+- Material-UI (MUI) v6
+- React Router v6
+- Socket.io Client
+- Axios
+- SASS
+- Vitest for unit testing
+
+## Backend
+
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- Socket.io
+- JWT Authentication
+- Nodemailer
+- Stripe Integration
+- EasyPost API Integration
+- Various security middlewares
 
 # Features
 
-### Admin
+## User Features
 
-- Add a Product
-- Edit a Product
-- Delete a Product
-- View Orders
-- Mark Orders and Shipped and Delivered
+- User authentication (signup, login, password reset)
+- Product browsing and searching
+- Shopping cart management
+- Secure checkout with Stripe
+- Order tracking
+- Email notifications
+- Account management
+- Real-time updates via WebSocket
 
-### User
+## Admin Features
 
-- Create an Account
-- View Products
-- View Cart
-- Add Item to Cart
-- Adjust the quantity of the product
-- Remove Item from Cart
-- Pay with Paypal
-- View Orders
-- Recieve Email Notifications based on order and account status
-- Account Verification via Email Link
-- Forgot your Password Flow
+- Product management (CRUD operations)
+- Order management
+- Shipping integration with EasyPost
+- Sales analytics
+- User management
+- Inventory tracking
+
+# Prerequisites
+
+Before installation, ensure you have the following installed:
+
+- Node.js (v20.11.1)
+- npm (v10.2.4)
+- MongoDB (local or Atlas URI)
+- Git
+- XCode
 
 # Installation
 
-First clone this repo
+1. Clone the repository:
 
-```shell
-git clone git@github.com:livingkurt/Glow-LEDs.git
-```
+   ```bash
+   git clone https://github.com/yourusername/Glow-LEDs.git
+   cd Glow-LEDs
+   ```
 
-Install Dependancies
+2. Install dependencies:
 
-```shell
-npm install
-```
+   ```bash
+   npm run clean-install
+   ```
 
-## .env Set Up
+3. Create a .env file in the root directory with the following variables:
 
-Copy .env example and name it .env
+   ```
+   MONGODB_URI=your_mongodb_uri
+   JWT_SECRET=your_jwt_secret
+   STRIPE_SECRET_KEY=your_stripe_secret
+   STRIPE_PUBLISHABLE_KEY=your_stripe_publishable
+   EMAIL_USER=your_email
+   EMAIL_PASS=your_email_app_password
+   EASYPOST_API_KEY=your_easypost_key
+   NODE_ENV=development
+   ```
 
-#### MONGODB_URI
+4. Start the development server:
 
-Local Mongodb URI
+   ```bash
+   npm run start:dev
+   ```
 
-#### ACCESS_TOKEN_SECRET
+The application will be available at:
 
-Create secret key that is unsed to create your jwt tokens
+- Frontend: http://localhost:5173
+- Backend: http://localhost:8080
 
-#### PAYPAL_CLIENT_ID
+# Available Scripts
 
-Set up your paypal developer account and paste in your client ID
+- `npm run start:dev`: Start development server
+- `npm run build`: Build the application
+- `npm run test`: Run tests
+- `npm run lint`: Run ESLint
+- `npm run prettier`: Run Prettier
+- `npm run cypress:run`: Run Cypress tests
 
-#### PASSWORD
+# Development
 
-Gmail Password
+## Directory Structure
 
-#### EMAIL
+- `/client`: Frontend React application
+- `/server`: Backend Node.js application
+- `/dist`: Compiled backend code
+- `/client/dist`: Compiled frontend code
 
-Gmail Email
+## Testing
 
-#### DISPLAY_EMAIL
+- Frontend unit tests: `cd client && npm test`
+- E2E tests: `npm run cypress:run`
+- Backend tests: `npm run test:backend`
 
-So that the display email will be formatted correctly
+## Code Style
 
-DISPLAY_EMAIL='"Name" <email@email.com>'
+The project uses ESLint and Prettier for code formatting. Run `npm run lint` and `npm run prettier` to ensure your code meets the project's style guidelines.
 
-Run App
+# Deployment
 
-```shell
-npm start
-```
+The application is configured for deployment on Heroku. The `heroku-postbuild` script will handle the build process.
 
-# Technologies
+# Contributing
 
-## Front End
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a new Pull Request
 
-- Javascript
-- HTML5
-- CSS3
-- React.js
-- Redux
-- Paypal API
-- axios
-- http-proxy-middleware
-- js-cookie
-- react-redux
-- react-router-dom
-- redux
-- redux-thunk
-- validator
+# License
 
-## Back End
+This project is licensed under the MIT License.
 
-- Node.js
-- Nodemailer
-- MongoDB
-  - mongoose.js
-- Express.js
-- bcryptjs
-- body-parser
-- jsonwebtoken
+# Inspiration
 
-# Pictures
-
-<div align="center" style="display:flex; flex-wrap: wrap; width:1500px;">
-  <h2>Home</h2>
-  <img style="text-align: center;" src="client/public/images/optimized_images/readme_images/home_top_optimized.png">
-  <img style="text-align: center;" src="client/public/images/optimized_images/readme_images/home_bottom_optimized.png">
-  <h2>View Products</h2>
-  <img style="text-align: center;" src="client/public/images/optimized_images/readme_images/products_optimized.png">
-  <h2>Cart</h2>
-  <img style="text-align: center;" src="client/public/images/optimized_images/readme_images/cart_optimized.png">
-  <h2>Contact Form</h2>
-  <img style="text-align: center;" src="client/public/images/optimized_images/readme_images/contact_optimized.png">
-  <h2>User Profile</h2>
-  <img style="text-align: center;" src="client/public/images/optimized_images/readme_images/profile_optimized.png">
-  <h2>Admin Products</h2>
-  <img style="text-align: center;" src="client/public/images/optimized_images/readme_images/admin_products_optimized.png">
-  <h2>Admin Orders</h2>
-  <img style="text-align: center;" src="client/public/images/optimized_images/readme_images/admin_orders_optimized.png">
-</div>
+I have been facinated with LEDs ever since I saw my first light show back in early 2014, and always wanted the top of the line gloves so that I could customize the modes as much as possible. I've noticed that led diffusers have not made any significant advancements and feel little bored with what is avaiable. So then I bought my Prusa i3 MK3s 3D printer, and got to work developing what I call **\_\_\_** (To Be Announced)!
