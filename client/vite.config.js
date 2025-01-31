@@ -23,10 +23,30 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks: {
-            "vendor-mui": ["@mui/material", "@mui/icons-material"],
+            // Split MUI into smaller chunks
+            "vendor-mui-core": ["@mui/material/styles", "@mui/material/colors"],
+            "vendor-mui-base": ["@mui/material/Button", "@mui/material/Box", "@mui/material/Typography"],
+            "vendor-mui-icons": ["@mui/icons-material"],
+            "vendor-mui-rest": ["@mui/material"],
+
+            // Core vendor dependencies
             "vendor-react": ["react", "react-dom", "react-router-dom"],
             "vendor-redux": ["redux", "react-redux", "@reduxjs/toolkit"],
             "vendor-core": ["axios", "lodash"],
+
+            // Split features by domain
+            "feature-scanner": ["react-qr-reader"],
+          },
+          // Optimize chunk distribution
+          chunkFileNames: chunkInfo => {
+            const name = chunkInfo.name;
+            if (name.includes("vendor")) {
+              return "vendor/[name]-[hash].js";
+            }
+            if (name.includes("feature")) {
+              return "features/[name]-[hash].js";
+            }
+            return "chunks/[name]-[hash].js";
           },
         },
       },
@@ -36,7 +56,16 @@ export default defineConfig(({ mode }) => {
         compress: {
           drop_console: true,
           drop_debugger: true,
+          pure_funcs: ["console.log", "console.info", "console.debug", "console.warn"],
         },
+      },
+      // Add source map for production debugging
+      sourcemap: mode === "development",
+      // Enable CSS code splitting
+      cssCodeSplit: true,
+      // Optimize dependencies pre-bundling
+      optimizeDeps: {
+        include: ["react", "react-dom", "react-router-dom", "@mui/material", "@mui/icons-material"],
       },
     },
     server: {
