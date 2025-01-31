@@ -140,3 +140,6 @@ webhook_payload.json
 .aider*
 
 lightshow.lol-main
+
+# Sentry Config File
+.sentryclirc
