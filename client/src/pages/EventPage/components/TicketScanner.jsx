@@ -1,5 +1,4 @@
-import React, { useState, useCallback } from "react";
-import { QrReader } from "react-qr-reader";
+import { useState, useCallback, lazy, Suspense } from "react";
 import { useDispatch } from "react-redux";
 import * as API from "../../../api";
 
@@ -8,6 +7,15 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
+
+// Lazy load the QR reader
+const QrReader = lazy(() => import("react-qr-reader").then(module => ({ default: module.QrReader })));
+
+const LoadingScanner = () => (
+  <Box display="flex" justifyContent="center" alignItems="center" p={4}>
+    <CircularProgress />
+  </Box>
+);
 
 const TicketScanner = ({ openScannerModal, setOpenScannerModal, event }) => {
   const [scanResult, setScanResult] = useState(null);
@@ -37,9 +45,9 @@ const TicketScanner = ({ openScannerModal, setOpenScannerModal, event }) => {
     [dispatch, isProcessing]
   );
 
-  const handleError = error => {
-    console.error(error);
+  const handleError = () => {
     setScanStatus("error");
+    // Optionally, you could dispatch an error action or show a notification here
   };
 
   const closeScanner = () => {
@@ -73,12 +81,14 @@ const TicketScanner = ({ openScannerModal, setOpenScannerModal, event }) => {
       <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" p={2}>
         {isScanning ? (
           <Box width="100%" maxWidth="300px" position="relative">
-            <QrReader
-              constraints={{ facingMode: "environment" }}
-              onResult={handleResult}
-              onError={handleError}
-              style={{ width: "100%" }}
-            />
+            <Suspense fallback={<LoadingScanner />}>
+              <QrReader
+                constraints={{ facingMode: "environment" }}
+                onResult={handleResult}
+                onError={handleError}
+                style={{ width: "100%" }}
+              />
+            </Suspense>
 
             {isProcessing && (
               <Box

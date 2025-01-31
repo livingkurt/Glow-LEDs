@@ -1,24 +1,31 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../api";
 
 import TicketItem from "./components/TicketItem";
-import TicketModal from "./components/TicketModal";
 import EventContainer from "./components/EventContainer";
 import TicketPrice from "./components/TicketPrice";
 import EventTitle from "./components/EventTitle";
-import TicketScanner from "./components/TicketScanner";
-import { EditEventModal } from "../EventsPage/components";
 import { open_edit_event_modal } from "../../slices/eventSlice";
-import { EditTicketModal } from "../TicketsPage/components";
-import TicketHoldersModal from "./components/TicketHolderModal";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+
+// Lazy load modals and scanner
+const TicketModal = lazy(() => import("./components/TicketModal"));
+const TicketScanner = lazy(() => import("./components/TicketScanner"));
+const EditEventModal = lazy(() => import("../EventsPage/components/EditEventModal"));
+const EditTicketModal = lazy(() => import("../TicketsPage/components/EditTicketModal"));
+const TicketHoldersModal = lazy(() => import("./components/TicketHolderModal"));
+
+const LoadingFallback = () => (
+  <Box display="flex" justifyContent="center" alignItems="center" p={2}>
+    <CircularProgress />
+  </Box>
+);
 
 const EventPage = () => {
   const { pathname } = useParams();
@@ -162,26 +169,35 @@ const EventPage = () => {
           </Box>
         </Box>
       </Box>
-      <TicketModal
-        open={openModal}
-        onClose={handleCloseModal}
-        selectedTicket={selectedTicket}
-        event={event}
-        quantity={quantity}
-        setQuantity={setQuantity}
-        onAddToCart={handleAddToCart}
-      />
+      <Suspense fallback={<LoadingFallback />}>
+        {openModal && (
+          <TicketModal
+            open={openModal}
+            onClose={handleCloseModal}
+            selectedTicket={selectedTicket}
+            event={event}
+            quantity={quantity}
+            setQuantity={setQuantity}
+            onAddToCart={handleAddToCart}
+          />
+        )}
 
-      <TicketScanner openScannerModal={openScannerModal} setOpenScannerModal={setOpenScannerModal} event={event} />
-      <TicketHoldersModal
-        open={openTicketHoldersModal}
-        onClose={() => setOpenTicketHoldersModal(false)}
-        event={event}
-        allTickets={allTickets}
-      />
+        {openScannerModal && (
+          <TicketScanner openScannerModal={openScannerModal} setOpenScannerModal={setOpenScannerModal} event={event} />
+        )}
 
-      <EditEventModal />
-      <EditTicketModal />
+        {openTicketHoldersModal && (
+          <TicketHoldersModal
+            open={openTicketHoldersModal}
+            onClose={() => setOpenTicketHoldersModal(false)}
+            event={event}
+            allTickets={allTickets}
+          />
+        )}
+
+        <EditEventModal />
+        <EditTicketModal />
+      </Suspense>
     </EventContainer>
   );
 };
