@@ -36,6 +36,12 @@ const CustomRedirect = ({ from, to }) => {
   return null;
 };
 
+const LoadingFallback = () => (
+  <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+    <GLLoading />
+  </div>
+);
+
 const App = () => {
   const dispatch = useDispatch();
   const userPage = useSelector(state => state.users.userPage);
@@ -56,12 +62,6 @@ const App = () => {
   }, [dispatch, current_user._id]);
 
   const theme = createTheme(GLTheme);
-
-  const LoadingFallback = () => (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-      <GLLoading />
-    </div>
-  );
 
   return (
     <ThemeProvider theme={theme}>
@@ -126,15 +126,17 @@ const App = () => {
                   element={
                     <ProtectedRoute isAdminRoute={true}>
                       <MainLayout>
-                        {createElement(
-                          AdminComponents[route.element] ||
-                            (() => (
-                              <div>
-                                {"Component not found "}
-                                {route.element}{" "}
-                              </div>
-                            ))
-                        )}
+                        <Suspense fallback={<LoadingFallback />}>
+                          {createElement(
+                            AdminComponents[route.element] ||
+                              (() => (
+                                <div>
+                                  {"Component not found "}
+                                  {route.element}{" "}
+                                </div>
+                              ))
+                          )}
+                        </Suspense>
                       </MainLayout>
                     </ProtectedRoute>
                   }
@@ -149,27 +151,31 @@ const App = () => {
                   element={
                     route.element === "PlaceOrderPage" ? (
                       <PlaceOrderLayout>
-                        {createElement(
-                          Components[route.element] ||
-                            (() => (
-                              <div>
-                                {"Component not found "}
-                                {route.element}{" "}
-                              </div>
-                            ))
-                        )}
+                        <Suspense fallback={<LoadingFallback />}>
+                          {createElement(
+                            Components[route.element] ||
+                              (() => (
+                                <div>
+                                  {"Component not found "}
+                                  {route.element}{" "}
+                                </div>
+                              ))
+                          )}
+                        </Suspense>
                       </PlaceOrderLayout>
                     ) : (
                       <MainLayout>
-                        {createElement(
-                          Components[route.element] ||
-                            (() => (
-                              <div>
-                                {"Component not found "}
-                                {route.element}{" "}
-                              </div>
-                            ))
-                        )}
+                        <Suspense fallback={<LoadingFallback />}>
+                          {createElement(
+                            Components[route.element] ||
+                              (() => (
+                                <div>
+                                  {"Component not found "}
+                                  {route.element}{" "}
+                                </div>
+                              ))
+                          )}
+                        </Suspense>
                       </MainLayout>
                     )
                   }
