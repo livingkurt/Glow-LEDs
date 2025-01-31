@@ -62,9 +62,80 @@ Before installation, ensure you have the following installed:
 
 - Node.js (v20.11.1)
 - npm (v10.2.4)
-- MongoDB (local or Atlas URI)
 - Git
 - XCode
+- Homebrew (for MongoDB installation)
+
+## Installing MongoDB on macOS
+
+1. Install Homebrew (if not already installed):
+
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+
+2. Tap the MongoDB Homebrew Tap:
+
+   ```bash
+   brew tap mongodb/brew
+   ```
+
+3. Install MongoDB Community Edition:
+
+   ```bash
+   brew install mongodb-community
+   ```
+
+4. Start MongoDB as a macOS service:
+
+   ```bash
+   brew services start mongodb-community
+   ```
+
+5. Verify MongoDB installation:
+   ```bash
+   mongosh
+   ```
+
+## Installing MongoDB Database Tools
+
+MongoDB Database Tools are included with MongoDB Community Edition. If you need to install them separately:
+
+1. Install via Homebrew:
+
+   ```bash
+   brew install mongodb-database-tools
+   ```
+
+2. Verify the installation:
+   ```bash
+   mongoexport --version
+   ```
+
+## Configuring MongoDB PATH
+
+Homebrew automatically adds MongoDB binaries to your PATH. If you need to add them manually:
+
+1. Open your shell configuration file:
+
+   ```bash
+   nano ~/.zshrc  # for Zsh
+   # or
+   nano ~/.bash_profile  # for Bash
+   ```
+
+2. Add the following line:
+
+   ```bash
+   export PATH="/usr/local/opt/mongodb-community/bin:$PATH"
+   ```
+
+3. Save and reload your shell configuration:
+   ```bash
+   source ~/.zshrc  # for Zsh
+   # or
+   source ~/.bash_profile  # for Bash
+   ```
 
 # Installation
 
@@ -84,7 +155,7 @@ Before installation, ensure you have the following installed:
 3. Create a .env file in the root directory with the following variables:
 
    ```
-   MONGODB_URI=your_mongodb_uri
+   MONGODB_URI=mongodb://localhost:27017/glow_leds  # local MongoDB URI
    JWT_SECRET=your_jwt_secret
    STRIPE_SECRET_KEY=your_stripe_secret
    STRIPE_PUBLISHABLE_KEY=your_stripe_publishable
@@ -94,8 +165,19 @@ Before installation, ensure you have the following installed:
    NODE_ENV=development
    ```
 
-4. Start the development server:
+4. Start MongoDB (if not already running):
 
+   ```bash
+   brew services start mongodb-community
+   ```
+
+5. Start the transpiler server:
+
+   ```bash
+   npm run transpile-watch
+   ```
+
+6. Start the development server:
    ```bash
    npm run start:dev
    ```
