@@ -189,9 +189,20 @@ const getDescription = category => {
 
 export const createShippingRates = async ({ order, returnLabel, returnToHeadquarters }) => {
   try {
+    console.log("Starting createShippingRates with:", {
+      orderId: order._id,
+      returnLabel,
+      returnToHeadquarters,
+    });
+
     const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
+    console.log("Found parcels:", parcels.length);
+
     const shippableItems = order.orderItems.filter(item => item.itemType === "product");
+    console.log("Shippable items:", shippableItems.length);
+
     const parcel = determine_parcel(shippableItems, parcels);
+    console.log("Determined parcel:", parcel);
 
     const customerAddress = {
       verify: ["delivery"],
@@ -270,9 +281,13 @@ export const createShippingRates = async ({ order, returnLabel, returnToHeadquar
     });
     return { shipment, parcel };
   } catch (error) {
-    console.log({ error, errors: error.errors });
+    console.error("Error in createShippingRates:", {
+      error: error.message,
+      stack: error.stack,
+      orderId: order?._id,
+    });
     if (error instanceof Error) {
-      throw new Error(error.errors?.map(error => `${error.field} ${error.message}`).join(", "));
+      throw new Error(error.errors?.map(error => `${error.field} ${error.message}`).join(", ") || error.message);
     }
   }
 };
