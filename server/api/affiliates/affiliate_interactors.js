@@ -105,18 +105,39 @@ const processGiftCardRewards = async (affiliate, promoCodeUsage) => {
     currentRevenue: promoCodeUsage.revenue,
   });
 
+  // Use previous month for task calculations
   const currentDate = new Date();
+  currentDate.setMonth(currentDate.getMonth() - 1); // Get previous month
   const currentMonth = currentDate.toLocaleString("default", { month: "long" });
   const currentYear = currentDate.getFullYear();
+
+  console.log("Calculating rewards for:", { month: currentMonth, year: currentYear });
 
   const monthlyTasks =
     affiliate.sponsorTasks?.filter(task => task.month === currentMonth && task.year === currentYear && task.verified) ||
     [];
 
+  console.log("Found monthly tasks:", {
+    totalTasks: monthlyTasks.length,
+    tasks: monthlyTasks.map(task => ({
+      name: task.taskName,
+      points: task.points,
+      isFullLightshow: task.isFullLightshow,
+    })),
+  });
+
   const totalPoints = monthlyTasks.reduce((sum, task) => sum + task.points, 0);
   const isFullLightshow = monthlyTasks.some(task => task.isFullLightshow);
 
+  console.log("Task summary:", {
+    totalPoints,
+    isFullLightshow,
+    revenue: promoCodeUsage.revenue,
+  });
+
   const giftCardAmount = determineGiftCardAmount(totalPoints, promoCodeUsage.revenue, isFullLightshow);
+
+  console.log("Determined gift card amount:", { giftCardAmount });
 
   if (giftCardAmount === 0) {
     return { giftCardAmount: null, monthlyTasks };
@@ -162,6 +183,11 @@ const createPaycheckRecord = async (affiliate, earnings, promoCodeUsage, descrip
 };
 
 export const payoutAffiliate = async (affiliate, start_date, end_date) => {
+  const INCLUDE_PAYMENTS = true;
+  const INCLUDE_EMAILS = true;
+  const INCLUDE_PAYCHECKS = true;
+  const INCLUDE_PROMO_TIER_UPDATE = true;
+  const INCLUDE_GIFT_CARDS = true;
   try {
     console.log("Starting affiliate payout process for:", {
       affiliate: affiliate.artist_name,
@@ -178,22 +204,28 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
     });
     console.log("Promo code usage:", promoCodeUsage);
 
-    const description = `Monthly Payout for ${affiliate?.user?.first_name} ${affiliate?.user?.last_name}`;
+    let description = `Monthly Payout for ${affiliate?.user?.first_name} ${affiliate?.user?.last_name}`;
 
     // Process payments and create records
-    if (affiliate?.user?.stripe_connect_id && promoCodeUsage.earnings > 0) {
-      console.log("Processing Stripe payout:", {
-        earnings: promoCodeUsage.earnings,
-        stripeConnectId: affiliate.user.stripe_connect_id,
-      });
-      await affiliatePayoutPayments(promoCodeUsage.earnings, affiliate.user.stripe_connect_id, description);
+    if (INCLUDE_PAYMENTS) {
+      if (affiliate?.user?.stripe_connect_id && promoCodeUsage.earnings > 0) {
+        console.log("Processing Stripe payout:", {
+          earnings: promoCodeUsage.earnings,
+          stripeConnectId: affiliate.user.stripe_connect_id,
+        });
+        await affiliatePayoutPayments(promoCodeUsage.earnings, affiliate.user.stripe_connect_id, description);
+      }
+      if (INCLUDE_PAYCHECKS) {
+        await createPaycheckRecord(affiliate, promoCodeUsage.earnings, promoCodeUsage, description);
+      }
     }
-    const paycheck = await createPaycheckRecord(affiliate, promoCodeUsage.earnings, promoCodeUsage, description);
 
-    // Update promo code tier
-    const percentage_off = determineRevenueTier(affiliate, promoCodeUsage.revenue);
-    console.log("Updating promo code tier:", { percentage_off });
-    await promo_services.update_promos_s({ id: affiliate.private_code._id }, { percentage_off });
+    if (INCLUDE_PROMO_TIER_UPDATE) {
+      // Update promo code tier
+      const percentage_off = determineRevenueTier(affiliate, promoCodeUsage.revenue);
+      console.log("Updating promo code tier:", { percentage_off });
+      await promo_services.update_promos_s({ id: affiliate.private_code._id }, { percentage_off });
+    }
 
     // Initialize variables for email
     let giftCard = null;
@@ -201,7 +233,7 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
     let monthlyTasks = [];
 
     // Get monthly tasks and process rewards if sponsor
-    if (affiliate?.sponsor) {
+    if (INCLUDE_GIFT_CARDS && affiliate?.sponsor) {
       console.log("Processing sponsor rewards");
 
       const sponsorRewards = await processGiftCardRewards(affiliate, promoCodeUsage);
@@ -213,16 +245,18 @@ export const payoutAffiliate = async (affiliate, start_date, end_date) => {
       }
     }
 
-    // Send single earnings email with all information
-    await sendAffiliateEarningsEmail({
-      email: affiliate.user.email,
-      affiliate,
-      giftCard,
-      level,
-      monthlyTasks: monthlyTasks || [], // Ensure monthlyTasks is always an array
-      promoCodeUsage,
-    });
-    return paycheck;
+    if (INCLUDE_EMAILS) {
+      // Send single earnings email with all information
+      await sendAffiliateEarningsEmail({
+        email: affiliate.user.email,
+        affiliate,
+        giftCard,
+        level,
+        monthlyTasks: monthlyTasks || [], // Ensure monthlyTasks is always an array
+        promoCodeUsage,
+      });
+    }
+    return "Success";
   } catch (error) {
     console.error("Error processing affiliate payout:", error);
     throw error;
