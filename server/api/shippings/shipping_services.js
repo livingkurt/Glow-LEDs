@@ -14,11 +14,31 @@ import {
   refundLabel,
 } from "./shipping_interactors.js";
 
-import easy_post_api from "@easypost/api";
+import EasyPostApi from "@easypost/api";
 import email_services from "../emails/email_services.js";
 import { sendExchangeOrderEmail } from "../orders/order_interactors.js";
 
-const EasyPost = new easy_post_api(config.EASY_POST);
+console.log("Initializing EasyPost with config:", {
+  environment: config.ENVIRONMENT,
+  easyPostKeyLength: config.EASY_POST?.length || 0,
+  hasEasyPostKey: !!config.EASY_POST,
+});
+
+const EasyPost = new EasyPostApi(config.EASY_POST);
+
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 2000; // 2 seconds
+
+const retryWithDelay = async (fn, retries = MAX_RETRIES, delay = RETRY_DELAY) => {
+  try {
+    return await fn();
+  } catch (error) {
+    if (retries === 0) throw error;
+    console.log(`Retrying... ${MAX_RETRIES - retries + 1} of ${MAX_RETRIES}`);
+    await new Promise(resolve => setTimeout(resolve, delay));
+    return retryWithDelay(fn, retries - 1, delay);
+  }
+};
 
 export default {
   shipping_rates_shipping_s: async body => {
@@ -29,24 +49,32 @@ export default {
         const preOrderItems = order.orderItems.filter(item => item.isPreOrder);
         const nonPreOrderItems = order.orderItems.filter(item => !item.isPreOrder);
 
-        const preOrderRates = await createShippingRates({
-          order: { ...order, orderItems: preOrderItems },
-          returnLabel: false,
-        });
+        const preOrderRates = await retryWithDelay(() =>
+          createShippingRates({
+            order: { ...order, orderItems: preOrderItems },
+            returnLabel: false,
+          })
+        );
 
-        const nonPreOrderRates = await createShippingRates({
-          order: { ...order, orderItems: nonPreOrderItems },
-          returnLabel: false,
-        });
+        const nonPreOrderRates = await retryWithDelay(() =>
+          createShippingRates({
+            order: { ...order, orderItems: nonPreOrderItems },
+            returnLabel: false,
+          })
+        );
 
         return {
           preOrderRates,
           nonPreOrderRates,
         };
       } else {
-        return await createShippingRates({ order, returnLabel: false });
+        return await retryWithDelay(() => createShippingRates({ order, returnLabel: false }));
       }
     } catch (error) {
+      console.error("Error in shipping_rates_shipping_s:", {
+        error: error.message,
+        stack: error.stack,
+      });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
