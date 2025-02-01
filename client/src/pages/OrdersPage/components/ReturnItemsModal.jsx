@@ -12,6 +12,8 @@ import {
   MenuItem,
   FormControl,
   Box,
+  Checkbox,
+  FormControlLabel,
 } from "@mui/material";
 import CustomizationOption from "../../ProductPage/components/CustomizationOption";
 import { calculateAdditionalCost, getActiveOptions, getSelectedOptions } from "../../ProductPage/productHelpers";
@@ -25,6 +27,8 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
       returnQuantity: 0,
       returnReason: "",
       exchangeItems: [],
+      isPartialReturn: false,
+      partialReturnDetails: "",
     })) || []
   );
 
@@ -148,6 +152,21 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
     setReturnItems(newReturnItems);
   };
 
+  const handlePartialReturnChange = (index, checked) => {
+    const newReturnItems = [...returnItems];
+    newReturnItems[index].isPartialReturn = checked;
+    if (!checked) {
+      newReturnItems[index].partialReturnDetails = "";
+    }
+    setReturnItems(newReturnItems);
+  };
+
+  const handlePartialReturnDetailsChange = (index, value) => {
+    const newReturnItems = [...returnItems];
+    newReturnItems[index].partialReturnDetails = value;
+    setReturnItems(newReturnItems);
+  };
+
   const handleNextStep = () => {
     const itemsToReturn = returnItems.filter(item => item.returnQuantity > 0);
     if (itemsToReturn.length === 0) {
@@ -177,6 +196,8 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
         product: item.product,
         quantity: item.returnQuantity,
         reason: item.returnReason,
+        isPartialReturn: item.isPartialReturn,
+        partialReturnDetails: item.partialReturnDetails,
       })),
       exchangeItems: itemsToReturn.flatMap(item =>
         item.exchangeItems.filter(exchange => exchange.product && exchange.quantity > 0)
@@ -199,46 +220,77 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
             <TableCell align="right">{"Ordered Quantity"}</TableCell>
             <TableCell align="right">{"Return Quantity"}</TableCell>
             <TableCell>{"Return Reason"}</TableCell>
+            <TableCell>{"Partial Return"}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {returnItems.map((item, index) => (
-            <TableRow key={index}>
-              <TableCell>{item.name}</TableCell>
-              <TableCell align="right">{item.quantity}</TableCell>
-              <TableCell align="right">
-                <TextField
-                  type="number"
-                  value={item.returnQuantity}
-                  onChange={e => handleQuantityChange(index, e.target.value)}
-                  inputProps={{
-                    min: 0,
-                    max: item.quantity,
-                    style: { textAlign: "right" },
-                  }}
-                  size="small"
-                  sx={{ width: 80 }}
-                />
-              </TableCell>
-              <TableCell>
-                <FormControl fullWidth size="small">
-                  <Select
-                    value={item.returnReason}
-                    onChange={e => handleReasonChange(index, e.target.value)}
-                    disabled={item.returnQuantity === 0}
-                  >
-                    <MenuItem value="">
-                      <em>{"Select reason"}</em>
-                    </MenuItem>
-                    {returnReasons.map(reason => (
-                      <MenuItem key={reason} value={reason}>
-                        {reason}
+            <React.Fragment key={index}>
+              <TableRow>
+                <TableCell>{item.name}</TableCell>
+                <TableCell align="right">{item.quantity}</TableCell>
+                <TableCell align="right">
+                  <TextField
+                    type="number"
+                    value={item.returnQuantity}
+                    onChange={e => handleQuantityChange(index, e.target.value)}
+                    inputProps={{
+                      min: 0,
+                      max: item.quantity,
+                      style: { textAlign: "right" },
+                    }}
+                    size="small"
+                    sx={{ width: 80 }}
+                  />
+                </TableCell>
+                <TableCell>
+                  <FormControl fullWidth size="small">
+                    <Select
+                      value={item.returnReason}
+                      onChange={e => handleReasonChange(index, e.target.value)}
+                      disabled={item.returnQuantity === 0}
+                    >
+                      <MenuItem value="">
+                        <em>{"Select reason"}</em>
                       </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </TableCell>
-            </TableRow>
+                      {returnReasons.map(reason => (
+                        <MenuItem key={reason} value={reason}>
+                          {reason}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </TableCell>
+                <TableCell>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={item.isPartialReturn}
+                        onChange={e => handlePartialReturnChange(index, e.target.checked)}
+                        disabled={item.returnQuantity === 0}
+                      />
+                    }
+                    label="Partial Return"
+                  />
+                </TableCell>
+              </TableRow>
+              {item.isPartialReturn && (
+                <TableRow>
+                  <TableCell colSpan={5}>
+                    <TextField
+                      fullWidth
+                      size="small"
+                      label="Partial Return Details"
+                      placeholder="Please describe which items from the set are being returned"
+                      value={item.partialReturnDetails}
+                      onChange={e => handlePartialReturnDetailsChange(index, e.target.value)}
+                      multiline
+                      rows={2}
+                    />
+                  </TableCell>
+                </TableRow>
+              )}
+            </React.Fragment>
           ))}
         </TableBody>
       </Table>
