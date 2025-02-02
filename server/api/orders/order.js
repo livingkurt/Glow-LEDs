@@ -90,6 +90,8 @@ const orderItemSchema = {
   returnReason: { type: String },
   exchangeQuantity: { type: Number },
   exchangeReason: { type: String },
+  isPartialReturn: { type: Boolean, default: false },
+  partialReturnDetails: { type: String },
 };
 
 const orderSchema = new mongoose.Schema(

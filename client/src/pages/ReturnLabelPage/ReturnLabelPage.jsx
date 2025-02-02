@@ -209,7 +209,23 @@ const ReturnLabelPage = () => {
                 <TableBody>
                   {order.returnItems.map((item, index) => (
                     <TableRow key={index}>
-                      <TableCell>{item.name}</TableCell>
+                      <TableCell>
+                        <Stack spacing={1}>
+                          <Typography>{item.name}</Typography>
+                          {item.isPartialReturn && item.partialReturnDetails && (
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                color: "warning.main",
+                                fontStyle: "italic",
+                              }}
+                            >
+                              {"Partial Return: "}
+                              {item.partialReturnDetails}
+                            </Typography>
+                          )}
+                        </Stack>
+                      </TableCell>
                       <TableCell align="right">{item.returnQuantity}</TableCell>
                     </TableRow>
                   ))}

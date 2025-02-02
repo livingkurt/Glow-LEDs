@@ -238,6 +238,8 @@ const OrderActionButtons = ({ order }) => {
                 ...item,
                 quantity: item.returnQuantity,
                 reason: item.returnReason,
+                isPartialReturn: item.isPartialReturn,
+                partialReturnDetails: item.partialReturnDetails,
               })),
               exchangeItems: returnData.exchangeItems,
             })
