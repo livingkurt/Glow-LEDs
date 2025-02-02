@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Button, Grid } from "@mui/material";
+import ReturnItemsModal from "./ReturnItemsModal";
+import ReturnHistory from "./ReturnHistory";
 import * as API from "../../../api";
-import { API_Orders } from "../../../utils";
 import { Loading } from "../../../shared/SharedComponents";
 import { printCustomerLabel, printInvoice, printLabel } from "../ordersPageHelpers";
 import { openLinkLabelModal } from "../../../slices/shippingSlice";
 import { openShippingModal, set_order } from "../../../slices/orderSlice";
 import { showConfirm, showSuccess } from "../../../slices/snackbarSlice";
-import ReturnItemsModal from "./ReturnItemsModal";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
 import { useProductsQuery } from "../../../api/allRecordsApi";
+import { API_Orders } from "../../../utils";
 
 const OrderActionButtons = ({ order }) => {
   const dispatch = useDispatch();
@@ -29,6 +29,16 @@ const OrderActionButtons = ({ order }) => {
   };
 
   const productsQuery = useProductsQuery({ hidden: false });
+  // Only show return button if order is delivered and has items that can be returned
+  const canReturn =
+    order.status === "delivered" &&
+    order.orderItems?.some(item => {
+      const returnedQty = (order.returns || []).reduce((total, returnRecord) => {
+        const returnItem = returnRecord.returnItems.find(ri => ri.product === item.product);
+        return total + (returnItem?.returnQuantity || 0);
+      }, 0);
+      return returnedQty < item.quantity;
+    });
 
   return (
     <div>
@@ -173,7 +183,7 @@ const OrderActionButtons = ({ order }) => {
             {"Link Order to Label"}
           </Button>
         </Grid>
-        {!order.shipping.return_shipping_label && (
+        {canReturn && (
           <Grid item xs={12}>
             <Button
               color="secondary"
@@ -181,7 +191,7 @@ const OrderActionButtons = ({ order }) => {
               className="w-100per mv-5px"
               onClick={() => setReturnModalOpen(true)}
             >
-              {"Send Return Instructions"}
+              {"Return/Exchange Items"}
             </Button>
           </Grid>
         )}
@@ -226,6 +236,9 @@ const OrderActionButtons = ({ order }) => {
           </>
         )}
       </Grid>
+
+      <ReturnHistory returns={order.returns} />
+
       <ReturnItemsModal
         open={returnModalOpen}
         onClose={() => setReturnModalOpen(false)}
@@ -244,6 +257,7 @@ const OrderActionButtons = ({ order }) => {
               exchangeItems: returnData.exchangeItems,
             })
           );
+          setReturnModalOpen(false);
         }}
         availableProducts={productsQuery.isLoading ? [] : productsQuery.data}
       />

@@ -94,12 +94,25 @@ const orderItemSchema = {
   partialReturnDetails: { type: String },
 };
 
+const returnRecordSchema = {
+  returnItems: [orderItemSchema],
+  exchangeItems: [orderItemSchema],
+  returnDate: { type: Date, default: Date.now },
+  returnShipmentId: { type: String },
+  returnShippingRate: { type: Object },
+  returnShippingLabel: { type: Object },
+  returnShipmentTracker: { type: Object },
+  returnTrackingNumber: { type: String },
+  returnTrackingUrl: { type: String },
+  exchangeOrderId: { type: mongoose.Schema.Types.ObjectId, ref: "Order" },
+  status: { type: String, enum: ["initiated", "shipped", "delivered", "completed"], default: "initiated" },
+};
+
 const orderSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     orderItems: [orderItemSchema],
-    returnItems: [orderItemSchema],
-    exchangeItems: [orderItemSchema],
+    returns: [returnRecordSchema],
     messages: [messageSchema],
     shipping: shippingSchema,
     payment: paymentSchema, // Deprecated
