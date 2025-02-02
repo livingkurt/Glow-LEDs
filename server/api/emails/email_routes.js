@@ -42,5 +42,6 @@ router
   .delete(isAuth, isAdmin, email_controller.remove_emails_c);
 
 router.post("/return_label", email_controller.send_return_label_emails_c);
+router.post("/share_return_label", email_controller.share_return_label_emails_c);
 
 export default router;
