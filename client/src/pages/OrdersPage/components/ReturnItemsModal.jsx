@@ -21,15 +21,29 @@ import GLTwoStepModal from "../../../shared/GlowLEDsComponents/GLTwoStepModal/GL
 
 const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }) => {
   const [activeStep, setActiveStep] = useState(0);
+
+  // Calculate already returned quantities for each item
+  const getReturnedQuantity = itemId => {
+    return (order.returns || []).reduce((total, returnRecord) => {
+      const returnItem = returnRecord.returnItems.find(item => item.product === itemId);
+      return total + (returnItem?.returnQuantity || 0);
+    }, 0);
+  };
+
   const [returnItems, setReturnItems] = useState(
-    order?.orderItems?.map(item => ({
-      ...item,
-      returnQuantity: 0,
-      returnReason: "",
-      exchangeItems: [],
-      isPartialReturn: false,
-      partialReturnDetails: "",
-    })) || []
+    order?.orderItems?.map(item => {
+      const alreadyReturnedQty = getReturnedQuantity(item.product);
+      return {
+        ...item,
+        returnQuantity: 0,
+        returnReason: "",
+        exchangeItems: [],
+        isPartialReturn: false,
+        partialReturnDetails: "",
+        maxReturnQuantity: item.quantity - alreadyReturnedQty,
+        alreadyReturnedQty,
+      };
+    }) || []
   );
 
   const returnReasons = [
@@ -42,11 +56,14 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
   ];
 
   const handleQuantityChange = (index, value) => {
-    const newQuantity = Math.min(Math.max(0, parseInt(value) || 0), returnItems[index].quantity);
+    const newQuantity = Math.min(Math.max(0, parseInt(value) || 0), returnItems[index].maxReturnQuantity);
     const newReturnItems = [...returnItems];
     newReturnItems[index].returnQuantity = newQuantity;
     // Reset exchange quantity if return quantity is modified
-    newReturnItems[index].exchangeQuantity = Math.min(newReturnItems[index].exchangeQuantity, newQuantity);
+    newReturnItems[index].exchangeItems = newReturnItems[index].exchangeItems.map(item => ({
+      ...item,
+      quantity: Math.min(item.quantity, newQuantity),
+    }));
     setReturnItems(newReturnItems);
   };
 
@@ -218,6 +235,7 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
           <TableRow>
             <TableCell>{"Item"}</TableCell>
             <TableCell align="right">{"Ordered Quantity"}</TableCell>
+            <TableCell align="right">{"Already Returned"}</TableCell>
             <TableCell align="right">{"Return Quantity"}</TableCell>
             <TableCell>{"Return Reason"}</TableCell>
             <TableCell>{"Partial Return"}</TableCell>
@@ -229,6 +247,7 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
               <TableRow>
                 <TableCell>{item.name}</TableCell>
                 <TableCell align="right">{item.quantity}</TableCell>
+                <TableCell align="right">{item.alreadyReturnedQty}</TableCell>
                 <TableCell align="right">
                   <TextField
                     type="number"
@@ -236,11 +255,13 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
                     onChange={e => handleQuantityChange(index, e.target.value)}
                     inputProps={{
                       min: 0,
-                      max: item.quantity,
+                      max: item.maxReturnQuantity,
                       style: { textAlign: "right" },
                     }}
                     size="small"
                     sx={{ width: 80 }}
+                    disabled={item.maxReturnQuantity === 0}
+                    helperText={item.maxReturnQuantity === 0 ? "All items returned" : ""}
                   />
                 </TableCell>
                 <TableCell>
@@ -276,7 +297,7 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
               </TableRow>
               {item.isPartialReturn && (
                 <TableRow>
-                  <TableCell colSpan={5}>
+                  <TableCell colSpan={6}>
                     <TextField
                       fullWidth
                       size="small"

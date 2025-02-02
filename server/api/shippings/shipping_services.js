@@ -134,10 +134,18 @@ export default {
     try {
       const order = await order_db.findById_orders_db(params.order_id);
 
-      order.returnItems = body.returnItems || [];
-      order.exchangeItems = body.exchangeItems || [];
+      // Create new return record
+      const returnRecord = {
+        returnItems: body.returnItems || [],
+        exchangeItems: body.exchangeItems || [],
+        returnDate: new Date(),
+      };
 
-      await order.save();
+      // Add return record to order
+      if (!order.returns) {
+        order.returns = [];
+      }
+      order.returns.push(returnRecord);
 
       const { shipment } = await createShippingRates({
         order,
@@ -146,7 +154,16 @@ export default {
       });
 
       const label = await EasyPost.Shipment.buy(shipment.id, shipment.lowestRate());
-      await addTracking({ order, label, shipping_rate: label.selected_rate, isReturnTracking: true });
+
+      // Update the return record with shipping info
+      const currentReturn = order.returns[order.returns.length - 1];
+      currentReturn.returnShipmentId = shipment.id;
+      currentReturn.returnShippingRate = label.selected_rate;
+      currentReturn.returnShippingLabel = label;
+      currentReturn.returnTrackingNumber = label.tracking_number;
+      currentReturn.returnTrackingUrl = label.tracking_url;
+
+      await order.save();
 
       const latestOrder = (await order_db.findById_orders_db(params.order_id)).toObject();
 
@@ -159,10 +176,11 @@ export default {
             return_shipping_label: label,
           },
         },
-        returnItems: body.returnItems || [],
-        exchangeItems: body.exchangeItems || [],
+        returnItems: currentReturn.returnItems,
+        exchangeItems: currentReturn.exchangeItems,
       });
-      if (body.exchangeItems?.length > 0) {
+
+      if (currentReturn.exchangeItems?.length > 0) {
         const { _id, ...orderWithoutId } = latestOrder;
         const newOrder = await order_db.create_orders_db({
           ...orderWithoutId,
@@ -185,15 +203,20 @@ export default {
           user: latestOrder?.user,
           tracking_number: "",
           shippingPrice: 0,
-          itemPrice: body.exchangeItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
+          itemPrice: currentReturn.exchangeItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
           taxPrice: 0,
           totalPrice: 0,
-          orderItems: body.exchangeItems,
+          orderItems: currentReturn.exchangeItems,
           status: "paid",
           relatedOrder: order._id,
-          returnItems: body.returnItems,
+          returnItems: currentReturn.returnItems,
           change_log: [],
         });
+
+        // Update return record with exchange order reference
+        currentReturn.exchangeOrderId = newOrder._id;
+        await order.save();
+
         await sendExchangeOrderEmail(newOrder);
       }
 
