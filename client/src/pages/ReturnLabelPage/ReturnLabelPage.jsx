@@ -17,15 +17,25 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
 } from "@mui/material";
 import { Print, Email, Info } from "@mui/icons-material";
 import { detailsOrder } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { printCustomerLabel } from "../../pages/OrdersPage/ordersPageHelpers";
+import axios from "axios";
 
 const ReturnLabelPage = () => {
   const dispatch = useDispatch();
   const [returnDeadline, setReturnDeadline] = useState("");
+  const [openEmailDialog, setOpenEmailDialog] = useState(false);
+  const [friendEmail, setFriendEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [emailSending, setEmailSending] = useState(false);
   const location = useLocation();
   const orderPage = useSelector(state => state.orders.orderPage);
   const { order } = orderPage;
@@ -47,6 +57,41 @@ const ReturnLabelPage = () => {
   const handlePrintLabel = () => {
     if (order?.shipping?.return_shipping_label?.postage_label?.label_url) {
       printCustomerLabel(order?.shipping?.return_shipping_label?.postage_label?.label_url, order, returnDeadline);
+    }
+  };
+
+  const handleEmailDialogOpen = () => {
+    setOpenEmailDialog(true);
+  };
+
+  const handleEmailDialogClose = () => {
+    setOpenEmailDialog(false);
+    setFriendEmail("");
+    setEmailError("");
+  };
+
+  const validateEmail = email => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const handleSendEmail = async () => {
+    if (!validateEmail(friendEmail)) {
+      setEmailError("Please enter a valid email address");
+      return;
+    }
+
+    setEmailSending(true);
+    try {
+      await axios.post("/api/emails/share_return_label", {
+        order,
+        friendEmail,
+      });
+      handleEmailDialogClose();
+    } catch (error) {
+      setEmailError("Failed to send email. Please try again.");
+    } finally {
+      setEmailSending(false);
     }
   };
 
@@ -78,13 +123,7 @@ const ReturnLabelPage = () => {
                 >
                   {"Print label and instructions"}
                 </Button>
-                <Button
-                  variant="outlined"
-                  startIcon={<Email />}
-                  onClick={() =>
-                    (window.location.href = order?.shipping?.return_shipping_label?.postage_label?.label_url)
-                  }
-                >
+                <Button variant="outlined" startIcon={<Email />} onClick={handleEmailDialogOpen}>
                   {"Send to a friend by email"}
                 </Button>
               </Stack>
@@ -170,7 +209,23 @@ const ReturnLabelPage = () => {
                 <TableBody>
                   {order.returnItems.map((item, index) => (
                     <TableRow key={index}>
-                      <TableCell>{item.name}</TableCell>
+                      <TableCell>
+                        <Stack spacing={1}>
+                          <Typography>{item.name}</Typography>
+                          {item.isPartialReturn && item.partialReturnDetails && (
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                color: "warning.main",
+                                fontStyle: "italic",
+                              }}
+                            >
+                              {"Partial Return: "}
+                              {item.partialReturnDetails}
+                            </Typography>
+                          )}
+                        </Stack>
+                      </TableCell>
                       <TableCell align="right">{item.returnQuantity}</TableCell>
                     </TableRow>
                   ))}
@@ -180,6 +235,33 @@ const ReturnLabelPage = () => {
           )}
         </Stack>
       </Paper>
+
+      <Dialog open={openEmailDialog} onClose={handleEmailDialogClose}>
+        <DialogTitle>{"Share Return Label"}</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Friend's Email Address"
+            type="email"
+            fullWidth
+            variant="outlined"
+            value={friendEmail}
+            onChange={e => {
+              setFriendEmail(e.target.value);
+              setEmailError("");
+            }}
+            error={Boolean(emailError)}
+            helperText={emailError}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleEmailDialogClose}>{"Cancel"}</Button>
+          <Button onClick={handleSendEmail} variant="contained" disabled={emailSending}>
+            {emailSending ? "Sending..." : "Send"}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };

@@ -281,4 +281,12 @@ export default {
       res.status(500).send({ error, message: error.message });
     }
   },
+  share_return_label_emails_c: async (req, res) => {
+    try {
+      const recipient = await email_services.share_return_label_emails_s(req.body);
+      res.status(200).send({ message: `Return Label Email Shared with ${recipient}` });
+    } catch (error) {
+      res.status(500).send({ error, message: error.message });
+    }
+  },
 };

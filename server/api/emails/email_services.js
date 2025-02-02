@@ -764,4 +764,24 @@ export default {
     await sendEmail(mailOptions);
     return order.shipping.email;
   },
+  share_return_label_emails_s: async ({ order, friendEmail }) => {
+    // Convert Mongoose document to plain object
+    const plainOrder = order.toObject ? order.toObject() : order;
+
+    const mailOptions = {
+      from: config.DISPLAY_INFO_EMAIL,
+      to: friendEmail,
+      subject: `${order.shipping.first_name} shared a return shipping label with you`,
+      html: App({
+        body: ReturnLabelTemplate({
+          order: plainOrder,
+          returnItems: order.returnItems,
+          exchangeItems: order.exchangeItems,
+        }),
+        unsubscribe: false,
+      }),
+    };
+    await sendEmail(mailOptions);
+    return friendEmail;
+  },
 };

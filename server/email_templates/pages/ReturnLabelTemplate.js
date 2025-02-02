@@ -35,6 +35,13 @@ export default ({ order, returnItems, exchangeItems }) => {
                      </span>`
                   : ""
               }
+              ${
+                item.isPartialReturn && item.partialReturnDetails
+                  ? `<br><span style="font-size: 14px; color: #ffd700; font-style: italic; margin-top: 5px; display: block;">
+                      Partial Return: ${item.partialReturnDetails}
+                     </span>`
+                  : ""
+              }
             </td>
             <td style="padding: 10px; text-align: center;">${item.quantity}</td>
             <td style="padding: 10px; text-align: right;">${formatPrice(item.price)}</td>
