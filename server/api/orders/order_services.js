@@ -320,7 +320,12 @@ export default {
       }
 
       // Update stock and empty cart first
-      await product_services.update_stock_products_s({ cartItems: order.orderItems });
+      try {
+        await product_services.update_stock_products_s({ cartItems: order.orderItems });
+      } catch (error) {
+        console.error("Error updating product stock:", error);
+        // Continue execution even if stock update fails
+      }
       await cart_services.empty_carts_s({ id: cartId });
 
       // Handle promo code
@@ -392,6 +397,7 @@ export default {
 
       return orders;
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         // Include the order ID in the error if it exists
         if (error.orderId) {

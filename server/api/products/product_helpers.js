@@ -203,11 +203,11 @@ export const diminish_helios_glove_set_stock = async (product, item) => {
   const gloveOption = product.options.find(option => option.name === "Gloves Size");
   if (gloveOption) {
     const selectedGloveSize = item.selectedOptions.find(opt =>
-      gloveOption.values.some(value => value._id.toString() === opt._id.toString())
+      gloveOption.values.some(value => value.name === opt.name)
     );
 
     if (selectedGloveSize) {
-      const selectedGlove = gloveOption.values.find(value => value._id.toString() === selectedGloveSize._id.toString());
+      const selectedGlove = gloveOption.values.find(value => value.name === selectedGloveSize.name);
 
       if (selectedGlove?.product) {
         const gloveProduct = await product_db.findById_products_db(selectedGlove.product);
