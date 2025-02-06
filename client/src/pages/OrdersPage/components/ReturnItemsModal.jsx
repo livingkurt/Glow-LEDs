@@ -364,7 +364,6 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
                           disabled={!exchangeItem.product}
                           inputProps={{
                             min: 0,
-                            // max: item.returnQuantity,
                             style: { textAlign: "right" },
                           }}
                           size="small"
