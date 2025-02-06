@@ -122,7 +122,7 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
   };
 
   const handleExchangeQuantityChange = (returnItemIndex, exchangeItemIndex, value) => {
-    const newQuantity = Math.min(Math.max(0, parseInt(value) || 0), returnItems[returnItemIndex].returnQuantity);
+    const newQuantity = Math.max(0, parseInt(value) || 0); // Removed the upper limit
     const newReturnItems = [...returnItems];
     newReturnItems[returnItemIndex].exchangeItems[exchangeItemIndex].quantity = newQuantity;
     setReturnItems(newReturnItems);
@@ -205,7 +205,19 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
         partialReturnDetails: item.partialReturnDetails,
       })),
       exchangeItems: itemsToReturn.flatMap(item =>
-        item.exchangeItems.filter(exchange => exchange.product && exchange.quantity > 0)
+        item.exchangeItems
+          .filter(exchange => exchange.product && exchange.quantity > 0)
+          .map(exchange => {
+            // Find the full product details from availableProducts
+            const selectedProduct = availableProducts.find(p => p._id === exchange.product);
+            return {
+              ...exchange,
+              ...selectedProduct, // Include all product details
+              itemType: "product",
+              quantity: exchange.quantity,
+              selectedOptions: exchange.selectedOptions || [],
+            };
+          })
       ),
     };
 
@@ -352,7 +364,6 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
                           disabled={!exchangeItem.product}
                           inputProps={{
                             min: 0,
-                            max: item.returnQuantity,
                             style: { textAlign: "right" },
                           }}
                           size="small"
