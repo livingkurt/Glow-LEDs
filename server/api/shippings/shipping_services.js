@@ -177,6 +177,7 @@ export default {
             return_shipment_tracker: null,
             return_shipping_label: null,
           },
+          promo_code: "",
           createdAt: new Date(),
           updatedAt: new Date(),
           return_tracking_url: "",
@@ -199,6 +200,7 @@ export default {
 
       return { label: label.postage_label.label_url };
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
