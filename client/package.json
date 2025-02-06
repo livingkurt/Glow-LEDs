@@ -18,8 +18,6 @@
     "exact:imports": "node scripts/updateMuiImports.js"
   },
   "dependencies": {
-    "@bugsnag/js": "^7.23.0",
-    "@bugsnag/plugin-react": "^7.22.7",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@hello-pangea/dnd": "^16.6.0",
