@@ -59,9 +59,14 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
   const handleAddExchangeProduct = returnItemIndex => {
     const newReturnItems = [...returnItems];
     newReturnItems[returnItemIndex].exchangeItems.push({
-      productId: "",
+      product: "",
       quantity: 0,
+      name: "",
+      price: 0,
+      selectedOptions: [],
+      currentOptions: [],
     });
+
     setReturnItems(newReturnItems);
   };
 
@@ -301,9 +306,10 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
         {"Select replacement items for exchange"}
       </Typography>
       {returnItems
-        .filter(item => item.returnQuantity > 0)
-        .map((item, returnItemIndex) => (
-          <Box key={returnItemIndex} sx={{ mb: 4 }}>
+        .map((item, index) => ({ item, originalIndex: index }))
+        .filter(({ item }) => item.returnQuantity > 0)
+        .map(({ item, originalIndex }) => (
+          <Box key={originalIndex} sx={{ mb: 4 }}>
             <Typography variant="subtitle1" sx={{ mb: 1 }}>
               {`Returning: ${item.name} (Quantity: ${item.returnQuantity})`}
             </Typography>
@@ -317,14 +323,14 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
               </TableHead>
               <TableBody>
                 {item.exchangeItems.map((exchangeItem, exchangeItemIndex) => (
-                  <>
-                    <TableRow key={exchangeItemIndex}>
+                  <React.Fragment key={`exchange-item-${originalIndex}-${exchangeItemIndex}`}>
+                    <TableRow>
                       <TableCell>
                         <FormControl fullWidth size="small">
                           <Select
                             value={exchangeItem.product || ""}
                             onChange={e =>
-                              handleExchangeProductSelect(returnItemIndex, exchangeItemIndex, e.target.value)
+                              handleExchangeProductSelect(originalIndex, exchangeItemIndex, e.target.value)
                             }
                           >
                             <MenuItem value="">
@@ -342,9 +348,7 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
                         <TextField
                           type="number"
                           value={exchangeItem.quantity}
-                          onChange={e =>
-                            handleExchangeQuantityChange(returnItemIndex, exchangeItemIndex, e.target.value)
-                          }
+                          onChange={e => handleExchangeQuantityChange(originalIndex, exchangeItemIndex, e.target.value)}
                           disabled={!exchangeItem.product}
                           inputProps={{
                             min: 0,
@@ -357,7 +361,7 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
                       </TableCell>
                       <TableCell align="right">
                         <Button
-                          onClick={() => handleRemoveExchangeProduct(returnItemIndex, exchangeItemIndex)}
+                          onClick={() => handleRemoveExchangeProduct(originalIndex, exchangeItemIndex)}
                           color="error"
                           variant="outlined"
                         >
@@ -376,19 +380,19 @@ const ReturnItemsModal = ({ open, onClose, order, onConfirm, availableProducts }
                                 option={option}
                                 selectedOption={exchangeItem.selectedOptions?.[optionIndex]}
                                 updateValidationError={() => {}}
-                                selectOption={params => handleOptionChange(params, returnItemIndex, exchangeItemIndex)}
+                                selectOption={params => handleOptionChange(params, originalIndex, exchangeItemIndex)}
                               />
                             ))}
                           </Box>
                         </TableCell>
                       </TableRow>
                     )}
-                  </>
+                  </React.Fragment>
                 ))}
                 <TableRow>
                   <TableCell colSpan={3}>
                     <Button
-                      onClick={() => handleAddExchangeProduct(returnItemIndex)}
+                      onClick={() => handleAddExchangeProduct(originalIndex)}
                       color="secondary"
                       variant="outlined"
                     >
