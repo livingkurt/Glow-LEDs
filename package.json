@@ -89,7 +89,8 @@
     "migrate": "node -e \"import('./server/api/migrations/scripts/migration_runner.js').then(m => m.runMigrations('up'))\"",
     "migrate:down": "node server/api/migrations/scripts/migration_runner.js down",
     "migrate:redo": "node server/api/migrations/scripts/migration_runner.js redo",
-    "build-source-maps": "babel server -d dist --source-maps"
+    "build-source-maps": "babel server -d dist --source-maps",
+    "seed": "node server/seeds.js"
   },
   "engines": {
     "node": "20.11.1",

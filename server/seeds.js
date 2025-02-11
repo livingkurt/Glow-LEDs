@@ -8,12 +8,27 @@ import Tag from "./api/tags/tag.js";
 import Filament from "./api/filaments/filament.js";
 import Cart from "./api/carts/cart.js";
 import Promo from "./api/promos/promo.js";
+import Event from "./api/events/event.js";
+import Ticket from "./api/tickets/ticket.js";
+import Article from "./api/articles/article.js";
+import Feature from "./api/features/feature.js";
+import Mode from "./api/modes/mode.js";
+import Microlight from "./api/microlights/microlight.js";
+import Team from "./api/teams/team.js";
+import Affiliate from "./api/affiliates/affiliate.js";
+import Survey from "./api/surveys/survey.js";
+import GiftCard from "./api/gift_cards/gift_card.js";
+import Content from "./api/contents/content.js";
+import Version from "./api/versions/version.js";
+import Token from "./api/tokens/token.js";
+import Parcel from "./api/parcels/parcel.js";
+import config from "./config.js";
 
 dotenv.config();
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URL);
+    const conn = await mongoose.connect(config.MONGODB_URI);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error(`Error: ${error.message}`);
@@ -30,6 +45,20 @@ const clearCollections = async () => {
     await Filament.deleteMany();
     await Cart.deleteMany();
     await Promo.deleteMany();
+    await Event.deleteMany();
+    await Ticket.deleteMany();
+    await Article.deleteMany();
+    await Feature.deleteMany();
+    await Mode.deleteMany();
+    await Microlight.deleteMany();
+    await Team.deleteMany();
+    await Affiliate.deleteMany();
+    await Survey.deleteMany();
+    await GiftCard.deleteMany();
+    await Content.deleteMany();
+    await Version.deleteMany();
+    await Token.deleteMany();
+    await Parcel.deleteMany();
     console.log("Collections cleared");
   } catch (error) {
     console.error(`Error clearing collections: ${error.message}`);
@@ -43,6 +72,11 @@ const seedData = async () => {
     const image1 = await Image.create({
       link: "https://example.com/image1.jpg",
       album: "Products",
+    });
+
+    const image2 = await Image.create({
+      link: "https://example.com/image2.jpg",
+      album: "Events",
     });
 
     // Create sample tags
@@ -66,7 +100,7 @@ const seedData = async () => {
     });
 
     // Create sample products
-    await Product.create({
+    const product1 = await Product.create({
       name: "LED Glove Set",
       price: 49.99,
       wholesale_price: 29.99,
@@ -93,7 +127,7 @@ const seedData = async () => {
     });
 
     // Create sample users
-    await User.create({
+    const adminUser = await User.create({
       first_name: "Admin",
       last_name: "User",
       email: "admin@example.com",
@@ -129,13 +163,178 @@ const seedData = async () => {
       },
     });
 
-    // Create sample promo codes
-    await Promo.create({
-      promo_code: "WELCOME10",
-      percentage_off: 10,
-      admin_only: false,
-      minimum_total: 50,
-      active: true,
+    // Create sample events
+    const event1 = await Event.create({
+      name: "Glow LED Launch Party",
+      fact: "Join us for an amazing night of lights and music!",
+      short_description: "Celebrating the launch of our new LED products",
+      start_date: new Date("2024-06-01"),
+      end_date: new Date("2024-06-02"),
+      venue: "The Glow Venue",
+      thumbnail_image: image2._id,
+      background_image: image1._id,
+      social_media_type: "instagram",
+      social_media_handle: "@glowleds",
+      ticket_box_color: "#FF4081",
+      age_group: "18+",
+      address: {
+        address_1: "123 Glow Street",
+        city: "Los Angeles",
+        state: "CA",
+        postalCode: "90210",
+      },
+      pathname: "launch-party",
+    });
+
+    // Create sample tickets
+    const ticket1 = await Ticket.create({
+      title: "VIP Pass",
+      ticket_type: "vip",
+      price: 99.99,
+      fact: "Get exclusive access to VIP areas",
+      color: "#FFD700",
+      image: image2._id,
+      count_in_stock: 100,
+      max_display_quantity: 4,
+      max_quantity: 4,
+      short_description: "VIP access to the launch party",
+      pathname: "vip-pass",
+    });
+
+    // Add tickets to event
+    await Event.findByIdAndUpdate(event1._id, {
+      tickets: [ticket1._id],
+    });
+
+    // Create sample microlights
+    const microlight1 = await Microlight.create({
+      name: "Atom V2",
+      company: "Glow LEDs",
+      category: "Premium",
+      tags: [tag1._id],
+      colors: [
+        { name: "Red", colorCode: "#FF0000" },
+        { name: "Green", colorCode: "#00FF00" },
+        { name: "Blue", colorCode: "#0000FF" },
+      ],
+      flashing_patterns: [
+        {
+          name: "Strobe",
+          type: "basic",
+          on_dur: 50,
+          off_dur: 50,
+        },
+      ],
+      number_of_modes: 3,
+      colors_per_mode: 3,
+      number_of_leds: 3,
+      brightness_control: true,
+      brightness_levels: 8,
+      saturation_control: true,
+      saturation_levels: 8,
+      power: "rechargeable",
+      programmable: true,
+      battery_life: 8,
+      pathname: "atom-v2",
+      images: [image1._id],
+    });
+
+    // Create sample modes
+    await Mode.create({
+      name: "Rainbow Strobe",
+      description: "A beautiful rainbow strobing pattern",
+      author: "Admin",
+      user: adminUser._id,
+      colors: [
+        { name: "Red", colorCode: "#FF0000", brightness: 100, saturation: 100 },
+        { name: "Green", colorCode: "#00FF00", brightness: 100, saturation: 100 },
+        { name: "Blue", colorCode: "#0000FF", brightness: 100, saturation: 100 },
+      ],
+      order: 1,
+      microlight: microlight1._id,
+      flashing_pattern: {
+        name: "Strobe",
+        type: "basic",
+        on_dur: 50,
+        off_dur: 50,
+      },
+      visibility: "public",
+      pathname: "rainbow-strobe",
+    });
+
+    // Create sample articles
+    await Article.create({
+      author: adminUser._id,
+      title: "Getting Started with LED Gloves",
+      short_description: "Learn the basics of LED gloving",
+      content: "Detailed content about LED gloving basics...",
+      order: 1,
+      image: image1._id,
+      tags: [tag1._id],
+      pathname: "led-gloving-basics",
+    });
+
+    // Create sample features
+    await Feature.create({
+      user: adminUser._id,
+      artist_name: "GlowMaster",
+      email: "glowmaster@example.com",
+      instagram_handle: "@glowmaster",
+      product: "LED Glove Set",
+      quote: "These are the best gloves I've ever used!",
+      category: "Testimonial",
+      pathname: "glowmaster-review",
+    });
+
+    // Create sample gift cards
+    await GiftCard.create({
+      code: "WELCOME2024",
+      initialBalance: 50,
+      currentBalance: 50,
+      source: "promotion",
+      isActive: true,
+      expirationDate: new Date("2024-12-31"),
+    });
+
+    // Create sample content
+    await Content.create({
+      name: "Home Page Content",
+      home_page: {
+        modules: [
+          {
+            type: "hero",
+            content: {
+              title: "Welcome to Glow LEDs",
+              description: "Discover the magic of light",
+            },
+          },
+        ],
+        slideshow: [
+          {
+            label: "New Products",
+            fact: "Check out our latest LED products",
+            image: image1._id,
+            link: "/products",
+            button_text: "Shop Now",
+          },
+        ],
+        featured_products: [product1._id],
+      },
+    });
+
+    // Create sample version
+    await Version.create({
+      version: 1.0,
+    });
+
+    // Create sample parcels
+    await Parcel.create({
+      type: "Small Box",
+      length: 6,
+      width: 4,
+      height: 2,
+      volume: 48,
+      quantity_state: 100,
     });
 
     console.log("Sample data seeded successfully");
