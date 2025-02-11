@@ -90,7 +90,7 @@
     "migrate:down": "node server/api/migrations/scripts/migration_runner.js down",
     "migrate:redo": "node server/api/migrations/scripts/migration_runner.js redo",
     "build-source-maps": "babel server -d dist --source-maps",
-    "seed": "node server/seeds.js"
+    "seed": "mongorestore --uri='mongodb://127.0.0.1/glow_leds_db' dump/glow-leds-seed --drop && node server/seeds.js"
   },
   "engines": {
     "node": "20.11.1",
