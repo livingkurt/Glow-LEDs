@@ -27,6 +27,7 @@ import user_routes from "./users/user_routes.js";
 import version_routes from "./versions/version_routes.js";
 import wholesaler_routes from "./wholesalers/wholesaler_routes.js";
 import mode_routes from "./modes/mode_routes.js";
+
 const router = express.Router();
 
 router.use("/api/affiliates", affiliate_routes);

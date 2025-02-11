@@ -188,8 +188,17 @@ Note: Never commit your Stripe secret key to version control. Always use environ
    A. Root directory `.env` file (Backend):
 
    ```bash
+   #############################################################################
+   ################### Glow LEDs Backed Ennvironment Variables ##################
+   #############################################################################
+
+   ################## Environment ##################
+   ENVIRONMENT=development
+
    ################## Database ##################
-   MONGODB_URI=mongodb://localhost:27017/glow_leds  # local MongoDB URI
+   MONGODB_URI_PROD=
+   MONGODB_URI_STAGING=
+   MONGODB_URI_DEV=mongodb://127.0.0.1/glow_leds_db
 
    ################## User Login ##################
    # Local Authorization
@@ -231,7 +240,9 @@ Note: Never commit your Stripe secret key to version control. Always use environ
    PRODUCTION_COUNTRY=your_country
 
    ################## Easy Post ##################
-   EASY_POST=your_easypost_api_key
+   EASY_POST_PROD=your_easypost_api_key
+   EASY_POST_STAGING=your_easypost_api_key
+   EASY_POST_DEV=your_easypost_api_key
 
    ################## Google Sheets ##################
    VITE_GOOGLE_SHEETS_PRIVATE=your_google_sheets_key
@@ -276,7 +287,14 @@ Note: Never commit your Stripe secret key to version control. Always use environ
 
    B. Client directory `.env` file (Frontend):
 
-   ```bash
+   ```
+   #############################################################################
+   ################### Glow LEDs Frontend Environment Variables ##################
+   #############################################################################
+
+   ################## Environment ##################
+   VITE_ENVIRONMENT=development
+
    ################## Stripe ##################
    VITE_STRIPE_KEY=pk_test_your_stripe_publishable_key
 
@@ -323,13 +341,22 @@ Note: Never commit your Stripe secret key to version control. Always use environ
    brew services start mongodb-community
    ```
 
-6. Start the transpiler server:
+6. Seed the database:
+
+   Place dump/glow-leds-seed in the root directory and run the following command:
+
+   ```bash
+   npm run seed
+   ```
+
+7. Start the transpiler server:
 
    ```bash
    npm run transpile-watch
    ```
 
-7. Start the development server:
+8. Start the development server:
+
    ```bash
    npm run start:dev
    ```
@@ -346,7 +373,7 @@ The application will be available at:
 - `npm run test`: Run tests
 - `npm run lint`: Run ESLint
 - `npm run prettier`: Run Prettier
-- `npm run cypress:run`: Run Cypress tests
+- `npm run seed`: Seed the database
 
 # Development
 
