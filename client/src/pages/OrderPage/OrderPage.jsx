@@ -96,7 +96,8 @@ const OrderPage = () => {
             </Box>
 
             <Grid container spacing={3}>
-              <Grid item xs={12} md={8}>
+              {/* Order Details Section - Moving to right side */}
+              <Grid item xs={12} md={4}>
                 <Grid container spacing={3}>
                   {/* Order Info Section */}
                   <Grid item xs={12}>
@@ -105,27 +106,34 @@ const OrderPage = () => {
                       style={{
                         backgroundColor: width > 407 && determineOrderColors(order),
                         padding: "20px",
+                        color: "white",
                       }}
                     >
                       <Grid container spacing={2}>
                         <Grid item xs={12}>
                           <Box display="flex" alignItems="center" justifyContent="space-between">
-                            <Typography variant="h5">{"Email"}</Typography>
-                            <Typography>{order.shipping.email}</Typography>
+                            <Typography variant="h5" style={{ color: "white" }}>
+                              {"Email"}
+                            </Typography>
+                            <Typography style={{ color: "white" }}>{order.shipping.email}</Typography>
                           </Box>
                           <Box my={2} borderBottom={1} borderColor="grey.300" />
                         </Grid>
                         <Grid item xs={12}>
                           <Box display="flex" alignItems="center" justifyContent="space-between">
-                            <Typography variant="h5">{"Order Status:"}</Typography>
-                            <Typography>{toTitleCase(order.status)}</Typography>
+                            <Typography variant="h5" style={{ color: "white" }}>
+                              {"Order Status:"}
+                            </Typography>
+                            <Typography style={{ color: "white" }}>{toTitleCase(order.status)}</Typography>
                           </Box>
                           <Box my={2} borderBottom={1} borderColor="grey.300" />
                         </Grid>
                         <Grid item xs={12}>
                           <Box display="flex" alignItems="center" justifyContent="space-between">
-                            <Typography variant="h5">{"Order #:"}</Typography>
-                            <Typography>{order._id}</Typography>
+                            <Typography variant="h5" style={{ color: "white" }}>
+                              {"Order #:"}
+                            </Typography>
+                            <Typography style={{ color: "white" }}>{order._id}</Typography>
                           </Box>
                         </Grid>
                       </Grid>
@@ -139,12 +147,13 @@ const OrderPage = () => {
                       style={{
                         backgroundColor: width > 407 && determineOrderColors(order),
                         padding: "20px",
+                        color: "white",
                       }}
                     >
                       <Grid container spacing={2}>
                         {order.isRefunded && (
                           <Grid item xs={12}>
-                            <Typography variant="h6" color="error">
+                            <Typography variant="h6" style={{ color: "error" }}>
                               {"Refunded: "}
                               {order.payment.refund_reason[order.payment.refund_reason.length - 1]}
                               {" on"} {format_date(order.refundedAt)}
@@ -153,7 +162,9 @@ const OrderPage = () => {
                         )}
 
                         <Grid item xs={12}>
-                          <Typography variant="h5">{"Shipping"}</Typography>
+                          <Typography variant="h5" style={{ color: "white" }}>
+                            {"Shipping"}
+                          </Typography>
                           <Box my={2} borderBottom={1} borderColor="grey.300" />
                         </Grid>
 
@@ -162,7 +173,9 @@ const OrderPage = () => {
                           determine_tracking_link(order.tracking_number) && (
                             <Grid item xs={12}>
                               <Box display="flex" alignItems="center" justifyContent="space-between">
-                                <Typography variant="h6">{"Tracking #:"}</Typography>
+                                <Typography variant="h6" style={{ color: "white" }}>
+                                  {"Tracking #:"}
+                                </Typography>
                                 <a
                                   href={
                                     order.tracking_url
@@ -185,7 +198,9 @@ const OrderPage = () => {
                         {current_user?.isAdmin && order.return_tracking_number && (
                           <Grid item xs={12}>
                             <Box display="flex" alignItems="center" justifyContent="space-between">
-                              <Typography variant="h6">{"Return #:"}</Typography>
+                              <Typography variant="h6" style={{ color: "white" }}>
+                                {"Return #:"}
+                              </Typography>
                               <a
                                 href={determine_tracking_link(order.return_tracking_number)}
                                 target="_blank"
@@ -215,23 +230,25 @@ const OrderPage = () => {
                         </Grid>
 
                         <Grid item xs={12}>
-                          <Typography variant="h5" gutterBottom>
+                          <Typography variant="h5" gutterBottom style={{ color: "white" }}>
                             {"Address"}
                           </Typography>
                           <Box className="paragraph_font" lineHeight="25px">
-                            <Typography>
+                            <Typography style={{ color: "white" }}>
                               {order.shipping.first_name} {order.shipping.last_name}
                             </Typography>
-                            <Typography>
+                            <Typography style={{ color: "white" }}>
                               {order.shipping.address_1} {order.shipping.address_2}
                             </Typography>
-                            <Typography>
+                            <Typography style={{ color: "white" }}>
                               {order.shipping.city}
                               {", "}
                               {order.shipping.state} {order.shipping.postalCode}
                               {","} {order.shipping.country}
                             </Typography>
-                            {order.shipping.international && <Typography>{"International"}</Typography>}
+                            {order.shipping.international && (
+                              <Typography style={{ color: "white" }}>{"International"}</Typography>
+                            )}
                           </Box>
                         </Grid>
                       </Grid>
@@ -245,29 +262,30 @@ const OrderPage = () => {
                       style={{
                         backgroundColor: width > 407 && determineOrderColors(order),
                         padding: "20px",
+                        color: "white",
                       }}
                     >
-                      <Typography variant="h5" gutterBottom>
+                      <Typography variant="h5" gutterBottom style={{ color: "white" }}>
                         {"Speed"}
                       </Typography>
                       {order.shipping.shipping_rate && (
                         <Grid container spacing={2}>
                           <Grid item xs={12}>
                             <Box display="flex" justifyContent="space-between">
-                              <Typography>{"Carrier:"}</Typography>
-                              <Typography>{order.shipping.shipping_rate.carrier}</Typography>
+                              <Typography style={{ color: "white" }}>{"Carrier:"}</Typography>
+                              <Typography style={{ color: "white" }}>{order.shipping.shipping_rate.carrier}</Typography>
                             </Box>
                           </Grid>
                           <Grid item xs={12}>
                             <Box display="flex" justifyContent="space-between">
-                              <Typography>{"Speed:"}</Typography>
-                              <Typography>{order.shipping.shipping_rate.service}</Typography>
+                              <Typography style={{ color: "white" }}>{"Speed:"}</Typography>
+                              <Typography style={{ color: "white" }}>{order.shipping.shipping_rate.service}</Typography>
                             </Box>
                           </Grid>
                           <Grid item xs={12}>
                             <Box display="flex" justifyContent="space-between">
-                              <Typography>{"Estimated Processing Time:"}</Typography>
-                              <Typography>
+                              <Typography style={{ color: "white" }}>{"Estimated Processing Time:"}</Typography>
+                              <Typography style={{ color: "white" }}>
                                 {order.orderItems
                                   .filter(item => item.itemType === "product")
                                   .some(item => item.processing_time) && (
@@ -291,8 +309,8 @@ const OrderPage = () => {
                           </Grid>
                           <Grid item xs={12}>
                             <Box display="flex" justifyContent="space-between">
-                              <Typography>{"Estimated Delivery Time:"}</Typography>
-                              <Typography>
+                              <Typography style={{ color: "white" }}>{"Estimated Delivery Time:"}</Typography>
+                              <Typography style={{ color: "white" }}>
                                 {order.shipping.shipping_rate.est_delivery_days}{" "}
                                 {order.shipping.shipping_rate.est_delivery_days === 1
                                   ? "Business Day"
@@ -302,8 +320,8 @@ const OrderPage = () => {
                           </Grid>
                           <Grid item xs={12}>
                             <Box display="flex" justifyContent="space-between">
-                              <Typography>{"Rate:"}</Typography>
-                              <Typography>
+                              <Typography style={{ color: "white" }}>{"Rate:"}</Typography>
+                              <Typography style={{ color: "white" }}>
                                 {"$"}{" "}
                                 {order.shipping.international
                                   ? order.shipping.shipping_rate.rate
@@ -323,19 +341,20 @@ const OrderPage = () => {
                       style={{
                         backgroundColor: width > 407 && determineOrderColors(order),
                         padding: "20px",
+                        color: "white",
                       }}
                     >
-                      <Typography variant="h5" gutterBottom>
+                      <Typography variant="h5" gutterBottom style={{ color: "white" }}>
                         {"Payment"}
                       </Typography>
-                      <Typography>
+                      <Typography style={{ color: "white" }}>
                         {order.status !== "unpaid" && order.paidAt
                           ? "Paid at " + format_date(order.paidAt)
                           : "Not Paid"}
                       </Typography>
                       {current_user?.isAdmin && (
                         <Box mt={2}>
-                          <Typography>
+                          <Typography style={{ color: "white" }}>
                             {"Payment Method: "}
                             {order?.payment?.paymentMethod}
                           </Typography>
@@ -345,38 +364,35 @@ const OrderPage = () => {
                   </Grid>
                 </Grid>
               </Grid>
-
-              {/* Order Summary Section */}
-              <Grid item xs={12} md={4}>
-                <Paper elevation={3}>
-                  <OrderSummary
-                    backgroundColor={width > 407 && determineOrderColors(order)}
-                    loading={loading}
-                    shippingPrice={order.shippingPrice}
-                    previousShippingPrice={order.previousShippingPrice}
-                    previousNonPreOrderShippingPrice={order.previousNonPreOrderShippingPrice}
-                    previousPreOrderShippingPrice={order.previousPreOrderShippingPrice}
-                    tip={order.tip}
-                    itemsPrice={order.itemsPrice}
-                    taxPrice={order.taxPrice}
-                    totalPrice={order.totalPrice}
-                    preOrderShippingPrice={order.preOrderShippingPrice}
-                    nonPreOrderShippingPrice={order.nonPreOrderShippingPrice}
-                    splitOrder={order.splitOrder}
-                    show_payment={true}
-                    payment_completed={true}
-                    active_promo_codes={[order.promo]}
-                    active_gift_cards={order.giftCards}
-                    cartItems={order.orderItems}
-                    shipping={order.shipping}
-                    originalTotal={originalTotal}
-                    hasPreOrderItems={hasPreOrderItems}
-                    hasSaleItems={hasSaleItems}
-                    serviceFee={serviceFee}
-                    hasActiveDiscounts={hasActiveDiscounts}
-                    saleTotal={saleTotal}
-                  />
-                </Paper>
+              {/* Order Summary Section - Moving to left side and adjusting width */}
+              <Grid item xs={12} md={8}>
+                <OrderSummary
+                  backgroundColor={width > 407 && determineOrderColors(order)}
+                  loading={loading}
+                  shippingPrice={order.shippingPrice}
+                  previousShippingPrice={order.previousShippingPrice}
+                  previousNonPreOrderShippingPrice={order.previousNonPreOrderShippingPrice}
+                  previousPreOrderShippingPrice={order.previousPreOrderShippingPrice}
+                  tip={order.tip}
+                  itemsPrice={order.itemsPrice}
+                  taxPrice={order.taxPrice}
+                  totalPrice={order.totalPrice}
+                  preOrderShippingPrice={order.preOrderShippingPrice}
+                  nonPreOrderShippingPrice={order.nonPreOrderShippingPrice}
+                  splitOrder={order.splitOrder}
+                  show_payment={true}
+                  payment_completed={true}
+                  active_promo_codes={[order.promo]}
+                  active_gift_cards={order.giftCards}
+                  cartItems={order.orderItems}
+                  shipping={order.shipping}
+                  originalTotal={originalTotal}
+                  hasPreOrderItems={hasPreOrderItems}
+                  hasSaleItems={hasSaleItems}
+                  serviceFee={serviceFee}
+                  hasActiveDiscounts={hasActiveDiscounts}
+                  saleTotal={saleTotal}
+                />
               </Grid>
             </Grid>
           </div>
