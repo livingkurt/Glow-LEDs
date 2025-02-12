@@ -12,6 +12,7 @@ import ArticlePageSkeleton from "./components/ArticlePageSkeletons";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import HeroVideo from "../HomePage/components/HeroVideo";
 
 const ArticlePage = () => {
   const dispatch = useDispatch();
@@ -44,16 +45,22 @@ const ArticlePage = () => {
       <Typography variant="h1" gutterBottom>
         {article.title}
       </Typography>
+
       <Typography variant="subtitle1" gutterBottom>
         {article.subtitle}
       </Typography>
-      {article.image && (
+      {!article.hide_image && article.image && (
         <Box sx={{ my: 2 }}>
           <GLLazyImage
             src={article.image.link}
             alt={article.title}
             style={{ maxWidth: "100%", height: "auto", borderRadius: "20px" }}
           />
+        </Box>
+      )}
+      {article.video && (
+        <Box sx={{ my: 2 }}>
+          <HeroVideo video={article.video} />
         </Box>
       )}
       <Box sx={{ mt: 4 }}>
