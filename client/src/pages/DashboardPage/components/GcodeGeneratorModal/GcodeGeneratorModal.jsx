@@ -1,4 +1,3 @@
-import React from "react";
 import { Loading } from "../../../../shared/SharedComponents";
 import GLActionModal from "../../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import {
@@ -185,7 +184,7 @@ const GcodeGeneratorModal = () => {
         )}
         <Grid item xs={12}>
           {gcodeNames.map(name => (
-            <List className="">
+            <List key={name}>
               <Paper>
                 <Box p={3}>{name}</Box>
               </Paper>

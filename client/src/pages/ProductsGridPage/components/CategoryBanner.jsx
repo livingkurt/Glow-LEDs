@@ -1,4 +1,3 @@
-import React from "react";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";

@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { humanize, manuals, toCapitalize } from "../../utils/helper_functions";
@@ -115,7 +114,7 @@ const ManualPage = () => {
             ? "glowstringz"
             : pathname
         ].videos.map(video => (
-          <div>
+          <div key={video.title}>
             <h2
               style={{
                 textAlign: "center",

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { isLoading, timeLabel } from "../dashboardHelpers";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";

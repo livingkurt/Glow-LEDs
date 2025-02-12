@@ -1,9 +1,8 @@
-import React from "react";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import useTheme from "@mui/material/styles/useTheme";
+
 const ContributorsDisplay = ({ contributors, text_color, secondary_color, header_text_color }) => {
   const theme = useTheme();
   return (
@@ -28,7 +27,7 @@ const ContributorsDisplay = ({ contributors, text_color, secondary_color, header
         }}
       >
         {contributors.map(contributor => (
-          <Box display="flex" flexDirection="column" alignItems="center" p={2}>
+          <Box key={contributor.first_name} display="flex" flexDirection="column" alignItems="center" p={2}>
             <Avatar
               sx={{ width: 64, height: 64, mb: 1 }}
               style={{

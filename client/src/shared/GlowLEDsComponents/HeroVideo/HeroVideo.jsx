@@ -1,6 +1,5 @@
 import Box from "@mui/material/Box";
-import PropTypes from "prop-types";
-import React from "react";
+
 import YouTube from "react-youtube";
 
 const HeroVideo = ({ video, video_hidden }) => {
@@ -30,14 +29,6 @@ const HeroVideo = ({ video, video_hidden }) => {
   ) : (
     <></>
   );
-};
-
-HeroVideo.propTypes = {
-  discover_more: PropTypes.object,
-};
-
-HeroVideo.defaultProps = {
-  discover_more: {},
 };
 
 export default HeroVideo;

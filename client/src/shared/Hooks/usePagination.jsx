@@ -1,6 +1,4 @@
-import React from "react";
 import { useMemo } from "react";
-import { userWindowDimensions } from ".";
 
 export const DOTS = "...";
 
@@ -9,30 +7,7 @@ const range = (start, end) => {
   return Array.from({ length }, (_, idx) => idx + start);
 };
 
-const determine_total_page_numbers = width => {
-  if (width > 600) {
-    return 5;
-  } else if (width < 600 && width > 500) {
-    return 5;
-  } else if (width < 500 && width > 325) {
-    return 2;
-  } else if (width < 325) {
-    return 2;
-  }
-};
-const determine_item_count = width => {
-  if (width > 600) {
-    return { first: 3, second: 2 };
-  } else if (width < 600 && width > 500) {
-    return { first: 2, second: 2 };
-  } else if (width < 500 && width > 325) {
-    return { first: 0, second: 1 };
-  } else if (width < 325) {
-    return { first: 0, second: 1 };
-  }
-};
-
-export const usePagination = ({ totalCount, pageSize, siblingCount = 1, currentPage }) => {
+export const usePagination = ({ totalCount, siblingCount = 1, currentPage }) => {
   const paginationRange = useMemo(() => {
     const totalPageCount = totalCount;
 
@@ -88,7 +63,7 @@ export const usePagination = ({ totalCount, pageSize, siblingCount = 1, currentP
       let middleRange = range(leftSiblingIndex, rightSiblingIndex);
       return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
     }
-  }, [totalCount, pageSize, siblingCount, currentPage]);
+  }, [totalCount, siblingCount, currentPage]);
 
   return paginationRange;
 };

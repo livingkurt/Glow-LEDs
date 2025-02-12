@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 import { Helmet } from "react-helmet";
@@ -39,7 +38,7 @@ const CartPage = () => {
       dispatch(showInfo({ message: "Cannot proceed to checkout without any items in cart" }));
       return;
     }
-    if (current_user.hasOwnProperty("first_name")) {
+    if ("first_name" in current_user) {
       navigate("/secure/checkout/place_order");
     } else {
       navigate("/checkout/place_order");

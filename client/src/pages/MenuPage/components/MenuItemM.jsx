@@ -1,9 +1,8 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 import { LazyImage } from "../../../shared/SharedComponents";
 
-const MenuItemM = ({ item, index, decide_url }) => {
+const MenuItemM = ({ item, index }) => {
   return (
     <li key={index} className="w-100per">
       <Link to={item.link}>

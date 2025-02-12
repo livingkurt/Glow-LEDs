@@ -2,7 +2,6 @@
 import PropTypes from "prop-types";
 import Skeleton from "@mui/material/Skeleton";
 
-import React from "react";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -49,7 +48,6 @@ const GLAutocomplete = ({
   getOptionKey,
   isOptionEqualToValue,
   size,
-  ...otherProps
 }) => {
   const icon = <CheckBoxOutlineBlankIcon fontSize="medium" />;
   const checkedIcon = <CheckBoxIcon fontSize="medium" />;

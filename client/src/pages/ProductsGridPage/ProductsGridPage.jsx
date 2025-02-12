@@ -1,5 +1,3 @@
-import React from "react";
-
 import { toTitleCase } from "../../utils/helper_functions";
 import ProductsGridPageFilters from "./components/ProductsGridPageFilters";
 import ProductCard from "./components/ProductCard";

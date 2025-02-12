@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 
@@ -9,7 +8,7 @@ const RecentlyViewed = ({ closeMenu }) => {
     return (
       <div className="ta-c w-100per" style={{ border: "0px !important" }}>
         <div className="mv-2rem">
-          <label className="title_font fs-20px lh-20px">{"Recently Viewed Products"}</label>
+          <div className="title_font fs-20px lh-20px">{"Recently Viewed Products"}</div>
         </div>
         <div className="jc-c">
           <div className="jc-c wrap w-100per">

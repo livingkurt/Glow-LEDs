@@ -1,7 +1,6 @@
-import React from "react";
-import { Routes, Route } from "react-router";
-import { navItems } from "../layouts/Header/headerHelpers";
 import { routes } from "../utils/helpers/routes";
+import { navItems } from "../layouts/Navbar/navbarHelpers";
+import { Route, Routes } from "react-router-dom";
 
 const extractPaths = obj => {
   let paths = [];

@@ -1,8 +1,8 @@
-import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import useTheme from "@mui/material/styles/useTheme";
-const ColumnTitle = ({ align, ariaLabel, children, onClick, sx, hasColumnRows, ...otherProps }) => {
+
+const ColumnTitle = ({ align, children, onClick, sx, hasColumnRows, ...otherProps }) => {
   const theme = useTheme();
   return (
     <Box

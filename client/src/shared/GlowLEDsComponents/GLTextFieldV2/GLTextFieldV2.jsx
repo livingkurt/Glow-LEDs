@@ -1,19 +1,15 @@
-import React from "react";
 import PropTypes from "prop-types";
 import Icon from "@mui/material/Icon";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
-import Skeleton from "@mui/material/Skeleton";
 
 /* eslint-disable max-lines-per-function */
 const GLTextFieldV2 = ({
-  style,
   value,
   helperText,
   error,
   required,
   fullWidth,
-  displayHelperText,
   type,
   icon,
   iconPosition,
@@ -27,15 +23,12 @@ const GLTextFieldV2 = ({
   classes,
   dataTest,
   autoFocus,
-  restrictCharacters,
   maxLength,
   InputProps,
   disabled,
   multiline,
   maxRows,
   minRows,
-  loading,
-  inputProps,
   upperCase,
   lowerCase,
   noSpace,

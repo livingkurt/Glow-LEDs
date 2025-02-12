@@ -1,5 +1,3 @@
-import React from "react";
-
 import { styled } from "@mui/material/styles";
 import random from "lodash/random";
 import Box from "@mui/material/Box";
@@ -22,7 +20,7 @@ const StyledTextImage = styled("img")({
   objectPosition: "center",
 });
 
-const ImageContainer = styled(Box)(({ theme }) => ({
+const ImageContainer = styled(Box)(() => ({
   position: "relative",
   overflow: "hidden",
   height: 0,

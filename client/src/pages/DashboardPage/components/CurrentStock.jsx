@@ -1,6 +1,5 @@
-import React from "react";
 import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTable";
-
+import { useMemo } from "react";
 import { useDispatch } from "react-redux";
 import * as API from "../../../api";
 import Typography from "@mui/material/Typography";
@@ -10,7 +9,7 @@ const CurrentStock = () => {
   const currentStock = API.useGetCurrentStockQuery();
 
   // Group products by category and subcategory
-  const groupedProducts = React.useMemo(() => {
+  const groupedProducts = useMemo(() => {
     if (!currentStock.data) return [];
 
     return Object.values(
@@ -122,7 +121,7 @@ const CurrentStock = () => {
         {"Current Stock"}
       </Typography>
 
-      {groupedProducts.map((group, index) => (
+      {groupedProducts.map(group => (
         <GLDisplayTable
           key={`${group.category}/${group.subcategory}`}
           title={`${formatTitle(group.category, group.subcategory)} Stock`}

@@ -1,6 +1,5 @@
 // EditCartModal.jsx
 
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_cart_modal, set_cart } from "../../../slices/cartSlice";
@@ -17,6 +16,7 @@ import {
   useAffiliatesQuery,
 } from "../../../api/allRecordsApi";
 import { handleCartProductChange, handleCartTicketChange } from "../cartsPageHelpers";
+import { useMemo, memo } from "react";
 
 const EditCartModal = () => {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const EditCartModal = () => {
   const { data: affiliates, isLoading: affiliatesLoading } = useAffiliatesQuery();
   const { data: users, isLoading: usersLoading } = useUsersQuery();
 
-  const formFields = React.useMemo(
+  const formFields = useMemo(
     () =>
       cartFormFields({
         users: usersLoading ? [] : users,
@@ -99,4 +99,4 @@ const EditCartModal = () => {
   );
 };
 
-export default React.memo(EditCartModal);
+export default memo(EditCartModal);
