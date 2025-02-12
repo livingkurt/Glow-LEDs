@@ -1,0 +1,23 @@
+{
+  "recommendations": [
+    "formulahendry.auto-rename-tag",
+    "Nixon.env-cmd-file-syntax",
+    "dsznajder.es7-react-js-snippets",
+    "dbaeumer.vscode-eslint",
+    "donjayamanne.githistory",
+    "GitHub.vscode-pull-request-github",
+    "ecmel.vscode-html-css",
+    "Orta.vscode-jest",
+    "skyran.js-jsx-snippets",
+    "bierner.markdown-preview-github-styles",
+    "DavidAnson.vscode-markdownlint",
+    "FallenMax.mithril-emmet",
+    "esbenp.prettier-vscode",
+    "inferrinizzard.prettier-sql-vscode",
+    "tal7aouy.rainbow-bracket",
+    "burkeholland.simple-react-snippets",
+    "plievone.vscode-template-literal-editor",
+    "meganrogge.template-string-converter",
+    "vscode-icons-team.vscode-icons"
+  ]
+}
