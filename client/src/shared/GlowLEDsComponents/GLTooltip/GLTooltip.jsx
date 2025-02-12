@@ -1,4 +1,3 @@
-
 import Tooltip from "@mui/material/Tooltip";
 
 const GLTooltip = ({ children, tooltip, ...otherProps }) => {

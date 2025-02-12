@@ -1,5 +1,3 @@
-
-
 const Particles = () => {
   return <div className="particles-js" />;
 };

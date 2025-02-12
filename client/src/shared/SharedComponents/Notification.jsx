@@ -1,5 +1,3 @@
-
-
 const Notification = ({ message, ...others }) => {
   return (
     <div>

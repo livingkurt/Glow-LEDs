@@ -1,5 +1,3 @@
-
-
 const Filter = ({ filterHandler, filter_options, state, title, width }) => {
   return (
     <div className="ai-c ml-1rem mh-1rem">

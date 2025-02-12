@@ -1,5 +1,3 @@
-
-
 const Content = ({ style, children }) => {
   return (
     <main style={style} className="outer-content">

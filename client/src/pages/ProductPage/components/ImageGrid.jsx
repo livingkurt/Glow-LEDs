@@ -1,5 +1,3 @@
-
-
 import { styled } from "@mui/material/styles";
 import random from "lodash/random";
 import Box from "@mui/material/Box";

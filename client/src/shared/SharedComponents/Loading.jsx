@@ -1,5 +1,3 @@
-
-
 const Loading = ({ loading, children, message }) => {
   return (
     <div>

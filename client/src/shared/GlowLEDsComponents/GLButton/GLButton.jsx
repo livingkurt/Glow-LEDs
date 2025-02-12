@@ -1,5 +1,3 @@
-
-
 const GLButton = ({ children, icon, onClick, onKeyUp, className, disabled, variant, fullWidth, ...otherProps }) => {
   return (
     <button

@@ -1,6 +1,5 @@
 // EditCartModal.jsx
 
-
 import { useDispatch, useSelector } from "react-redux";
 import GLActionModal from "../../../shared/GlowLEDsComponents/GLActionModal/GLActionModal";
 import { set_edit_cart_modal, set_cart } from "../../../slices/cartSlice";

@@ -1,5 +1,3 @@
-
-
 const ContentWide = ({ style, children }) => {
   return (
     <main style={style} className="content_wide">

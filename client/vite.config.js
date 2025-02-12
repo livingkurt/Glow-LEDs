@@ -23,7 +23,6 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks: {
-
             // Split MUI into smaller chunks
             "vendor-mui-core": ["@mui/material/styles", "@mui/material/colors"],
             "vendor-mui-base": ["@mui/material/Button", "@mui/material/Box", "@mui/material/Typography"],

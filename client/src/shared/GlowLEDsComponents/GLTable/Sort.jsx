@@ -1,5 +1,3 @@
-
-
 const Sort = ({ sortHandler, sort_options }) => {
   return (
     <div className="ai-c mv-1rem ">

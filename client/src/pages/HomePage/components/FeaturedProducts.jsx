@@ -1,4 +1,3 @@
-
 import PropTypes from "prop-types";
 import ProductCard from "../../ProductsGridPage/components/ProductCard";
 import Box from "@mui/material/Box";

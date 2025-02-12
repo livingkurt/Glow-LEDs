@@ -1,4 +1,3 @@
-
 import Box from "@mui/material/Box";
 
 const LineBreak = ({ line_break }) => {

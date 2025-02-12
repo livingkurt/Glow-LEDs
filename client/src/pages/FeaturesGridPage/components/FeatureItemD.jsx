@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { humanize } from "../../../utils/helper_functions";
 import { LazyImage } from "../../../shared/SharedComponents";

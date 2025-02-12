@@ -1,5 +1,3 @@
-
-
 const Rating = ({ rating, numReviews }) => {
   return !rating ? (
     <div />

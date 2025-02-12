@@ -1,5 +1,3 @@
-
-
 import { toTitleCase } from "../../utils/helper_functions";
 import useArticlesGridPage from "./useArticlesGridPage";
 import ArticlesGridPageSkeletons from "./component/ArticlesGridPageSkeletons";

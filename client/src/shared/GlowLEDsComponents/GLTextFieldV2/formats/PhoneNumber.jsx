@@ -1,4 +1,3 @@
-
 import PropTypes from "prop-types";
 import NumberFormat from "react-number-format";
 

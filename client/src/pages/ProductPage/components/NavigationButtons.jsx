@@ -1,5 +1,3 @@
-
-
 import { scrollToElement } from "../productHelpers";
 import Box from "@mui/material/Box";
 import { darken } from "@mui/material/styles";

@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 
-
 import { Link } from "react-router-dom";
 import SponsorsCard from "../../SponsorsGridPage/components/SponsorCard";
 import Box from "@mui/material/Box";

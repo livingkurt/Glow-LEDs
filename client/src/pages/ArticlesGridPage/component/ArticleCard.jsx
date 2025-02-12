@@ -1,5 +1,3 @@
-
-
 import { Link } from "react-router-dom";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 import { toCapitalize } from "../../../utils/helper_functions";

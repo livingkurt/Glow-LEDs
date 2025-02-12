@@ -1,4 +1,3 @@
-
 import Search from "@mui/icons-material/Search";
 
 import GLIconButton from "../GLIconButton/GLIconButton";

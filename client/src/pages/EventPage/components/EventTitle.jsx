@@ -1,5 +1,3 @@
-
-
 import { isSafari } from "react-device-detect";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";

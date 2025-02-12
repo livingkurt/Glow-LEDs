@@ -1,7 +1,6 @@
 /* eslint-disable max-lines */
 import { tagKeyMatchFull } from "covalent/MaterialUI/TagInput/tagRegex";
 
-
 const props = {
   glTable: {
     rows: [

@@ -1,4 +1,3 @@
-
 import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { humanize, manuals, toCapitalize } from "../../utils/helper_functions";

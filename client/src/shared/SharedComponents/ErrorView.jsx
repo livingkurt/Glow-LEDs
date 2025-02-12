@@ -1,5 +1,3 @@
-
-
 const ErrorView = ({ error }) => {
   return (
     <div>

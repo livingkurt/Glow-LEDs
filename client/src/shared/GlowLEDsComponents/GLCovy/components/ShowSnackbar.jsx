@@ -1,4 +1,3 @@
-
 import PropTypes from "prop-types";
 import { unmountComponentAtNode } from "react-dom";
 import Snackbar from "@mui/material/Snackbar";

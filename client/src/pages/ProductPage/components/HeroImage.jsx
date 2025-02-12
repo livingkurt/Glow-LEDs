@@ -1,4 +1,3 @@
-
 import Box from "@mui/material/Box";
 
 const HeroImage = ({ image }) => {

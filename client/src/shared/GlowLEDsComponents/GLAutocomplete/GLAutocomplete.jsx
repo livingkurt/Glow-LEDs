@@ -2,7 +2,6 @@
 import PropTypes from "prop-types";
 import Skeleton from "@mui/material/Skeleton";
 
-
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import Autocomplete from "@mui/material/Autocomplete";

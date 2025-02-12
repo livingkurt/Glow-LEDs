@@ -1,5 +1,3 @@
-
-
 import { isEvenIndex, isFourthSection, isNotFourthSection, isOddIndex } from "./aboutPageHelpers";
 
 import HeroVideo from "../../shared/GlowLEDsComponents/HeroVideo/HeroVideo";

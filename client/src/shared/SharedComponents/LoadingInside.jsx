@@ -1,5 +1,3 @@
-
-
 const LoadingInside = ({ loading, error, children }) => {
   const loading_message = () => {
     setTimeout(() => {

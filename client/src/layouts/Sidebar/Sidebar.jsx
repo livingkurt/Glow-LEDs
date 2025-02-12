@@ -1,5 +1,3 @@
-
-
 import { sidebarItems } from "../Navbar/navbarHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { setSideNavDrawer } from "../../slices/cartSlice";

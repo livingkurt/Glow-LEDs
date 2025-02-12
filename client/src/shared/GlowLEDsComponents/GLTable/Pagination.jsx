@@ -1,4 +1,3 @@
-
 import { usePagination, DOTS } from "../../Hooks/usePagination";
 import { userWindowDimensions } from "../../Hooks";
 
