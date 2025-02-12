@@ -1,0 +1,70 @@
+name: Lint Check
+
+on:
+  pull_request:
+    branches:
+      - staging
+      - main
+      - develop
+
+jobs:
+  lint:
+    name: Run Linters
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v41
+        with:
+          files: |
+            **/*.{js,jsx,ts,tsx,json,css,scss,md}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install Root Dependencies
+        run: npm ci
+
+      - name: Install Client Dependencies
+        run: cd client && npm ci --legacy-peer-deps
+
+      - name: Install Server Dependencies
+        run: cd server && npm ci
+
+      - name: Run Server ESLint on changed files
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          CHANGED_FILES="${{ steps.changed-files.outputs.all_changed_files }}"
+          SERVER_FILES=$(echo "$CHANGED_FILES" | tr ' ' '\n' | grep "^server/" | sed 's/^server\///' | tr '\n' ' ' || true)
+          if [ ! -z "$SERVER_FILES" ]; then
+            echo "Linting changed server files: $SERVER_FILES"
+            cd server && ../node_modules/.bin/eslint $SERVER_FILES
+          fi
+
+      - name: Run Client ESLint on changed files
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          CHANGED_FILES="${{ steps.changed-files.outputs.all_changed_files }}"
+          CLIENT_FILES=$(echo "$CHANGED_FILES" | tr ' ' '\n' | grep "^client/src/" | sed 's/^client\///' | tr '\n' ' ' || true)
+          if [ ! -z "$CLIENT_FILES" ]; then
+            echo "Linting changed client files: $CLIENT_FILES"
+            cd client && ../node_modules/.bin/eslint $CLIENT_FILES
+          fi
+
+      - name: Run Prettier Check on changed files
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          CHANGED_FILES="${{ steps.changed-files.outputs.all_changed_files }}"
+          if [ ! -z "$CHANGED_FILES" ]; then
+            echo "Running prettier on changed files: $CHANGED_FILES"
+            npx prettier --check $CHANGED_FILES
+          fi
