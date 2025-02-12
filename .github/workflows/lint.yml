@@ -44,7 +44,7 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           CHANGED_FILES="${{ steps.changed-files.outputs.all_changed_files }}"
-          SERVER_FILES=$(echo "$CHANGED_FILES" | tr ' ' '\n' | grep "^server/" | tr '\n' ' ' || true)
+          SERVER_FILES=$(echo "$CHANGED_FILES" | tr ' ' '\n' | grep "^server/" | sed 's/^server\///' | tr '\n' ' ' || true)
           if [ ! -z "$SERVER_FILES" ]; then
             echo "Linting changed server files: $SERVER_FILES"
             cd server && ../node_modules/.bin/eslint $SERVER_FILES
@@ -54,7 +54,7 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           CHANGED_FILES="${{ steps.changed-files.outputs.all_changed_files }}"
-          CLIENT_FILES=$(echo "$CHANGED_FILES" | tr ' ' '\n' | grep "^client/src/" | tr '\n' ' ' || true)
+          CLIENT_FILES=$(echo "$CHANGED_FILES" | tr ' ' '\n' | grep "^client/src/" | sed 's/^client\///' | tr '\n' ' ' || true)
           if [ ! -z "$CLIENT_FILES" ]; then
             echo "Linting changed client files: $CLIENT_FILES"
             cd client && ../node_modules/.bin/eslint $CLIENT_FILES
