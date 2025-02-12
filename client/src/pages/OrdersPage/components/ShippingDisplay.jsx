@@ -1,4 +1,4 @@
-import React from "react";
+
 
 import { sendEmail } from "../ordersPageHelpers";
 import { determine_service, toTitleCaseSnakeCase } from "../../PlaceOrderPage/placeOrderHelpers";

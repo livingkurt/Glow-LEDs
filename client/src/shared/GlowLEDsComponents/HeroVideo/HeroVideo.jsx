@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import PropTypes from "prop-types";
-import React from "react";
+
 import YouTube from "react-youtube";
 
 const HeroVideo = ({ video, video_hidden }) => {

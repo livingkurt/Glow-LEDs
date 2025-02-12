@@ -1,4 +1,4 @@
-import React from "react";
+
 
 import { isEvenIndex, isFourthSection, isNotFourthSection, isOddIndex } from "./aboutPageHelpers";
 

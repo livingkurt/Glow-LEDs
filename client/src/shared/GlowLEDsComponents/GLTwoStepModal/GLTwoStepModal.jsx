@@ -6,7 +6,7 @@
 // `.__________`-_______-'
 
 /* eslint-disable max-lines-per-function */
-import React from "react";
+
 import PropTypes from "prop-types";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";

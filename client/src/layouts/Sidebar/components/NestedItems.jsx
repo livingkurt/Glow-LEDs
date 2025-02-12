@@ -1,5 +1,3 @@
-import React from "react";
-
 import SidebarItem from "./SidebarItem";
 import Collapse from "@mui/material/Collapse";
 import List from "@mui/material/List";

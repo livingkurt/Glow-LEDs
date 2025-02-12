@@ -1,4 +1,4 @@
-import React from "react";
+
 
 const Sort = ({ sortHandler, sort_options }) => {
   return (

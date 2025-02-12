@@ -1,4 +1,4 @@
-import React from "react";
+
 import { usePagination, DOTS } from "../../Hooks/usePagination";
 import { userWindowDimensions } from "../../Hooks";
 

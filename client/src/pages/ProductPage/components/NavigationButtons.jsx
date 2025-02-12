@@ -1,4 +1,4 @@
-import React from "react";
+
 
 import { scrollToElement } from "../productHelpers";
 import Box from "@mui/material/Box";

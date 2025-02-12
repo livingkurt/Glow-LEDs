@@ -1,4 +1,4 @@
-import React from "react";
+
 import PropTypes from "prop-types";
 
 import GLToggleButtons from "../../../shared/GlowLEDsComponents/GLToggleButtons/GLToggleButtons";

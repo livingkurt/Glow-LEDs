@@ -1,4 +1,3 @@
-import React from "react";
 import { Routes, Route } from "react-router";
 import { navItems } from "../layouts/Header/headerHelpers";
 import { routes } from "../utils/helpers/routes";

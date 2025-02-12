@@ -1,4 +1,4 @@
-import React from "react";
+
 import { useSelector, useDispatch } from "react-redux";
 import GLCartItem from "../../shared/GlowLEDsComponents/GLCartItem/GLCartItem";
 import { Helmet } from "react-helmet";

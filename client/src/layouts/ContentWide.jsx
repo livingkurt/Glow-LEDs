@@ -1,4 +1,4 @@
-import React from "react";
+
 
 const ContentWide = ({ style, children }) => {
   return (

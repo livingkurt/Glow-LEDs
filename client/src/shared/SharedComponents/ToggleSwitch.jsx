@@ -1,5 +1,3 @@
-import React from "react";
-
 const ToggleSwitch = ({ setting, update_function }) => {
   return (
     <div className="mv-10px ai-c">
