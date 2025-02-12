@@ -132,7 +132,7 @@ const ProfileAffiliateMetrics = ({ sponsorCodes, currentMonthEarnings, yearlyEar
               color="primary"
               fullWidth
               component="a"
-              href="https://docs.google.com/document/d/1hiquje1Bw-SWlYEO2Lp8NMfVZhvMRNNrwNog4Ltr5Ac/edit"
+              href="https://drive.google.com/drive/folders/1KF_SDStvNQYH9eYC2T1TJBsXvMSRnsu9?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
             >
