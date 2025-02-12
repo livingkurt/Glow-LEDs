@@ -368,35 +368,37 @@ const OrderPage = () => {
                   </Grid>
                 </Grid>
               </Grid>
-              {/* Order Summary Section - Moving to left side and adjusting width */}
-              <Grid item xs={12} md={7}>
-                <OrderSummary
-                  backgroundColor={width > 407 && determineOrderColors(order)}
-                  loading={loading}
-                  shippingPrice={order.shippingPrice}
-                  previousShippingPrice={order.previousShippingPrice}
-                  previousNonPreOrderShippingPrice={order.previousNonPreOrderShippingPrice}
-                  previousPreOrderShippingPrice={order.previousPreOrderShippingPrice}
-                  tip={order.tip}
-                  itemsPrice={order.itemsPrice}
-                  taxPrice={order.taxPrice}
-                  totalPrice={order.totalPrice}
-                  preOrderShippingPrice={order.preOrderShippingPrice}
-                  nonPreOrderShippingPrice={order.nonPreOrderShippingPrice}
-                  splitOrder={order.splitOrder}
-                  show_payment={true}
-                  payment_completed={true}
-                  active_promo_codes={[order.promo]}
-                  active_gift_cards={order.giftCards}
-                  cartItems={order.orderItems}
-                  shipping={order.shipping}
-                  originalTotal={originalTotal}
-                  hasPreOrderItems={hasPreOrderItems}
-                  hasSaleItems={hasSaleItems}
-                  serviceFee={serviceFee}
-                  hasActiveDiscounts={hasActiveDiscounts}
-                  saleTotal={saleTotal}
-                />
+              {/* Order Summary Section */}
+              <Grid item xs={12} md={7} style={{ alignSelf: "flex-start" }}>
+                <Box>
+                  <OrderSummary
+                    backgroundColor={width > 407 && determineOrderColors(order)}
+                    loading={loading}
+                    shippingPrice={order.shippingPrice}
+                    previousShippingPrice={order.previousShippingPrice}
+                    previousNonPreOrderShippingPrice={order.previousNonPreOrderShippingPrice}
+                    previousPreOrderShippingPrice={order.previousPreOrderShippingPrice}
+                    tip={order.tip}
+                    itemsPrice={order.itemsPrice}
+                    taxPrice={order.taxPrice}
+                    totalPrice={order.totalPrice}
+                    preOrderShippingPrice={order.preOrderShippingPrice}
+                    nonPreOrderShippingPrice={order.nonPreOrderShippingPrice}
+                    splitOrder={order.splitOrder}
+                    show_payment={true}
+                    payment_completed={true}
+                    active_promo_codes={[order.promo]}
+                    active_gift_cards={order.giftCards}
+                    cartItems={order.orderItems}
+                    shipping={order.shipping}
+                    originalTotal={originalTotal}
+                    hasPreOrderItems={hasPreOrderItems}
+                    hasSaleItems={hasSaleItems}
+                    serviceFee={serviceFee}
+                    hasActiveDiscounts={hasActiveDiscounts}
+                    saleTotal={saleTotal}
+                  />
+                </Box>
               </Grid>
             </Grid>
           </div>
