@@ -217,7 +217,7 @@ export const printCustomerLabel = async (label, order, deadline) => {
               item => `
             <tr>
               <td style="text-align: left; padding: 0.25rem; border-bottom: 1px solid #ddd;">${item.name}</td>
-              <td style="text-align: right; padding: 0.25rem; border-bottom: 1px solid #ddd;">${item.quantity}</td>
+              <td style="text-align: right; padding: 0.25rem; border-bottom: 1px solid #ddd;">${item.returnQuantity || item.quantity}</td>
             </tr>
           `
             )
@@ -240,7 +240,7 @@ export const printCustomerLabel = async (label, order, deadline) => {
           : ""
       }
 
-      <div >
+      <div>
         <h2 style="color: black; font-size: 1rem; margin-bottom: 0.5rem;">Additional instructions for shipping the package</h2>
         <ul style="color: black; margin: 0 0 0 1.5rem; padding: 0;">
           <li style="margin-bottom: 0.25rem; font-size: 0.9rem;">Print the return shipping label. They are designed to be printed in A4 format.</li>
@@ -249,7 +249,7 @@ export const printCustomerLabel = async (label, order, deadline) => {
         </ul>
       </div>
 
-      <div >
+      <div>
         <h2 style="color: black; font-size: 1rem; margin-bottom: 0.25rem;">Return label by post</h2>
         <p style="color: black; margin-bottom: 0.25rem; font-size: 0.9rem;">Cut out this label and attach it to the outside of the package you are going to return</p>
         <div style="width: 100%; display: flex; align-items: center; justify-content: center; margin: 0.5rem 0;">

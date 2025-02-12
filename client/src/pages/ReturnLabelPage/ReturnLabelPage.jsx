@@ -25,7 +25,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import { Print, Email, Info, Download } from "@mui/icons-material";
+import { Print, Email, Info } from "@mui/icons-material";
 import { detailsOrder } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { printCustomerLabel } from "../../pages/OrdersPage/ordersPageHelpers";
@@ -61,25 +61,6 @@ const ReturnLabelPage = () => {
   const handlePrintLabel = () => {
     if (order?.shipping?.return_shipping_label?.postage_label?.label_url) {
       printCustomerLabel(order?.shipping?.return_shipping_label?.postage_label?.label_url, order, returnDeadline);
-    }
-  };
-
-  const handleDownloadLabel = async () => {
-    const labelUrl = order?.shipping?.return_shipping_label?.postage_label?.label_url;
-    if (labelUrl) {
-      try {
-        const response = await axios.get(labelUrl, { responseType: "blob" });
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", `return-label-${order._id}.pdf`);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        window.URL.revokeObjectURL(url);
-      } catch (error) {
-        console.error("Error downloading label:", error);
-      }
     }
   };
 
@@ -160,15 +141,6 @@ const ReturnLabelPage = () => {
                 sx={{ bgcolor: "primary.main" }}
               >
                 {"Print label"}
-              </Button>
-              <Button
-                fullWidth={isMobile}
-                variant="contained"
-                startIcon={<Download />}
-                onClick={handleDownloadLabel}
-                sx={{ bgcolor: "primary.main" }}
-              >
-                {"Download PDF"}
               </Button>
               <Button fullWidth={isMobile} variant="outlined" startIcon={<Email />} onClick={handleEmailDialogOpen}>
                 {"Email label"}
