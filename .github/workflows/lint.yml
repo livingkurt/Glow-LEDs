@@ -35,7 +35,7 @@ jobs:
         run: npm ci
 
       - name: Install Client Dependencies
-        run: cd client && npm ci
+        run: cd client && npm ci --legacy-peer-deps
 
       - name: Install Server Dependencies
         run: cd server && npm ci
