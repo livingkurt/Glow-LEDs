@@ -97,14 +97,15 @@ const OrderPage = () => {
 
             <Grid container spacing={3}>
               {/* Order Details Section - Moving to right side */}
-              <Grid item xs={12} md={4}>
-                <Grid container spacing={3}>
+              <Grid item xs={12} md={5}>
+                <Grid container spacing={2}>
                   {/* Order Info Section */}
                   <Grid item xs={12}>
                     <Paper
                       elevation={3}
                       style={{
                         backgroundColor: width > 407 && determineOrderColors(order),
+                        borderRadius: "10px",
                         padding: "20px",
                         color: "white",
                       }}
@@ -146,6 +147,7 @@ const OrderPage = () => {
                       elevation={3}
                       style={{
                         backgroundColor: width > 407 && determineOrderColors(order),
+                        borderRadius: "10px",
                         padding: "20px",
                         color: "white",
                       }}
@@ -261,6 +263,7 @@ const OrderPage = () => {
                       elevation={3}
                       style={{
                         backgroundColor: width > 407 && determineOrderColors(order),
+                        borderRadius: "10px",
                         padding: "20px",
                         color: "white",
                       }}
@@ -340,6 +343,7 @@ const OrderPage = () => {
                       elevation={3}
                       style={{
                         backgroundColor: width > 407 && determineOrderColors(order),
+                        borderRadius: "10px",
                         padding: "20px",
                         color: "white",
                       }}
@@ -365,7 +369,7 @@ const OrderPage = () => {
                 </Grid>
               </Grid>
               {/* Order Summary Section - Moving to left side and adjusting width */}
-              <Grid item xs={12} md={8}>
+              <Grid item xs={12} md={7}>
                 <OrderSummary
                   backgroundColor={width > 407 && determineOrderColors(order)}
                   loading={loading}
