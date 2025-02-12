@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { determine_terms_link } from "../profileHelpers";
 import { Loading } from "../../../shared/SharedComponents";
