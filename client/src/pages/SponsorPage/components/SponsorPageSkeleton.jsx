@@ -1,4 +1,3 @@
-import React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -6,6 +5,7 @@ import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Skeleton from "@mui/material/Skeleton";
+import { Fragment } from "react";
 const SponsorPageSkeleton = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -52,7 +52,7 @@ const SponsorPageSkeleton = () => {
           <Card sx={{ color: "#fff", bgcolor: "#4e5061", borderRadius: "20px" }}>
             <CardContent>
               {[...Array(6)].map((_, index) => (
-                <React.Fragment key={index}>
+                <Fragment key={index}>
                   <Skeleton
                     animation="wave"
                     variant="text"
@@ -68,7 +68,7 @@ const SponsorPageSkeleton = () => {
                     height={20}
                     sx={{ bgcolor: "#5c6281", mb: 2 }}
                   />
-                </React.Fragment>
+                </Fragment>
               ))}
               <Skeleton
                 animation="wave"

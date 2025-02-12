@@ -1,11 +1,9 @@
-import React from "react";
 import { usePagination, DOTS } from "../../Hooks/usePagination";
 import { userWindowDimensions } from "../../Hooks";
 
 import GLIconButton from "../GLIconButton/GLIconButton";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import ArrowForward from "@mui/icons-material/ArrowForward";
-import IconButton from "@mui/material/IconButton";
 
 const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, className }) => {
   const { width } = userWindowDimensions();

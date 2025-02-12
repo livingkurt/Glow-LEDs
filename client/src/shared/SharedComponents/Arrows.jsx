@@ -1,10 +1,6 @@
-import React from "react";
-import { GLButton } from "../GlowLEDsComponents";
-
 import GLIconButton from "../GlowLEDsComponents/GLIconButton/GLIconButton";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import ArrowForward from "@mui/icons-material/ArrowForward";
-import IconButton from "@mui/material/IconButton";
 
 const Arrows = ({ direction, set_value, update_function, name, value }) => {
   const increment = () => {

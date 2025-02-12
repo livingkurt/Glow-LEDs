@@ -1,4 +1,3 @@
-import React from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { GLButton } from "../../../../shared/GlowLEDsComponents";
 import { useSelector } from "react-redux";
@@ -28,15 +27,15 @@ const StripeForm = ({ handleSubmit }) => {
   const elements = useElements();
 
   const placeOrder = useSelector(state => state.placeOrder);
-  const { hideCheckoutButton, paymentValidations } = placeOrder;
+  const { paymentValidations } = placeOrder;
 
   return (
     <form onSubmit={e => handleSubmit(e, stripe, elements)}>
       <CardElement options={cardElementOptions} />
       {paymentValidations && (
-        <label className="validation_text" style={{ textAlign: "center" }}>
+        <div className="validation_text" style={{ textAlign: "center" }}>
           {paymentValidations}
-        </label>
+        </div>
       )}
       {/* {!hideCheckoutButton && ( */}
       <GLButton type="submit" variant="primary" className="w-100per mt-1rem bob" disabled={!stripe}>

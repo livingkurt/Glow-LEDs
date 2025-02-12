@@ -1,9 +1,7 @@
-import React from "react";
 import PropTypes from "prop-types";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import clsx from "clsx";
 import glTable from "../glTable.module.scss";
 
 const GLTableToolbar = ({
@@ -19,10 +17,10 @@ const GLTableToolbar = ({
   <div>
     {tableName && (hasFilters || titleActions) && (
       <Toolbar
-        className={clsx(
-          glTable.titleContainer,
-          enableRowSelect && numSelected > 0 && glTable.rowSelectedTitleContainer
-        )}
+        className={{
+          ...glTable.titleContainer,
+          ...(enableRowSelect && numSelected > 0 && glTable.rowSelectedTitleContainer),
+        }}
       >
         <div>
           {enableRowSelect && numSelected > 0 ? (

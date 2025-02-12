@@ -1,4 +1,4 @@
-import React from "react";
+import { StrictMode } from "react";
 import { Provider } from "react-redux";
 import * as Sentry from "@sentry/react";
 import App from "./App";
@@ -8,9 +8,9 @@ export const AppWithSentry = ({ store }) => {
     return (
       <Sentry.ErrorBoundary>
         <Provider store={store}>
-          <React.StrictMode>
+          <StrictMode>
             <App />
-          </React.StrictMode>
+          </StrictMode>
         </Provider>
       </Sentry.ErrorBoundary>
     );
@@ -18,9 +18,9 @@ export const AppWithSentry = ({ store }) => {
 
   return (
     <Provider store={store}>
-      <React.StrictMode>
+      <StrictMode>
         <App />
-      </React.StrictMode>
+      </StrictMode>
     </Provider>
   );
 };

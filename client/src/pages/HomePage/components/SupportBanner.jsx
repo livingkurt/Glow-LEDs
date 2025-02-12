@@ -1,7 +1,4 @@
-import React from "react";
-
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -9,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import useTheme from "@mui/material/styles/useTheme";
+
 const SupportBanner = support_banner => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -68,10 +66,6 @@ const SupportBanner = support_banner => {
   ) : (
     <></>
   );
-};
-
-SupportBanner.propTypes = {
-  support_banner: PropTypes.object.isRequired,
 };
 
 export default SupportBanner;

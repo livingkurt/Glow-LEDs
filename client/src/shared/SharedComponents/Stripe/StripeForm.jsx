@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { isMobile } from "react-device-detect";
 import { GLButton } from "../../GlowLEDsComponents";
-import { useDispatch } from "react-redux";
 
 const StripeForm = ({ pay_order, date_1, date_2, setLoadingPayment }) => {
   const stripe = useStripe();
@@ -56,9 +55,9 @@ const StripeForm = ({ pay_order, date_1, date_2, setLoadingPayment }) => {
         }}
       />
       {payment_validations && (
-        <label className="validation_text" style={{ textAlign: "center" }}>
+        <div className="validation_text" style={{ textAlign: "center" }}>
           {payment_validations}
-        </label>
+        </div>
       )}
       {new Date() > new Date(date_1) && new Date() < new Date(date_2) && (
         <li>

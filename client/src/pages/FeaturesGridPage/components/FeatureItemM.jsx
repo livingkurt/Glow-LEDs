@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { LazyImage } from "../../../shared/SharedComponents";
 import { humanize } from "../../../utils/helper_functions";
@@ -26,7 +25,7 @@ const FeatureSmallScreen = ({ feature, category, style }) => {
             <div className="product_text" style={{ fontSize: "1.6rem" }}>
               {feature.artist_name}
             </div>
-            <label style={{ fontSize: "1.3rem" }}>{feature.product && humanize(feature.product)}</label>
+            <div style={{ fontSize: "1.3rem" }}>{feature.product && humanize(feature.product)}</div>
           </div>
         </div>
       </Link>

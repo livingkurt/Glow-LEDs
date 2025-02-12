@@ -1,5 +1,3 @@
-import React from "react";
-
 import BatteryFullIcon from "@mui/icons-material/BatteryFull";
 import BluetoothIcon from "@mui/icons-material/Bluetooth";
 import HeadphonesIcon from "@mui/icons-material/Headphones";

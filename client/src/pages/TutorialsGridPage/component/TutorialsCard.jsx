@@ -1,6 +1,3 @@
-import React from "react";
-
-import { Link } from "react-router-dom";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 import { toCapitalize } from "../../../utils/helper_functions";
 import Box from "@mui/material/Box";
@@ -9,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import useTheme from "@mui/material/styles/useTheme";
+
 const TutorialCard = ({ tutorial, handleOpen }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));

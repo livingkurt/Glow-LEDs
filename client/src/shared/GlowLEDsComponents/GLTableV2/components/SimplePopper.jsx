@@ -1,9 +1,9 @@
-import React from "react";
 import Box from "@mui/material/Box";
 import Popper from "@mui/material/Popper";
+import { useState } from "react";
 
-export default function SimplePopper() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+const SimplePopper = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = event => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -22,4 +22,6 @@ export default function SimplePopper() {
       </Popper>
     </div>
   );
-}
+};
+
+export default SimplePopper;

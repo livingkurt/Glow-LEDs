@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 const GlowLEDsTextLogo = () => {
@@ -16,16 +15,16 @@ const GlowLEDsTextLogo = () => {
       </Link>
       <Link to="/" aria-label="Home Page">
         <div className="row pos-rel">
-          <label className="glow_leds_text" data-testid="glow_leds_title">
+          <div className="glow_leds_text" data-testid="glow_leds_title">
             {"Glow LEDs"}
-          </label>
+          </div>
 
-          <label className="tm" style={{ color: "#9a9898" }}>
+          <div className="tm" style={{ color: "#9a9898" }}>
             {"™"}
-          </label>
-          <label className="make_it_glow_text fs-18px mt-10px ta-r jc-fe pos-abs right-n10px bottom-n11px">
+          </div>
+          <div className="make_it_glow_text fs-18px mt-10px ta-r jc-fe pos-abs right-n10px bottom-n11px">
             {"Make it Glow"}
-          </label>
+          </div>
         </div>
       </Link>
     </div>

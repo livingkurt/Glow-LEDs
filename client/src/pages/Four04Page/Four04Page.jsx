@@ -1,4 +1,3 @@
-import React from "react";
 import { Helmet } from "react-helmet";
 
 const Four04Page = () => {
@@ -12,7 +11,7 @@ const Four04Page = () => {
         <meta name="twitter:title" content="404 Not Found" />
       </Helmet>
       <h1 style={{ margin: "20px auto" }}>{"404 Page Not Found"}</h1>
-      <label>{"Sorry About that"}</label>
+      <div>{"Sorry About that"}</div>
     </div>
   );
 };

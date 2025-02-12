@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable react-refresh/only-export-components */
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";

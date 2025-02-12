@@ -1,7 +1,3 @@
-import React from "react";
-import { GLButton } from "..";
-import IconButton from "@mui/material/IconButton";
-
 import GLIconButton from "../GLIconButton/GLIconButton";
 
 const Search = ({ handleListItems, className, search, set_search }) => {
