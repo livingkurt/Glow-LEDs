@@ -2,7 +2,7 @@ import { domain } from "../email_template_helpers.js";
 
 export default ({ order, returnItems, exchangeItems }) => {
   const printPageUrl = `${domain()}/account/return_label?orderId=${order._id}&deadline=${encodeURIComponent(
-    new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+    order.returnDeadline.toISOString()
   )}`;
 
   // Helper function to format price
