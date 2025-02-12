@@ -22,8 +22,10 @@ import {
   DialogContent,
   DialogActions,
   TextField,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
-import { Print, Email, Info } from "@mui/icons-material";
+import { Print, Email, Info, Download } from "@mui/icons-material";
 import { detailsOrder } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { printCustomerLabel } from "../../pages/OrdersPage/ordersPageHelpers";
@@ -31,6 +33,8 @@ import axios from "axios";
 
 const ReturnLabelPage = () => {
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [returnDeadline, setReturnDeadline] = useState("");
   const [openEmailDialog, setOpenEmailDialog] = useState(false);
   const [friendEmail, setFriendEmail] = useState("");
@@ -57,6 +61,25 @@ const ReturnLabelPage = () => {
   const handlePrintLabel = () => {
     if (order?.shipping?.return_shipping_label?.postage_label?.label_url) {
       printCustomerLabel(order?.shipping?.return_shipping_label?.postage_label?.label_url, order, returnDeadline);
+    }
+  };
+
+  const handleDownloadLabel = async () => {
+    const labelUrl = order?.shipping?.return_shipping_label?.postage_label?.label_url;
+    if (labelUrl) {
+      try {
+        const response = await axios.get(labelUrl, { responseType: "blob" });
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `return-label-${order._id}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error("Error downloading label:", error);
+      }
     }
   };
 
@@ -98,35 +121,58 @@ const ReturnLabelPage = () => {
   return (
     <Container
       maxWidth="lg"
-      mt={5}
       sx={{
-        padding: 4,
+        padding: { xs: 2, sm: 4 },
+        mt: { xs: 2, sm: 5 },
       }}
     >
       <Paper
         sx={{
-          padding: 4,
+          padding: { xs: 2, sm: 4 },
         }}
       >
         <Stack spacing={3}>
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <Typography variant="h4" component="h1">
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              justifyContent: "space-between",
+              alignItems: { xs: "stretch", sm: "center" },
+              gap: 2,
+            }}
+          >
+            <Typography variant="h4" component="h1" sx={{ fontSize: { xs: "1.5rem", sm: "2.125rem" } }}>
               {"Your return label"}
             </Typography>
-            <Box sx={{ "@media print": { display: "none" } }}>
-              <Stack direction="row" spacing={2}>
-                <Button
-                  variant="contained"
-                  startIcon={<Print />}
-                  onClick={handlePrintLabel}
-                  sx={{ bgcolor: "primary.main" }}
-                >
-                  {"Print label and instructions"}
-                </Button>
-                <Button variant="outlined" startIcon={<Email />} onClick={handleEmailDialogOpen}>
-                  {"Send to a friend by email"}
-                </Button>
-              </Stack>
+            <Box
+              sx={{
+                "@media print": { display: "none" },
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                gap: 2,
+              }}
+            >
+              <Button
+                fullWidth={isMobile}
+                variant="contained"
+                startIcon={<Print />}
+                onClick={handlePrintLabel}
+                sx={{ bgcolor: "primary.main" }}
+              >
+                {"Print label"}
+              </Button>
+              <Button
+                fullWidth={isMobile}
+                variant="contained"
+                startIcon={<Download />}
+                onClick={handleDownloadLabel}
+                sx={{ bgcolor: "primary.main" }}
+              >
+                {"Download PDF"}
+              </Button>
+              <Button fullWidth={isMobile} variant="outlined" startIcon={<Email />} onClick={handleEmailDialogOpen}>
+                {"Email label"}
+              </Button>
             </Box>
           </Box>
 
@@ -172,10 +218,10 @@ const ReturnLabelPage = () => {
             </Typography>
             <Box
               sx={{
-                transform: "rotate(-90deg)",
-                width: "6in",
-                margin: "2rem auto",
-                height: "6in",
+                transform: { xs: "none", sm: "rotate(-90deg)" },
+                width: { xs: "100%", sm: "6in" },
+                margin: { xs: "1rem auto", sm: "2rem auto" },
+                height: { xs: "auto", sm: "6in" },
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -189,6 +235,7 @@ const ReturnLabelPage = () => {
                   width: "100%",
                   height: "auto",
                   display: "block",
+                  maxWidth: { xs: "100%", sm: "6in" },
                 }}
               />
             </Box>
@@ -199,44 +246,46 @@ const ReturnLabelPage = () => {
               <Typography variant="h5" gutterBottom>
                 {"Items to return"}
               </Typography>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>{"Item description"}</TableCell>
-                    <TableCell align="right">{"Quantity"}</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {order.returnItems.map((item, index) => (
-                    <TableRow key={index}>
-                      <TableCell>
-                        <Stack spacing={1}>
-                          <Typography>{item.name}</Typography>
-                          {item.isPartialReturn && item.partialReturnDetails && (
-                            <Typography
-                              variant="body2"
-                              sx={{
-                                color: "warning.main",
-                                fontStyle: "italic",
-                              }}
-                            >
-                              {"Partial Return: "}
-                              {item.partialReturnDetails}
-                            </Typography>
-                          )}
-                        </Stack>
-                      </TableCell>
-                      <TableCell align="right">{item.returnQuantity}</TableCell>
+              <Box sx={{ overflowX: "auto" }}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>{"Item description"}</TableCell>
+                      <TableCell align="right">{"Quantity"}</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHead>
+                  <TableBody>
+                    {order.returnItems.map((item, index) => (
+                      <TableRow key={index}>
+                        <TableCell>
+                          <Stack spacing={1}>
+                            <Typography>{item.name}</Typography>
+                            {item.isPartialReturn && item.partialReturnDetails && (
+                              <Typography
+                                variant="body2"
+                                sx={{
+                                  color: "warning.main",
+                                  fontStyle: "italic",
+                                }}
+                              >
+                                {"Partial Return: "}
+                                {item.partialReturnDetails}
+                              </Typography>
+                            )}
+                          </Stack>
+                        </TableCell>
+                        <TableCell align="right">{item.returnQuantity}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Box>
             </Paper>
           )}
         </Stack>
       </Paper>
 
-      <Dialog open={openEmailDialog} onClose={handleEmailDialogClose}>
+      <Dialog open={openEmailDialog} onClose={handleEmailDialogClose} fullWidth maxWidth="sm">
         <DialogTitle>{"Share Return Label"}</DialogTitle>
         <DialogContent>
           <TextField
