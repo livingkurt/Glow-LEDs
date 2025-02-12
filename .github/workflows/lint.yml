@@ -44,18 +44,20 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           CHANGED_FILES="${{ steps.changed-files.outputs.all_changed_files }}"
-          SERVER_FILES=$(echo "$CHANGED_FILES" | tr ' ' '\n' | grep "^server/" | tr '\n' ' ')
+          SERVER_FILES=$(echo "$CHANGED_FILES" | tr ' ' '\n' | grep "^server/" | tr '\n' ' ' || true)
           if [ ! -z "$SERVER_FILES" ]; then
-            npm run lint -- $SERVER_FILES
+            echo "Linting changed server files: $SERVER_FILES"
+            cd server && ../node_modules/.bin/eslint $SERVER_FILES
           fi
 
       - name: Run Client ESLint on changed files
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           CHANGED_FILES="${{ steps.changed-files.outputs.all_changed_files }}"
-          CLIENT_FILES=$(echo "$CHANGED_FILES" | tr ' ' '\n' | grep "^client/" | tr '\n' ' ')
+          CLIENT_FILES=$(echo "$CHANGED_FILES" | tr ' ' '\n' | grep "^client/src/" | tr '\n' ' ' || true)
           if [ ! -z "$CLIENT_FILES" ]; then
-            cd client && npm run lint -- $CLIENT_FILES
+            echo "Linting changed client files: $CLIENT_FILES"
+            cd client && ../node_modules/.bin/eslint $CLIENT_FILES
           fi
 
       - name: Run Prettier Check on changed files
@@ -63,5 +65,6 @@ jobs:
         run: |
           CHANGED_FILES="${{ steps.changed-files.outputs.all_changed_files }}"
           if [ ! -z "$CHANGED_FILES" ]; then
+            echo "Running prettier on changed files: $CHANGED_FILES"
             npx prettier --check $CHANGED_FILES
           fi
