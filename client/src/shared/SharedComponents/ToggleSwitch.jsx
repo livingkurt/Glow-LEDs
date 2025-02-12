@@ -1,8 +1,8 @@
 const ToggleSwitch = ({ setting, update_function }) => {
   return (
     <div className="mv-10px ai-c">
-      <label className="w-14rem">{setting.label}</label>
-      <label className="switch">
+      <div className="w-14rem">{setting.label}</div>
+      <div className="switch">
         <input
           type="checkbox"
           name={setting.name}
@@ -10,7 +10,7 @@ const ToggleSwitch = ({ setting, update_function }) => {
           onChange={e => update_function(e.target.name, e.target.checked === true ? 1 : 0)}
         />
         <span className="slider round" />
-      </label>
+      </div>
     </div>
   );
 };

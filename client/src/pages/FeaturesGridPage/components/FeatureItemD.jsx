@@ -23,13 +23,13 @@ const Feature = ({ feature, category, style, size }) => {
                 }
               />
 
-              <label style={{ fontSize: "1.6rem" }} className="m-5px">
+              <div style={{ fontSize: "1.6rem" }} className="m-5px">
                 {feature.artist_name}
-              </label>
-              {/* <label style={{ fontSize: '1.3rem' }}>{feature.song_id}</label> */}
-              <label style={{ fontSize: "1.3rem" }}>{feature.product && humanize(feature.product)}</label>
+              </div>
+              {/* <div style={{ fontSize: '1.3rem' }}>{feature.song_id}</div> */}
+              <div style={{ fontSize: "1.3rem" }}>{feature.product && humanize(feature.product)}</div>
               <Link to={`/features/category/${category.toLowerCase()}/${feature.pathname}`}>
-                <label style={{ fontSize: "1.6rem" }}>{feature.name}</label>
+                <div style={{ fontSize: "1.6rem" }}>{feature.name}</div>
               </Link>
             </div>
           </div>

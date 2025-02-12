@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Skeleton from "@mui/material/Skeleton";
@@ -25,7 +26,7 @@ const ArticlePageSkeleton = () => {
 
       <Box sx={{ mt: 4 }}>
         {[...Array(6)].map((_, index) => (
-          <React.Fragment key={index}>
+          <Fragment key={index}>
             <Skeleton
               animation="wave"
               variant="text"
@@ -39,7 +40,7 @@ const ArticlePageSkeleton = () => {
             <Skeleton animation="wave" variant="text" width="85%" height={20} sx={{ bgcolor: "#4e5061", mb: "2px" }} />
             <Skeleton animation="wave" variant="text" width="90%" height={20} sx={{ bgcolor: "#4e5061", mb: "2px" }} />
             <Skeleton animation="wave" variant="text" width="80%" height={20} sx={{ bgcolor: "#4e5061", mb: "2px" }} />
-          </React.Fragment>
+          </Fragment>
         ))}
       </Box>
     </Container>

@@ -16,6 +16,7 @@ import {
   useAffiliatesQuery,
 } from "../../../api/allRecordsApi";
 import { handleCartProductChange, handleCartTicketChange } from "../cartsPageHelpers";
+import { useMemo, memo } from "react";
 
 const EditCartModal = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const EditCartModal = () => {
   const { data: affiliates, isLoading: affiliatesLoading } = useAffiliatesQuery();
   const { data: users, isLoading: usersLoading } = useUsersQuery();
 
-  const formFields = React.useMemo(
+  const formFields = useMemo(
     () =>
       cartFormFields({
         users: usersLoading ? [] : users,
@@ -98,4 +99,4 @@ const EditCartModal = () => {
   );
 };
 
-export default React.memo(EditCartModal);
+export default memo(EditCartModal);

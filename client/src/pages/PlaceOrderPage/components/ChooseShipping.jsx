@@ -4,11 +4,12 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
-const ChooseShipping = ({ shippingRates, onChange, carrier }) => {
-  const [value, setValue] = React.useState("");
+import { useState } from "react";
+
+const ChooseShipping = ({ shippingRates, carrier }) => {
+  const [value, setValue] = useState("");
   const handleChange = event => {
     setValue(event.target.value);
-    // onChange(event.target.value, service);
   };
 
   return (

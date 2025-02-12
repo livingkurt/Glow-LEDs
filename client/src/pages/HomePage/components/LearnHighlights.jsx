@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -9,6 +7,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import useTheme from "@mui/material/styles/useTheme";
+
 const LearnHighlights = learn_highlights => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -95,14 +94,6 @@ const LearnHighlights = learn_highlights => {
   ) : (
     <></>
   );
-};
-
-LearnHighlights.propTypes = {
-  learn_highlights: PropTypes.object,
-};
-
-LearnHighlights.defaultProps = {
-  learn_highlights: {},
 };
 
 export default LearnHighlights;

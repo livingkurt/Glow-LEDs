@@ -1,4 +1,4 @@
-const GLButton = ({ children, icon, onClick, onKeyUp, className, disabled, variant, fullWidth, ...otherProps }) => {
+const GLButton = ({ children, onClick, onKeyUp, className, variant, fullWidth, ...otherProps }) => {
   return (
     <button
       type="button"

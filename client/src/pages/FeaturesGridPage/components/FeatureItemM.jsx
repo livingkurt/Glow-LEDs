@@ -25,7 +25,7 @@ const FeatureSmallScreen = ({ feature, category, style }) => {
             <div className="product_text" style={{ fontSize: "1.6rem" }}>
               {feature.artist_name}
             </div>
-            <label style={{ fontSize: "1.3rem" }}>{feature.product && humanize(feature.product)}</label>
+            <div style={{ fontSize: "1.3rem" }}>{feature.product && humanize(feature.product)}</div>
           </div>
         </div>
       </Link>

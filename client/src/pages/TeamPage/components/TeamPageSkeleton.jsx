@@ -5,7 +5,7 @@ import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Skeleton from "@mui/material/Skeleton";
-import Typography from "@mui/material/Typography";
+
 const TeamPageSkeleton = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>

@@ -1,11 +1,10 @@
-import PropTypes from "prop-types";
-
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import useTheme from "@mui/material/styles/useTheme";
+
 const DiscoverMoreHero = discover_more => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -72,14 +71,6 @@ const DiscoverMoreHero = discover_more => {
   ) : (
     <></>
   );
-};
-
-DiscoverMoreHero.propTypes = {
-  discover_more: PropTypes.object,
-};
-
-DiscoverMoreHero.defaultProps = {
-  discover_more: {},
 };
 
 export default DiscoverMoreHero;

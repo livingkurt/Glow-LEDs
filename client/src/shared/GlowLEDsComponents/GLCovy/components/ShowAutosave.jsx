@@ -2,11 +2,7 @@ import PropTypes from "prop-types";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
-const ShowSnackbar = ({ containerRoot, message, open, severity, duration, horizontal, vertical }) => {
-  const handleClose = () => {
-    containerRoot.unmount();
-  };
-
+const ShowSnackbar = ({ message, open, severity, duration, horizontal, vertical }) => {
   // eslint-disable-next-line consistent-return
   const determine_alert_color = () => {
     switch (severity) {
@@ -50,7 +46,6 @@ ShowSnackbar.defaultProps = {
 };
 
 ShowSnackbar.propTypes = {
-  containerRoot: PropTypes.object.isRequired,
   message: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
   severity: PropTypes.string.isRequired,

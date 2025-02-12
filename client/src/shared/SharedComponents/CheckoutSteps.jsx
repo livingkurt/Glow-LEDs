@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const CheckoutSteps = ({ success, show_payment, shipping_completed }) => {

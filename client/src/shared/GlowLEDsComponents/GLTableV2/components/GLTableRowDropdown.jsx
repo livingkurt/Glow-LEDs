@@ -8,7 +8,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { darken } from "@mui/material/styles";
 
 // Styled Components
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(() => ({
   cursor: "pointer",
   height: "50px",
   width: "auto",
@@ -18,7 +18,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const StyledCheckbox = styled(Checkbox, {
   shouldForwardProp: prop => prop !== "determineColor",
-})(({ theme, determineColor }) => ({
+})(({ determineColor }) => ({
   color: determineColor ? "white" : "",
   "& .MuiSvgIcon-root": {
     color: "white",
@@ -39,7 +39,6 @@ const GLTableRowDropdown = ({
   dropdownColumnDefs,
   enableRowSelect,
   determineColor,
-  isItemSelected,
   labelId,
   onCellClick,
 }) => {

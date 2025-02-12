@@ -1,5 +1,5 @@
 /* eslint-disable max-lines-per-function */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 
 import mapValues from "lodash/mapValues";
@@ -14,7 +14,6 @@ import {
   GLTableToolbar,
   GLTableSearch,
   GLTableFilterChips,
-  GLTableActions,
 } from "./components";
 import glTable from "./glTable.module.scss";
 import "./glTable.scss";
@@ -25,16 +24,7 @@ import {
   updateUrlWithTableState,
   visibleSelected,
 } from "./glTableHelpers";
-import {
-  addRows,
-  updatePage,
-  updatePageSize,
-  fetchTablePage,
-  fetchTableFilters,
-  reorderRows,
-  updateQuery,
-  selectRow,
-} from "./actions/actions";
+import { addRows, fetchTablePage, fetchTableFilters, reorderRows, updateQuery, selectRow } from "./actions/actions";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { useNavigate, useLocation } from "react-router-dom";
 import GLLegend from "./components/GLLegend";
@@ -45,7 +35,6 @@ import Skeleton from "@mui/material/Skeleton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 
@@ -76,7 +65,6 @@ const GLTableV2 = ({
   onRowClick,
   rowProps,
   cellProps,
-  noContentMessage,
   containerClassNames,
   style,
   remoteVersionRequirement,

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { API_Emails } from "../../../utils";
 import { toTitleCase } from "../../../utils/helper_functions";
 import { Loading } from "../../../shared/SharedComponents";
-import config from "../../../config";
 
 import { orderStatusColors, nextStatus } from "../ordersPageHelpers";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
@@ -59,6 +58,7 @@ const OrderStatusButtons = ({ order }) => {
           updatePayload.errorAt = new Date();
           break;
         default:
+          // eslint-disable-next-line no-console
           console.error("Unknown status: ", status);
           return;
       }

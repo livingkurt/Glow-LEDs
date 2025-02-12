@@ -1,7 +1,7 @@
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
-const GLCheckboxV2 = ({ children, onChecked, value, label, ...otherProps }) => {
+const GLCheckboxV2 = ({ onChecked, value, label, ...otherProps }) => {
   return (
     <FormControlLabel
       style={{ color: "white" }}

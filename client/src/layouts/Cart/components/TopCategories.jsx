@@ -6,7 +6,7 @@ const TopCategories = ({ category_items, closeMenu }) => {
   return (
     <div className="pv-1rem ta-c w-100per">
       <div>
-        <label className="fs-20px title_font mv-1rem">{"Top Categories"}</label>
+        <div className="fs-20px title_font mv-1rem">{"Top Categories"}</div>
       </div>
       <div className="jc-c">
         <div className="wrapper">
@@ -16,7 +16,7 @@ const TopCategories = ({ category_items, closeMenu }) => {
                 <div className="product jc-c m-auto" style={{ height: "unset" }} key={index}>
                   {item.label && (
                     <Link to={item.link} onClick={closeMenu} className="column jc-c ta-c">
-                      <label className="mt-0px fs-14px title_font mb-10px"> {humanize(item.label)}</label>
+                      <div className="mt-0px fs-14px title_font mb-10px"> {humanize(item.label)}</div>
                       {item && item.image && (
                         <LazyImage
                           className="br-20px"

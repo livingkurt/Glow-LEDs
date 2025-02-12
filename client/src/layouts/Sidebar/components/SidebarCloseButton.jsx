@@ -40,7 +40,7 @@ const SidebarCloseButton = () => {
           </GLButton>
         </div>
         <Link to="/" aria-label="Home Page">
-          <label className="fs-20px mv-0px ff-h mr-20px ta-c">{"GL"}</label>
+          <div className="fs-20px mv-0px ff-h mr-20px ta-c">{"GL"}</div>
         </Link>
       </div>
     </>

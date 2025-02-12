@@ -184,7 +184,7 @@ const GcodeGeneratorModal = () => {
         )}
         <Grid item xs={12}>
           {gcodeNames.map(name => (
-            <List className="">
+            <List key={name}>
               <Paper>
                 <Box p={3}>{name}</Box>
               </Paper>

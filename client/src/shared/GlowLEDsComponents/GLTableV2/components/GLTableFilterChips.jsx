@@ -33,7 +33,7 @@ const StyledChip = styled(Chip)(({ theme }) => ({
   },
 }));
 
-const MoreButton = styled(Button)(({ theme }) => ({
+const MoreButton = styled(Button)(() => ({
   lineHeight: 3,
 }));
 

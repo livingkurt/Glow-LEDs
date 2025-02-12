@@ -20,7 +20,7 @@ const StyledTextImage = styled("img")({
   objectPosition: "center",
 });
 
-const ImageContainer = styled(Box)(({ theme }) => ({
+const ImageContainer = styled(Box)(() => ({
   position: "relative",
   overflow: "hidden",
   height: 0,

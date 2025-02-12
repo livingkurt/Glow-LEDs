@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import GLLazyImage from "../../../shared/GlowLEDsComponents/GLLazyImage/GLLazyImage";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -7,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import useTheme from "@mui/material/styles/useTheme";
+
 const GetTheMost = get_more_out_of => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -65,14 +65,6 @@ const GetTheMost = get_more_out_of => {
   ) : (
     <></>
   );
-};
-
-GetTheMost.propTypes = {
-  get_more_out_of: PropTypes.object,
-};
-
-GetTheMost.defaultProps = {
-  get_more_out_of: {},
 };
 
 export default GetTheMost;

@@ -8,7 +8,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
 
-const StyledStepper = styled(Stepper)(({ theme }) => ({
+const StyledStepper = styled(Stepper)(() => ({
   flexGrow: 1,
   justifyContent: "space-between",
 }));

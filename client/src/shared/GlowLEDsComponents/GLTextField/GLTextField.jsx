@@ -4,7 +4,7 @@ import Skeleton from "@mui/material/Skeleton";
 import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
 
-const StyledTextField = styled(TextField)(({ theme }) => ({
+const StyledTextField = styled(TextField)(() => ({
   marginTop: 15,
   marginBottom: 15,
   "& label.Mui-focused": {
@@ -33,7 +33,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const StyledSkeleton = styled(Skeleton)(({ theme }) => ({
+const StyledSkeleton = styled(Skeleton)(() => ({
   marginTop: -10,
   marginBottom: -10,
 }));

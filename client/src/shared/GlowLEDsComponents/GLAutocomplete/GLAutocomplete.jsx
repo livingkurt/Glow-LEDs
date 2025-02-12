@@ -48,7 +48,6 @@ const GLAutocomplete = ({
   getOptionKey,
   isOptionEqualToValue,
   size,
-  ...otherProps
 }) => {
   const icon = <CheckBoxOutlineBlankIcon fontSize="medium" />;
   const checkedIcon = <CheckBoxIcon fontSize="medium" />;

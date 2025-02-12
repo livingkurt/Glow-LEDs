@@ -45,7 +45,7 @@ const SupportLink = ({ icon, text, href, isExternal, color, id }) => {
   );
 };
 
-const ProductSupport = ({ productSupport, text_color, header_text_color }) => {
+const ProductSupport = ({ productSupport, header_text_color }) => {
   const { quick_guide, manual, support_link, tutorial_video, hidden } = productSupport;
 
   if (hidden) {

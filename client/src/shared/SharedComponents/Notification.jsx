@@ -2,7 +2,7 @@ const Notification = ({ message, ...others }) => {
   return (
     <div>
       <div className={`notification jc-c column pos-fix ${message || "none"}`} {...others}>
-        <label className="ta-c  fs-14px">{message}</label>
+        <div className="ta-c  fs-14px">{message}</div>
       </div>
     </div>
   );

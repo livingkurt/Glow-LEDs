@@ -1,4 +1,3 @@
-import styles from "./GLInput.module.scss";
 import "./GLInput.scss";
 
 const GLInput = ({
@@ -7,26 +6,15 @@ const GLInput = ({
   helperText,
   error,
   id,
-  className,
   required,
-  fullWidth,
-  displayHelperText,
   type,
-  icon,
-  iconPosition,
-  iconFontSize,
-  iconColor,
   onChange,
   label,
-  placeholder,
   name,
-  variant,
-  dataTest,
   autoFocus,
-  restrictCharacters,
-  inputClasses,
   inputProps,
   containerProps,
+  inputClasses,
 }) => {
   return (
     <>
@@ -51,9 +39,9 @@ const GLInput = ({
         </span>
       </div>
       {helperText && (
-        <label className={`helper_text ${error ? "validation" : ""}`}>
+        <div className={`helper_text ${error ? "validation" : ""}`}>
           {helperText} {required && "Required"}
-        </label>
+        </div>
       )}
     </>
   );

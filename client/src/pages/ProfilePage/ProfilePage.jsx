@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { Loading } from "../../shared/SharedComponents";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./ProfilePage.scss";
 import { Helmet } from "react-helmet";
 import { EditUserModal } from "../UsersPage/components";

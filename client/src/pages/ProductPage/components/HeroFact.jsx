@@ -1,8 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import useTheme from "@mui/material/styles/useTheme";
+
 const HeroFact = ({ heroFact, text_color, secondary_color, header_text_color }) => {
-  const theme = useTheme();
   if (!heroFact || heroFact.hidden) return null;
 
   const { title, description, subtitle } = heroFact;

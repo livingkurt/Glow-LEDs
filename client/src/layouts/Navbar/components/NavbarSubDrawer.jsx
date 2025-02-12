@@ -8,7 +8,7 @@ const NavbarSubDrawer = ({ columns }) => {
   columns.forEach(column => {
     column.rows.forEach(row => {
       if (row.sideDrawer) {
-        row.sideDrawer.drawerItems.forEach((drawerItem, index) => {
+        row.sideDrawer.drawerItems.forEach(drawerItem => {
           if (drawerItem.subSideDrawer) {
             normalizedItems.push({
               type: "subSideDrawer",

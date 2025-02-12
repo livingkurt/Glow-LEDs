@@ -59,10 +59,10 @@ const OrderComplete = ({ current_user, orderIds }) => {
 
               <div className="ta-c max-w-800px m-auto">
                 <Grid container spacing={2}>
-                  <Grid item xs={current_user && current_user?.hasOwnProperty("first_name") ? 6 : 12}>
+                  <Grid item xs={current_user && "first_name" in current_user ? 6 : 12}>
                     <Link
                       to={
-                        current_user && current_user?.hasOwnProperty("first_name")
+                        current_user && "first_name" in current_user
                           ? "/secure/account/order/" + orderId
                           : "/checkout/order/" + orderId
                       }
@@ -73,7 +73,7 @@ const OrderComplete = ({ current_user, orderIds }) => {
                       </Button>
                     </Link>
                   </Grid>
-                  {current_user && current_user?.hasOwnProperty("first_name") && (
+                  {current_user && "first_name" in current_user && (
                     <Grid item xs={6}>
                       <Link to="/secure/account/profile">
                         <Button variant="contained" color="primary" fullWidth>

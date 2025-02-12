@@ -114,7 +114,7 @@ const ManualPage = () => {
             ? "glowstringz"
             : pathname
         ].videos.map(video => (
-          <div>
+          <div key={video.title}>
             <h2
               style={{
                 textAlign: "center",
