@@ -134,6 +134,14 @@ export default {
     try {
       const order = await order_db.findById_orders_db(params.order_id);
 
+      // Set return deadline to 30 days from delivery date
+      if (order.deliveredAt) {
+        order.returnDeadline = new Date(new Date(order.deliveredAt).getTime() + 30 * 24 * 60 * 60 * 1000);
+      } else {
+        // Fallback to current date if not delivered yet
+        order.returnDeadline = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+      }
+
       order.returnItems = body.returnItems || [];
       order.exchangeItems = body.exchangeItems || [];
 

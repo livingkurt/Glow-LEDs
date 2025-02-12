@@ -35,7 +35,6 @@ const ReturnLabelPage = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const [returnDeadline, setReturnDeadline] = useState("");
   const [openEmailDialog, setOpenEmailDialog] = useState(false);
   const [friendEmail, setFriendEmail] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -45,22 +44,21 @@ const ReturnLabelPage = () => {
   const { order } = orderPage;
 
   useEffect(() => {
-    // Get label URL from query params
+    // Get orderId from query params
     const params = new URLSearchParams(location.search);
-    const deadline = params.get("deadline");
     const orderId = params.get("orderId");
     if (orderId) {
       dispatch(detailsOrder(orderId));
-    }
-
-    if (deadline) {
-      setReturnDeadline(deadline);
     }
   }, [location, dispatch]);
 
   const handlePrintLabel = () => {
     if (order?.shipping?.return_shipping_label?.postage_label?.label_url) {
-      printCustomerLabel(order?.shipping?.return_shipping_label?.postage_label?.label_url, order, returnDeadline);
+      printCustomerLabel(
+        order?.shipping?.return_shipping_label?.postage_label?.label_url,
+        order,
+        order?.returnDeadline
+      );
     }
   };
 
@@ -148,7 +146,7 @@ const ReturnLabelPage = () => {
             </Box>
           </Box>
 
-          {returnDeadline && (
+          {order?.returnDeadline && (
             <Alert
               icon={<Info sx={{ color: "black" }} />}
               severity="info"
@@ -159,7 +157,7 @@ const ReturnLabelPage = () => {
               }}
             >
               {"All the products must be returned before "}
-              {format_date(returnDeadline)}
+              {format_date(order.returnDeadline)}
               {"."}
             </Alert>
           )}

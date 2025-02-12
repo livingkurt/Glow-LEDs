@@ -168,6 +168,7 @@ const orderSchema = new mongoose.Schema(
     preOrderShippingDate: { type: Date },
     splitOrder: { type: mongoose.Schema.Types.ObjectId, ref: "Order" },
     relatedOrder: { type: mongoose.Schema.Types.ObjectId, ref: "Order" },
+    returnDeadline: { type: Date },
     deleted: { type: Boolean, default: false },
   },
   {

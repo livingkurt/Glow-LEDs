@@ -192,6 +192,18 @@ const OrderActionButtons = ({ order }) => {
                 color="secondary"
                 variant="contained"
                 className="w-100per mv-5px"
+                onClick={() => {
+                  window.open(`/account/return_label?orderId=${order._id}`, "_blank");
+                }}
+              >
+                {"View Return Instructions"}
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                color="secondary"
+                variant="contained"
+                className="w-100per mv-5px"
                 onClick={handlePrintReturnLabel}
               >
                 {"Print Return Label"}
