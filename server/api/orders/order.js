@@ -4,6 +4,8 @@ import { sharedItemSchema } from "../carts/shared_item.js";
 const shippingSchema = {
   shipment_id: { type: String },
   shipping_rate: { type: Object },
+
+  
   shipping_label: { type: Object },
   shipment_tracker: { type: Object },
   return_shipment_id: { type: String },
