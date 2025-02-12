@@ -47,15 +47,7 @@ jobs:
           SERVER_FILES=$(echo "$CHANGED_FILES" | tr ' ' '\n' | grep "^server/" | sed 's/^server\///' | tr '\n' ' ' || true)
           if [ ! -z "$SERVER_FILES" ]; then
             echo "Linting changed server files: $SERVER_FILES"
-            cd server && ../node_modules/.bin/eslint $SERVER_FILES \
-              --format stylish \
-              --rule 'prettier/prettier: ["error", {"endOfLine": "auto"}]' \
-              || (
-                echo "::error::ESLint found issues in server files. Here's how to fix them:" && \
-                echo "1. Run 'npm run lint:fix' to automatically fix formatting issues" && \
-                echo "2. For other issues, please review the errors above" && \
-                exit 1
-              )
+            cd server && ../node_modules/.bin/eslint $SERVER_FILES
           fi
 
       - name: Run Client ESLint on changed files
@@ -65,15 +57,7 @@ jobs:
           CLIENT_FILES=$(echo "$CHANGED_FILES" | tr ' ' '\n' | grep "^client/src/" | sed 's/^client\///' | tr '\n' ' ' || true)
           if [ ! -z "$CLIENT_FILES" ]; then
             echo "Linting changed client files: $CLIENT_FILES"
-            cd client && ../node_modules/.bin/eslint $CLIENT_FILES \
-              --format stylish \
-              --rule 'prettier/prettier: ["error", {"endOfLine": "auto"}]' \
-              || (
-                echo "::error::ESLint found issues in client files. Here's how to fix them:" && \
-                echo "1. Run 'cd client && npm run lint:fix' to automatically fix formatting issues" && \
-                echo "2. For other issues, please review the errors above" && \
-                exit 1
-              )
+            cd client && ../node_modules/.bin/eslint $CLIENT_FILES
           fi
 
       - name: Run Prettier Check on changed files
@@ -82,10 +66,5 @@ jobs:
           CHANGED_FILES="${{ steps.changed-files.outputs.all_changed_files }}"
           if [ ! -z "$CHANGED_FILES" ]; then
             echo "Running prettier on changed files: $CHANGED_FILES"
-            npx prettier --check $CHANGED_FILES || (
-              echo "::error::Prettier found formatting issues. To fix:" && \
-              echo "1. Run 'npm run prettier:fix' to automatically fix formatting" && \
-              echo "2. Commit and push the changes" && \
-              exit 1
-            )
+            npx prettier --check $CHANGED_FILES
           fi
